@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SuperKitchen</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%if Rails.env.production? %>
+      <%= render "shared/gtm_head" %>
+    <% end %>
+  
+    <%= stylesheet_pack_tag 'application' %>
+  </head>
+
+  <body>  <%if Rails.env.production? %>
+      <%= render "shared/gtm_body" %>
+    <% end %>
+  
+    <div id="vue-app">
+      <app></app>
+      <%= yield %>
+    </div>
+  </body>
+</html>
