@@ -42,20 +42,29 @@ ActiveRecord::Schema.define(version: 2021_04_16_220217) do
   end
 
   create_table "ingredients", force: :cascade do |t|
+    t.integer "provider_id"
+    t.integer "user_id"
     t.string "name"
     t.string "SKU"
     t.integer "price"
     t.string "currency"
     t.integer "quantity"
     t.string "measure"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "providers", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.string "country"
-
-  create_table "menus", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -63,12 +72,14 @@ ActiveRecord::Schema.define(version: 2021_04_16_220217) do
   create_table "recipe_ingredients", force: :cascade do |t|
     t.integer "recipe_id"
     t.integer "ingredient_id"
-    t.integer "quantity"
+    t.integer "ingredient_quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "recipes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "menu_id"
     t.string "name"
     t.integer "portions"
     t.text "instructions"
