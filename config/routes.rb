@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'ingredients/index'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       namespace :users do
