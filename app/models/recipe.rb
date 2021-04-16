@@ -1,8 +1,8 @@
 class Recipe < ApplicationRecord
-	belongs_to :user
-	belongs_to :menu
-	has_many :recipe_ingridients
-	has_many :ingredients, throug: :recipe_ingridients
+  belongs_to :user
+  belongs_to :menu, optional: true
+  has_many :recipe_ingredients, dependent: :destroy
+  has_many :ingredients, through: :recipe_ingredients
 end
 
 # == Schema Information
@@ -10,6 +10,8 @@ end
 # Table name: recipes
 #
 #  id           :bigint(8)        not null, primary key
+#  user_id      :integer
+#  menu_id      :integer
 #  name         :string
 #  portions     :integer
 #  instructions :text
