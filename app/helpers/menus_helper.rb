@@ -1,8 +1,3 @@
-class Menu < ApplicationRecord
-  belongs_to :user
-  has_many :recipes
-end
-
 # == Schema Information
 #
 # Table name: menus
@@ -13,3 +8,5 @@ end
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+module MenusHelper
+end

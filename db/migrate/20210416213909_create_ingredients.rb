@@ -1,6 +1,8 @@
 class CreateIngredients < ActiveRecord::Migration[6.0]
   def change
     create_table :ingredients do |t|
+      t.integer :provider_id
+      t.integer :user_id
       t.string :name
       t.string :SKU
       t.integer :price
