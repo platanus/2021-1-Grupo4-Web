@@ -66,3 +66,8 @@ end
 group :production, :development, :test do
   gem 'tzinfo-data'
 end
+
+group :production do
+  gem 'heroku-stage'
+  gem 'rails_stdout_logging'
+end
