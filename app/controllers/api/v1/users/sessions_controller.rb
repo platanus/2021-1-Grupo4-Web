@@ -1,30 +1,25 @@
 class Api::V1::Users::SessionsController < Devise::SessionsController
-  before_action :sign_in_params, only: :create
   before_action :load_user, only: :create
   protect_from_forgery with: :null_session
+
+  include Api::Error
 
   def create
     if @user.valid_password?(sign_in_params[:password])
       sign_in @user
-      render json: {
-        message: "Signed in",
-        user: @user
-      }, status: :ok
+      render json: @user, serializer: Api::V1::UserSerializer, status: :ok
     else
-      render json: { messages: 'Invalid email or password' }, status: :unauthorized
+      respond_api_error(:unauthorized, { message: 'Invalid email or password' })
     end
   end
 
   private
 
-  def sign_in_params
-    params.require(:user).permit :email, :password
+  def load_user
+    @user = User.find_by!(email: sign_in_params[:email])
   end
 
-  def load_user
-    @user = User.find_for_database_authentication(email: sign_in_params[:email])
-    return @user if @user.present?
-
-    render json: { message: "Can't find user" }, status: :failure
+  def sign_in_params
+    params.require(:user).permit(:email, :password)
   end
 end

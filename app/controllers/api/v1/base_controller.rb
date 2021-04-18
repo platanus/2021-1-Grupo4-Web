@@ -1,6 +1,4 @@
 class Api::V1::BaseController < Api::BaseController
-  acts_as_token_authentication_handler_for User
-
   respond_to :json
   protect_from_forgery with: :null_session
 
