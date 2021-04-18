@@ -1,0 +1,89 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "basePath": "/api/v1",
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/users/registrations": {
+      "post": {
+        "summary": "Create user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              },
+              "required": [
+                "user"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user created"
+          }
+        }
+      }
+    },
+    "/users/sessions": {
+      "post": {
+        "summary": "Log in",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              },
+              "required": [
+                "user"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "logged in"
+          }
+        }
+      }
+    }
+  }
+}

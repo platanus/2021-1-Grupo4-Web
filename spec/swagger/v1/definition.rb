@@ -6,5 +6,6 @@ API_V1 = {
   },
   basePath: '/api/v1',
   definitions: {
+    user: USER_SCHEMA
   }
 }
