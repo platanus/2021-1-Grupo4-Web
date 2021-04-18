@@ -7,9 +7,8 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     if @user.valid_password?(sign_in_params[:password])
       sign_in @user
       render json: {
-        messages: "Signed in",
-        is_success: true,
-        data: { user: @user }
+        message: "Signed in",
+        user: @user
       }, status: :ok
     else
       render json: { messages: 'Invalid email or password' }, status: :unauthorized
@@ -26,6 +25,6 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     @user = User.find_for_database_authentication(email: sign_in_params[:email])
     return @user if @user.present?
 
-    render json: { messages: "Can't find user" }, status: :failure
+    render json: { message: "Can't find user" }, status: :failure
   end
 end
