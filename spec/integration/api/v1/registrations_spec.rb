@@ -29,10 +29,7 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
           }
         end
 
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data['message']).to eq('Sign up succesfuly')
-        end
+        run_test!
       end
     end
   end
