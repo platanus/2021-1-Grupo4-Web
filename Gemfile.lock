@@ -201,6 +201,8 @@ GEM
     has_scope (0.8.0)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
+    heroku-stage (0.4.0)
+      rails
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.12.0)
@@ -328,6 +330,7 @@ GEM
     rails-i18n (6.0.0)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 7)
+    rails_stdout_logging (0.0.5)
     railties (6.0.3.5)
       actionpack (= 6.0.3.5)
       activesupport (= 6.0.3.5)
@@ -531,6 +534,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   guard-rspec
+  heroku-stage
   jbuilder (~> 2.7)
   listen
   marcel (~> 0.3.3)
@@ -544,6 +548,7 @@ DEPENDENCIES
   rack-timeout
   rails (~> 6.0.3, >= 6.0.3.5)
   rails-i18n
+  rails_stdout_logging
   recipient_interceptor
   rspec-nc
   rspec-rails
