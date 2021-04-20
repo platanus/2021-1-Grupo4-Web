@@ -10,8 +10,6 @@ end
 # Table name: recipes
 #
 #  id           :bigint(8)        not null, primary key
-#  user_id      :integer
-#  menu_id      :integer
 #  name         :string
 #  portions     :integer
 #  instructions :text
