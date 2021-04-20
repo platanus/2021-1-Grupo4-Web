@@ -1,9 +1,8 @@
 FactoryBot.define do
   factory :recipe do
-    name { "MyString" }
-    portions { "" }
-    instructions { "MyText" }
-    cook_minutes { "MyString" }
-    int { "MyString" }
+    name { "Some recipe name" }
+    portions { 1 }
+    instructions { "Some long instructions for the recipe" }
+    cook_minutes { 60 }
   end
 end

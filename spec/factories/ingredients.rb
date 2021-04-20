@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :ingredient do
-    name { "MyString" }
-    SKU { "MyString" }
-    price { 1 }
-    currency { "MyString" }
+    name { "Some ingredient name" }
+    SKU { "0000" }
+    price { 1000 }
+    currency { "CLP" }
     quantity { 1 }
-    measure { "MyString" }
+    measure { "kg" }
   end
 end
