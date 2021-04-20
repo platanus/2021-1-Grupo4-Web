@@ -50,8 +50,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_220840) do
     t.string "measure"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "provider_id"
-    t.index ["provider_id"], name: "index_ingredients_on_provider_id"
   end
 
   create_table "menus", force: :cascade do |t|
