@@ -1,5 +1,4 @@
 class  Api::V1::ProvidersController < Api::V1::BaseController
-    acts_as_token_authentication_handler_for User
 
     def create
         respond_with Provider.create!(provider_params)
