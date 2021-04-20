@@ -6,10 +6,8 @@ Rails.application.routes.draw do
           resources :registrations, only: [:create]
           resources :sessions, only: [:create]
         end
-      end
-      namespace :providers do
-        resources :providers, only: [:create]
-      end
+      end  
+        resources :providers
     end
   end
 
