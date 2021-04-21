@@ -1,5 +1,5 @@
 class Provider < ApplicationRecord
-    has_many :ingredients, dependent: :destroy
+  has_many :ingredients, dependent: :destroy
 end
 
 # == Schema Information
