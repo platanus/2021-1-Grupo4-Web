@@ -1,7 +1,5 @@
 <template>
-    <button class="mx-2 my-2 h-10 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-      @click="addIngredient"
-    >
+    <button @click="clickButton" class="mx-2 my-2 h-10 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
       {{ elements.placeholder }}
     </button>
 </template>
@@ -11,9 +9,10 @@ export default {
   props: {
     elements: { type: Object, required: true },
   },
+
   methods: {
-    addIngredient() {
-      console.log('Agregar Ingrediente');
+    clickButton() {
+      this.$emit('click');
     },
   },
 };

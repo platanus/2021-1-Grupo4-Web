@@ -6,13 +6,19 @@
       <search
         :algo="{ tipo: 'ingrediente' }"
       />
-      <base-button :elements="{ placeholder:'Agregar ingrediente' }" />
+      <base-button 
+        :elements="{ placeholder:'Agregar ingrediente' }"
+        @click="addIngredient"
+      />
     </div>
 
     <div class="flex items-center">
       <base-table :dots="true" :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"/>
     </div>
     
+
+
+
 
   </div>
 </template>
@@ -30,6 +36,11 @@ export default {
   },
   props: {
     ingredients: { type: Array, required: true },
+  },
+  methods: {
+    addIngredient() {
+      console.log('Agregar Ingrediente');
+    },
   },
 };
 </script>
