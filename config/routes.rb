@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
+      resources :providers
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]
           resources :sessions, only: [:create]
         end
-      end  
-        resources :providers
+      end
+      resources :providers
     end
   end
 
