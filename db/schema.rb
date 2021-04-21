@@ -10,12 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2021_04_17_232431) do
-=======
-ActiveRecord::Schema.define(version: 2021_04_16_203754) do
->>>>>>> feat(crud): model provider
 
+ActiveRecord::Schema.define(version: 2021_04_17_232431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,7 +41,6 @@ ActiveRecord::Schema.define(version: 2021_04_16_203754) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
   create_table "ingredients", force: :cascade do |t|
     t.bigint "provider_id"
     t.bigint "user_id", null: false
@@ -55,12 +50,31 @@ ActiveRecord::Schema.define(version: 2021_04_16_203754) do
     t.string "currency"
     t.integer "quantity"
     t.string "measure"
-=======
+
   create_table "providers", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.string "country"
->>>>>>> feat(crud): model provider
+
+  create_table "menus", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "recipe_ingredients", force: :cascade do |t|
+    t.integer "recipe_id"
+    t.integer "ingredient_id"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.string "name"
+    t.integer "portions"
+    t.text "instructions"
+    t.integer "cook_minutes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["provider_id"], name: "index_ingredients_on_provider_id"
