@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_04_17_232431) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -126,6 +125,8 @@ ActiveRecord::Schema.define(version: 2021_04_17_232431) do
     t.text "instructions"
     t.integer "cook_minutes"
 >>>>>>> b33eb21 (feat(crud): model provider)
+=======
+>>>>>>> ce2d487 (feat(crud): create models Recipe RecipeIngredients Menu)
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_recipes_on_user_id"
