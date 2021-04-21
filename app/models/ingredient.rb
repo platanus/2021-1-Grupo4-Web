@@ -1,6 +1,6 @@
 class Ingredient < ApplicationRecord
   belongs_to :user
-  belongs_to :provider
+  belongs_to :provider, optional: true
   has_many :recipe_ingredients, dependent: :destroy
   has_many :recipes, through: :recipe_ingredients, dependent: nil
 end
