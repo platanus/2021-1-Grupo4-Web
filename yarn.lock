@@ -8053,11 +8053,16 @@ postcss-js@^2:
   resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-2.0.3.tgz#a96f0f23ff3d08cec7dc5b11bf11c5f8077cdab9"
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-2.0.3.tgz#a96f0f23ff3d08cec7dc5b11bf11c5f8077cdab9"
 =======
   resolved "https://registry.npmjs.org/postcss-js/-/postcss-js-2.0.3.tgz"
 >>>>>>> feat(crud): model provider
 >>>>>>> 2699d6c (revert last commit)
+=======
+  resolved "https://registry.npmjs.org/postcss-js/-/postcss-js-2.0.3.tgz"
+>>>>>>> feat(crud): model provider
+>>>>>>> 32b7e61753aecc97ac7ea2d8b376bb9a9b1b5f80
   integrity sha512-zS59pAk3deu6dVHyrGqmC3oDXBdNdajk4k1RyxeVXCrcEDBUBHoIhE4QTsmhxgzXxsaqFDAkUZfmMa5f/N/79w==
   dependencies:
     camelcase-css "^2.0.1"
