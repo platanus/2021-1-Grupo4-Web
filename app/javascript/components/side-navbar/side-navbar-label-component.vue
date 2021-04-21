@@ -1,6 +1,6 @@
 <template>
-  <div class="static w-16 h-0.5 left-16 top-4 not-italic font-normal text-xl text-white">
-    hola
+  <div class="static w-16 pl-2 items-center left-16 not-italic font-normal text-xl text-white">
+    Label
   </div>
 </template>
 
