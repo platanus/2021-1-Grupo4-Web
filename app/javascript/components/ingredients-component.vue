@@ -16,9 +16,9 @@
       <base-table :dots="true" :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"/>
     </div>
 
-    <div v-if="showing">
-      <add-ingredient-modal/>
-    </div>
+   
+    <add-ingredient-modal @cancel="toggleModal" v-if="showing"/>
+
 
   </div>
 </template>
