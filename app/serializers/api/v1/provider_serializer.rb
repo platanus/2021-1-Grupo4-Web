@@ -1,5 +1,5 @@
 class Api::V1::ProviderSerializer < ActiveModel::Serializer
     type :provider
-    attributes(:name, :address, :country)
+    attributes(:id, :name, :address, :country)
   end
   
