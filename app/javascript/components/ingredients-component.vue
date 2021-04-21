@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h2>Ingredientes</h2>
-    <div class="above-table">
+    <h2 class="text-4xl">Ingredientes</h2>
+
+    <div class="flex items-center">
       <search
         :algo="{ tipo: 'ingrediente' }"
       />
       <base-button :elements="{ placeholder:'Agregar ingrediente' }" />
     </div>
+
     <!-- Componente tabla, con parametro de cuantas columnas hacer -->
   </div>
 </template>
