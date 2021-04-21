@@ -50,11 +50,13 @@ ActiveRecord::Schema.define(version: 2021_04_17_232431) do
     t.string "currency"
     t.integer "quantity"
     t.string "measure"
+  end
 
   create_table "providers", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.string "country"
+  end
 
   create_table "menus", force: :cascade do |t|
     t.string "name"
@@ -123,6 +125,7 @@ ActiveRecord::Schema.define(version: 2021_04_17_232431) do
     t.integer "portions"
     t.text "instructions"
     t.integer "cook_minutes"
+>>>>>>> b33eb21 (feat(crud): model provider)
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_recipes_on_user_id"
