@@ -7,11 +7,12 @@ end
 #
 # Table name: menu_recipes
 #
-#  id         :bigint(8)        not null, primary key
-#  menu_id    :bigint(8)        not null
-#  recipe_id  :bigint(8)        not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :bigint(8)        not null, primary key
+#  menu_id         :bigint(8)        not null
+#  recipe_id       :bigint(8)        not null
+#  recipe_quantity :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
