@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <button
+    <button class="mx-2 my-2 h-10 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       @click="addIngredient"
     >
       {{ elements.placeholder }}
     </button>
-  </div>
 </template>
 
 <script>
@@ -14,8 +12,8 @@ export default {
     elements: { type: Object, required: true },
   },
   methods: {
-    addIngredients() {
-      console.log('boton apretado');
+    addIngredient() {
+      console.log('Agregar Ingrediente');
     },
   },
 };
