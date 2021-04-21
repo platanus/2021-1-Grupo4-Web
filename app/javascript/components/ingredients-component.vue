@@ -9,21 +9,27 @@
       <base-button :elements="{ placeholder:'Agregar ingrediente' }" />
     </div>
 
-    <!-- Componente tabla, con parametro de cuantas columnas hacer -->
+    <div class="flex items-center">
+      <base-table :dots="true" :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"/>
+    </div>
+    
+
   </div>
 </template>
 
 <script>
 import Search from './search-component.vue';
 import BaseButton from './base-button-component.vue';
+import BaseTable from './base-table/base-table-component.vue';
 
 export default {
   components: {
     Search,
     BaseButton,
+    BaseTable,
   },
   props: {
-    ingredients: { type: Object, required: true },
+    ingredients: { type: Array, required: true },
   },
 };
 </script>
