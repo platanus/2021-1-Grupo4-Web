@@ -33,7 +33,7 @@
       okButtonLabel="Agregar"
       cancelButtonLabel="Cancelar"
     >
-      <ingredients-form/>
+      <ingredients-form :units="['Kg','Litro']" :editMode="false"/>
     </base-modal>
 
     <!--EditModal-->
@@ -45,7 +45,7 @@
       okButtonLabel="Guardar"
       cancelButtonLabel="Cancelar"
     >
-      <ingredients-form/>
+      <ingredients-form :units="['Kg','Litro']" :editMode="true"/>
     </base-modal>
 
     <!--DeleteModal-->
