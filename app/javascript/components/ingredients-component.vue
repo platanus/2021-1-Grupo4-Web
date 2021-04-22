@@ -8,16 +8,35 @@
       />
       <base-button 
         :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500' }"
-        @click="toggleModal"
+        @click="toggleAddModal"
       />
     </div>
 
     <div class="flex items-center">
-      <base-table :dots="true" :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"/>
+      <base-table 
+        :dots="true" 
+        :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"
+        @edit="toggleEditModal"
+        @del="toggleDelModal"
+        />
     </div>
 
    
-    <add-ingredient-modal @cancel="toggleModal" v-if="showing"/>
+    <add-ingredient-modal 
+      @cancel="toggleAddModal" 
+      v-if="showing_add"
+      :elements="{ kind: 'Agregar' }"
+    />
+    <add-ingredient-modal
+      @cancel="toggleEditModal" 
+      v-if="showing_edit"
+      :elements="{ kind: 'Editar' }"
+    />
+    <add-ingredient-modal
+      @cancel="toggleDelModal"
+      v-if="showing_del"
+      :elements="{ kind: 'Eliminar' }"
+    />
 
 
   </div>
@@ -42,14 +61,24 @@ export default {
 
   data(){
     return {
-      showing: false
+      showing_add: false,
+      showing_edit: false,
+      showing_del: false,
     }
   },
 
   methods: {
-    toggleModal() {
+    toggleAddModal() {
       console.log('Abrir modal');
-      this.showing = !this.showing
+      this.showing_add = !this.showing_add
+    },
+    toggleEditModal() {
+      console.log('editar modal');
+      this.showing_edit = !this.showing_edit;
+    },
+    toggleDelModal() {
+      console.log('eliminar modal');
+      this.showing_del = !this.showing_del;
     },
   },
 };
