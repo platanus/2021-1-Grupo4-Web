@@ -2,8 +2,9 @@ import Vue from 'vue/dist/vue.esm';
 import App from '../app.vue';
 import '../css/application.css';
 import TopNavbar from '../components/top-navbar-component.vue';
-import Ingredients from '../components/ingredients-component.vue';
 import SideNavbar from '../components/side-navbar/side-navbar-component.vue';
+import Ingredients from '../components/ingredients/ingredients-component.vue';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
