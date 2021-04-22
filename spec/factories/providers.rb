@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :provider do
-    name { "Some provider name" }
-    address { "Some address 1111" }
+    name { Faker::Company.name }
+    address { Faker::Address.street_address }
     country { "Chile" }
   end
 end

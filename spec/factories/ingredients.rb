@@ -1,10 +1,11 @@
 FactoryBot.define do
   factory :ingredient do
-    name { "Some ingredient name" }
-    sku { "0000" }
-    price { 1000 }
+    name { Faker::Food.ingredient }
+    sku { Faker::Alphanumeric.alphanumeric(number: 10) }
+    price { rand(50..300)*10 }
     currency { "CLP" }
-    quantity { 1 }
+    quantity { rand(1..3) }
     measure { "kg" }
+    user { create(:user) }
   end
 end

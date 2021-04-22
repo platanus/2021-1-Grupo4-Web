@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :menu do
-    name { "Some menu name" }
+    name { "Menu #{rand(1..100)}" }
   end
 end

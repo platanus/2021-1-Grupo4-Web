@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :recipe do
-    name { "Some recipe name" }
-    portions { 1 }
-    instructions { "Some long instructions for the recipe" }
-    cook_minutes { 60 }
+    name { Faker::Food.dish }
+    portions { rand(1..6) }
+    instructions { Faker::Lorem.paragraph(sentence_count: 10) }
+    cook_minutes { rand(10..180) }
   end
 end
