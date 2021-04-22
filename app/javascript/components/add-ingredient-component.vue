@@ -10,14 +10,12 @@
             
             <!--Título-->
             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-              {{ elements.kind }} Ingrediente
+              {{ elements.kind }}
             </h3>
 
             <!--Contenido-->
             <div class="mt-2">
-              <p class="text-sm text-gray-500">
-                Aquí va el form
-              </p>
+              <ingredients-form/>
             </div>
 
           </div>
@@ -27,12 +25,12 @@
       <!--Parte de abajo donde van los botones-->
       <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
         <base-button 
-        :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500'}"
+        :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500 hover:bg-green-700 text-white'}"
         @click="addIngredient"
         />
 
         <base-button
-        :elements="{ placeholder:'Cancelar', color: 'bg-gray-400'}"
+        :elements="{ placeholder:'Cancelar', color: 'bg-white hover:bg-gray-300 text-black'}"
         @click="cancel"
         />
       </div>
@@ -46,10 +44,12 @@
 
 <script>
 import BaseButton from './base-button-component.vue';
+import IngredientsForm from  './ingredients-form-component';
 
 export default {
 components: {
     BaseButton,
+    IngredientsForm,
 },
 props: {
   elements: {

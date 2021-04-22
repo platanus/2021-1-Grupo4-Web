@@ -1,6 +1,6 @@
 <template>
     <button  
-      class="mx-2 my-2 h-10 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      class="mx-2 my-2 h-10 font-bold py-2 px-4 rounded shadow-md"
       :class="elements.color"
       @click="clickButton"
     >
