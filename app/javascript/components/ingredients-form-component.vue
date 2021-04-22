@@ -1,5 +1,5 @@
 <template>
-<div class="pt-5">
+<div class="pt-3">
     <form class="w-full max-w-lg">
 
         <div class="flex flex-wrap -mx-3 mb-6">
