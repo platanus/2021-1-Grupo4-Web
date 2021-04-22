@@ -10,7 +10,7 @@
             
             <!--Título-->
             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-              Agregar Ingrediente
+              {{ elements.kind }} Ingrediente
             </h3>
 
             <!--Contenido-->
@@ -51,7 +51,11 @@ export default {
 components: {
     BaseButton,
 },
-
+props: {
+  elements: {
+    type: Object, required: true
+  },
+},
 methods:{
     addIngredient(){
         console.log("Agregar Ingrediente");
