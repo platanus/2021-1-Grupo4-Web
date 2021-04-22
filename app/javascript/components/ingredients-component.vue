@@ -7,7 +7,7 @@
         :algo="{ tipo: 'ingrediente' }"
       />
       <base-button 
-        :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500' }"
+        :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500 hover:bg-green-700 text-white' }"
         @click="toggleAddModal"
       />
     </div>
@@ -25,7 +25,7 @@
     <add-ingredient-modal 
       @cancel="toggleAddModal" 
       v-if="showing_add"
-      :elements="{ kind: 'Agregar' }"
+      :elements="{ kind: 'Agregar Ingrediente' }"
     />
     <add-ingredient-modal
       @cancel="toggleEditModal" 
@@ -47,6 +47,7 @@ import Search from './search-component.vue';
 import BaseButton from './base-button-component.vue';
 import BaseTable from './base-table/base-table-component.vue';
 import AddIngredientModal from './add-ingredient-component.vue';
+
 export default {
   components: {
     Search,
