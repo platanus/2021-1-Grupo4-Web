@@ -6,10 +6,10 @@
       </svg>
     </button>
     <div v-if="active">
-      <div class="origin-top-right absolute right-0 mt-1 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer">
-        <ul>
+      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer">
+        <ul> 
           <li class="hover:bg-gray-100">
-            <a 
+            <a
               class="font-semibold block px-4 py-3" 
               v-if="elements.edit" 
               @click="editIngredient"
