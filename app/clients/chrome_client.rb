@@ -1,5 +1,5 @@
 class ChromeClient
-  CHROME_CLIENT_TIMEOUT = 35
+  CHROME_CLIENT_TIMEOUT = 15
 
   def browser
     @browser ||= Pincers.for_webdriver(:chrome, wait_timeout: CHROME_CLIENT_TIMEOUT)

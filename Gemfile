@@ -51,7 +51,6 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rspec-nc', require: false
   gem 'rspec-rails'
   gem 'rswag-specs'
   gem 'rubocop', '~> 1.9'

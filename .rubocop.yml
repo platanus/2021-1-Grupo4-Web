@@ -526,3 +526,9 @@ RSpec/LetSetup:
 RSpec/ExpectChange:
   Enabled: true
   EnforcedStyle: block
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false

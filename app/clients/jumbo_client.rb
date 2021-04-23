@@ -5,7 +5,7 @@ class JumboClient < ChromeClient
     ensuring_browser_closure do
       go_to_products_page(query)
 
-      browser.search('.shelf-item').wait(:present, timeout: 5.0).map do |product|
+      products_found.map do |product|
         {
           price: get_price(product) || get_old_price(product) || get_offer_price(product),
           measure: get_measure(product),
@@ -16,6 +16,10 @@ class JumboClient < ChromeClient
   end
 
   private
+
+  def products_found
+    browser.search('.shelf-item').wait(:present, timeout: 10.0)
+  end
 
   def get_price(product)
     price = product.search('.product-single-price-container').text.split("\n").first
