@@ -1,10 +1,9 @@
 require "vue_component.rb"
-AUTO_BUILD_ELEMENTS=[:admin_component, :template, :slot]
+AUTO_BUILD_ELEMENTS = [:admin_component, :template, :slot]
 component_creator(AUTO_BUILD_ELEMENTS)
 
 class CustomFooter < ActiveAdmin::Component
-
-  def build _arg
+  def build(_arg)
     super(id: "footer")
     para "Powered by Platanus"
   end
