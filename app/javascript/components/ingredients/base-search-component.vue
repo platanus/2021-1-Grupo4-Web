@@ -18,7 +18,7 @@
 <script>
 export default {
   props: {
-    algo: { type: Object, required: true },
+    ingredient: { type: Object, required: true },
   },
 };
 </script>
