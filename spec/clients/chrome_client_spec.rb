@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'selenium-webdriver'
 
 RSpec.describe ChromeClient do
   let(:client) { described_class.new }
@@ -10,6 +11,13 @@ RSpec.describe ChromeClient do
     allow(Selenium::WebDriver).to receive(:for).and_return(chrome_driver)
     allow(Selenium::WebDriver::Chrome::Service).to receive(:driver_path=).and_return(true)
     allow(Pincers).to receive(:for_webdriver).and_return(browser)
+  end
+
+  let(:chrome_options) { Selenium::WebDriver::Chrome::Options.new }
+  let(:chrome_driver) { instance_double('ChromeDriver') }
+
+  before do
+    allow(Selenium::WebDriver).to receive(:for).and_return(chrome_driver)
   end
 
   describe 'create chrome browser' do
