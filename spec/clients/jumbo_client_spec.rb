@@ -57,7 +57,8 @@ RSpec.describe JumboClient do
         {
           price: expected_price,
           measure: expected_measure,
-          name: expected_name
+          name: expected_name,
+          provider: 'Jumbo'
         }
       ]
     end
@@ -84,7 +85,8 @@ RSpec.describe JumboClient do
         {
           price: expected_price,
           measure: expected_measure,
-          name: expected_name
+          name: expected_name,
+          provider: 'Jumbo'
         }
       ]
     end
@@ -111,7 +113,8 @@ RSpec.describe JumboClient do
         {
           price: expected_price,
           measure: expected_measure,
-          name: expected_name
+          name: expected_name,
+          provider: 'Jumbo'
         }
       ]
     end
@@ -122,6 +125,21 @@ RSpec.describe JumboClient do
     end
 
     it 'returns an array of hashes with information including offer price' do
+      expect(call_products_by_query).to eq(expected_result)
+    end
+  end
+
+  describe 'cant get products because of timeout' do
+    let(:expected_result) { [] }
+
+    before do
+      allow(browser).to receive(:search).with('.shelf-item').and_return(products_search)
+      allow(products_search).to receive(:wait).with(:present, timeout: 10.0).and_raise(
+        Pincers::ConditionTimeoutError.new(anything, 'Timed out waiting element to be present')
+      )
+    end
+
+    it 'returns an empty array' do
       expect(call_products_by_query).to eq(expected_result)
     end
   end

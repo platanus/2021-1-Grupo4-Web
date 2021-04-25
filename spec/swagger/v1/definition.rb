@@ -6,6 +6,7 @@ API_V1 = {
   },
   basePath: '/api/v1',
   definitions: {
-    user: USER_SCHEMA
+    user: USER_SCHEMA,
+    provider_ingredient: PROVIDER_INGREDIENT_SCHEMA
   }
 }

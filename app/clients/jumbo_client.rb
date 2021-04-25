@@ -9,10 +9,13 @@ class JumboClient < ChromeClient
         {
           price: get_price(product) || get_old_price(product) || get_offer_price(product),
           measure: get_measure(product),
-          name: get_name(product)
+          name: get_name(product),
+          provider: 'Jumbo'
         }
       end
     end
+  rescue Pincers::ConditionTimeoutError
+    []
   end
 
   private
