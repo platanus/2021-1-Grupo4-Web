@@ -1,14 +1,16 @@
 <template>
   <div>
     <!--Title-->
-    <h2 class="text-4xl">Ingredientes</h2>
+    <h2 class="text-4xl">
+      Ingredientes
+    </h2>
 
     <!--SearchBar y Button-->
     <div class="flex items-center">
       <search
         :algo="{ tipo: 'ingrediente' }"
       />
-      <base-button 
+      <base-button
         :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500 hover:bg-green-700 text-white' }"
         @click="toggleAddModal"
       />
@@ -16,59 +18,64 @@
 
     <!--Table-->
     <div class="flex items-center">
-      <base-table 
-        :dots="true" 
+      <base-table
+        :dots="true"
         :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"
         @edit="toggleEditModal"
         @del="toggleDelModal"
-        />
+      />
     </div>
 
     <!--AddModal-->
     <base-modal
       @ok="addIngredient"
-      @cancel="toggleAddModal" 
+      @cancel="toggleAddModal"
       v-if="showing_add"
       title="Agregar Ingrediente"
-      okButtonLabel="Agregar"
-      cancelButtonLabel="Cancelar"
+      ok-button-label="Agregar"
+      cancel-button-label="Cancelar"
     >
-      <ingredients-form :units="['Kg','Litro']" :editMode="false"/>
+      <ingredients-form
+        :units="['Kg','Litro']"
+        :edit-mode="false"
+      />
     </base-modal>
 
     <!--EditModal-->
     <base-modal
       @ok="editIngredient"
-      @cancel="toggleEditModal" 
+      @cancel="toggleEditModal"
       v-if="showing_edit"
       title="Editar Ingrediente"
-      okButtonLabel="Guardar"
-      cancelButtonLabel="Cancelar"
+      ok-button-label="Guardar"
+      cancel-button-label="Cancelar"
     >
-      <ingredients-form :units="['Kg','Litro']" :editMode="true"/>
+      <ingredients-form
+        :units="['Kg','Litro']"
+        :edit-mode="true"
+      />
     </base-modal>
 
     <!--DeleteModal-->
     <base-modal
       @ok="deleteIngredient"
-      @cancel="toggleDelModal" 
+      @cancel="toggleDelModal"
       v-if="showing_del"
       title="Eliminar Ingrediente"
-      okButtonLabel="Sí, Eliminar"
-      cancelButtonLabel="Cancelar"
+      ok-button-label="Sí, Eliminar"
+      cancel-button-label="Cancelar"
     >
       <p>Estás segura de que deseas eliminar este ingrediente?</p>
     </base-modal>
-
   </div>
 </template>
 
 <script>
-import Search from '../search-component.vue';
-import BaseButton from '../base-button-component.vue';
-import BaseTable from '../base-table/base-table-component.vue';
-import BaseModal from '../base-modal-component.vue';
-import IngredientsForm from  './ingredients-form-component';
+import Search from './base-search-component.vue';
+import BaseButton from './base-button-component.vue';
+import BaseTable from './base-table-component.vue';
+import BaseModal from './base-modal-component.vue';
+import IngredientsForm from './base-form-component';
 
 export default {
   components: {
@@ -83,12 +90,12 @@ export default {
     ingredients: { type: Array, required: true },
   },
 
-  data(){
+  data() {
     return {
       showing_add: false,
       showing_edit: false,
       showing_del: false,
-    }
+    };
   },
 
   methods: {
@@ -101,17 +108,17 @@ export default {
     toggleDelModal() {
       this.showing_del = !this.showing_del;
     },
-    addIngredient(){
+    addIngredient() {
       this.showing_add = !this.showing_add;
-      console.log("Agregar Ingrediente");
+      console.log('Agregar Ingrediente');
     },
-    editIngredient(){
+    editIngredient() {
       this.showing_edit = !this.showing_edit;
-      console.log("Editar Ingrediente");
+      console.log('Editar Ingrediente');
     },
-    deleteIngredient(){
+    deleteIngredient() {
       this.showing_del = !this.showing_del;
-      console.log("Eliminar Ingrediente");
+      console.log('Eliminar Ingrediente');
     },
   },
 };
