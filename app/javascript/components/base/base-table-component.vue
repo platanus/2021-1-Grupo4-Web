@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Dropdown from './base-dropdown-component.vue';
+import Dropdown from '../ingredients/base-dropdown-component.vue';
 
 export default {
   components: {
