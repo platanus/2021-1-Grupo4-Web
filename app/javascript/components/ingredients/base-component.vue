@@ -8,7 +8,7 @@
     <!--SearchBar y Button-->
     <div class="flex items-center">
       <search
-        :algo="{ tipo: 'ingrediente' }"
+        :ingredient="{ tipo: 'ingrediente' }"
       />
       <base-button
         :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500 hover:bg-green-700 text-white' }"
