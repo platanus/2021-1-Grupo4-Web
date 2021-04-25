@@ -59,9 +59,6 @@ RSpec.describe JumboClient do
     end
 
     before do
-      allow(product).to receive(:search).with('.product-single-price-container').and_return(
-        price_result
-      )
       mock_product
       mock_product_prices
     end
@@ -89,9 +86,6 @@ RSpec.describe JumboClient do
     end
 
     before do
-      allow(product).to receive(:search).with('.product-single-price-container').and_return(
-        price_result
-      )
       mock_product
       mock_product_prices
     end
@@ -119,9 +113,6 @@ RSpec.describe JumboClient do
     end
 
     before do
-      allow(product).to receive(:search).with('.product-single-price-container').and_return(
-        price_result
-      )
       mock_product
       mock_product_prices
     end
