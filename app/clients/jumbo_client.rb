@@ -51,6 +51,10 @@ class JumboClient < ChromeClient
   end
 
   def go_to_products_page(query)
+<<<<<<< HEAD
     browser.goto "#{BASE_URL}?ft=#{query}"
+=======
+    browser.goto("#{BASE_URL}?ft=#{query}")
+>>>>>>> ef8f99f... BASE[#12] style(superkitchen@scrapers): fix cops and some code issues
   end
 end

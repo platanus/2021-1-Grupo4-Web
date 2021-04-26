@@ -1,5 +1,5 @@
 class LiderClient < ChromeClient
-  BASE_URL = 'https://www.lider.cl/supermercado/search?Ntt='
+  BASE_URL = 'https://www.lider.cl/supermercado/search'
 
   def products_by_query(query: nil)
     ensuring_browser_closure do
@@ -14,7 +14,6 @@ class LiderClient < ChromeClient
                                 measure: get_measure(product),
                                 name: get_name(product)
                               })
-        puts scraped_products.last
       end
     end
   end
@@ -42,6 +41,6 @@ class LiderClient < ChromeClient
   end
 
   def go_to_products_page(query)
-    browser.goto(BASE_URL + query)
+    browser.goto("#{BASE_URL}?Ntt=#{query}")
   end
 end
