@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         devise_scope :user do
           resources :registrations, only: [:create]
           resources :sessions, only: [:create]
+          resources :ingredientss, only: [:index, :create]
         end
       end
 
