@@ -85,7 +85,7 @@ export default {
   methods: {
     changeActiveElement(value) {
       console.log(value);
-      //this.activeElement = value;
+      // this.activeElement = value;
     },
   },
 };

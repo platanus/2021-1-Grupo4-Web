@@ -10,9 +10,9 @@ module SuperKitchen
         origins '*'
         resource '/public/*', headers: :any, methods: :get
         resource '/api/*',
-          headers: :any,
-          expose: ['X-Page', 'X-PageTotal'],
-          methods: [:get, :post, :patch, :put, :delete, :options]
+                 headers: :any,
+                 expose: ['X-Page', 'X-PageTotal'],
+                 methods: [:get, :post, :patch, :put, :delete, :options]
       end
     end
 

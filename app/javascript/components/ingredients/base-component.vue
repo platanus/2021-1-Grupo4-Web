@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import Search from './base-search-component.vue';
-import BaseButton from './base-button-component.vue';
-import BaseTable from './base-table-component.vue';
-import BaseModal from './base-modal-component.vue';
+import Search from '../base/base-search-component.vue';
+import BaseButton from '../base/base-button-component.vue';
+import BaseTable from '../base/base-table-component.vue';
+import BaseModal from '../base/base-modal-component.vue';
 import IngredientsForm from './base-form-component';
 
 export default {
