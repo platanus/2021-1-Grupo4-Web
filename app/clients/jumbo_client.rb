@@ -1,5 +1,5 @@
 class JumboClient < ChromeClient
-  BASE_URL = 'https://www.jumbo.cl/busqueda?ft='
+  BASE_URL = 'https://www.jumbo.cl/busqueda'
 
   def products_by_query(query: nil)
     ensuring_browser_closure do
@@ -30,6 +30,6 @@ class JumboClient < ChromeClient
   end
 
   def go_to_products_page(query)
-    browser.goto(BASE_URL + query)
+    browser.goto("#{BASE_URL}?ft=#{query}")
   end
 end
