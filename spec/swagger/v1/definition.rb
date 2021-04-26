@@ -15,6 +15,9 @@ API_V1 = {
     provider: PROVIDER_SCHEMA,
     provider_response: PROVIDER_RESPONSE_SCHEMA,
     providers_collection: PROVIDERS_COLLECTION_SCHEMA,
-    provider_resource: PROVIDER_RESOURCE_SCHEMA
+    provider_resource: PROVIDER_RESOURCE_SCHEMA,
+    menu: MENU_SCHEMA,
+    menus_collection: MENUS_COLLECTION_SCHEMA,
+    menu_resource: MENU_RESOURCE_SCHEMA
   }
 }

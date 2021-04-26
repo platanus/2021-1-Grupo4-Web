@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :ingredients
       resources :providers
+
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]
