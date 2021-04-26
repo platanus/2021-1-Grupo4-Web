@@ -15,7 +15,8 @@
   </nav>
 </template
 
-<script>
+<script
+>
 
 export default {
 }

@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import InputForm from "./base-input-form.vue"
+import InputForm from './base-input-form.vue';
+
 export default {
   props: {
     editMode: { type: Boolean, required: true },
@@ -66,7 +67,7 @@ export default {
     units: { type: Array, required: true },
   },
   components: {
-    InputForm
-  }
+    InputForm,
+  },
 };
 </script>

@@ -12,14 +12,14 @@
     <%if Rails.env.production? %>
       <%= render "shared/gtm_head" %>
     <% end %>
-  
+
     <%= stylesheet_pack_tag 'application' %>
   </head>
 
   <body>  <%if Rails.env.production? %>
       <%= render "shared/gtm_body" %>
     <% end %>
-  
+
     <div id="vue-app">
       <top-navbar></top-navbar>
         <%= yield %>
