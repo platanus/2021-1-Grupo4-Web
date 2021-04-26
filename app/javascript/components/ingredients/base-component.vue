@@ -30,7 +30,7 @@
     <base-modal
       @ok="addIngredient"
       @cancel="toggleAddModal"
-      v-if="showing_add"
+      v-if="showingAdd"
       title="Agregar Ingrediente"
       ok-button-label="Agregar"
       cancel-button-label="Cancelar"
@@ -45,7 +45,7 @@
     <base-modal
       @ok="editIngredient"
       @cancel="toggleEditModal"
-      v-if="showing_edit"
+      v-if="showingEdit"
       title="Editar Ingrediente"
       ok-button-label="Guardar"
       cancel-button-label="Cancelar"
@@ -60,7 +60,7 @@
     <base-modal
       @ok="deleteIngredient"
       @cancel="toggleDelModal"
-      v-if="showing_del"
+      v-if="showingDel"
       title="Eliminar Ingrediente"
       ok-button-label="Sí, Eliminar"
       cancel-button-label="Cancelar"
@@ -92,32 +92,32 @@ export default {
 
   data() {
     return {
-      showing_add: false,
-      showing_edit: false,
-      showing_del: false,
+      showingAdd: false,
+      showingEdit: false,
+      showingDel: false,
     };
   },
 
   methods: {
     toggleAddModal() {
-      this.showing_add = !this.showing_add;
+      this.showingAdd = !this.showingAdd;
     },
     toggleEditModal() {
-      this.showing_edit = !this.showing_edit;
+      this.showingEdit = !this.showingEdit;
     },
     toggleDelModal() {
-      this.showing_del = !this.showing_del;
+      this.showingDel = !this.showingDel;
     },
     addIngredient() {
-      this.showing_add = !this.showing_add;
+      this.showingAdd = !this.showingAdd;
       console.log('Agregar Ingrediente');
     },
     editIngredient() {
-      this.showing_edit = !this.showing_edit;
+      this.showingEdit = !this.showingEdit;
       console.log('Editar Ingrediente');
     },
     deleteIngredient() {
-      this.showing_del = !this.showing_del;
+      this.showingDel = !this.showingDel;
       console.log('Eliminar Ingrediente');
     },
   },
