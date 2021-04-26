@@ -6,10 +6,20 @@ RSpec.describe Provider, type: :model do
   it { is_expected.to have_many(:ingredients) }
 
   describe 'it has all the attributes' do
-    ["name", "address", "country"].each do |attribute|
-      it "includes the #{attribute} attribute" do
-        expect(provider.attributes).to include(attribute)
-      end
+    it "includes the :id attribute" do
+      expect(provider.attributes).to include("id")
+    end
+
+    it "includes the :name attribute" do
+      expect(provider.attributes).to include("name")
+    end
+
+    it "includes the :address attribute" do
+      expect(provider.attributes).to include("address")
+    end
+
+    it "includes the :country attribute" do
+      expect(provider.attributes).to include("country")
     end
     it "succeeds on save" do
       expect(provider.save!).to be(true)

@@ -8,6 +8,10 @@ RSpec.describe RecipeIngredient, type: :model do
   it { is_expected.to belong_to(:ingredient) }
 
   describe 'it has all the attributes' do
+    it "includes the :id attribute" do
+      expect(recipe_ingredient.attributes).to include("id")
+    end
+
     it "includes the :ingredient_quantity attribute" do
       expect(recipe_ingredient.attributes).to include("ingredient_quantity")
     end
