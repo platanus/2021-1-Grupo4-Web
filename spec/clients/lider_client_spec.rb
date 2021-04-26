@@ -42,7 +42,6 @@ RSpec.describe LiderClient do
   end
 
   describe 'getting all products with normal and offer price' do
-    
     let(:offer_price_result) { instance_double('Offer price div', text: "$4.690") }
     let(:normal_price_result) { instance_double('Normal price div', text: nil) }
 
@@ -71,5 +70,3 @@ RSpec.describe LiderClient do
     end
   end
 end
-
-

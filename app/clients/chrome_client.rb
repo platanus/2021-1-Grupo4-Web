@@ -2,6 +2,7 @@ require 'selenium-webdriver'
 
 class ChromeClient
 <<<<<<< HEAD
+<<<<<<< HEAD
   CHROME_CLIENT_TIMEOUT = 15
 
   def browser
@@ -10,6 +11,8 @@ class ChromeClient
       wait_timeout: CHROME_CLIENT_TIMEOUT
     )
 =======
+=======
+>>>>>>> e0b182d... style(kitchengram@lider-scraper): fix cops
   CHROME_CLIENT_TIMEOUT = 35
   ENABLE_HEADLESS_CHROME = true
 
