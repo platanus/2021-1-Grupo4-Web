@@ -30,9 +30,9 @@ end
 
 def component_creator(auto_build_elements)
   auto_build_elements.each do |element|
-    as_string=element.to_s
+    as_string = element.to_s
     camelized_element = as_string.camelize
-    Object.const_set(camelized_element,Class.new(VueComponent))
+    Object.const_set(camelized_element, Class.new(VueComponent))
     Object.const_get(camelized_element).class_eval do
       builder_method as_string.to_sym
       def tag_name
@@ -41,4 +41,3 @@ def component_creator(auto_build_elements)
     end
   end
 end
-
