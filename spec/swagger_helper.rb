@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-Dir[::Rails.root.join("spec/swagger/**/schemas/*.rb")].each { |f| require f }
-Dir[::Rails.root.join("spec/swagger/**/definition.rb")].each { |f| require f }
+Dir[::Rails.root.join("spec/swagger/**/schemas/*.rb")].sort.each { |f| require f }
+Dir[::Rails.root.join("spec/swagger/**/definition.rb")].sort.each { |f| require f }
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's confiugred to serve Swagger from the same folder
-  config.swagger_root = Rails.root.to_s + '/swagger'
+  config.swagger_root = "#{Rails.root}/swagger"
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:to_swagger' rake task, the complete Swagger will
