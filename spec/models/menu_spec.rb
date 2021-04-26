@@ -15,5 +15,14 @@ RSpec.describe Menu, type: :model do
     it "includes the :name attribute" do
       expect(menu.attributes).to include("name")
     end
+    it "succeeds on save" do
+      expect(menu.save!).to be(true)
+    end
+  end
+  describe "without user" do
+    let(:menu) { build(:menu, user: nil) }
+    it "raises RecordInvalid exception" do
+      expect{ menu.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end

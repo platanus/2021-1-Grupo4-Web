@@ -29,5 +29,14 @@ RSpec.describe Recipe, type: :model do
     it "includes the :cook_minutes attribute" do
       expect(recipe.attributes).to include("cook_minutes")
     end
+    it "succeeds on save" do
+      expect(recipe.save!).to be(true)
+    end
+  end
+  describe "without user" do
+    let(:recipe) { build(:recipe, user: nil) }
+    it "raises RecordInvalid exception" do
+      expect{ recipe.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end

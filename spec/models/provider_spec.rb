@@ -21,5 +21,8 @@ RSpec.describe Provider, type: :model do
     it "includes the :country attribute" do
       expect(provider.attributes).to include("country")
     end
+    it "succeeds on save" do
+      expect(provider.save!).to be(true)
+    end
   end
 end

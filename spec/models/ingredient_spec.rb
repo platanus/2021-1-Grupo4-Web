@@ -36,5 +36,15 @@ RSpec.describe Ingredient, type: :model do
     it "includes the :measure attribute" do
       expect(ingredient.attributes).to include("measure")
     end
+
+    it "succeeds on save" do
+      expect(ingredient.save!).to be(true)
+    end
+  end
+  describe "without user" do
+    let(:ingredient) { build(:ingredient, user: nil) }
+    it "raises RecordInvalid exception" do
+      expect{ ingredient.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end
