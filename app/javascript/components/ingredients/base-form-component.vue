@@ -21,7 +21,8 @@
         </div>
         <div class="relative">
           <select
-            class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none"
+            class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
+            rounded leading-tight focus:outline-none"
             id="ingredient-unit"
           >
             <option
@@ -30,7 +31,10 @@
             >
               Unidad
             </option>
-            <option v-for="unit in units">
+            <option
+              v-for="unit in units"
+              :key="unit"
+            >
               {{ unit }}
             </option>
           </select>
@@ -59,10 +63,24 @@
 
 <script>
 import InputForm from './base-input-form.vue';
+
 export default {
   props: {
-    editMode: { type: Boolean, required: true },
-    ingredientData: { type: Object },
+    editMode: {
+      type: Boolean,
+      required: true },
+    ingredientData: {
+      type: Object,
+      default() {
+        return {
+          Nombre: 'Manzana',
+          Precio: 1000,
+          Cantidad: 1.5,
+          Unidad: 'kg',
+          PrecioUnitario: 667,
+        };
+      },
+    },
     units: { type: Array, required: true },
   },
   components: {

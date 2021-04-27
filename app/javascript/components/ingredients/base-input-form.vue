@@ -1,6 +1,7 @@
 <template>
   <input
-    class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+    class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3
+     leading-tight focus:outline-none"
     :id="id"
     :type="type"
     :placeholder="placeholder"

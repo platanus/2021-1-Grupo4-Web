@@ -14,7 +14,10 @@
         class="hidden sm:inline-block sm:align-middle sm:h-screen"
         aria-hidden="true"
       >&#8203;</span>
-      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden
+      shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+      >
         <!--Título-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
           <h3
@@ -54,6 +57,7 @@
 
 <script>
 import BaseButton from './base-button-component.vue';
+
 export default {
   components: {
     BaseButton,

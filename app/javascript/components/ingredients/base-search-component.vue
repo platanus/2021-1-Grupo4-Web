@@ -23,7 +23,8 @@
         <input
           type="search"
           name="q"
-          class="border-2 w-full border-yellow-700 py-2 text-sm text-yellow-700 pl-10 focus:outline-none focus:bg-white focus:text-yellow-700"
+          class="border-2 w-full border-yellow-700 py-2 text-sm text-yellow-700 pl-10 focus:outline-none focus:bg-white
+          focus:text-yellow-700"
           placeholder="Buscar ingrediente..."
           autocomplete="off"
         >

@@ -13,7 +13,7 @@ export default {
   props: {
     elements: { type: Object, required: true },
   },
-  
+
   methods: {
     clickButton() {
       this.$emit('click');
