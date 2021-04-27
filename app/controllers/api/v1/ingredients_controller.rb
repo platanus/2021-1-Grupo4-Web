@@ -11,7 +11,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def index
-    respond_with ingredients
+    respond_with Ingredient.all
   end
 
   def show
@@ -19,7 +19,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def create
-    respond_with ingredients.create!(ingredient_params)
+    respond_with Ingredient.create!(ingredient_params)
   end
 
   def update
@@ -42,14 +42,6 @@ class Api::V1::IngredientsController < Api::V1::BaseController
 
   def ingredient
     @ingredient ||= Ingredient.find_by!(id: params[:id])
-  end
-
-  def ingredients
-    @ingredients ||= user.ingredients
-  end
-
-  def user
-    @user ||= User.find_by!(id: params[:user_id])
   end
 
   def ingredient_params
