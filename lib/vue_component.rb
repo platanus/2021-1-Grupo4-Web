@@ -4,10 +4,6 @@ class VueComponent < Arbre::Component
     :root
   end
 
-  def initialize(*)
-    super
-  end
-
   def build(attributes = {})
     super(process_attributes(attributes))
   end
@@ -21,7 +17,7 @@ class VueComponent < Arbre::Component
       elsif !dasherized_key.index(':').nil? && dasherized_key.index(':').zero?
         vue_attributes[dasherized_key] = value.to_json
       else
-        vue_attributes[":" + dasherized_key] = value.to_json
+        vue_attributes[":#{dasherized_key}"] = value.to_json
       end
     end
     vue_attributes

@@ -66,7 +66,7 @@
       ok-button-label="Sí, Eliminar"
       cancel-button-label="Cancelar"
     >
-      <p>Estás seguro de que deseas eliminar este ingrediente?</p>
+      <p>Estás seguro que deseas eliminar este ingrediente?</p>
     </base-modal>
   </div>
 </template>
