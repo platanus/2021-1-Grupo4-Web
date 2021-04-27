@@ -68,6 +68,7 @@
 
 <script>
 import Item from './side-navbar-item-component.vue';
+
 export default {
   props: {
     activeElement: { type: String, required: true },

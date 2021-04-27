@@ -54,6 +54,7 @@
 
 <script>
 import BaseButton from './base-button-component.vue';
+
 export default {
   components: {
     BaseButton,
