@@ -19,14 +19,13 @@ describe 'API::V1::Sessions', swagger_doc: 'v1/swagger.json' do
         }
       )
 
-      before { create(:user) }
-
       response '200', 'logged in' do
+        let!(:new_user) { create(:user) }
         let(:user) do
           {
             user: {
-              email: 'john@platan.us',
-              password: 'some_long_password'
+              email: new_user.email,
+              password: new_user.password
             }
           }
         end
