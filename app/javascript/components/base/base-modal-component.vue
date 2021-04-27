@@ -54,12 +54,10 @@
 
 <script>
 import BaseButton from './base-button-component.vue';
-
 export default {
   components: {
     BaseButton,
   },
-
   props: {
     title: { type: String, required: true },
     okButtonLabel: { type: String, required: true },
@@ -69,7 +67,6 @@ export default {
     ok() {
       this.$emit('ok');
     },
-
     cancel() {
       this.$emit('cancel');
     },

@@ -40,11 +40,12 @@ Rails.application.config.content_security_policy do |policy|
     # https://developers.google.com/tag-manager/web/csp
     policy.connect_src :self, :https, 'https://www.google-analytics.com'
     policy.script_src :self,
-                      :https,
-                      :unsafe_inline,
-                      'https://www.googletagmanager.com',
-                      'https://www.google-analytics.com',
-                      'https://ssl.google-analytics.com'
+      :https,
+      :unsafe_inline,
+      :unsafe_eval,
+      'https://www.googletagmanager.com',
+      'https://www.google-analytics.com',
+      'https://ssl.google-analytics.com'
     policy.img_src :self, :https, 'https://www.googletagmanager.com', 'https://www.google-analytics.com'
   end
 end

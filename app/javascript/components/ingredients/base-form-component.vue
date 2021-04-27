@@ -30,10 +30,7 @@
             >
               Unidad
             </option>
-            <option
-              v-for="unit in units"
-              :key="unit.id"
-            >
+            <option v-for="unit in units">
               {{ unit }}
             </option>
           </select>
@@ -62,26 +59,11 @@
 
 <script>
 import InputForm from './base-input-form.vue';
-
 export default {
   props: {
-    editMode: {
-      type: Boolean,
-      required: true },
-    ingredientData: {
-      type: Object, default() {
-        return {
-          Nombre: 'Manzana',
-          Precio: 1000,
-          Cantidad: 1.5,
-          Unidad: 'kg',
-          PrecioUnitario: 667,
-        };
-      },
-    },
-    units: {
-      type: Array,
-      required: true },
+    editMode: { type: Boolean, required: true },
+    ingredientData: { type: Object },
+    units: { type: Array, required: true },
   },
   components: {
     InputForm,

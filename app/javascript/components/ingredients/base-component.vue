@@ -30,7 +30,7 @@
     <base-modal
       @ok="addIngredient"
       @cancel="toggleAddModal"
-      v-if="showingAdd"
+      v-if="showing_add"
       title="Agregar Ingrediente"
       ok-button-label="Agregar"
       cancel-button-label="Cancelar"
@@ -45,7 +45,7 @@
     <base-modal
       @ok="editIngredient"
       @cancel="toggleEditModal"
-      v-if="showingEdit"
+      v-if="showing_edit"
       title="Editar Ingrediente"
       ok-button-label="Guardar"
       cancel-button-label="Cancelar"
@@ -60,7 +60,7 @@
     <base-modal
       @ok="deleteIngredient"
       @cancel="toggleDelModal"
-      v-if="showingDel"
+      v-if="showing_del"
       title="Eliminar Ingrediente"
       ok-button-label="Sí, Eliminar"
       cancel-button-label="Cancelar"
@@ -76,7 +76,6 @@ import BaseButton from '../base/base-button-component.vue';
 import BaseTable from '../base/base-table-component.vue';
 import BaseModal from '../base/base-modal-component.vue';
 import IngredientsForm from './base-form-component';
-
 export default {
   components: {
     Search,
@@ -85,39 +84,36 @@ export default {
     BaseModal,
     IngredientsForm,
   },
-
   props: {
     ingredients: { type: Array, required: true },
   },
-
   data() {
     return {
-      showingAdd: false,
-      showingEdit: false,
-      showingDel: false,
+      showing_add: false,
+      showing_edit: false,
+      showing_del: false,
     };
   },
-
   methods: {
     toggleAddModal() {
-      this.showingAdd = !this.showingAdd;
+      this.showing_add = !this.showing_add;
     },
     toggleEditModal() {
-      this.showingEdit = !this.showingEdit;
+      this.showing_edit = !this.showing_edit;
     },
     toggleDelModal() {
-      this.showingDel = !this.showingDel;
+      this.showing_del = !this.showing_del;
     },
     addIngredient() {
-      this.showingAdd = !this.showingAdd;
+      this.showing_add = !this.showing_add;
       console.log('Agregar Ingrediente');
     },
     editIngredient() {
-      this.showingEdit = !this.showingEdit;
+      this.showing_edit = !this.showing_edit;
       console.log('Editar Ingrediente');
     },
     deleteIngredient() {
-      this.showingDel = !this.showingDel;
+      this.showing_del = !this.showing_del;
       console.log('Eliminar Ingrediente');
     },
   },

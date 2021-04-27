@@ -15,13 +15,11 @@
 </template>
 
 <script>
-
 export default {
   props: {
     label: { type: String, required: true },
     active: { type: Boolean, required: true },
   },
-
   methods: {
     clickButton() {
       this.$emit('click', this.label);
