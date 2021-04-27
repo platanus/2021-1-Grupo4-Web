@@ -282,6 +282,77 @@
       "required": [
         "data"
       ]
+    },
+    "menu": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "menu"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "example": "Some name",
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": [
+
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "menus_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/menu"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "menu_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/menu"
+        }
+      },
+      "required": [
+        "data"
+      ]
     }
   },
   "paths": {
@@ -492,6 +563,115 @@
           },
           "401": {
             "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/menus": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Menus",
+        "description": "Retrieves all the menus",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Menus retrieved",
+            "schema": {
+              "$ref": "#/definitions/menus_collection"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates Menu",
+        "description": "Creates Menu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu",
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "menu created"
+          }
+        }
+      }
+    },
+    "/menus/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Menu",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "menu retrieved",
+            "schema": {
+              "$ref": "#/definitions/menu_resource"
+            }
+          },
+          "404": {
+            "description": "invalid menu id"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates Menu",
+        "description": "Updates Menu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu",
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "menu updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Menu",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific menu",
+        "responses": {
+          "204": {
+            "description": "menu deleted"
+          },
+          "404": {
+            "description": "menu not found"
           }
         }
       }
