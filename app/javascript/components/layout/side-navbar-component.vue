@@ -10,7 +10,7 @@
           class="h-5 w-5 text-white"
           svg-inline
           src="../../../assets/images/ingredients-svg.svg"
-        />
+        >
       </item>
     </a>
 
@@ -24,7 +24,7 @@
           class="h-5 w-5 text-white"
           svg-inline
           src="../../../assets/images/recipes-svg.svg"
-        />
+        >
       </item>
     </a>
 
@@ -38,7 +38,7 @@
           class="h-5 w-5 text-white"
           svg-inline
           src="../../../assets/images/menus-svg.svg"
-        />
+        >
       </item>
     </a>
   </div>
