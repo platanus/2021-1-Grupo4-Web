@@ -4,10 +4,10 @@ Rails.application.routes.draw do
       resources :ingredients
       resources :providers
       resources :users do
-        resources :recipes, only: [:index, :create]
+        resources :recipes, only: [:index, :create, :show]
       end
 
-      resources :recipes, only: [:show, :update, :destroy]
+      resources :recipes, only: [:update, :destroy]
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]
