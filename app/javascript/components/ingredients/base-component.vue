@@ -72,20 +72,7 @@
 </template>
 
 <script>
-import Search from '../base/base-search-component.vue';
-import BaseButton from '../base/base-button-component.vue';
-import BaseTable from '../base/base-table-component.vue';
-import BaseModal from '../base/base-modal-component.vue';
-import IngredientsForm from './base-form-component';
-
 export default {
-  components: {
-    Search,
-    BaseButton,
-    BaseTable,
-    BaseModal,
-    IngredientsForm,
-  },
   props: {
     ingredients: { type: Array, required: true },
   },

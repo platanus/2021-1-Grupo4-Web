@@ -45,12 +45,7 @@
 </template>
 
 <script>
-import Dropdown from '../ingredients/base-dropdown-component.vue';
-
 export default {
-  components: {
-    Dropdown,
-  },
   props: {
     table: { type: Object, required: true },
     dots: { type: Boolean, required: true },

@@ -23,7 +23,7 @@
           class="content-center py-2"
         >
           <p class="content-center text-center ml-2 font-semibold">
-            {{ JSON.parse(element)[property] }}
+            {{ table_body[property] }}
           </p>
         </td>
         <td
@@ -45,16 +45,24 @@
 </template>
 
 <script>
-import Dropdown from './base-dropdown-component.vue';
-
 export default {
-  components: {
-    Dropdown,
-  },
   props: {
     table: { type: Object, required: true },
     dots: { type: Boolean, required: true },
   },
+
+  computed: {
+    table_body: () => {
+      let return_thing;
+      for (let element in this.table.body) {
+        for (let property in this.table.header) {
+          return_thing[property] = JSON.parse(element)[property];
+        };
+      };
+      return return_thing;
+    },
+  },
+  
   methods: {
     editIngredient() {
       this.$emit('edit');
