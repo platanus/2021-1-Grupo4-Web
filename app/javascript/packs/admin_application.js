@@ -1,7 +1,7 @@
 import Vue from 'vue/dist/vue.esm';
 import AdminComponent from '../components/admin-component';
 
-Vue.component('AdminComponent', AdminComponent);
+Vue.component('admin_component', AdminComponent);
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('wrapper') !== null) {
