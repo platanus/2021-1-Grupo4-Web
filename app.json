@@ -2,6 +2,6 @@
 {
   "name": "KitchenGram",
   "scripts": {
-    "postdeploy": "/app/bin/setup_review_app"
+    "postdeploy": "./bin/setup_review_app"
   }
 }
