@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'API V1 Menus', swagger_doc: 'v1/swagger.json' do
+describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_id) { user.id }
 
