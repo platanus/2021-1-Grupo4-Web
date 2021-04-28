@@ -1,0 +1,7 @@
+
+{
+  "name": "3E",
+  "scripts": {
+    "postdeploy": "/bin/setup_review_app"
+  }
+}
