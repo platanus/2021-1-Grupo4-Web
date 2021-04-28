@@ -2,6 +2,6 @@
 {
   "name": "KitchenGram",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load && bundle exec rake db:migrate && bundle exec rake db:seed"
+    "postdeploy": "/app/bin/setup_review_app"
   }
 }
