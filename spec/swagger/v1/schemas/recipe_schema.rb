@@ -6,6 +6,7 @@ RECIPE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
+        user_id: { type: :integer, example: 666, 'x-nullable': true },
         name: { type: :string, example: 'Some name', 'x-nullable': true },
         portions: { type: :integer, example: 666, 'x-nullable': true },
         instructions: { type: :string, example: 'Some instructions', 'x-nullable': true },

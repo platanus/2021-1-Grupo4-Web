@@ -6,7 +6,6 @@ class Api::V1::RecipeSerializer < ActiveModel::Serializer
     :portions,
     :instructions,
     :cook_minutes,
-    :ingredients_quantity,
     :created_at,
     :updated_at
   )

@@ -1,8 +1,8 @@
 class Api::V1::RecipesController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User
-  
+  acts_as_token_authentication_handler_for User, fallback: :exception
+
   def index
-    respond_with recipes
+    respond_with Recipe.all
   end
 
   def show
@@ -10,7 +10,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def create
-    respond_with recipes.create!(recipe_params)
+    respond_with Recipe.create!(recipe_params)
   end
 
   def update
@@ -25,14 +25,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def recipe
     @recipe ||= Recipe.find_by!(id: params[:id])
-  end
-
-  def recipes
-    @recipes ||= user.recipes
-  end
-
-  def user
-    @user ||= User.find_by!(id: params[:user_id])
   end
 
   def recipe_params
