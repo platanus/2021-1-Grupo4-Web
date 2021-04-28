@@ -1,8 +1,6 @@
 require 'selenium-webdriver'
 
 class ChromeClient
-<<<<<<< HEAD
-<<<<<<< HEAD
   CHROME_CLIENT_TIMEOUT = 15
 
   def browser
@@ -10,23 +8,6 @@ class ChromeClient
       driver,
       wait_timeout: CHROME_CLIENT_TIMEOUT
     )
-=======
-=======
->>>>>>> e0b182d... style(kitchengram@lider-scraper): fix cops
-  CHROME_CLIENT_TIMEOUT = 35
-  ENABLE_HEADLESS_CHROME = true
-
-  @@options = Selenium::WebDriver::Chrome::Options.new
-
-  def browser
-    set_headless_chrome if ENABLE_HEADLESS_CHROME
-    @browser ||= Pincers.for_webdriver(:chrome, wait_timeout: CHROME_CLIENT_TIMEOUT,
-                                                options: @@options)
-  end
-
-  def set_headless_chrome
-    @@options.add_argument('--headless')
->>>>>>> 8d34a4b... feat(lider-scraper): add lider scraper for products and headless Chrome
   end
 
   def ensuring_browser_closure(&block)
