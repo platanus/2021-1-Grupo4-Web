@@ -43,10 +43,7 @@
 <script>
 export default {
   props: {
-    elements: {
-      type: Object,
-      required: true,
-    },
+    elements: { type: Object, required: true },
   },
   data() {
     return {

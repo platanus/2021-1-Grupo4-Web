@@ -2,7 +2,6 @@
   <div class="flex flex-col items-start pt-0 pl-0 pr-0 pb-8 absolute w-64 h-screen left-0 top-16 bg-gray-800">
     <a href="/ingredients">
       <item
-        @click="changeActiveElement"
         label="Ingredientes"
         :active="activeElement==='Ingredientes'"
       >
@@ -16,7 +15,6 @@
 
     <a href="/recipes">
       <item
-        @click="changeActiveElement"
         label="Recetas"
         :active="activeElement==='Recetas'"
       >
@@ -30,7 +28,6 @@
 
     <a href="/menus">
       <item
-        @click="changeActiveElement"
         label="Menús"
         :active="activeElement==='Menus'"
       >
@@ -48,11 +45,6 @@
 export default {
   props: {
     activeElement: { type: String, required: true },
-  },
-  methods: {
-    changeActiveElement(value) {
-      console.log(value);
-    },
   },
 };
 </script>

@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import InputForm from './base-input-form.vue';
 
 export default {
   props: {
@@ -82,9 +81,6 @@ export default {
       },
     },
     units: { type: Array, required: true },
-  },
-  components: {
-    InputForm,
   },
 };
 </script>
