@@ -72,6 +72,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     ingredients: { type: Array, required: true },

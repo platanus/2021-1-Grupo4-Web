@@ -5,7 +5,9 @@
     role="dialog"
     aria-modal="true"
   >
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div
+      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+    >
       <div
         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
         aria-hidden="true"
@@ -42,11 +44,17 @@
         <!--Botones-->
         <div class="bg-white px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <base-button
-            :elements="{ placeholder: okButtonLabel, color: 'bg-green-500 hover:bg-green-700 text-white'}"
+            :elements="{
+              placeholder: okButtonLabel,
+              color: 'bg-green-500 hover:bg-green-700 text-white'
+            }"
             @click="ok"
           />
           <base-button
-            :elements="{ placeholder:cancelButtonLabel, color: 'bg-white hover:bg-gray-300 text-black'}"
+            :elements="{
+              placeholder: cancelButtonLabel,
+              color: 'bg-white hover:bg-gray-300 text-black'
+            }"
             @click="cancel"
           />
         </div>
@@ -56,7 +64,12 @@
 </template>
 
 <script>
+import BaseButton from './base-button-component.vue';
+
 export default {
+  components: {
+    BaseButton,
+  },
   props: {
     title: { type: String, required: true },
     okButtonLabel: { type: String, required: true },
