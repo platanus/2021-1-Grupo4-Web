@@ -181,6 +181,82 @@
       "required": [
         "data"
       ]
+    },
+    "provider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "provider"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Some name",
+              "x-nullable": true
+            },
+            "address": {
+              "type": "string",
+              "example": "Some address",
+              "x-nullable": true
+            },
+            "country": {
+              "type": "string",
+              "example": "Some country",
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": [
+
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "providers_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/provider"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "provider_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/provider"
+        }
+      },
+      "required": [
+        "data"
+      ]
     }
   },
   "paths": {
@@ -388,6 +464,144 @@
           },
           "404": {
             "description": "ingredient not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/providers": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Providers",
+        "description": "Retrieves all the providers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Providers retrieved",
+            "schema": {
+              "$ref": "#/definitions/providers_collection"
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates Provider",
+        "description": "Creates Provider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "provider created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/providers/{id}": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Provider",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "provider retrieved",
+            "schema": {
+              "$ref": "#/definitions/provider_resource"
+            }
+          },
+          "404": {
+            "description": "invalid provider id"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates Provider",
+        "description": "Updates Provider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "provider updated"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Provider",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific provider",
+        "responses": {
+          "204": {
+            "description": "provider deleted"
+          },
+          "404": {
+            "description": "provider not found"
           },
           "401": {
             "description": "user unauthorized"
