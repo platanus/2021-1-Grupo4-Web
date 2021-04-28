@@ -33,10 +33,178 @@
           "type": "string"
         }
       }
+    },
+    "ingredient": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "ingredient"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "provider_id": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "user_id": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "example": "Some name",
+              "x-nullable": true
+            },
+            "sku": {
+              "type": "string",
+              "example": "Some sku",
+              "x-nullable": true
+            },
+            "price": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "currency": {
+              "type": "string",
+              "example": "Some currency",
+              "x-nullable": true
+            },
+            "quantity": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "measure": {
+              "type": "string",
+              "example": "Some measure",
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": [
+
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "ingredients_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ingredient"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "ingredient_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ingredient"
+        }
+      },
+      "required": [
+        "data"
+      ]
     }
   },
   "paths": {
-    "/search-ingredients": {
+    "/ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Ingredients",
+        "description": "Retrieves all the ingredients",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ingredients retrieved",
+            "schema": {
+              "$ref": "#/definitions/ingredients_collection"
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates Ingredient",
+        "description": "Creates Ingredient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ingredient",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ingredient": {
+                  "$ref": "#/definitions/ingredient"
+                }
+              },
+              "required": [
+                "ingredient"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ingredient created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/ingredients/{id}": {
       "parameters": [
         {
           "name": "user_email",
@@ -49,40 +217,82 @@
           "type": "string"
         },
         {
-          "name": "query",
-          "in": "query",
-          "type": "string"
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
         }
       ],
       "get": {
-        "summary": "Search ingredients",
+        "summary": "Retrieves Ingredient",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ingredient retrieved",
+            "schema": {
+              "$ref": "#/definitions/ingredient_resource"
+            }
+          },
+          "404": {
+            "description": "invalid ingredient id"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates Ingredient",
+        "description": "Updates Ingredient",
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "description": "Retrieves ingredients by different providers",
-        "responses": {
-          "200": {
-            "description": "ingredients retrieved",
+        "parameters": [
+          {
+            "name": "ingredient",
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/provider_ingredient"
-                  }
+                "ingredient": {
+                  "$ref": "#/definitions/ingredient"
                 }
               },
               "required": [
-                "data"
+                "ingredient"
               ]
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ingredient updated"
           },
           "401": {
-            "description": "with invalid user token"
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Ingredient",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific ingredient",
+        "responses": {
+          "204": {
+            "description": "ingredient deleted"
+          },
+          "404": {
+            "description": "ingredient not found"
+          },
+          "401": {
+            "description": "user unauthorized"
           }
         }
       }
