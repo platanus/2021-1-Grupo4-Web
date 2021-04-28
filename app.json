@@ -2,6 +2,6 @@
 {
   "name": "KitchenGram",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake db:schema:load db:seed DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
   }
 }
