@@ -2,7 +2,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   def index
-    respond_with Recipe.all
+    respond_with Recipe.where(user_id: current_user.id)
   end
 
   def show
@@ -14,7 +14,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def update
-    respond_with recipe.update!(recipe_params)
+    respond_with recipe.update!(recipe_params.merge(user_id: current_user.id))
   end
 
   def destroy
@@ -24,16 +24,15 @@ class Api::V1::RecipesController < Api::V1::BaseController
   private
 
   def recipe
-    @recipe ||= Recipe.find_by!(id: params[:id])
+    @recipe ||= Recipe.find_by!(id: params[:id], user_id: current_user.id)
   end
 
   def recipe_params
     params.require(:recipe).permit(
-      :user_id,
       :name,
       :portions,
       :instructions,
-      :cook_minutes,
+      :cook_minutes
     )
   end
 end

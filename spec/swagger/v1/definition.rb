@@ -15,7 +15,7 @@ API_V1 = {
     provider: PROVIDER_SCHEMA,
     provider_response: PROVIDER_RESPONSE_SCHEMA,
     providers_collection: PROVIDERS_COLLECTION_SCHEMA,
-    provider_resource: PROVIDER_RESOURCE_SCHEMA
+    provider_resource: PROVIDER_RESOURCE_SCHEMA,
     recipe: RECIPE_SCHEMA,
     recipes_collection: RECIPES_COLLECTION_SCHEMA,
     recipe_resource: RECIPE_RESOURCE_SCHEMA,

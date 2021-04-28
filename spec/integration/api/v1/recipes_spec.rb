@@ -15,8 +15,11 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
 
       let(:collection_count) { 5 }
       let(:expected_collection_count) { collection_count }
-
-      before { create_list(:recipe, collection_count) }
+      before do
+        5.times do |_time|
+          create(:recipe, user_id: user.id)
+        end
+      end
 
       response '200', 'Recipes retrieved' do
         schema('$ref' => '#/definitions/recipes_collection')
@@ -68,7 +71,7 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
 
     parameter name: :id, in: :path, type: :integer
 
-    let(:existent_recipe) { create(:recipe) }
+    let(:existent_recipe) { create(:recipe, user_id: user.id) }
     let(:id) { existent_recipe.id }
 
     get 'Retrieves Recipe' do
@@ -101,7 +104,7 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       response '200', 'recipe updated' do
         let(:recipe) do
           {
-            user_id: 666,
+            user_id: user.id,
             name: 'Some name',
             portions: 666,
             instructions: 'Some instructions',
