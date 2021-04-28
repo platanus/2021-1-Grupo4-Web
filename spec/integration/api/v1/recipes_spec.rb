@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'API V1 Recipes', swagger_doc: 'v1/swagger.json' do
+describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
@@ -42,6 +42,7 @@ describe 'API V1 Recipes', swagger_doc: 'v1/swagger.json' do
       response '201', 'recipe created' do
         let(:recipe) do
           {
+            user_id: 666,
             name: 'Some name',
             portions: 666,
             instructions: 'Some instructions',
@@ -100,6 +101,7 @@ describe 'API V1 Recipes', swagger_doc: 'v1/swagger.json' do
       response '200', 'recipe updated' do
         let(:recipe) do
           {
+            user_id: 666,
             name: 'Some name',
             portions: 666,
             instructions: 'Some instructions',

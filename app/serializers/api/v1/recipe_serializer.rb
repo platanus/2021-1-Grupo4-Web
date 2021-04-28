@@ -2,6 +2,7 @@ class Api::V1::RecipeSerializer < ActiveModel::Serializer
   type :recipe
 
   attributes(
+    :user_id,
     :name,
     :portions,
     :instructions,

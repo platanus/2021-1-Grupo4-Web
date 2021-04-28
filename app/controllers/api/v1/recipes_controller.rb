@@ -29,6 +29,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def recipe_params
     params.require(:recipe).permit(
+      :user_id,
       :name,
       :portions,
       :instructions,
