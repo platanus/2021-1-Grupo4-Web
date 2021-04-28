@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'API V1 Providers', swagger_doc: 'v1/swagger.json' do
+describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
