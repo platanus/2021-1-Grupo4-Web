@@ -1,5 +1,3 @@
-require 'selenium-webdriver'
-
 class ChromeClient
   CHROME_CLIENT_TIMEOUT = 15
 
