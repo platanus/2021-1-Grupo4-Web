@@ -3,9 +3,15 @@ require 'swagger_helper'
 describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_id) { user.id }
+  let(:user_email) { user.email }
+  let(:user_token) { user.authentication_token }
+  let(:user_to_update) { create(:user) }
 
   path '/users/{user_id}/menus' do
     parameter name: :user_id, in: :path, type: :integer
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
     get 'Retrieves Menus' do
       description 'Retrieves all the menus'
       produces 'application/json'
@@ -33,7 +39,7 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
       response '201', 'menu created' do
         let(:menu) do
           {
-            user_id: 666,
+            user_id: user_id,
             name: 'Some name'
           }
         end
@@ -45,6 +51,8 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
 
   path '/menus/{id}' do
     parameter name: :id, in: :path, type: :integer
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
 
     let(:existent_menu) { create(:menu, user: user) }
     let(:id) { existent_menu.id }
@@ -73,7 +81,7 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
       response '200', 'menu updated' do
         let(:menu) do
           {
-            user_id: 666,
+            user_id: user_to_update.id,
             name: 'Some name'
           }
         end
