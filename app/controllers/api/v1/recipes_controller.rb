@@ -10,7 +10,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def create
-    respond_with Recipe.create!(recipe_params)
+    respond_with Recipe.create!(recipe_params.merge(user_id: current_user.id))
   end
 
   def update
@@ -33,7 +33,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       :name,
       :portions,
       :instructions,
-      :cook_minutes
+      :cook_minutes,
     )
   end
 end
