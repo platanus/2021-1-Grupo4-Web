@@ -1,6 +1,6 @@
 
 {
-  "name": "3E",
+  "name": "KitchenGram",
   "scripts": {
     "postdeploy": "/bin/setup_review_app"
   }
