@@ -21,7 +21,7 @@
     <div class="flex items-center">
       <base-table
         :dots="true"
-        :table="{ header: Object.keys(JSON.parse(ingredients[0])), body: ingredients }"
+        :table="{ header: tableHeader, body: ingredients }"
         @edit="toggleEditModal"
         @del="toggleDelModal"
       />
@@ -102,6 +102,13 @@ export default {
     },
     deleteIngredient() {
       this.showingDel = !this.showingDel;
+    },
+  },
+  computed: {
+    tableHeader() {
+      const tableHeader = Object.keys(JSON.parse(this.ingredients[0]));
+
+      return tableHeader;
     },
   },
 };
