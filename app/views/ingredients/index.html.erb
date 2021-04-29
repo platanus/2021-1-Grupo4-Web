@@ -1,10 +1,12 @@
-<side-navbar active-element = "Ingredientes"></side-navbar>
-<div class="container mx-auto px-60 py-10">
-    <ingredients
-      :ingredients="<%= [
-        {"Nombre": "Manzana","Precio": 1000, "Cantidad": 1.5, "Unidad": "kg", "Precio Unitario": 667}.to_json,
-        {"Nombre": "Arándanos","Precio": 7000, "Cantidad": 1, "Unidad": "kg", "Precio Unitario": 7000}.to_json,
-        {"Nombre": "Leche","Precio": 400, "Cantidad": 1, "Unidad": "kg", "Precio Unitario": 400}.to_json] %>"
-    >
-    </ingredients>
+<div class="h-screen flex">
+  <side-navbar active-element = "Ingredientes"></side-navbar>
+  <div class="container ml-64 px-20 py-10 overflow-hidden">
+      <ingredients
+        :ingredients="<%= [
+          {"Nombre": "Manzana","Precio": 1000, "Cantidad": 1.5, "Unidad": "kg", "Precio Unitario": 667}.to_json,
+          {"Nombre": "Arándanos","Precio": 7000, "Cantidad": 1, "Unidad": "kg", "Precio Unitario": 7000}.to_json,
+          {"Nombre": "Leche","Precio": 400, "Cantidad": 1, "Unidad": "kg", "Precio Unitario": 400}.to_json] %>"
+      >
+      </ingredients>
+  </div>
 </div>
