@@ -13,8 +13,8 @@
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="element in table.body"
-        :key="element"
+        v-for="parsedElement in parsedElements"
+        :key="parsedElement"
         class="bg-white border-4 border-gray-200"
       >
         <td
@@ -23,7 +23,7 @@
           class="content-center py-2"
         >
           <p class="content-center text-center ml-2 font-semibold">
-            {{ JSON.parse(element)[property] }}
+            {{ parsedElement[property] }}
           </p>
         </td>
         <td
@@ -58,6 +58,15 @@ export default {
     deleteIngredient() {
       this.$emit('del');
     },
+  },
+
+  computed: {
+    parsedElements() {
+      const parsedElements = this.table.body.map((element) => JSON.parse(element));
+
+      return parsedElements;
+    },
+
   },
 };
 
