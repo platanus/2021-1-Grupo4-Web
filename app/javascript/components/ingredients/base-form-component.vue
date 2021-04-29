@@ -7,8 +7,7 @@
             id="ingredient-name"
             type="text"
             placeholder="Nombre"
-            :value="editMode? ingredientObject.Nombre : ''"
-
+            :value="editMode? ingredient.Nombre : ''"
           />
         </div>
       </div>
@@ -19,7 +18,7 @@
             id="ingredient-amount"
             type="number"
             placeholder="Cantidad"
-            :value="editMode? ingredientObject.Cantidad : ''"
+            :value="editMode? ingredient.Cantidad : ''"
           />
         </div>
         <div class="relative">
@@ -28,35 +27,26 @@
             rounded leading-tight focus:outline-none"
             id="ingredient-unit"
           >
-          <!--Add Mode -->
+            <!--Add Mode unit Unselected -->
             <option
-              v-if="!editMode" 
+              v-if="!editMode"
               hidden
               selected
             >
               Unidad
             </option>
+            <!--Edit Mode unit ingredient -->
             <option
-              v-if="!editMode" 
-              v-for="unit in units"
-              :key="unit"
-              :value="unit"
-            >
-              {{ unit }}
-            </option>
-
-          <!--Edit Mode -->
-            <option
-              v-if="editMode" 
+              v-if="editMode"
               selected
-              :key="ingredientObject.Unidad"
-              :value="ingredientObject.Unidad"
+              :key="ingredient.Unidad"
+              :value="ingredient.Unidad"
             >
-              {{ ingredientObject.Unidad }}
+              {{ ingredient.Unidad }}
             </option>
+            <!--Other units -->
             <option
-              v-for="unit in units"
-              v-if="editMode && unit!=ingredientObject.Unidad" 
+              v-for="unit in formUnits"
               :key="unit"
               :value="unit"
             >
@@ -80,7 +70,7 @@
             id="ingredient-price"
             type="number"
             placeholder="Precio"
-            :value="editMode? ingredientObject.Precio : ''"
+            :value="editMode? ingredient.Precio : ''"
           />
         </div>
       </div>
@@ -92,18 +82,20 @@
 
 export default {
   props: {
-    editMode: {
-      type: Boolean,
-      required: true },
-    ingredient: {
-      type: String,
-    },
+    editMode: { type: Boolean, required: true },
+    ingredient: { type: Object, default() {
+      return {};
+    } },
     units: { type: Array, required: true },
   },
 
   computed: {
-    ingredientObject(){
-      return JSON.parse(this.ingredient);
+    formUnits() {
+      if (!this.editMode) {
+        return this.units;
+      }
+
+      return this.units.filter(unit => unit !== this.ingredient.Unidad);
     },
   },
 };

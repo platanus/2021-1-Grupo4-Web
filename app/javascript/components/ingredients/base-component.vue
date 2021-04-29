@@ -83,7 +83,7 @@ export default {
       showingAdd: false,
       showingEdit: false,
       showingDel: false,
-      ingredientToEdit: '',
+      ingredientToEdit: {},
     };
   },
   methods: {

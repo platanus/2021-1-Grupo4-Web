@@ -14,7 +14,7 @@ export default {
     id: { type: String, required: true },
     type: { type: String, required: true },
     placeholder: { type: String, required: true },
-    value: { required: true},
+    value: { type: [String, Number], required: true },
   },
 };
 </script>
