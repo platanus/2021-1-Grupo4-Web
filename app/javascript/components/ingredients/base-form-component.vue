@@ -7,7 +7,7 @@
             id="ingredient-name"
             type="text"
             placeholder="Nombre"
-            :value="editMode? ingredient.Nombre : ''"
+            :value="editMode ? ingredient.Nombre : ''"
           />
         </div>
       </div>
@@ -18,7 +18,7 @@
             id="ingredient-amount"
             type="number"
             placeholder="Cantidad"
-            :value="editMode? ingredient.Cantidad : ''"
+            :value="editMode ? ingredient.Cantidad : ''"
           />
         </div>
         <div class="relative">
