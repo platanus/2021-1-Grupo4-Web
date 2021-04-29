@@ -4,10 +4,6 @@ class Recipe < ApplicationRecord
   has_many :menus, through: :menu_recipes, dependent: nil
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients, dependent: nil
-
-  def ingredients_quantity
-    RecipeIngredient.where(recipe_id: id).map { |i| [i.ingredient, i.ingredient_quantity] }
-  end
 end
 
 # == Schema Information
