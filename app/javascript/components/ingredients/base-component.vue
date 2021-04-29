@@ -54,6 +54,7 @@
       <ingredients-form
         :units="['Kg','Litro']"
         :edit-mode="true"
+        :ingredient="this.ingredientToEdit"
       />
     </base-modal>
 
@@ -82,14 +83,16 @@ export default {
       showingAdd: false,
       showingEdit: false,
       showingDel: false,
+      ingredientToEdit: {},
     };
   },
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
     },
-    toggleEditModal() {
+    toggleEditModal(ingredient) {
       this.showingEdit = !this.showingEdit;
+      this.ingredientToEdit = ingredient;
     },
     toggleDelModal() {
       this.showingDel = !this.showingDel;

@@ -4,6 +4,7 @@
     :id="id"
     :type="type"
     :placeholder="placeholder"
+    :value="value"
   >
 </template>
 
@@ -13,6 +14,7 @@ export default {
     id: { type: String, required: true },
     type: { type: String, required: true },
     placeholder: { type: String, required: true },
+    value: { type: [String, Number], required: true },
   },
 };
 </script>

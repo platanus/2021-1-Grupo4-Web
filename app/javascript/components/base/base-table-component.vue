@@ -14,7 +14,7 @@
     <tbody class="bg-gray-200">
       <tr
         v-for="parsedElement in parsedElements"
-        :key="parsedElement"
+        :key="parsedElement.Nombre"
         class="bg-white border-4 border-gray-200"
       >
         <td
@@ -35,7 +35,7 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient"
+            @edit="editIngredient(parsedElement)"
             @del="deleteIngredient"
           />
         </td>
@@ -52,8 +52,8 @@ export default {
     dots: { type: Boolean, required: true },
   },
   methods: {
-    editIngredient() {
-      this.$emit('edit');
+    editIngredient(element) {
+      this.$emit('edit', element);
     },
     deleteIngredient() {
       this.$emit('del');

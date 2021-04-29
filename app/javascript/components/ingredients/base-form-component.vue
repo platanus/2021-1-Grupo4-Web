@@ -7,6 +7,7 @@
             id="ingredient-name"
             type="text"
             placeholder="Nombre"
+            :value="editMode ? ingredient.Nombre : ''"
           />
         </div>
       </div>
@@ -17,6 +18,7 @@
             id="ingredient-amount"
             type="number"
             placeholder="Cantidad"
+            :value="editMode ? ingredient.Cantidad : ''"
           />
         </div>
         <div class="relative">
@@ -25,19 +27,33 @@
             rounded leading-tight focus:outline-none"
             id="ingredient-unit"
           >
+            <!--Add Mode unit Unselected -->
             <option
+              v-if="!editMode"
               hidden
               selected
             >
               Unidad
             </option>
+            <!--Edit Mode unit ingredient -->
             <option
-              v-for="unit in units"
+              v-if="editMode"
+              selected
+              :key="ingredient.Unidad"
+              :value="ingredient.Unidad"
+            >
+              {{ ingredient.Unidad }}
+            </option>
+            <!--Other units -->
+            <option
+              v-for="unit in formUnits"
               :key="unit"
+              :value="unit"
             >
               {{ unit }}
             </option>
           </select>
+
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
               class="fill-current h-4 w-4"
@@ -54,6 +70,7 @@
             id="ingredient-price"
             type="number"
             placeholder="Precio"
+            :value="editMode? ingredient.Precio : ''"
           />
         </div>
       </div>
@@ -65,22 +82,22 @@
 
 export default {
   props: {
-    editMode: {
-      type: Boolean,
-      required: true },
-    ingredientData: {
-      type: Object,
-      default() {
-        return {
-          Nombre: 'Manzana',
-          Precio: 1000,
-          Cantidad: 1.5,
-          Unidad: 'kg',
-          PrecioUnitario: 667,
-        };
-      },
-    },
+    editMode: { type: Boolean, required: true },
+    ingredient: { type: Object, default() {
+      return {};
+    } },
     units: { type: Array, required: true },
   },
+
+  computed: {
+    formUnits() {
+      if (!this.editMode) {
+        return this.units;
+      }
+
+      return this.units.filter(unit => unit !== this.ingredient.Unidad);
+    },
+  },
 };
+
 </script>
