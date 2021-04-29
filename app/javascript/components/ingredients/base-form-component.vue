@@ -7,6 +7,8 @@
             id="ingredient-name"
             type="text"
             placeholder="Nombre"
+            :value="editMode? ingredientObject.Nombre : ''"
+
           />
         </div>
       </div>
@@ -17,6 +19,7 @@
             id="ingredient-amount"
             type="number"
             placeholder="Cantidad"
+            :value="editMode? ingredientObject.Cantidad : ''"
           />
         </div>
         <div class="relative">
@@ -25,19 +28,42 @@
             rounded leading-tight focus:outline-none"
             id="ingredient-unit"
           >
+          <!--Add Mode -->
             <option
+              v-if="!editMode" 
               hidden
               selected
             >
               Unidad
             </option>
             <option
+              v-if="!editMode" 
               v-for="unit in units"
               :key="unit"
+              :value="unit"
+            >
+              {{ unit }}
+            </option>
+
+          <!--Edit Mode -->
+            <option
+              v-if="editMode" 
+              selected
+              :key="ingredientObject.Unidad"
+              :value="ingredientObject.Unidad"
+            >
+              {{ ingredientObject.Unidad }}
+            </option>
+            <option
+              v-for="unit in units"
+              v-if="editMode && unit!=ingredientObject.Unidad" 
+              :key="unit"
+              :value="unit"
             >
               {{ unit }}
             </option>
           </select>
+
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
               class="fill-current h-4 w-4"
@@ -54,6 +80,7 @@
             id="ingredient-price"
             type="number"
             placeholder="Precio"
+            :value="editMode? ingredientObject.Precio : ''"
           />
         </div>
       </div>
@@ -68,19 +95,17 @@ export default {
     editMode: {
       type: Boolean,
       required: true },
-    ingredientData: {
-      type: Object,
-      default() {
-        return {
-          Nombre: 'Manzana',
-          Precio: 1000,
-          Cantidad: 1.5,
-          Unidad: 'kg',
-          PrecioUnitario: 667,
-        };
-      },
+    ingredient: {
+      type: String,
     },
     units: { type: Array, required: true },
   },
+
+  computed: {
+    ingredientObject(){
+      return JSON.parse(this.ingredient);
+    },
+  },
 };
+
 </script>

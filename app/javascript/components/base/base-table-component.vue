@@ -35,7 +35,7 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient"
+            @edit="editIngredient(element)"
             @del="deleteIngredient"
           />
         </td>
@@ -52,8 +52,8 @@ export default {
     dots: { type: Boolean, required: true },
   },
   methods: {
-    editIngredient() {
-      this.$emit('edit');
+    editIngredient(element) {
+      this.$emit('edit', element);
     },
     deleteIngredient() {
       this.$emit('del');
