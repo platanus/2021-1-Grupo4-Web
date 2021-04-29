@@ -11,7 +11,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def index
-    respond_with Ingredient.where(user_id: current_user.id)
+    respond_with ingredients
   end
 
   def show
@@ -19,11 +19,11 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def create
-    respond_with Ingredient.create!(ingredient_params.merge(user_id: current_user.id))
+    respond_with ingredients.create!(ingredient_params)
   end
 
   def update
-    respond_with ingredient.update!(ingredient_params.merge(user_id: current_user.id))
+    respond_with ingredient.update!(ingredient_params)
   end
 
   def destroy
@@ -41,12 +41,15 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def ingredient
-    @ingredient ||= Ingredient.find_by!(id: params[:id], user_id: current_user.id)
+    @ingredient ||= ingredients.find_by!(id: params[:id])
+  end
+
+  def ingredients
+    @ingredients ||= current_user.ingredients
   end
 
   def ingredient_params
     params.require(:ingredient).permit(
-      :provider_id,
       :name,
       :sku,
       :price,
