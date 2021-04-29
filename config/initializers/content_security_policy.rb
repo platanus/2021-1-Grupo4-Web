@@ -42,6 +42,7 @@ Rails.application.config.content_security_policy do |policy|
     policy.script_src :self,
                       :https,
                       :unsafe_inline,
+                      :unsafe_eval,
                       'https://www.googletagmanager.com',
                       'https://www.google-analytics.com',
                       'https://ssl.google-analytics.com'
