@@ -1,7 +1,9 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe JumboClient do
   let(:query) { 'pan' }
+  let(:client_instance) { described_class.new }
 
   let(:measure_result) { instance_double('Measure div', text: '1 Un.') }
   let(:name_result) { [instance_double('Title div', text: 'Pan del oso.'), double] }
@@ -37,7 +39,9 @@ RSpec.describe JumboClient do
   end
 
   before do
-    allow_any_instance_of(described_class).to receive(:browser).and_return(browser)
+    allow(described_class).to receive(:new).and_return(client_instance)
+    allow(client_instance).to receive(:browser).and_return(browser)
+
     mock_products_found
   end
 
@@ -122,3 +126,4 @@ RSpec.describe JumboClient do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
