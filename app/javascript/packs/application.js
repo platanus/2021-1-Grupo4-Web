@@ -14,6 +14,7 @@ import BaseTable from '../components/base/base-table-component.vue';
 import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
 import Register from '../components/users/register-component.vue';
+import Login from '../components/users/login-component.vue';
 
 import Locales from '../locales/locales.js';
 
@@ -31,6 +32,7 @@ Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
 Vue.component('Register', Register);
+Vue.component('Login', Login);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
