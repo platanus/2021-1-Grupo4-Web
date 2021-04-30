@@ -6,7 +6,7 @@
           v-for="attribute in header"
           :key="attribute"
         >
-          <span class="text-white font-bold">{{ $t(`msg.${attribute}`) }}</span>
+          <span class="text-white font-bold">{{ $t(`msg.${modelType}.${attribute}`) }}</span>
         </th>
         <th v-if="dots" />
       </tr>
@@ -51,6 +51,7 @@ export default {
     header: { type: Array, required: true },
     body: { type: Array, required: true },
     dots: { type: Boolean, required: true },
+    modelType: { type: String, required: true },
   },
   methods: {
     editIngredient(element) {

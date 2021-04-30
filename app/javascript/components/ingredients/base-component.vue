@@ -25,6 +25,7 @@
         :dots="true"
         :header="tableHeader"
         :body="ingredients"
+        model-type="ingredients"
         @edit="toggleEditModal"
         @del="toggleDelModal"
       />

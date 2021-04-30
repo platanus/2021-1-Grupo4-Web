@@ -6,10 +6,6 @@ export default {
     yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
-    name: 'Nombre',
-    price: 'Precio',
-    quantity: 'Cantidad',
-    measure: 'Unidad',
 
     ingredients: {
       title: 'Ingredientes',
@@ -18,6 +14,10 @@ export default {
       edit: 'Editar ingrediente',
       delete: 'Eliminar ingrediente',
       deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
+      name: 'Nombre',
+      price: 'Precio',
+      quantity: 'Cantidad',
+      measure: 'Unidad',
     },
 
     recipes: {
