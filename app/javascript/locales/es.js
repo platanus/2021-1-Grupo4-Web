@@ -14,6 +14,7 @@ export default {
       labelPassword: 'Contraseña',
       placeholderEmail: 'Ingresa tu correo',
       register: 'Registrarse',
+      login: 'Iniciar Sesión',
     },
 
     ingredients: {
