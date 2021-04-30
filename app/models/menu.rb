@@ -4,7 +4,7 @@ class Menu < ApplicationRecord
   has_many :recipes, through: :menu_recipes, dependent: nil
 
   def recipes_menu
-    MenuRecipe.where(menu_id: id).map{ |r| [r.recipe, r.recipe_quantity]}
+    MenuRecipe.where(menu_id: id).map { |r| [r.recipe, r.recipe_quantity] }
   end
 end
 
