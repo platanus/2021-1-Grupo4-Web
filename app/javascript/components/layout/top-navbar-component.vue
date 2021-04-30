@@ -7,7 +7,7 @@
             <a
               href="/"
               class="text-white px-3 py-2 rounded-md text-lg font-bold"
-            >SuperKitchen</a>
+            >KitchenGram</a>
           </div>
         </div>
       </div>

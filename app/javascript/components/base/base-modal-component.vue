@@ -20,7 +20,7 @@
         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform
        transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
       >
-        <!--Título-->
+        <!--Title-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
           <h3
             class="text-lg leading-6 font-medium text-white"
@@ -30,7 +30,7 @@
           </h3>
         </div>
 
-        <!--Contenido-->
+        <!--Content-->
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <!--Botones-->
+        <!--Buttons-->
         <div class="bg-white px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <base-button
             :elements="{

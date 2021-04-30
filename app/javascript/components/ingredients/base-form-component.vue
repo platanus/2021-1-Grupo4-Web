@@ -6,8 +6,8 @@
           <input-form
             id="ingredient-name"
             type="text"
-            placeholder="Nombre"
-            :value="editMode ? ingredient.Nombre : ''"
+            :placeholder="$t('msg.ingredients.name')"
+            :value="editMode ? ingredient.name : ''"
           />
         </div>
       </div>
@@ -17,8 +17,8 @@
           <input-form
             id="ingredient-amount"
             type="number"
-            placeholder="Cantidad"
-            :value="editMode ? ingredient.Cantidad : ''"
+            :placeholder="$t('msg.ingredients.quantity')"
+            :value="editMode ? ingredient.quantity : ''"
           />
         </div>
         <div class="relative">
@@ -33,16 +33,16 @@
               hidden
               selected
             >
-              Unidad
+              {{ $t('msg.ingredients.measure') }}
             </option>
             <!--Edit Mode unit ingredient -->
             <option
               v-if="editMode"
               selected
-              :key="ingredient.Unidad"
-              :value="ingredient.Unidad"
+              :key="ingredient.measure"
+              :value="ingredient.measure"
             >
-              {{ ingredient.Unidad }}
+              {{ ingredient.measure }}
             </option>
             <!--Other units -->
             <option
@@ -69,8 +69,8 @@
           <input-form
             id="ingredient-price"
             type="number"
-            placeholder="Precio"
-            :value="editMode? ingredient.Precio : ''"
+            :placeholder="$t('msg.ingredients.price')"
+            :value="editMode? ingredient.price : ''"
           />
         </div>
       </div>
@@ -95,7 +95,7 @@ export default {
         return this.units;
       }
 
-      return this.units.filter(unit => unit !== this.ingredient.Unidad);
+      return this.units.filter(unit => unit !== this.ingredient.measure);
     },
   },
 };
