@@ -3,7 +3,7 @@ export default {
     add: 'Agregar',
     edit: 'Editar',
     delete: 'Eliminar',
-    yesDelete: 'Sí,Eliminar',
+    yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
     name: 'Nombre',
