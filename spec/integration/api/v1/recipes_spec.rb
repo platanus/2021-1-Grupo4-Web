@@ -4,6 +4,7 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
+  let(:new_recipe) { create(:recipe, user_id: user.id) }
 
   path '/recipes' do
     parameter name: :user_email, in: :query, type: :string
@@ -14,9 +15,8 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       produces 'application/json'
 
       let(:collection_count) { 5 }
-      let(:expected_collection_count) { collection_count }
       before do
-        5.times do |_time|
+        collection_count.times do |_time|
           create(:recipe, user_id: user.id)
         end
       end
@@ -25,7 +25,7 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
         schema('$ref' => '#/definitions/recipes_collection')
 
         run_test! do |response|
-          expect(JSON.parse(response.body)['data'].count).to eq(expected_collection_count)
+          expect(JSON.parse(response.body)['data'].count).to eq(collection_count)
         end
       end
 
@@ -45,11 +45,11 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       response '201', 'recipe created' do
         let(:recipe) do
           {
-            user_id: 666,
-            name: 'Some name',
-            portions: 666,
-            instructions: 'Some instructions',
-            cook_minutes: 666
+            user_id: new_recipe.id,
+            name: new_recipe.name,
+            portions: new_recipe.portions,
+            instructions: new_recipe.instructions,
+            cook_minutes: new_recipe.cook_minutes
           }
         end
 
