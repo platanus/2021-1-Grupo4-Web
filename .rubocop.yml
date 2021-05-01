@@ -526,3 +526,4 @@ RSpec/LetSetup:
 RSpec/ExpectChange:
   Enabled: true
   EnforcedStyle: block
+

@@ -13,6 +13,7 @@ gem 'enumerize'
 gem 'jbuilder', '~> 2.7'
 gem 'marcel', '~> 0.3.3'
 gem 'pg'
+gem 'pincers'
 gem 'power_api'
 gem 'power-types'
 gem 'puma', '~> 4.1'
@@ -50,7 +51,6 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rspec-nc', require: false
   gem 'rspec-rails'
   gem 'rswag-specs'
   gem 'rubocop', '~> 1.9'
