@@ -3,7 +3,7 @@
     <h2 class="pb-5 text-4xl">
       {{ $t('msg.users.register') }}
     </h2>
-    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form @submit.prevent="addUser" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div class="mb-4">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
@@ -39,12 +39,43 @@
         />
       </div>
     </form>
+    <div>{{ error }}</div>
   </div>
 </template>
 
 <script>
 
+import axios from 'axios';
+
 export default {
+  data() {
+    return {
+      error: '',
+    };
+  },
+
+  methods: {
+    addUser() {
+      axios
+        .post('http://localhost:3000/api/v1/users/registrations', {
+          user: {
+            email: 'vale123456@uc.cl',
+            password: '123456789',
+          },
+        })
+        .then(response => {
+          alert(response);
+          this.error = response;
+        })
+        .catch(error => {
+          alert(error);
+          console.log(error);
+          this.error = error;
+        });
+    },
+
+  },
+
 };
 
 </script>
