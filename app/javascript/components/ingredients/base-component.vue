@@ -3,16 +3,17 @@
   <div>
     <!--Title-->
     <h2 class="text-4xl">
-      Ingredientes
+      {{ $t('msg.ingredients.title') }}
     </h2>
 
     <!--SearchBar y Button-->
     <div class="flex items-center">
       <search
-        :ingredient="{ tipo: 'ingrediente' }"
+        :placeholder="$t('msg.ingredients.search')"
       />
       <base-button
-        :elements="{ placeholder:'Agregar ingrediente', color: 'bg-green-500 hover:bg-green-700 text-white' }"
+        :elements="{ placeholder: $t('msg.ingredients.add'),
+                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
         @click="toggleAddModal"
       />
     </div>
@@ -21,7 +22,9 @@
     <div class="flex items-center">
       <base-table
         :dots="true"
-        :table="{ header: tableHeader, body: ingredients }"
+        :header="tableHeader"
+        :body="ingredients"
+        model-type="ingredients"
         @edit="toggleEditModal"
         @del="toggleDelModal"
       />
@@ -32,9 +35,9 @@
       @ok="addIngredient"
       @cancel="toggleAddModal"
       v-if="showingAdd"
-      title="Agregar Ingrediente"
-      ok-button-label="Agregar"
-      cancel-button-label="Cancelar"
+      :title="$t('msg.ingredients.add')"
+      :ok-button-label="$t('msg.add')"
+      :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
         :units="['Kg','Litro']"
@@ -47,9 +50,9 @@
       @ok="editIngredient"
       @cancel="toggleEditModal"
       v-if="showingEdit"
-      title="Editar Ingrediente"
-      ok-button-label="Guardar"
-      cancel-button-label="Cancelar"
+      :title="$t('msg.ingredients.edit')"
+      :ok-button-label="$t('msg.save')"
+      :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
         :units="['Kg','Litro']"
@@ -63,11 +66,11 @@
       @ok="deleteIngredient"
       @cancel="toggleDelModal"
       v-if="showingDel"
-      title="Eliminar Ingrediente"
-      ok-button-label="Sí, Eliminar"
-      cancel-button-label="Cancelar"
+      :title="$t('msg.ingredients.delete')"
+      :ok-button-label="$t('msg.yesDelete')"
+      :cancel-button-label="$t('msg.cancel')"
     >
-      <p>Estás seguro que deseas eliminar este ingrediente?</p>
+      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
     </base-modal>
   </div>
 </template>
@@ -84,6 +87,7 @@ export default {
       showingEdit: false,
       showingDel: false,
       ingredientToEdit: {},
+      tableHeader: ['name', 'price', 'quantity', 'measure'],
     };
   },
   methods: {
@@ -105,13 +109,6 @@ export default {
     },
     deleteIngredient() {
       this.showingDel = !this.showingDel;
-    },
-  },
-  computed: {
-    tableHeader() {
-      const tableHeader = Object.keys(JSON.parse(this.ingredients[0]));
-
-      return tableHeader;
     },
   },
 };

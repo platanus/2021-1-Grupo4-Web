@@ -3,10 +3,10 @@
     <thead class="justify-between">
       <tr class="bg-yellow-500 border-4 border-yellow-500 py-1">
         <th
-          v-for="attribute in table.header"
+          v-for="attribute in header"
           :key="attribute"
         >
-          <span class="text-white font-bold">{{ attribute }}</span>
+          <span class="text-white font-bold">{{ $t(`msg.${modelType}.${attribute}`) }}</span>
         </th>
         <th v-if="dots" />
       </tr>
@@ -14,11 +14,11 @@
     <tbody class="bg-gray-200">
       <tr
         v-for="parsedElement in parsedElements"
-        :key="parsedElement.Nombre"
+        :key="parsedElement.name"
         class="bg-white border-4 border-gray-200"
       >
         <td
-          v-for="property in table.header"
+          v-for="property in header"
           :key="property"
           class="content-center py-2"
         >
@@ -48,8 +48,10 @@
 
 export default {
   props: {
-    table: { type: Object, required: true },
+    header: { type: Array, required: true },
+    body: { type: Array, required: true },
     dots: { type: Boolean, required: true },
+    modelType: { type: String, required: true },
   },
   methods: {
     editIngredient(element) {
@@ -62,7 +64,7 @@ export default {
 
   computed: {
     parsedElements() {
-      const parsedElements = this.table.body.map((element) => JSON.parse(element));
+      const parsedElements = this.body.map((element) => JSON.parse(element));
 
       return parsedElements;
     },

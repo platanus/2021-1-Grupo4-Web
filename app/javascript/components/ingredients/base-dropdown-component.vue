@@ -15,14 +15,14 @@
               class="font-semibold block px-4 py-3"
               v-if="elements.edit"
               @click="editIngredient"
-            >Editar</a>
+            >{{ $t('msg.edit') }}</a>
           </li>
           <li class="hover:bg-gray-100">
             <a
               class="font-semibold block px-4 py-3"
               v-if="elements.del"
               @click="deleteIngredient"
-            >Eliminar</a>
+            >{{ $t('msg.delete') }}</a>
           </li>
         </ul>
       </div>
