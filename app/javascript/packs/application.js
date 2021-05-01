@@ -13,6 +13,15 @@ import BaseTable from '../components/base/base-table-component.vue';
 import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
 
+import RecipesContainer from '../components/recipes/index/base-component.vue';
+import SearchRecipe from '../components/recipes/index/base-search-recipe.vue';
+import Recipes from '../components/recipes/index/base-recipes.vue';
+import Recipe from '../components/recipes/index/base-recipe.vue';
+import InfoRecipe from '../components/recipes/index/base-info-recipe.vue';
+import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
+import Pagination from '../components/recipes/index/base-pagination.vue';
+import PageNumber from '../components/recipes/index/base-page-number.vue';
+
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
 Vue.component('Ingredients', Ingredients);
@@ -24,6 +33,15 @@ Vue.component('Search', Search);
 Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
+
+Vue.component('RecipesContainer', RecipesContainer);
+Vue.component('SearchRecipe', SearchRecipe);
+Vue.component('Recipes', Recipes);
+Vue.component('Recipe', Recipe);
+Vue.component('InfoRecipe', InfoRecipe);
+Vue.component('PriceRecipe', PriceRecipe);
+Vue.component('Pagination', Pagination);
+Vue.component('PageNumber', PageNumber);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
