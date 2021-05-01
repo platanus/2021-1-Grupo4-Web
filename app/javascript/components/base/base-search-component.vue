@@ -29,7 +29,6 @@
 <script>
 export default {
   props: {
-    kind: { type: String, required: true },
     placeholder: { type: String, required: true },
   },
 };

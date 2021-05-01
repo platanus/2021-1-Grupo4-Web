@@ -2,6 +2,8 @@ import Vue from 'vue/dist/vue.esm';
 import VueI18n from 'vue-i18n';
 import '../css/application.css';
 
+import Locales from '../locales/locales.js';
+
 import TopNavbar from '../components/layout/top-navbar-component.vue';
 import SideNavbar from '../components/layout/side-navbar-component.vue';
 import Ingredients from '../components/ingredients/base-component.vue';
@@ -13,8 +15,6 @@ import Search from '../components/base/base-search-component.vue';
 import BaseTable from '../components/base/base-table-component.vue';
 import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
-
-import Locales from '../locales/locales.js';
 
 Vue.use(VueI18n);
 
