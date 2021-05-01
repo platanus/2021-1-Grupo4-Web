@@ -12,13 +12,6 @@ RSpec.describe ChromeClient do
     allow(Pincers).to receive(:for_webdriver).and_return(browser)
   end
 
-  let(:chrome_options) { Selenium::WebDriver::Chrome::Options.new }
-  let(:chrome_driver) { instance_double('ChromeDriver') }
-
-  before do
-    allow(Selenium::WebDriver).to receive(:for).and_return(chrome_driver)
-  end
-
   describe 'create chrome browser' do
     it 'creates when calling browser method' do
       client.browser

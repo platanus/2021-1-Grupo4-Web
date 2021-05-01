@@ -4,6 +4,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
+  let(:jumbo_client) { JumboClient.new }
 
   path '/search-ingredients' do
     parameter name: :user_email, in: :query, type: :string
@@ -22,7 +23,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     let(:query) { 'pan' }
 
     before do
-      allow_any_instance_of(JumboClient).to receive(:products_by_query).with(
+      allow(jumbo_client).to receive(:products_by_query).with(
         query: 'pan'
       ).and_return(products)
     end
