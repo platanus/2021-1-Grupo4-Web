@@ -563,6 +563,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec (~> 2.2)
   sass-rails (>= 6)
+  selenium-webdriver
   send_grid_mailer
   sentry-raven
   shoulda-matchers
