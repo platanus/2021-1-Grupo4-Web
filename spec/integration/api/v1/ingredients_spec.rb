@@ -23,6 +23,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     let(:query) { 'pan' }
 
     before do
+      allow(JumboClient).to receive(:new).and_return(jumbo_client)
       allow(jumbo_client).to receive(:products_by_query).with(
         query: 'pan'
       ).and_return(products)
