@@ -10,8 +10,9 @@ Rails.application.routes.draw do
         end
       end
 
-      # Ingredients
-      get '/search-ingredients', to: 'ingredients#search_ingredients'
+      # Ingredients by scraper
+      get '/search-jumbo-ingredients', to: 'ingredients#search_jumbo_ingredients'
+      get '/search-lider-ingredients', to: 'ingredients#search_lider_ingredients'
     end
   end
 
