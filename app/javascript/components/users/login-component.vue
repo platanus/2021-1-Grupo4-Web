@@ -83,7 +83,7 @@ export default {
   methods: {
     login() {
       axios
-        .post('http://localhost:3000/api/v1/users/sessions', {
+        .post('https://pl-super-kitchen-staging.herokuapp.com/users/sessions', {
           user: {
             email: this.form.userEmail,
             password: this.form.userPassword,
