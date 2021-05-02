@@ -15,6 +15,8 @@ export default {
       placeholderEmail: 'Ingresa tu correo',
       register: 'Registrarse',
       login: 'Iniciar Sesión',
+      successRegister: 'Usuario creado exitosamente',
+      failRegister: 'Hubo un error inesperado',
     },
 
     ingredients: {
