@@ -2,18 +2,11 @@
   <div class="w-full max-w-xs">
     <!--Alert-->
     <div
-      v-if="status!==''"
-      class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-3"
+      v-if="status===400"
+      class="bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-3 mb-4"
       role="alert"
     >
       <p
-        v-if="status===201"
-        class="font-bold"
-      >
-        {{ $t('msg.users.successRegister') }}
-      </p>
-      <p
-        v-if="status===400"
         class="font-bold"
       >
         {{ $t('msg.users.failRegister') }}
@@ -99,11 +92,12 @@ export default {
         .then(response => {
           this.status = response.status;
           this.userToken = response.data.data.attributes.authentication_token;
-          this.resetForm();
+          window.location.href = '/users/sign_in';
         })
         .catch(error => {
           this.status = 400;
           this.error = error;
+          this.resetForm();
         });
     },
 
