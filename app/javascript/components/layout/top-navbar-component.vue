@@ -52,6 +52,7 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem('token');
+      localStorage.removeItem('email');
       window.location.href = '/';
     },
   },

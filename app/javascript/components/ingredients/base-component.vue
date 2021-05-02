@@ -9,6 +9,7 @@
     <!--SearchBar y Button-->
     <div class="flex items-center">
       <search
+        kind="ingredient"
         :placeholder="$t('msg.ingredients.search')"
       />
       <base-button
@@ -89,6 +90,11 @@ export default {
       ingredientToEdit: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
     };
+  },
+
+  mounted() {
+    console.log(localStorage.getItem('token'));
+    console.log(localStorage.getItem('email'));
   },
 
   methods: {
