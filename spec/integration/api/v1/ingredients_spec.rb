@@ -48,6 +48,14 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             :data
           ]
         )
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
       end
     end
   end

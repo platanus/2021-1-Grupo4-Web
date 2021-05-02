@@ -184,6 +184,57 @@
     }
   },
   "paths": {
+    "/search-ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Search ingredients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves ingredients by different providers",
+        "responses": {
+          "200": {
+            "description": "ingredients retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/provider_ingredient"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
     "/ingredients": {
       "parameters": [
         {
