@@ -1,6 +1,20 @@
 PROVIDER_SCHEMA = {
   type: :object,
   properties: {
+    name: { type: :string, example: 'Some name', 'x-nullable': true },
+    address: { type: :string, example: 'Some address', 'x-nullable': true },
+    country: { type: :string, example: 'Some country', 'x-nullable': true }
+  },
+  required: [
+    :name,
+    :address,
+    :country
+  ]
+}
+
+PROVIDER_RESPONSE_SCHEMA = {
+  type: :object,
+  properties: {
     id: { type: :string, example: '1' },
     type: { type: :string, example: 'provider' },
     attributes: {
@@ -27,7 +41,7 @@ PROVIDERS_COLLECTION_SCHEMA = {
   properties: {
     data: {
       type: "array",
-      items: { "$ref" => "#/definitions/provider" }
+      items: { "$ref" => "#/definitions/provider_response" }
     }
   },
   required: [
@@ -38,7 +52,7 @@ PROVIDERS_COLLECTION_SCHEMA = {
 PROVIDER_RESOURCE_SCHEMA = {
   type: "object",
   properties: {
-    data: { "$ref" => "#/definitions/provider" }
+    data: { "$ref" => "#/definitions/provider_response" }
   },
   required: [
     :data

@@ -185,6 +185,31 @@
     "provider": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string",
+          "example": "Some name",
+          "x-nullable": true
+        },
+        "address": {
+          "type": "string",
+          "example": "Some address",
+          "x-nullable": true
+        },
+        "country": {
+          "type": "string",
+          "example": "Some country",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "country"
+      ]
+    },
+    "provider_response": {
+      "type": "object",
+      "properties": {
         "id": {
           "type": "string",
           "example": "1"
@@ -239,7 +264,7 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/provider"
+            "$ref": "#/definitions/provider_response"
           }
         }
       },
@@ -251,7 +276,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/provider"
+          "$ref": "#/definitions/provider_response"
         }
       },
       "required": [
@@ -514,7 +539,18 @@
         "parameters": [
           {
             "name": "provider",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "$ref": "#/definitions/provider"
+                }
+              },
+              "required": [
+                "provider"
+              ]
+            }
           }
         ],
         "responses": {
@@ -578,7 +614,18 @@
         "parameters": [
           {
             "name": "provider",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "$ref": "#/definitions/provider"
+                }
+              },
+              "required": [
+                "provider"
+              ]
+            }
           }
         ],
         "responses": {

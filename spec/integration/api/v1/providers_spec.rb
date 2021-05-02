@@ -37,7 +37,19 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
       description 'Creates Provider'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :provider, in: :body)
+      parameter(
+        name: :provider,
+        in: :body,
+        schema: {
+          type: "object",
+          properties: {
+            provider: { "$ref" => "#/definitions/provider" }
+          },
+          required: [
+            :provider
+          ]
+        }
+      )
 
       response '201', 'provider created' do
         let(:provider) do
@@ -94,7 +106,19 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
       description 'Updates Provider'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :provider, in: :body)
+      parameter(
+        name: :provider,
+        in: :body,
+        schema: {
+          type: "object",
+          properties: {
+            provider: { "$ref" => "#/definitions/provider" }
+          },
+          required: [
+            :provider
+          ]
+        }
+      )
 
       response '200', 'provider updated' do
         let(:provider) do
