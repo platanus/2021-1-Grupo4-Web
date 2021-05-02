@@ -1,6 +1,27 @@
 INGREDIENT_SCHEMA = {
   type: :object,
   properties: {
+    provider_id: { type: :integer, example: 666, 'x-nullable': true },
+    name: { type: :string, example: 'Some name', 'x-nullable': true },
+    sku: { type: :string, example: 'Some sku', 'x-nullable': true },
+    price: { type: :integer, example: 666, 'x-nullable': true },
+    currency: { type: :string, example: 'Some currency', 'x-nullable': true },
+    quantity: { type: :integer, example: 666, 'x-nullable': true },
+    measure: { type: :string, example: 'Some measure', 'x-nullable': true },
+  },
+  required: [
+    :name,
+    :price,
+    :currency,
+    :quantity,
+    :measure
+  ]
+}
+
+
+INGREDIENT_RESPONSE_SCHEMA = {
+  type: :object,
+  properties: {
     id: { type: :string, example: '1' },
     type: { type: :string, example: 'ingredient' },
     attributes: {
@@ -32,7 +53,7 @@ INGREDIENTS_COLLECTION_SCHEMA = {
   properties: {
     data: {
       type: "array",
-      items: { "$ref" => "#/definitions/ingredient" }
+      items: { "$ref" => "#/definitions/ingredient_response" }
     }
   },
   required: [
@@ -43,7 +64,7 @@ INGREDIENTS_COLLECTION_SCHEMA = {
 INGREDIENT_RESOURCE_SCHEMA = {
   type: "object",
   properties: {
-    data: { "$ref" => "#/definitions/ingredient" }
+    data: { "$ref" => "#/definitions/ingredient_response" }
   },
   required: [
     :data

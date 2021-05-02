@@ -37,6 +37,53 @@
     "ingredient": {
       "type": "object",
       "properties": {
+        "provider_id": {
+          "type": "integer",
+          "example": 666,
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "example": "Some name",
+          "x-nullable": true
+        },
+        "sku": {
+          "type": "string",
+          "example": "Some sku",
+          "x-nullable": true
+        },
+        "price": {
+          "type": "integer",
+          "example": 666,
+          "x-nullable": true
+        },
+        "currency": {
+          "type": "string",
+          "example": "Some currency",
+          "x-nullable": true
+        },
+        "quantity": {
+          "type": "integer",
+          "example": 666,
+          "x-nullable": true
+        },
+        "measure": {
+          "type": "string",
+          "example": "Some measure",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "price",
+        "currency",
+        "quantity",
+        "measure"
+      ]
+    },
+    "ingredient_response": {
+      "type": "object",
+      "properties": {
         "id": {
           "type": "string",
           "example": "1"
@@ -116,7 +163,7 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ingredient"
+            "$ref": "#/definitions/ingredient_response"
           }
         }
       },
@@ -128,7 +175,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/ingredient"
+          "$ref": "#/definitions/ingredient_response"
         }
       },
       "required": [
