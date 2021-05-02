@@ -16,9 +16,77 @@
           "type": "string"
         }
       }
+    },
+    "provider_ingredient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
+        "measure": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        }
+      }
     }
   },
   "paths": {
+    "/search-ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Search ingredients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves ingredients by different providers",
+        "responses": {
+          "200": {
+            "description": "ingredients retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/provider_ingredient"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "with invalid user token"
+          }
+        }
+      }
+    },
     "/users/registrations": {
       "post": {
         "summary": "Create user",
