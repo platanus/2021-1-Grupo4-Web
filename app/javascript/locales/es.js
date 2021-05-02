@@ -16,7 +16,7 @@ export default {
       register: 'Registrarse',
       login: 'Iniciar Sesión',
       successRegister: 'Usuario creado exitosamente',
-      failRegister: 'Hubo un error inesperado',
+      failRegister: 'No se pudo registrar el usuario',
     },
 
     ingredients: {
