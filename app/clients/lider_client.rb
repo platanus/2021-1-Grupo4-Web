@@ -1,32 +1,33 @@
-class LiderClient < ChromeClient
+class LiderClient < MarketClient
   BASE_URL = 'https://www.lider.cl/supermercado/search'
+  MARKET_NAME = 'Lider'
 
-  def products_by_query(query: nil)
-    ensuring_browser_closure do
-      go_to_products_page(query)
+  private
 
-      browser.search('.product-details').wait(:present, timeout: 5.0).map do |product|
-        {
-          brand: get_brand(product),
-          offer_price: get_offer_price(product),
-          normal_price: get_normal_price(product),
-          measure: get_measure(product),
-          name: get_name(product)
-        }
-      end
+  def products_found_to_json
+    products_found.map do |product|
+      {
+        price: get_price(product) || get_offer_price(product),
+        measure: get_measure(product),
+        name: get_name(product),
+        provider: MARKET_NAME,
+        provider_id: Provider.find_by(name: MARKET_NAME).to_param
+      }
     end
   end
 
-  private
+  def products_found
+    browser.search('.product-details').wait(:present, timeout: 5.0)
+  end
+
+  def get_price(product)
+    normal_price = product.search('.price-internet').text
+    format_search(normal_price)
+  end
 
   def get_offer_price(product)
     offer_price = product.search('.price-sell').text
     format_search(offer_price)
-  end
-
-  def get_normal_price(product)
-    normal_price = product.search('.price-internet').text
-    format_search(normal_price)
   end
 
   def get_measure(product)
@@ -39,16 +40,7 @@ class LiderClient < ChromeClient
     format_search(name)
   end
 
-  def get_brand(product)
-    brand = product.search('.product-name').text
-    format_search(brand)
-  end
-
-  def format_search(result)
-    result.presence ? result : nil
-  end
-
-  def go_to_products_page(query)
-    browser.goto("#{BASE_URL}?Ntt=#{query}")
+  def products_url(query)
+    "#{BASE_URL}?Ntt=#{query}"
   end
 end
