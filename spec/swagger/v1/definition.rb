@@ -11,6 +11,10 @@ API_V1 = {
     ingredient: INGREDIENT_SCHEMA,
     ingredient_response: INGREDIENT_RESPONSE_SCHEMA,
     ingredients_collection: INGREDIENTS_COLLECTION_SCHEMA,
-    ingredient_resource: INGREDIENT_RESOURCE_SCHEMA
+    ingredient_resource: INGREDIENT_RESOURCE_SCHEMA,
+    provider: PROVIDER_SCHEMA,
+    provider_response: PROVIDER_RESPONSE_SCHEMA,
+    providers_collection: PROVIDERS_COLLECTION_SCHEMA,
+    provider_resource: PROVIDER_RESOURCE_SCHEMA
   }
 }
