@@ -16,6 +16,9 @@ import BaseTable from '../components/base/base-table-component.vue';
 import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
 
+import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
+import ListComponent from '../components/recipes/create/list-component.vue';
+
 Vue.use(VueI18n);
 
 Vue.component('TopNavbar', TopNavbar);
@@ -29,6 +32,9 @@ Vue.component('Search', Search);
 Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
+
+Vue.component('CreateRecipes', CreateRecipes);
+Vue.component('ListComponent', ListComponent);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
