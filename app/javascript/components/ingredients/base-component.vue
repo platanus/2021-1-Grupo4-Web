@@ -91,6 +91,7 @@ export default {
       tableHeader: ['name', 'price', 'quantity', 'measure'],
     };
   },
+
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
