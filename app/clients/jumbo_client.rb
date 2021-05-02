@@ -1,24 +1,19 @@
-class JumboClient < ChromeClient
+class JumboClient < MarketClient
   BASE_URL = 'https://www.jumbo.cl/busqueda'
-
-  def products_by_query(query: nil)
-    ensuring_browser_closure do
-      go_to_products_page(query)
-
-      products_found.map do |product|
-        {
-          price: get_price(product) || get_old_price(product) || get_offer_price(product),
-          measure: get_measure(product),
-          name: get_name(product),
-          provider: 'Jumbo'
-        }
-      end
-    end
-  rescue Pincers::ConditionTimeoutError
-    []
-  end
+  MARKET_NAME = 'Jumbo'
 
   private
+
+  def products_found_to_json
+    products_found.map do |product|
+      {
+        price: get_price(product) || get_old_price(product) || get_offer_price(product),
+        measure: get_measure(product),
+        name: get_name(product),
+        provider: MARKET_NAME
+      }
+    end
+  end
 
   def products_found
     browser.search('.shelf-item').wait(:present, timeout: 10.0)
@@ -49,11 +44,7 @@ class JumboClient < ChromeClient
     format_search(name)
   end
 
-  def format_search(result)
-    result.presence ? result : nil
-  end
-
-  def go_to_products_page(query)
-    browser.goto "#{BASE_URL}?ft=#{query}"
+  def products_page(query)
+    "#{BASE_URL}?ft=#{query}"
   end
 end

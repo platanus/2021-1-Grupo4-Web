@@ -1,12 +1,13 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe LiderClient do
   let(:query) { 'carne' }
+  let(:lider_client) { described_class.new }
 
   let(:brand_result) { instance_double('Brand div', text: 'El Buen Corte') }
   let(:measure_result) { instance_double('Measure div', text: '500 g') }
   let(:name_result) { instance_double('Description div', text: 'Carne Molida 4%') }
-  let(:expected_brand) { 'El Buen Corte' }
   let(:expected_measure) { '500 g' }
   let(:expected_name) { 'Carne Molida 4%' }
 
@@ -17,7 +18,7 @@ RSpec.describe LiderClient do
   let(:products) { [product] }
 
   def call_products_by_query
-    described_class.new.products_by_query(query: query)
+    lider_client.products_by_query(query: query)
   end
 
   def mock_products_found
@@ -28,7 +29,6 @@ RSpec.describe LiderClient do
   def mock_product
     allow(product).to receive(:search).with('.product-attribute').and_return(measure_result)
     allow(product).to receive(:search).with('.product-description').and_return(name_result)
-    allow(product).to receive(:search).with('.product-name').and_return(brand_result)
   end
 
   def mock_product_prices
@@ -37,7 +37,8 @@ RSpec.describe LiderClient do
   end
 
   before do
-    allow_any_instance_of(described_class).to receive(:browser).and_return(browser)
+    allow(described_class).to receive(:new).and_return(lider_client)
+    allow(lider_client).to receive(:browser).and_return(browser)
     mock_products_found
   end
 
@@ -51,11 +52,10 @@ RSpec.describe LiderClient do
     let(:expected_result) do
       [
         {
-          brand: expected_brand,
-          offer_price: expected_offer_price,
-          normal_price: expected_normal_price,
+          price: expected_offer_price,
           measure: expected_measure,
-          name: expected_name
+          name: expected_name,
+          provider: 'Lider'
         }
       ]
     end
@@ -70,3 +70,4 @@ RSpec.describe LiderClient do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
