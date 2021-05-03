@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="flex flex-row justify-between items-center p-0 static h-8 flex-none order-0 flex-grow-0 mt-1 mb-4">
-      <div class="text-4xl flex-none order-0 flex-grow-0">
+    <div class="flex flex-row justify-between items-center h-8 order-0 flex-grow-0 mt-1 mb-4">
+      <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.recipes.title') }}
       </div>
-      <span class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded flex-none order-1 flex-grow-0 text-white">
+      <span class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded order-1 flex-grow-0 text-white">
         {{ $t('msg.recipes.add') }}
       </span>
     </div>

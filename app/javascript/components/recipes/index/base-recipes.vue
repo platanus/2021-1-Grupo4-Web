@@ -3,7 +3,7 @@
     <div class="flex-none order-2 flex-grow-0">
       <recipe
         v-for="recipe in parsedElements"
-        :key="recipe"
+        :key="recipe.name"
         :name="recipe.name"
         :portions="recipe.portions"
         :minutes="recipe.cook_minutes"
@@ -20,9 +20,7 @@ export default {
   },
   computed: {
     parsedElements() {
-      const parsedElements = this.allrecipes.map((element) => JSON.parse(element));
-
-      return parsedElements;
+      return this.allrecipes.map((element) => JSON.parse(element));
     },
   },
 };
