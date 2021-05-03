@@ -25,8 +25,11 @@ import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
 import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
 
+<<<<<<< HEAD
 Vue.use(VueI18n);
 
+=======
+>>>>>>> bd6d5a73a1766fdc1918f948720ab28c8a31d92a
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
 Vue.component('Ingredients', Ingredients);
