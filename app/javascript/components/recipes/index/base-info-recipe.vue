@@ -3,21 +3,35 @@
     <div class="flex-none order-0 flex-grow-0 mx-2.5">
       <div class="static w-auto h-6 font-sans not-italic font-normal text-lg text-black">
         <div class="flex-none order-0 flex-grow-0 mx-0">
-          Tallarines con carne
+          {{ recipeName }}
         </div>
       </div>
 
-      <div class="items-start p-0 static w-60 h-5 left-0">
+      <div class="items-start p-0 static w-64 h-5 left-0">
         <div class=" flex flex-row order-1 flex-grow-0 my-2.5 mx-0">
-          <div class="flex flex-row items-center p-0 w-28 h-5 top-0 left-0">
-            <div class="flex-none order-0 flex-grow-0 my-0">
-              2 porciones
+          <div class="flex flex-row items-center p-0 w-40 h-5 top-0 left-0 flex-none order-0 flex-grow-0 my-0">
+            <div class="static w-4 h-4 flex-none order-0 flex-grow-0 mr-2">
+              <img
+                class="h-5 w-5 text-white"
+                svg-inline
+                src="../../../../assets/images/chart-pie-svg.svg"
+              >
+            </div>
+            <div class="satic w-28 h-5 flex-none order-1 flex-grow-0">
+              {{ recipePortions + " porcion(es)" }}
             </div>
           </div>
 
-          <div class="flex flex-row items-center p-0 w-24 h-5 top-0 left-36">
-            <div class="flex-none order-0 flex-grow-0 my-0">
-              15 minutos
+          <div class="flex flex-row items-center p-0 w-40 h-5 top-0 left-0 flex-none order-0 flex-grow-0 my-0">
+            <div class="static w-4 h-4 flex-none order-0 flex-grow-0 mr-2">
+              <img
+                class="h-5 w-5 text-white"
+                svg-inline
+                src="../../../../assets/images/clock-svg.svg"
+              >
+            </div>
+            <div class="static w-28 h-5 flex-none order-1 flex-grow-0">
+              {{ recipeMinutes + " minuto(s)" }}
             </div>
           </div>
         </div>
@@ -28,5 +42,10 @@
 
 <script>
 export default {
+  props: {
+    recipeName: { type: String, required: true },
+    recipePortions: { type: Number, required: true },
+    recipeMinutes: { type: Number, required: true },
+  },
 };
 </script>
