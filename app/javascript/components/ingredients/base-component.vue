@@ -21,10 +21,16 @@
 
     <!--Table-->
     <div class="flex items-center">
+      <p
+        v-if="this.ingredients.length===0"
+      >
+        {{ $t('msg.notElements') }} {{ $t('msg.ingredients.title') }}
+      </p>
       <base-table
+        v-else
         :dots="true"
         :header="tableHeader"
-        :body="ingredients"
+        :body="this.ingredients"
         model-type="ingredients"
         @edit="toggleEditModal"
         @del="toggleDelModal"
@@ -78,10 +84,10 @@
 
 <script>
 
+import axios from 'axios';
+
 export default {
-  props: {
-    ingredients: { type: Array, required: true },
-  },
+
   data() {
     return {
       showingAdd: false,
@@ -89,12 +95,31 @@ export default {
       showingDel: false,
       ingredientToEdit: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
+      ingredients: [],
+      status: '',
+      error: '',
+      response: '',
     };
   },
 
   mounted() {
-    console.log(localStorage.getItem('token'));
-    console.log(localStorage.getItem('email'));
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+
+    axios
+      .get('https://pl-super-kitchen-staging.herokuapp.com/api/v1/ingredients', { params: {
+        'user_email': email,
+        'user_token': token,
+      } })
+      .then(response => {
+        this.status = response.status;
+        this.error = '';
+        this.response = response;
+      })
+      .catch(error => {
+        this.status = 400;
+        this.error = error;
+      });
   },
 
   methods: {
