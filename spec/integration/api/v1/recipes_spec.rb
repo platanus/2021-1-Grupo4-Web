@@ -1,9 +1,10 @@
 require 'swagger_helper'
 
 describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
+  let(:user_id) { user.id }
   let(:new_recipe) { create(:recipe, user_id: user.id) }
 
   path '/recipes' do
@@ -40,7 +41,16 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       description 'Creates Recipe'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :recipe, in: :body)
+      parameter(name: :recipe, in: :body,
+                schema: {
+                  type: "object",
+                  properties: {
+                    recipe: { "$ref" => "#/definitions/recipe" }
+                  },
+                  required: [
+                    :recipe
+                  ]
+                })
 
       response '201', 'recipe created' do
         let(:recipe) do
@@ -99,7 +109,16 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       description 'Updates Recipe'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :recipe, in: :body)
+      parameter(name: :recipe, in: :body,
+                schema: {
+                  type: "object",
+                  properties: {
+                    recipe: { "$ref" => "#/definitions/recipe" }
+                  },
+                  required: [
+                    :recipe
+                  ]
+                })
 
       response '200', 'recipe updated' do
         let(:recipe) do

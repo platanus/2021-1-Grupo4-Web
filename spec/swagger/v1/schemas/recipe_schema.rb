@@ -5,7 +5,7 @@ RECIPE_SCHEMA = {
     name: { type: :string, example: 'Some name', 'x-nullable': true },
     portions: { type: :integer, example: 666, 'x-nullable': true },
     instructions: { type: :string, example: 'Some instructions', 'x-nullable': true },
-    cook_minutes: { type: :integer, example: 666, 'x-nullable': true },
+    cook_minutes: { type: :integer, example: 666, 'x-nullable': true }
   },
   required: [
     :name,

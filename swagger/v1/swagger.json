@@ -290,6 +290,41 @@
           "type": "string",
           "example": "1"
         },
+        "name": {
+          "type": "string",
+          "example": "Some name",
+          "x-nullable": true
+        },
+        "portions": {
+          "type": "integer",
+          "example": 1,
+          "x-nullable": true
+        },
+        "instructions": {
+          "type": "text",
+          "example": "Some instructions",
+          "x-nullable": true
+        },
+        "cook_minutes": {
+          "type": "integer",
+          "example": 1,
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "portions",
+        "instructions",
+        "cook_minutes"
+      ]
+    },
+    "recipe_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
         "type": {
           "type": "string",
           "example": "recipe"
@@ -302,24 +337,19 @@
               "example": 666,
               "x-nullable": true
             },
-            "name": {
-              "type": "string",
-              "example": "Some name",
-              "x-nullable": true
-            },
             "portions": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "instructions": {
-              "type": "string",
+              "type": "text",
               "example": "Some instructions",
               "x-nullable": true
             },
             "cook_minutes": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "created_at": {
@@ -350,7 +380,7 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/recipe"
+            "$ref": "#/definitions/recipe_response"
           }
         }
       },
@@ -362,7 +392,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/recipe"
+          "$ref": "#/definitions/recipe_response"
         }
       },
       "required": [
@@ -785,7 +815,18 @@
         "parameters": [
           {
             "name": "recipe",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recipe": {
+                  "$ref": "#/definitions/recipe"
+                }
+              },
+              "required": [
+                "recipe"
+              ]
+            }
           }
         ],
         "responses": {
@@ -849,7 +890,18 @@
         "parameters": [
           {
             "name": "recipe",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recipe": {
+                  "$ref": "#/definitions/recipe"
+                }
+              },
+              "required": [
+                "recipe"
+              ]
+            }
           }
         ],
         "responses": {
