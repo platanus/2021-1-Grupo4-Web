@@ -2,13 +2,13 @@
   <div>
     <div class="flex flex-row justify-between items-center p-0 static h-8 flex-none order-0 flex-grow-0 mt-1 mb-4">
       <div class="text-4xl flex-none order-0 flex-grow-0">
-        Recetas
+        {{ $t('msg.recipes.title') }}
       </div>
       <span class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded flex-none order-1 flex-grow-0 text-white">
-        Agregar receta
+        {{ $t('msg.recipes.add') }}
       </span>
     </div>
-    <search-recipe />
+    <search-recipe :placeholder="$t('msg.recipes.search')" />
     <recipes :allrecipes="recipes" />
     <pagination />
   </div>
