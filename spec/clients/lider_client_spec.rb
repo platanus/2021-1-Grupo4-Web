@@ -49,13 +49,16 @@ RSpec.describe LiderClient do
     let(:expected_offer_price) { '$4.690' }
     let(:expected_normal_price) { nil }
 
+    let!(:provider) { create(:provider, name: 'Lider') }
+
     let(:expected_result) do
       [
         {
           price: expected_offer_price,
           measure: expected_measure,
           name: expected_name,
-          provider: 'Lider'
+          provider: 'Lider',
+          provider_id: provider.to_param
         }
       ]
     end

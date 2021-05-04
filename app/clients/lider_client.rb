@@ -10,7 +10,8 @@ class LiderClient < MarketClient
         price: get_price(product) || get_offer_price(product),
         measure: get_measure(product),
         name: get_name(product),
-        provider: MARKET_NAME
+        provider: MARKET_NAME,
+        provider_id: Provider.find_by(name: MARKET_NAME).to_param
       }
     end
   end
