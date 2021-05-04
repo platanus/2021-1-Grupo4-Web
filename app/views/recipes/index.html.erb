@@ -1,5 +1,10 @@
 <div class="h-screen flex">
   <side-navbar active-element="recipes"></side-navbar>
   <div class="container ml-64 px-20 py-10 overflow-hidden">
+      <recipes-container :recipes="<%= [
+          {"name": "Suspiro Limeño", "portions": 12, "cook_minutes": 25, "price":1500}.to_json,
+          {"name": "Lazaña Vegetariana", "portions": 6, "cook_minutes": 45, "price":17000}.to_json,
+          {"name": "Galletas de canela", "portions": 4, "cook_minutes": 25, "price":5500}.to_json,
+          {"name": "Arroz con Huevo", "portions": 4, "cook_minutes": 55, "price":3000}.to_json] %>" />
   </div>
 </div>
