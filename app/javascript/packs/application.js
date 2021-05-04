@@ -25,6 +25,8 @@ import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
 import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
 
+import RecipeShow from '../components/recipes/show/base-component.vue';
+
 Vue.use(VueI18n);
 
 Vue.component('TopNavbar', TopNavbar);
@@ -47,6 +49,8 @@ Vue.component('InfoRecipe', InfoRecipe);
 Vue.component('PriceRecipe', PriceRecipe);
 Vue.component('Pagination', Pagination);
 Vue.component('PageNumber', PageNumber);
+
+Vue.component('RecipeShow', RecipeShow);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
