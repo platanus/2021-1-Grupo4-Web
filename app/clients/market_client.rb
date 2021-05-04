@@ -50,11 +50,11 @@ class MarketClient < ChromeClient
     result.presence ? result : nil
   end
 
-  def products_page(_query)
+  def products_url(_query)
     raise NotImplementedError, "#{__method__} is not defined for #{self.class.name}"
   end
 
   def go_to_products_page(query)
-    browser.goto products_page(query)
+    browser.goto products_url(query)
   end
 end

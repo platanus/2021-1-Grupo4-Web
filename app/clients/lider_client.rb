@@ -40,7 +40,7 @@ class LiderClient < MarketClient
     format_search(name)
   end
 
-  def products_page(query)
+  def products_url(query)
     "#{BASE_URL}?Ntt=#{query}"
   end
 end
