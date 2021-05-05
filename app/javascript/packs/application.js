@@ -18,6 +18,7 @@ import IngredientsForm from '../components/ingredients/base-form-component';
 
 import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
 import List from '../components/recipes/create/list-component.vue';
+import Container from '../components/recipes/create/container-component.vue'
 
 Vue.use(VueI18n);
 
@@ -35,6 +36,7 @@ Vue.component('IngredientsForm', IngredientsForm);
 
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('List', List);
+Vue.component('Container', Container)
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
