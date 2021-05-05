@@ -22,6 +22,7 @@
       </div>
     </div>
     <!--Info-->
+    <recipe-info />
 
     <!--Body-->
   </div>

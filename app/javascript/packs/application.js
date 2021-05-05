@@ -26,6 +26,7 @@ import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
 
 import RecipeShow from '../components/recipes/show/base-component.vue';
+import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
 
 Vue.use(VueI18n);
 
@@ -51,6 +52,7 @@ Vue.component('Pagination', Pagination);
 Vue.component('PageNumber', PageNumber);
 
 Vue.component('RecipeShow', RecipeShow);
+Vue.component('RecipeInfo', RecipeInfo);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
