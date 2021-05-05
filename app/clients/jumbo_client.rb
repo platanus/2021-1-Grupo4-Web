@@ -6,13 +6,16 @@ class JumboClient < MarketClient
 
   def products_found_to_json
     products_found.map do |product|
+      price = get_price(product) || get_old_price(product) || get_offer_price(product)
+      next if price.blank?
+
       {
-        price: get_price(product) || get_old_price(product) || get_offer_price(product),
+        price: price,
         measure: get_measure(product),
         name: get_name(product),
         provider: MARKET_NAME
       }
-    end
+    end.compact
   end
 
   def products_found
@@ -30,8 +33,10 @@ class JumboClient < MarketClient
   end
 
   def get_offer_price(product)
-    price = product.search('.price-product-best').first.text
-    format_search(price)
+    price = product.search('.price-product-best').first
+    return if price.blank?
+
+    format_search(price.text)
   end
 
   def get_measure(product)
