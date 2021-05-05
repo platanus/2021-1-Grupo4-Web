@@ -22,13 +22,15 @@
 
     <div>
       <list
-        placeholder="Ingredientes"
-        :elements="ingredients"
+        placeholder="Ingredientes and Instructions"
+        :elements="objects"
       />
-      <list
+    <p>{{objects}}</p>
+      <!--list
         placeholder="Pasos"
         :elements="steps"
-      />
+        :svg="{sixdots: '../../../assets/images/menu-recipe-svg.svg'}"
+      /-->
     </div>
 
     <base-button
@@ -44,8 +46,12 @@
 <script>
 export default {
   props: {
-    ingredients: { type: Object, required: true },
-    steps: { type: Object, required: true },
+    objects: { type: Array, required: true }
+  },
+  methods: {
+    create() {
+      return
+    },
   },
 };
 </script>

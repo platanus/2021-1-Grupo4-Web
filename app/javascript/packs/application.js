@@ -17,7 +17,7 @@ import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
 
 import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
-import ListComponent from '../components/recipes/create/list-component.vue';
+import List from '../components/recipes/create/list-component.vue';
 
 Vue.use(VueI18n);
 
@@ -34,7 +34,7 @@ Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
 
 Vue.component('CreateRecipes', CreateRecipes);
-Vue.component('ListComponent', ListComponent);
+Vue.component('List', List);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
