@@ -8,7 +8,7 @@
       <container
         :text="element"
         :svg="svg"
-        :input="false"
+        :input="true"
         :color="color()"
       />
     </div>
@@ -16,7 +16,7 @@
         text="Costo total"
         :svg="{}"
         :input="false"
-        color="gray"
+        :color="false"
       /> 
 
       <base-button
@@ -39,22 +39,15 @@ export default {
   },
   data() {
     return {
-      par: 'gray',
+      par: false,
     }
   },
   methods: {
     search() {
       return null;
-    }
-  },
-  computed: {
+    },
     color() {
-      if (this.par === 'white') {
-        this.par = 'gray';
-      }
-      else {
-        this.par = 'white';
-      }
+      this.par = !this.par
       return this.par;
     },
   },
