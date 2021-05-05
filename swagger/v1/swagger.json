@@ -245,9 +245,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -316,9 +314,51 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "menu_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "menu"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer",
+              "example": 666,
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "example": "Some menu name",
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": []
         }
       },
       "required": [
@@ -565,13 +605,17 @@
         }
       }
     },
-    "/users/{user_id}/menus": {
+    "/menus": {
       "parameters": [
         {
-          "name": "user_id",
-          "in": "path",
-          "type": "integer",
-          "required": true
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
         }
       ],
       "get": {
@@ -601,7 +645,18 @@
         "parameters": [
           {
             "name": "menu",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menu": {
+                  "$ref": "#/definitions/menu"
+                }
+              },
+              "required": [
+                "menu"
+              ]
+            }
           }
         ],
         "responses": {
@@ -618,6 +673,16 @@
           "in": "path",
           "type": "integer",
           "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
         }
       ],
       "get": {
@@ -649,12 +714,26 @@
         "parameters": [
           {
             "name": "menu",
-            "in": "body"
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ingredient": {
+                  "$ref": "#/definitions/menu"
+                }
+              },
+              "required": [
+                "menu"
+              ]
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "menu updated"
+            "description": "ingredient updated"
+          },
+          "401": {
+            "description": "user unauthorized"
           }
         }
       },
