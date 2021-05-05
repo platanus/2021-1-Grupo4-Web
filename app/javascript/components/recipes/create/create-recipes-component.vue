@@ -24,16 +24,15 @@
       <list
         placeholder="Ingredientes"
         :elements="objects"
-        :svg="{sixdots: false}"
+        :svg="{sixdots: false, cancel: true}"
         :input="true"
       />
-    <p>{{objects}}</p>
-      <list
+      <!--list
         placeholder="Pasos"
         :elements="objects"
-        :svg="{sixdots: true}"
+        :svg="{sixdots: true, cancel: false}"
         :input="false"
-      />
+      /-->
     </div>
 
     <base-button
@@ -56,5 +55,6 @@ export default {
       return null
     },
   },
+
 };
 </script>
