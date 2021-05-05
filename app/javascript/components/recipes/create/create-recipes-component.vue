@@ -105,5 +105,6 @@ export default {
       return newArray;
     },
   },
+
 };
 </script>
