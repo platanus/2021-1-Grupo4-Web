@@ -24,6 +24,7 @@ import RecipeInstructions from '../components/recipes/show/base-recipe-instructi
 import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
 import List from '../components/recipes/create/list-component.vue';
+import Container from '../components/recipes/create/container-component.vue';
 
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
@@ -56,6 +57,7 @@ Vue.component('RecipeInstructions', RecipeInstructions);
 Vue.component('InstructionStep', InstructionStep);
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('List', List);
+Vue.component('Container', Container);
 
 Vue.component('NewMenuContainer', NewMenuContainer);
 Vue.component('MenusContainer', MenusContainer);

@@ -22,15 +22,18 @@
 
     <div>
       <list
-        placeholder="Ingredientes and Instructions"
+        placeholder="Ingredientes"
         :elements="objects"
+        :svg="{sixdots: false}"
+        :input="true"
       />
     <p>{{objects}}</p>
-      <!--list
+      <list
         placeholder="Pasos"
-        :elements="steps"
-        :svg="{sixdots: '../../../assets/images/menu-recipe-svg.svg'}"
-      /-->
+        :elements="objects"
+        :svg="{sixdots: true}"
+        :input="false"
+      />
     </div>
 
     <base-button
@@ -50,7 +53,7 @@ export default {
   },
   methods: {
     create() {
-      return
+      return null
     },
   },
 };
