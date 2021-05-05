@@ -13,9 +13,12 @@
         </div>
       </div>
       <div class="flex flex-row items-center">
-        <div class="flex flex-row justify-center items-center px-3 w-24 h-8 bg-white border-2 border-solid border-purple-600 box-border rounded order-2 flex-grow-0 mx-2 text-purple-600">
+        <a
+          class="flex flex-row justify-center items-center px-3 w-24 h-8 bg-white border-2 border-solid border-purple-600 box-border rounded order-2 flex-grow-0 mx-2 text-purple-600"
+          @click="toggleDelModal"
+        >
           {{ $t('msg.recipes.delete') }}
-        </div>
+        </a>
         <div class="flex flex-row justify-center items-center px-3 w-24 h-8 bg-white border-2 border-solid border-blue-700 box-border rounded order-2 flex-grow-0 mx-2 text-blue-700">
           {{ $t('msg.recipes.edit') }}
         </div>
@@ -28,12 +31,36 @@
       <recipe-ingredients />
       <recipe-instructions />
     </div>
+    <!--DeleteModal-->
+    <base-modal
+      @ok="deleteRecipe"
+      @cancel="toggleDelModal"
+      v-if="showingDel"
+      :title="$t('msg.recipes.delete')"
+      :ok-button-label="$t('msg.yesDelete')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <p>{{ $t('msg.recipes.deleteMsg') }}</p>
+    </base-modal>
   </div>
 </template>
 
 <script>
 
 export default {
+  data() {
+    return {
+      showingDel: false,
+    };
+  },
+  methods: {
+    toggleDelModal() {
+      this.showingDel = !this.showingDel;
+    },
+    deleteRecipe() {
+      this.showingDel = !this.showingDel;
+    },
+  },
 
 };
 </script>
