@@ -1,8 +1,10 @@
 <template>
   <div>
     <img 
-      
+      v-if="svg.sixdots"
+      src='../../../assets/images/menu-recipe-svg.svg'
     >
+    <!--<p>{{key}}</p>-->
     <input-form
       v-if="input"
       id="grams"

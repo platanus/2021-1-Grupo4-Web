@@ -17,6 +17,14 @@ import Register from '../components/users/register.vue';
 import Login from '../components/users/login.vue';
 import LandingPage from '../components/landing-page.vue';
 
+import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
+import RecipeIngredients from '../components/recipes/show/base-recipe-ingredients.vue';
+import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
+import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
+import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
+import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
+import List from '../components/recipes/create/list-component.vue';
+
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
 import RecipeShow from '../components/recipes/show/recipe-show.vue';
@@ -41,6 +49,15 @@ Vue.component('LandingPage', LandingPage);
 Vue.component('IngredientsContainer', IngredientsContainer);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('RecipeShow', RecipeShow);
+Vue.component('RecipeInfo', RecipeInfo);
+Vue.component('RecipeIngredients', RecipeIngredients);
+Vue.component('RecipeIngredient', RecipeIngredient);
+Vue.component('RecipeInstructions', RecipeInstructions);
+Vue.component('InstructionStep', InstructionStep);
+Vue.component('CreateRecipes', CreateRecipes);
+Vue.component('List', List);
+
+Vue.component('NewMenuContainer', NewMenuContainer);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
 

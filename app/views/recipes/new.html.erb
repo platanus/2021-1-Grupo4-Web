@@ -2,10 +2,11 @@
   <side-navbar active-element="recipes"></side-navbar>
   <div class="container ml-64 px-20 py-10 overflow-hidden">
       <create-recipes
-        :ingredients="<%= [
+        :objects="<%= [
           {"name": "Manzana","price": 1000, "quantity": 1.5, "measure": "Kg"}.to_json,
           {"name": "Arándanos","price": 7000, "quantity": 1, "measure": "Kg"}.to_json,
-          {"name": "Leche","price": 400, "quantity": 1, "measure": "Litro"}.to_json] %>"
+          {"name": "Leche","price": 400, "quantity": 1, "measure": "Litro"}.to_json,
+          {"instructions":"SomeInstructions"}.to_json] %>"    
       >
       </create-recipes>
   </div>
