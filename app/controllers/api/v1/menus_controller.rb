@@ -28,16 +28,11 @@ class Api::V1::MenusController < Api::V1::BaseController
   end
 
   def menus
-    @menus ||= user.menus
-  end
-
-  def user
-    @user ||= User.find_by!(id: params[:user_id])
+    @menus ||= current_user.menus
   end
 
   def menu_params
     params.require(:menu).permit(
-      :user_id,
       :name
     )
   end
