@@ -24,11 +24,13 @@ export default {
       title: 'Recetas',
       search: 'Buscar por nombre',
       add: 'Agregar receta',
-      edit: 'Editar receta',
-      delete: 'Eliminar receta',
+      edit: 'Editar',
+      delete: 'Eliminar',
       deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
+      minutes: 'minutos',
       portions: 'Porciones',
+      steps: 'Pasos',
     },
 
     menus: {
