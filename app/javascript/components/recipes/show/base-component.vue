@@ -23,8 +23,11 @@
     </div>
     <!--Info-->
     <recipe-info />
-
     <!--Body-->
+    <div class="flex flex-row items-start w-auto h-auto order-2 self-stretch flex-grow-0 my-4">
+      <recipe-ingredients />
+      <recipe-instructions />
+    </div>
   </div>
 </template>
 

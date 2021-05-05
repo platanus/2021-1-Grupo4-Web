@@ -16,7 +16,7 @@
       <img
         class="h-6 w-6 text-white mr-2"
         svg-inline
-        src="../../../../assets/images/dollar-svg.svg"
+        src="../../../../assets/images/chart-pie-svg.svg"
       >
       <div class="w-24 h-5 font-sans not-italic font-normal text-base text-black order-1 flex-grow-0">
         24 porciones

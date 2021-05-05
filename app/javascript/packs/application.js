@@ -27,6 +27,9 @@ import PageNumber from '../components/recipes/index/base-page-number.vue';
 
 import RecipeShow from '../components/recipes/show/base-component.vue';
 import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
+import RecipeIngredients from '../components/recipes/show/base-recipe-ingredients.vue';
+import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
+import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
 
 Vue.use(VueI18n);
 
@@ -53,6 +56,9 @@ Vue.component('PageNumber', PageNumber);
 
 Vue.component('RecipeShow', RecipeShow);
 Vue.component('RecipeInfo', RecipeInfo);
+Vue.component('RecipeIngredients', RecipeIngredients);
+Vue.component('RecipeIngredient', RecipeIngredient);
+Vue.component('RecipeInstructions', RecipeInstructions);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
