@@ -31,6 +31,9 @@
         },
         "provider": {
           "type": "string"
+        },
+        "provider_id": {
+          "type": "string"
         }
       }
     },
