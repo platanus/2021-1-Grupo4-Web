@@ -30,6 +30,7 @@ import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
 import RecipeIngredients from '../components/recipes/show/base-recipe-ingredients.vue';
 import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
 import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
+import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 
 Vue.use(VueI18n);
 
@@ -59,6 +60,7 @@ Vue.component('RecipeInfo', RecipeInfo);
 Vue.component('RecipeIngredients', RecipeIngredients);
 Vue.component('RecipeIngredient', RecipeIngredient);
 Vue.component('RecipeInstructions', RecipeInstructions);
+Vue.component('InstructionStep', InstructionStep);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
