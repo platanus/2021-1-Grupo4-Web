@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="w-72 h-20 grid grid-cols-4 items-center justify-items-center"
+    <div class="p-4 grid grid-cols-4 items-center justify-items-center"
      :class="color ? 'bg-white' : 'bg-gray-100'">
-      <!--div class="justify-self-start">
+      <div class="justify-self-start">
         <img 
           v-if="svg.sixdots"
+          svg-inline
           src="../../../../assets/images/menu-recipe-svg.svg"
         >
-      </div-->
-      <div>
-        
+
         <input
-          class="w-16 h-12 self-center justify-self-center bg-white text-gray-700 
+          class="w-16 h-12 self-center bg-white text-gray-700 
           border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
           v-if="input"
           id="grams"
@@ -19,7 +18,7 @@
           placeholder="Hay que arreglar el value"
           value=""
         >
-          
+      
       </div>
       <div>
         <span> {{ JSON.parse(text).measure }}</span>

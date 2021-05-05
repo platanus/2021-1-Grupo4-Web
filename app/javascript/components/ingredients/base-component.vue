@@ -10,6 +10,7 @@
     <div class="flex items-center">
       <search
         :placeholder="$t('msg.ingredients.search')"
+        :searchIcon="true"
       />
       <base-button
         :elements="{ placeholder: $t('msg.ingredients.add'),
