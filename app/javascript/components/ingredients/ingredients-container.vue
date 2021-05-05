@@ -11,6 +11,7 @@
       <ingredients-search-bar
         kind="ingredient"
         :placeholder="$t('msg.ingredients.search')"
+        :searchIcon="true"
       />
       <base-button
         :elements="{ placeholder: $t('msg.ingredients.add'),

@@ -8,7 +8,7 @@
       <container
         :text="element"
         :svg="svg"
-        :input="true"
+        :input="input"
         :color="color()"
       />
     </div>
