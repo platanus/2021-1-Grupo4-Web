@@ -83,6 +83,11 @@ export default {
   props: {
     objects: { type: Array, required: true },
   },
+  data() {
+    return {
+      steps: this.objects
+    }
+  },
   methods: {
     create() {
       return null;
@@ -120,6 +125,19 @@ export default {
       }
 
       return newArray;
+    },
+  },
+  computed: {
+    getSteps() {
+      let steps = this.elements[this.elements.length - 1];
+      return steps
+    },
+    getIngredients() {
+      let new_array = []
+      for (let i = 0; i < arr.length - 1; i++) {
+        console.log('hola')
+        
+      }
     },
   },
 

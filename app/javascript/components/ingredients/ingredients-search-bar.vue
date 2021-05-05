@@ -2,11 +2,10 @@
   <div class="flex my-4 items-center justify-start">
     <form method="GET">
       <div class="relative text-yellow-700">
-<<<<<<< HEAD:app/javascript/components/ingredients/ingredients-search-bar.vue
-        <span v-if="searchIcon" class="absolute inset-y-0 left-0 flex items-center pl-2">
-=======
-        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
->>>>>>> feat(recipes-new): new route with basic frontend:app/javascript/components/base/base-search-component.vue
+        <span
+          v-if="searchIcon"
+          class="absolute inset-y-0 left-0 flex items-center pl-2"
+        >
           <button
             type="submit"
             class="p-1 focus:outline-none focus:shadow-outline"
