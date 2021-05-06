@@ -7,6 +7,20 @@ export default {
     save: 'Guardar',
     cancel: 'Cancelar',
 
+    users: {
+      registerTitle: 'Crear Cuenta',
+      loginTitle: 'Iniciar Sesión',
+      labelEmail: 'Correo',
+      labelPassword: 'Contraseña',
+      placeholderEmail: 'Ingresa tu correo',
+      register: 'Registrarse',
+      login: 'Iniciar Sesión',
+      logout: 'Cerrar Sesión',
+      successRegister: 'Usuario creado exitosamente',
+      failRegister: 'No se pudo registrar el usuario',
+      failLogin: 'No se pudo iniciar sesión',
+    },
+
     ingredients: {
       title: 'Ingredientes',
       search: 'Buscar ingrediente...',

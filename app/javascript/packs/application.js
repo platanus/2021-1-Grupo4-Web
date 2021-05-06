@@ -15,6 +15,8 @@ import Search from '../components/base/base-search-component.vue';
 import BaseTable from '../components/base/base-table-component.vue';
 import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
+import Register from '../components/users/register-component.vue';
+import Login from '../components/users/login-component.vue';
 
 import RecipesContainer from '../components/recipes/index/base-component.vue';
 import SearchRecipe from '../components/recipes/index/base-search-recipe.vue';
@@ -38,6 +40,8 @@ Vue.component('Search', Search);
 Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
+Vue.component('Register', Register);
+Vue.component('Login', Login);
 
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('SearchRecipe', SearchRecipe);
