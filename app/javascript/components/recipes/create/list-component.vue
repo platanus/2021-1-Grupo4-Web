@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div 
         v-for="element in elements"
         :key="element"
@@ -12,20 +11,21 @@
         :color="color()"
       />
     </div>
-      <container
-        text="Costo total"
-        :svg="{}"
-        :input="false"
-        :color="false"
-      /> 
+    <container
+      v-if="input"
+      text="Costo total"
+      :svg="{}"
+      :input="false"
+      :color="false"
+    /> 
 
-      <base-button
-          :elements="{
-          placeholder: 'Buscar mas ingredientes',
-          color: 'bg-white hover:bg-gray-300 text-black'
-        }"
-        @click="search"
-      />
+    <base-button
+        :elements="{
+        placeholder: 'Buscar mas ingredientes',
+        color: 'bg-white hover:bg-gray-300 text-black'
+      }"
+      @click="search"
+    />
   </div>
 </template>
 

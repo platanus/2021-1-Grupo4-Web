@@ -6,7 +6,7 @@
         <img
           svg-inline
           src="../../../../assets/images/left-arrow-svg.svg"
-          class="inline-block align-middle h-8 w-8"
+          class="inline-block object-center h-8 w-8"
         >
       </a>
       <h2 class="inline-block text-3xl h-8">
@@ -38,16 +38,16 @@
       <div>
         <list
           placeholder="Ingredientes"
-          :elements="objects"
-          :svg="{sixdots: false, cancel: true, menu_recipe: false}"
+          :elements="getIngredients"
+          :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
         />
       </div>
       <div class="col-span-2">
         <list
           placeholder="Pasos"
-          :elements="objects"
-          :svg="{sixdots: true, cancel: false, menu_recipe: true}"
+          :elements="getSteps"
+          :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
         />
       </div>
@@ -68,11 +68,6 @@ export default {
   props: {
     objects: { type: Array, required: true }
   },
-  data() {
-    return {
-      steps: this.objects
-    }
-  },
   methods: {
     create() {
       return null
@@ -80,17 +75,18 @@ export default {
   },
   computed: {
     getSteps() {
-      let steps = this.elements[this.elements.length - 1];
-      return steps
+      let steps = [this.objects[this.objects.length - 1]];
+      const parsedSteps = JSON.parse(steps).instructions;
+      let new_steps = parsedSteps.split('\n');
+      return new_steps;
     },
     getIngredients() {
       let new_array = []
-      for (let i = 0; i < arr.length - 1; i++) {
-        console.log('hola')
-        
+      for (let i = 0; i < this.objects.length - 1; i++) {
+        new_array.push(this.objects[i]);
       }
+      return new_array
     },
   },
-
 };
 </script>
