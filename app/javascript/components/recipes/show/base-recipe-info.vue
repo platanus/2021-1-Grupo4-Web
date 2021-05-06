@@ -7,7 +7,7 @@
         svg-inline
         src="../../../../assets/images/dollar-svg.svg"
       >
-      <div class="w-10 h-5 font-sans not-italic font-normal text-base text-black flex-grow-0">
+      <div class="w-10 h-5 font-sans font-normal text-base text-black flex-grow-0">
         17.000
       </div>
     </div>
@@ -18,7 +18,7 @@
         svg-inline
         src="../../../../assets/images/chart-pie-svg.svg"
       >
-      <div class="w-24 h-5 font-sans not-italic font-normal text-base text-black flex-grow-0">
+      <div class="w-24 h-5 font-sans font-normal text-base text-black flex-grow-0">
         12 {{ $t('msg.recipes.portions') }}
       </div>
     </div>
@@ -29,7 +29,7 @@
         svg-inline
         src="../../../../assets/images/clock-svg.svg"
       >
-      <div class="w-36 h-5 font-sans not-italic font-normal text-base text-black flex-grow-0">
+      <div class="w-36 h-5 font-sans font-normal text-base text-black flex-grow-0">
         105 {{ $t('msg.recipes.minutes') }}
       </div>
     </div>
