@@ -8,9 +8,34 @@
         {{ $t('msg.recipes.add') }}
       </span>
     </div>
-    <search-recipe :placeholder="$t('msg.recipes.search')" />
+    <search-recipe
+      :placeholder="$t('msg.recipes.search')"
+      @filterByPrice="toggleFilterByPriceModal"
+    />
     <recipes :allrecipes="recipes" />
     <pagination />
+    <!--Price Filter Modal-->
+    <filter-popup
+      @ok="filterByPrice"
+      @cancel="toggleFilterByPriceModal"
+      v-if="showingFilterByPrice"
+      :title="Price"
+      :min="Mínimo"
+      :max="Máximo"
+    >
+      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
+    </filter-popup>
+    <!--Portions Filter Modal-->
+    <filter-popup
+      @ok="filterByPortions"
+      @cancel="toggleFilterByPortionsModal"
+      v-if="showingFilterByPortions"
+      :title="Porciones"
+      :min="Mínimas"
+      :max="Máximas"
+    >
+      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
+    </filter-popup>
   </div>
 </template>
 
@@ -18,6 +43,26 @@
 export default {
   props: {
     recipes: { type: Array, required: true },
+  },
+  data() {
+    return {
+      showingFilterByPrice: false,
+      showingFilterByPortions: false,
+    };
+  },
+  methods: {
+    toggleFilterByPriceModal() {
+      this.showingFilterByPrice = !this.showingFilterByPrice;
+    },
+    filterByPrice() {
+      this.showingFilterByPrice = !this.showingFilterByPrice;
+    },
+    toggleFilterByPortionsModal() {
+      this.showingFilterByPortions = !this.showingFilterByPortions;
+    },
+    filterByPortions() {
+      this.showingFilterByPortions = !this.showingFilterByPortions;
+    },
   },
 };
 </script>
