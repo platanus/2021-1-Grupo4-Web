@@ -282,37 +282,30 @@
     "menu": {
       "type": "object",
       "properties": {
-        "attributes": {
-          "type": "object",
-          "properties": {
-            "user_id": {
-              "type": "integer",
-              "example": 666,
-              "x-nullable": true
-            },
-            "name": {
-              "type": "string",
-              "example": "Some name",
-              "x-nullable": true
-            },
-            "created_at": {
-              "type": "string",
-              "example": "1984-06-04 09:00",
-              "x-nullable": true
-            },
-            "updated_at": {
-              "type": "string",
-              "example": "1984-06-04 09:00",
-              "x-nullable": true
-            }
-          },
-          "required": []
+        "user_id": {
+          "type": "integer",
+          "example": 666,
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string",
+          "example": "Some name",
+          "x-nullable": true
+        },
+        "created_at": {
+          "type": "string",
+          "example": "1984-06-04 09:00",
+          "x-nullable": true
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "1984-06-04 09:00",
+          "x-nullable": true
         }
       },
       "required": [
-        "id",
-        "type",
-        "attributes"
+        "user_id",
+        "name"
       ]
     },
     "menu_response": {
@@ -365,7 +358,7 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/menu"
+            "$ref": "#/definitions/menu_response"
           }
         }
       },
@@ -377,7 +370,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/menu"
+          "$ref": "#/definitions/menu_response"
         }
       },
       "required": [
@@ -710,7 +703,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "ingredient": {
+                "menu": {
                   "$ref": "#/definitions/menu"
                 }
               },
@@ -722,7 +715,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ingredient updated"
+            "description": "menu updated"
           },
           "401": {
             "description": "user unauthorized"

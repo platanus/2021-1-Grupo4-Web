@@ -17,6 +17,7 @@ API_V1 = {
     providers_collection: PROVIDERS_COLLECTION_SCHEMA,
     provider_resource: PROVIDER_RESOURCE_SCHEMA,
     menu: MENU_SCHEMA,
+    menu_response: MENU_RESPONSE_SCHEMA,
     menus_collection: MENUS_COLLECTION_SCHEMA,
     menu_resource: MENU_RESOURCE_SCHEMA
   }

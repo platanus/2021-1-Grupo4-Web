@@ -1,6 +1,16 @@
 MENU_SCHEMA = {
   type: :object,
   properties: {
+    name: { type: :string, example: 'Some name', 'x-nullable': true }
+  },
+  required: [
+    :name
+  ]
+}
+
+MENU_RESPONSE_SCHEMA = {
+  type: :object,
+  properties: {
     id: { type: :string, example: '1' },
     type: { type: :string, example: 'menu' },
     attributes: {
@@ -26,7 +36,7 @@ MENUS_COLLECTION_SCHEMA = {
   properties: {
     data: {
       type: "array",
-      items: { "$ref" => "#/definitions/menu" }
+      items: { "$ref" => "#/definitions/menu_response" }
     }
   },
   required: [
@@ -37,7 +47,7 @@ MENUS_COLLECTION_SCHEMA = {
 MENU_RESOURCE_SCHEMA = {
   type: "object",
   properties: {
-    data: { "$ref" => "#/definitions/menu" }
+    data: { "$ref" => "#/definitions/menu_response" }
   },
   required: [
     :data
