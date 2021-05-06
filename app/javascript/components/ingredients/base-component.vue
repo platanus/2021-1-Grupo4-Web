@@ -85,7 +85,7 @@
 
 <script>
 
-import { getIngredients, postIngredient } from './../../ingredientsRequests.js';
+import { getIngredients, postIngredient, deleteIngredient } from './../../ingredientsRequests.js';
 
 export default {
 
@@ -95,6 +95,7 @@ export default {
       showingEdit: false,
       showingDel: false,
       ingredientToEdit: {},
+      ingredientToDelete: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
       ingredients: [],
       status: '',
@@ -112,8 +113,12 @@ export default {
       this.status = response.status;
       this.error = '';
       this.response = response;
-      this.ingredients = response.data.data.map((element) => element.attributes);
-      console.log(this.ingredients);
+      this.ingredients = response.data.data.map(function(element) {
+        return {
+          id: element.id,
+          ...element.attributes,
+        }
+      });
     } catch (error) {
       this.status = error.response.status;
       this.error = error;
@@ -128,8 +133,9 @@ export default {
       this.showingEdit = !this.showingEdit;
       this.ingredientToEdit = ingredient;
     },
-    toggleDelModal() {
+    toggleDelModal(ingredient) {
       this.showingDel = !this.showingDel;
+      this.ingredientToDelete = ingredient;
     },
     async addIngredient() {
       const newIngredient = this.$refs.ingredientInfo.form;
@@ -149,8 +155,18 @@ export default {
     editIngredient() {
       this.showingEdit = !this.showingEdit;
     },
-    deleteIngredient() {
+    async deleteIngredient() {
       this.showingDel = !this.showingDel;
+      const token = localStorage.getItem('token');
+      const email = localStorage.getItem('email');
+      console.log(token, email, this.ingredientToDelete.id);
+      try {
+        const response = await deleteIngredient(email, token, this.ingredientToDelete.id);
+        this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
+      } catch (error) {
+        this.status = error.response.status;
+        this.error = error;
+      }
     },
   },
 };
