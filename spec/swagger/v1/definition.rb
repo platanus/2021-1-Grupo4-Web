@@ -20,5 +20,9 @@ API_V1 = {
     menu_response: MENU_RESPONSE_SCHEMA,
     menus_collection: MENUS_COLLECTION_SCHEMA,
     menu_resource: MENU_RESOURCE_SCHEMA
+    recipe: RECIPE_SCHEMA,
+    recipes_collection: RECIPES_COLLECTION_SCHEMA,
+    recipe_resource: RECIPE_RESOURCE_SCHEMA,
+    recipe_response: RECIPE_RESPONSE_SCHEMA
   }
 }
