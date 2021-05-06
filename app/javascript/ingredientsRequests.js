@@ -28,4 +28,14 @@ async function postIngredient(newIngredient, email, token) {
           } }));
 };
 
-export { getIngredients, postIngredient };
+async function deleteIngredient(email, token, ingredient_id) {
+  return (axios
+  .delete(`https://pl-super-kitchen-staging.herokuapp.com/api/v1/ingredients/${ingredient_id}`, { 
+    params: {
+    'user_email': email,
+    'user_token': token,
+    } 
+  }));
+};
+
+export { getIngredients, postIngredient, deleteIngredient };

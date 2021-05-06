@@ -36,7 +36,7 @@
               del:true
             }"
             @edit="editIngredient(element)"
-            @del="deleteIngredient"
+            @del="deleteIngredient(element)"
           />
         </td>
       </tr>
@@ -57,8 +57,8 @@ export default {
     editIngredient(element) {
       this.$emit('edit', element);
     },
-    deleteIngredient() {
-      this.$emit('del');
+    deleteIngredient(element) {
+      this.$emit('del', element);
     },
   },
 
