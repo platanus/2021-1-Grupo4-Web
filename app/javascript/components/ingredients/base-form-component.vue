@@ -135,6 +135,18 @@ export default {
     };
   },
 
+  created() {
+    this.form = {
+      providerId: this.ingredient.provider_id,
+      name: this.ingredient.name,
+      sku: this.ingredient.sku,
+      price: this.ingredient.price,
+      currency: this.ingredient.currency,
+      quantity: this.ingredient.quantity,
+      measure: this.ingredient.measure,
+    };
+  },
+
   computed: {
     formUnits() {
       if (!this.editMode) {

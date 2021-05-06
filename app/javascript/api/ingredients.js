@@ -38,4 +38,24 @@ async function deleteIngredient(email, token, ingredientId) {
     }));
 }
 
-export { getIngredients, postIngredient, deleteIngredient };
+async function editIngredient(email, token, ingredientId, ingredientInfo) {
+  return (axios
+    .put(`/api/v1/ingredients/${ingredientId}`, {
+      ingredient: {
+        'provider_id': ingredientInfo.providerId,
+        'name': ingredientInfo.name,
+        'sku': ingredientInfo.sku,
+        'price': ingredientInfo.price,
+        'currency': ingredientInfo.currency,
+        'quantity': ingredientInfo.quantity,
+        'measure': ingredientInfo.measure,
+      },
+    }, {
+      params: {
+        'user_email': email,
+        'user_token': token,
+      },
+    }));
+}
+
+export { getIngredients, postIngredient, deleteIngredient, editIngredient };

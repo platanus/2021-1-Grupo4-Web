@@ -47,7 +47,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
-        ref="ingredientInfo"
+        ref="addIngredientInfo"
         :units="['Kg','Litro']"
         :edit-mode="false"
       />
@@ -63,6 +63,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
+        ref="editIngredientInfo"
         :units="['Kg','Litro']"
         :edit-mode="true"
         :ingredient="this.ingredientToEdit"
@@ -85,7 +86,7 @@
 
 <script>
 
-import { getIngredients, postIngredient, deleteIngredient } from './../../api/ingredients.js';
+import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
 
 export default {
 
@@ -109,16 +110,13 @@ export default {
 
     try {
       const response = await getIngredients(email, token);
-      this.status = response.status;
-      this.error = '';
-      this.response = response;
       this.ingredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
+      this.successResponse(response);
     } catch (error) {
-      this.status = error.response.status;
-      this.error = error;
+      this.errorResponse(error);
     }
   },
 
@@ -126,32 +124,45 @@ export default {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
     },
+
     toggleEditModal(ingredient) {
       this.showingEdit = !this.showingEdit;
       this.ingredientToEdit = ingredient;
     },
+
     toggleDelModal(ingredient) {
       this.showingDel = !this.showingDel;
       this.ingredientToDelete = ingredient;
     },
+
     async addIngredient() {
-      const newIngredient = this.$refs.ingredientInfo.form;
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
       this.showingAdd = !this.showingAdd;
 
       try {
-        const response = await postIngredient(newIngredient, email, token);
+        const response = await postIngredient(this.$refs.addIngredientInfo.form, email, token);
         const ingredientToAdd = { id: response.data.data.id, ...response.data.data.attributes };
         this.ingredients.push(ingredientToAdd);
+        this.successResponse(response);
       } catch (error) {
-        this.status = error.response.status;
-        this.error = error;
+        this.errorResponse(error);
       }
     },
-    editIngredient() {
+
+    async editIngredient() {
       this.showingEdit = !this.showingEdit;
+      const token = localStorage.getItem('token');
+      const email = localStorage.getItem('email');
+      try {
+        const res = await editIngredient(email, token, this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
+        this.updateIngredient(res);
+        this.successResponse(res);
+      } catch (error) {
+        this.errorResponse(error);
+      }
     },
+
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
       const token = localStorage.getItem('token');
@@ -159,12 +170,27 @@ export default {
       try {
         const response = await deleteIngredient(email, token, this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
-        this.status = response.status;
-        this.error = '';
+        this.successResponse(response);
       } catch (error) {
-        this.status = error.response.status;
-        this.error = error;
+        this.errorResponse(error);
       }
+    },
+
+    async updateIngredient(res) {
+      const ingredientEdited = { id: this.ingredientToEdit.id, ...JSON.parse(res.config.data).ingredient };
+      const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
+      this.ingredients.splice(objectIndex, 1);
+      this.ingredients.splice(objectIndex, 0, ingredientEdited);
+    },
+
+    async successResponse(response) {
+      this.status = response.status;
+      this.error = '';
+    },
+
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
     },
   },
 };
