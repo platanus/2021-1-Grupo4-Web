@@ -460,9 +460,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
