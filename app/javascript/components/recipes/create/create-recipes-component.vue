@@ -83,11 +83,6 @@ export default {
   props: {
     objects: { type: Array, required: true },
   },
-  data() {
-    return {
-      steps: this.objects
-    }
-  },
   methods: {
     create() {
       return null;
@@ -110,36 +105,5 @@ export default {
       return newArray;
     },
   },
-  computed: {
-    getSteps() {
-      const steps = [this.objects[this.objects.length - 1]];
-      const parsedSteps = JSON.parse(steps).instructions;
-      const newSteps = parsedSteps.split('\n');
-
-      return newSteps;
-    },
-    getIngredients() {
-      const newArray = [];
-      for (let i = 0; i < this.objects.length - 1; i++) {
-        newArray.push(this.objects[i]);
-      }
-
-      return newArray;
-    },
-  },
-  computed: {
-    getSteps() {
-      let steps = this.elements[this.elements.length - 1];
-      return steps
-    },
-    getIngredients() {
-      let new_array = []
-      for (let i = 0; i < arr.length - 1; i++) {
-        console.log('hola')
-        
-      }
-    },
-  },
-
 };
 </script>
