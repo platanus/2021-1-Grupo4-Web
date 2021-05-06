@@ -85,7 +85,7 @@
 
 <script>
 
-import { getIngredients, postIngredient, deleteIngredient } from './../../ingredientsRequests.js';
+import { getIngredients, postIngredient, deleteIngredient } from './../../api/ingredients.js';
 
 export default {
 
@@ -100,7 +100,6 @@ export default {
       ingredients: [],
       status: '',
       error: '',
-      response: '',
     };
   },
 
@@ -113,12 +112,10 @@ export default {
       this.status = response.status;
       this.error = '';
       this.response = response;
-      this.ingredients = response.data.data.map(function(element) {
-        return {
-          id: element.id,
-          ...element.attributes,
-        }
-      });
+      this.ingredients = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
     } catch (error) {
       this.status = error.response.status;
       this.error = error;
@@ -141,12 +138,12 @@ export default {
       const newIngredient = this.$refs.ingredientInfo.form;
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
-
       this.showingAdd = !this.showingAdd;
 
       try {
         const response = await postIngredient(newIngredient, email, token);
-        this.ingredients.push(response.data.data.attributes);
+        const ingredientToAdd = { id: response.data.data.id, ...response.data.data.attributes };
+        this.ingredients.push(ingredientToAdd);
       } catch (error) {
         this.status = error.response.status;
         this.error = error;
@@ -159,10 +156,11 @@ export default {
       this.showingDel = !this.showingDel;
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
-      console.log(token, email, this.ingredientToDelete.id);
       try {
         const response = await deleteIngredient(email, token, this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
+        this.status = response.status;
+        this.error = '';
       } catch (error) {
         this.status = error.response.status;
         this.error = error;
