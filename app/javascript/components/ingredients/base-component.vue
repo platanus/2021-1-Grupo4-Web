@@ -85,7 +85,7 @@
 
 <script>
 
-import axios from 'axios';
+import { getIngredients, postIngredient } from './../../ingredientsRequests.js';
 
 export default {
 
@@ -103,25 +103,21 @@ export default {
     };
   },
 
-  created() {
+  async created() {
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');
 
-    axios
-      .get('https://pl-super-kitchen-staging.herokuapp.com/api/v1/ingredients', { params: {
-        'user_email': email,
-        'user_token': token,
-      } })
-      .then(response => {
-        this.status = response.status;
-        this.error = '';
-        this.response = response;
-        this.ingredients = response.data.data.map((element) => element.attributes);
-      })
-      .catch(error => {
-        this.status = 400;
-        this.error = error;
-      });
+    try {
+      const response = await getIngredients(email, token);
+      this.status = response.status;
+      this.error = '';
+      this.response = response;
+      this.ingredients = response.data.data.map((element) => element.attributes);
+      console.log(this.ingredients);
+    } catch (error) {
+      this.status = error.response.status;
+      this.error = error;
+    }
   },
 
   methods: {
@@ -135,37 +131,20 @@ export default {
     toggleDelModal() {
       this.showingDel = !this.showingDel;
     },
-    addIngredient() {
+    async addIngredient() {
       const newIngredient = this.$refs.ingredientInfo.form;
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
 
       this.showingAdd = !this.showingAdd;
 
-      axios
-        .post('https://pl-super-kitchen-staging.herokuapp.com/api/v1/ingredients', {
-          ingredient: {
-            'provider_id': newIngredient.providerId,
-            'name': newIngredient.name,
-            'sku': newIngredient.sku,
-            'price': newIngredient.price,
-            'currency': newIngredient.currency,
-            'quantity': newIngredient.quantity,
-            'measure': newIngredient.measure,
-          },
-        }, { params: {
-          'user_email': email,
-          'user_token': token,
-        } })
-        .then(response => {
-          this.status = response.status;
-          this.error = '';
-          this.response = response;
-        })
-        .catch(error => {
-          this.status = 400;
-          this.error = error;
-        });
+      try {
+        const response = await postIngredient(newIngredient, email, token);
+        this.ingredients.push(response.data.data.attributes);
+      } catch (error) {
+        this.status = error.response.status;
+        this.error = error;
+      }
     },
     editIngredient() {
       this.showingEdit = !this.showingEdit;
