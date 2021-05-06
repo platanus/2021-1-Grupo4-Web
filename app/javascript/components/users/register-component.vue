@@ -2,7 +2,7 @@
   <div class="w-full max-w-xs">
     <!--Alert-->
     <div
-      v-if="status===400"
+      v-if="error"
       class="bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-3 mb-4"
       role="alert"
     >
@@ -65,7 +65,7 @@
 
 <script>
 
-import axios from 'axios';
+import { registerUser } from './../../api/users.js';
 
 export default {
   data() {
@@ -75,38 +75,23 @@ export default {
         userPassword: '',
       },
       status: '',
-      userToken: '',
       error: '',
     };
   },
 
   methods: {
-    register() {
-      axios
-        .post('https://pl-super-kitchen-staging.herokuapp.com/api/v1/users/registrations', {
-          user: {
-            email: this.form.userEmail,
-            password: this.form.userPassword,
-          },
-        })
-        .then(response => {
-          this.status = response.status;
-          this.userToken = response.data.data.attributes.authentication_token;
-          window.location.href = '/users/sign_in';
-        })
-        .catch(error => {
-          this.status = 400;
-          this.error = error;
-          this.resetForm();
-        });
-    },
 
-    resetForm() {
-      Object.keys(this.form).forEach((key) => {
-        this.form[key] = '';
-      });
+    async register() {
+      try {
+        const response = await registerUser(this.form.userEmail, this.form.userPassword);
+        this.status = response.status;
+        this.error = '';
+        window.location.href = '/users/sign_in';
+      } catch (error) {
+        this.status = error.response.status;
+        this.error = error;
+      }
     },
-
   },
 
 };
