@@ -1,9 +1,9 @@
 PROVIDER_SCHEMA = {
   type: :object,
   properties: {
-    name: { type: :string, example: 'Some name', 'x-nullable': true },
-    address: { type: :string, example: 'Some address', 'x-nullable': true },
-    country: { type: :string, example: 'Some country', 'x-nullable': true }
+    name: { type: :string, example: 'Jumbo', 'x-nullable': true },
+    address: { type: :string, example: 'Av. Francisco Bilbao 223', 'x-nullable': true },
+    country: { type: :string, example: 'Chile', 'x-nullable': true }
   },
   required: [
     :name,
@@ -20,9 +20,9 @@ PROVIDER_RESPONSE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
-        name: { type: :string, example: 'Some name', 'x-nullable': true },
-        address: { type: :string, example: 'Some address', 'x-nullable': true },
-        country: { type: :string, example: 'Some country', 'x-nullable': true },
+        name: { type: :string, example: 'Jumbo', 'x-nullable': true },
+        address: { type: :string, example: 'Av. Francisco Bilbao 223', 'x-nullable': true },
+        country: { type: :string, example: 'Chile', 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },
