@@ -35,7 +35,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
     params.require(:recipe).permit(
       :name,
       :portions,
-      :instructions,
       :cook_minutes
     )
   end
