@@ -11,8 +11,4 @@ class Api::V1::RecipeSerializer < ActiveModel::Serializer
     :ingredients
     :steps
   )
-
-  def steps
-    object.steps.order(:number)
-  end
 end
