@@ -29,6 +29,9 @@ export default {
     filterByPrice() {
       this.$emit('filterByPrice');
     },
+    filterByPortions() {
+      this.$emit('filterByPortions');
+    },
   },
 };
 </script>

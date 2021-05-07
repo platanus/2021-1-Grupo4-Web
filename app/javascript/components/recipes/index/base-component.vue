@@ -11,28 +11,29 @@
     <search-recipe
       :placeholder="$t('msg.recipes.search')"
       @filterByPrice="toggleFilterByPriceModal"
+      @filterByPortions="toggleFilterByPortionsModal"
     />
     <recipes :allrecipes="recipes" />
     <pagination />
     <!--Price Filter Modal-->
     <filter-popup
-      @ok="filterByPrice"
+      @ok="toggleFilterByPriceModal"
       @cancel="toggleFilterByPriceModal"
       v-if="showingFilterByPrice"
-      :title="Price"
-      :min="Mínimo"
-      :max="Máximo"
+      :title="$t('msg.recipes.filter.price')"
+      :min="$t('msg.recipes.filter.minPrice')"
+      :max="$t('msg.recipes.filter.maxPrice')"
     >
       <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
     </filter-popup>
     <!--Portions Filter Modal-->
     <filter-popup
-      @ok="filterByPortions"
+      @ok="toggleFilterByPortionsModal"
       @cancel="toggleFilterByPortionsModal"
       v-if="showingFilterByPortions"
-      :title="Porciones"
-      :min="Mínimas"
-      :max="Máximas"
+      :title="$t('msg.recipes.filter.portions')"
+      :min="$t('msg.recipes.filter.minPortions')"
+      :max="$t('msg.recipes.filter.maxPortions')"
     >
       <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
     </filter-popup>
@@ -54,13 +55,7 @@ export default {
     toggleFilterByPriceModal() {
       this.showingFilterByPrice = !this.showingFilterByPrice;
     },
-    filterByPrice() {
-      this.showingFilterByPrice = !this.showingFilterByPrice;
-    },
     toggleFilterByPortionsModal() {
-      this.showingFilterByPortions = !this.showingFilterByPortions;
-    },
-    filterByPortions() {
       this.showingFilterByPortions = !this.showingFilterByPortions;
     },
   },
