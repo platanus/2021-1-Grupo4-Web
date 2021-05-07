@@ -9,7 +9,7 @@
     "recipe_step_update": {
       "type": "object",
       "properties": {
-        "number": {
+        "step_order_position": {
           "type": "integer",
           "example": 2,
           "x-nullable": false
@@ -35,9 +35,9 @@
         "attributes": {
           "type": "object",
           "properties": {
-            "number": {
+            "step_order_rank": {
               "type": "integer",
-              "example": 1,
+              "example": 0,
               "x-nullable": true
             },
             "description": {
@@ -566,9 +566,14 @@
               }
             },
             "steps": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/recipe_step_response"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/recipe_step_response"
+                  }
+                }
               }
             }
           },

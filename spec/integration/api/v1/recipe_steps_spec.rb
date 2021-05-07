@@ -82,7 +82,7 @@ describe 'Api::V1::RecipeSteps', swagger_doc: 'v1/swagger.json' do
       response '200', 'recipe_step updated' do
         let(:recipe_step) do
           {
-            number: 1,
+            step_order_position: 1,
             description: 'Some description'
           }
         end

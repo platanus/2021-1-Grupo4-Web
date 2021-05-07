@@ -8,7 +8,7 @@ RECIPE_STEP_SCHEMA = {
 RECIPE_STEP_UPDATE_SCHEMA = {
   type: :object,
   properties: {
-    number: { type: :integer, example: 2, 'x-nullable': false },
+    step_order_position: { type: :integer, example: 2, 'x-nullable': false },
     description: { type: :string, example: 'Prender el horno', 'x-nullable': true }
   }
 }
@@ -21,7 +21,7 @@ RECIPE_STEP_RESPONSE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
-        number: { type: :integer, example: 1, 'x-nullable': true },
+        step_order_rank: { type: :integer, example: 0, 'x-nullable': true },
         description: { type: :string, example: 'Prender el horno', 'x-nullable': true },
         media_url: { type: :string, example: 'https://some-media-url.com', 'x-nullable': true },
         recipe_id: { type: :integer, example: 1, 'x-nullable': true },

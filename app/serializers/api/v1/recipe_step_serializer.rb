@@ -2,7 +2,7 @@ class Api::V1::RecipeStepSerializer < ActiveModel::Serializer
   type :recipe_step
 
   attributes(
-    :number,
+    :step_order_rank,
     :description,
     :media_url,
     :recipe_id,

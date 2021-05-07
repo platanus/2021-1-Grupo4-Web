@@ -33,7 +33,7 @@ class Api::V1::RecipeStepsController < Api::V1::BaseController
 
   def recipe_step_params
     params.require(:recipe_step).permit(
-      :number,
+      :step_order_position,
       :description,
       :media_url,
       :recipe_id
