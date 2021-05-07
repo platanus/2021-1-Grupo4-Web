@@ -7,7 +7,7 @@ INGREDIENT_SCHEMA = {
     price: { type: :integer, example: 2990, 'x-nullable': true },
     currency: { type: :string, example: 'CLP', 'x-nullable': true },
     quantity: { type: :integer, example: 2, 'x-nullable': true },
-    measure: { type: :string, example: 'unidad', 'x-nullable': true },
+    measure: { type: :string, example: 'unidad', 'x-nullable': true }
   },
   required: [
     :name,
