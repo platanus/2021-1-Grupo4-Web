@@ -16,7 +16,7 @@ RECIPE_RESPONSE_SCHEMA = {
   type: :object,
   properties: {
     id: { type: :string, example: '1' },
-    type: { type: :string, example: 'ingredient' },
+    type: { type: :string, example: 'recipe' },
     attributes: {
       type: :object,
       properties: {
