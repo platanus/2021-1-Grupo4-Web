@@ -2,11 +2,12 @@ Rails.application.routes.draw do
   root to: 'home#index'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :recipe_steps, only: [:update, :destroy]
       resources :ingredients
       resources :providers
-      resources :menus
-      resources :recipes
+      resources :recipes do
+        resources :recipe_steps, only: [:create, :update, :destroy]
+      end
+
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]

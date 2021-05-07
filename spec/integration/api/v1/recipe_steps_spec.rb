@@ -51,7 +51,8 @@ describe 'Api::V1::RecipeSteps', swagger_doc: 'v1/swagger.json' do
     end
   end
 
-  path '/recipe_steps/{id}' do
+  path '/recipes/{recipe_id}/recipe_steps/{id}' do
+    parameter name: :recipe_id, in: :path, type: :integer
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
 

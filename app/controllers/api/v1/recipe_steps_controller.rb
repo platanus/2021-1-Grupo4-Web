@@ -16,7 +16,7 @@ class Api::V1::RecipeStepsController < Api::V1::BaseController
   private
 
   def recipe_step
-    @recipe_step ||= RecipeStep.find_by!(id: params[:id])
+    @recipe_step ||= recipe_steps.find_by!(id: params[:id])
   end
 
   def recipe_steps

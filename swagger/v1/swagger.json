@@ -66,9 +66,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -255,9 +253,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -356,9 +352,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -578,9 +572,7 @@
               }
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -1213,8 +1205,14 @@
         }
       }
     },
-    "/recipe_steps/{id}": {
+    "/recipes/{recipe_id}/recipe_steps/{id}": {
       "parameters": [
+        {
+          "name": "recipe_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
         {
           "name": "user_email",
           "in": "query",
