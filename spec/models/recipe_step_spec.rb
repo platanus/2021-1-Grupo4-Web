@@ -98,6 +98,14 @@ RSpec.describe RecipeStep, type: :model do
         .and change { cook.reload.number }.from(2).to(1)
         .and change { prepare.reload.number }.from(1).to(4)
     end
+
+    it 'does not move anything if change of step description' do
+      expect { prepare.update(description: 'Era sal, no azúcar jaja') }
+        .to change { decorate.reload.number }.by(0)
+        .and change { bake.reload.number }.by(0)
+        .and change { cook.reload.number }.by(0)
+        .and change { prepare.reload.number }.by(0)
+    end
     # rubocop:enable Layout/MultilineMethodCallIndentation
   end
 
