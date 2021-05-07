@@ -9,15 +9,48 @@
       </span>
     </div>
     <search-recipe :placeholder="$t('msg.recipes.search')" />
-    <recipes :allrecipes="recipes" />
-    <pagination />
+    <p
+      class="my-4"
+      v-if="this.recipes.length===0"
+    >
+      {{ $t('msg.notElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
+    </p>
+    <div v-else>
+      <recipes
+        :allrecipes="this.recipes"
+      />
+      <pagination />
+    </div>
   </div>
 </template>
 
 <script>
+
+import { getRecipes } from './../../../api/recipes.js';
+
 export default {
-  props: {
-    recipes: { type: Array, required: true },
+  data() {
+    return {
+      recipeToEdit: {},
+      recipeToDelete: {},
+      recipes: [],
+      status: '',
+      error: '',
+    };
+  },
+  async created() {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+    try {
+      const response = await getRecipes(email, token);
+      this.recipes = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
   },
 };
 </script>

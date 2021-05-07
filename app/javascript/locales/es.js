@@ -6,6 +6,7 @@ export default {
     yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
+    notElements: 'Aún no tienes',
 
     users: {
       registerTitle: 'Crear Cuenta',
