@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2021_05_07_003416) do
   end
 
   create_table "recipe_steps", force: :cascade do |t|
-    t.integer "number"
+    t.integer "step_order"
     t.text "description"
     t.string "media_url"
     t.bigint "recipe_id", null: false
