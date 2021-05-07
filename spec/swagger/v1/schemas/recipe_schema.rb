@@ -29,6 +29,10 @@ RECIPE_RESPONSE_SCHEMA = {
         ingredients: {
           type: "array",
           items: { "$ref" => "#/definitions/ingredient_response" }
+        },
+        steps: {
+          type: "array",
+          items: { "$ref" => "#/definitions/recipe_step_response" }
         }
       },
       required: []
