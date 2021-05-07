@@ -52,5 +52,15 @@ export default {
       this.errorResponse(error);
     }
   },
+  methods: {
+    async successResponse(response) {
+      this.status = response.status;
+      this.error = '';
+    },
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
+    },
+  },
 };
 </script>
