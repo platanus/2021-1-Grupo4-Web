@@ -5,7 +5,7 @@
         {{ $t('msg.menus.title') }}
       </div>
     </div>
-    <div class="flex flex-col p-10 w-auto h-96 bg-gray-50 flex-grow-0 my-10">
+    <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <search-menu :placeholder="$t('msg.menus.search')" />
       <base-table
         :dots="true"
@@ -28,7 +28,7 @@ export default {
     return {
       showingEdit: false,
       showingDel: false,
-      tableHeader: ['name', 'total price', 'number of recipes', 'recipes'],
+      tableHeader: ['name', 'totalPrice', 'recipesQuantity', 'recipes'],
     };
   },
 
