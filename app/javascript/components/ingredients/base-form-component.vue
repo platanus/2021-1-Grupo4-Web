@@ -136,14 +136,24 @@ export default {
   },
 
   created() {
+    const {
+      provider_id: providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
+    } = this.ingredient;
+
     this.form = {
-      providerId: this.ingredient.provider_id,
-      name: this.ingredient.name,
-      sku: this.ingredient.sku,
-      price: this.ingredient.price,
-      currency: this.ingredient.currency,
-      quantity: this.ingredient.quantity,
-      measure: this.ingredient.measure,
+      providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
     };
   },
 

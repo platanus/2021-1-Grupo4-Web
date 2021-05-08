@@ -10,22 +10,14 @@ async function getIngredients(email, token) {
     }));
 }
 
-async function postIngredient(newIngredient, email, token) {
+async function postIngredient(ingredient, email, token) {
   return (axios
-    .post('/api/v1/ingredients', {
-      ingredient: {
-        'provider_id': newIngredient.providerId,
-        'name': newIngredient.name,
-        'sku': newIngredient.sku,
-        'price': newIngredient.price,
-        'currency': newIngredient.currency,
-        'quantity': newIngredient.quantity,
-        'measure': newIngredient.measure,
-      },
-    }, { params: {
-      'user_email': email,
-      'user_token': token,
-    } }));
+    .post('/api/v1/ingredients',
+      { ingredient },
+      { params: {
+        'user_email': email,
+        'user_token': token,
+      } }));
 }
 
 async function deleteIngredient(email, token, ingredientId) {

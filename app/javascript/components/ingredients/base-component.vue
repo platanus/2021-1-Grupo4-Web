@@ -24,7 +24,7 @@
       <p
         v-if="this.ingredients.length===0"
       >
-        {{ $t('msg.notElements') }} {{ $t('msg.ingredients.title') }}
+        {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
       </p>
       <base-table
         v-else
@@ -141,10 +141,15 @@ export default {
       this.showingAdd = !this.showingAdd;
 
       try {
-        const response = await postIngredient(this.$refs.addIngredientInfo.form, email, token);
-        const ingredientToAdd = { id: response.data.data.id, ...response.data.data.attributes };
+        const {
+          status,
+          data:
+            { data: { id, attributes },
+            },
+        } = await postIngredient(this.$refs.addIngredientInfo.form, email, token);
+        const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
-        this.successResponse(response);
+        this.successResponse(status);
       } catch (error) {
         this.errorResponse(error);
       }
@@ -183,8 +188,8 @@ export default {
       this.ingredients.splice(objectIndex, 0, ingredientEdited);
     },
 
-    async successResponse(response) {
-      this.status = response.status;
+    async successResponse(status) {
+      this.status = status;
       this.error = '';
     },
 
