@@ -46,7 +46,7 @@ export default {
     },
 
     menus: {
-      title: 'Menús',
+      title: 'Mis menús',
       search: 'Buscar menú',
       add: 'Agregar menú',
       edit: 'Editar menú',
