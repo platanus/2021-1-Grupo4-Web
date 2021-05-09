@@ -11,10 +11,11 @@ async function registerUser(userEmail, userPassword) {
         password: userPassword,
       },
     },
-    { headers: {
-      'X-CSRF-Token': CSRFToken,
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
     },
-  }
     ));
 }
 
@@ -26,12 +27,25 @@ async function loginUser(userEmail, userPassword) {
         password: userPassword,
       },
     },
-    { headers: {
-      'X-CSRF-Token': CSRFToken,
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
     },
-  }
     )
   );
 }
 
-export { registerUser, loginUser };
+async function logoutUser() {
+  return (axios
+    .delete('/api/v1/users/log_out',
+      {
+        headers: {
+          'X-CSRF-Token': CSRFToken,
+        },
+      },
+    )
+  );
+}
+
+export { registerUser, loginUser, logoutUser };

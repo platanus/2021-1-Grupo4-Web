@@ -84,6 +84,7 @@ export default {
     async register() {
       try {
         const response = await registerUser(this.form.userEmail, this.form.userPassword);
+        localStorage.setItem('token', response.data.data.attributes.authentication_token);
         this.status = response.status;
         this.error = '';
         window.location.href = '/users/sign_in';

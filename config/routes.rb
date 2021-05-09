@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         devise_scope :user do
           resources :registrations, only: [:create]
           resources :sessions, only: [:create]
+          delete '/log_out', to: 'sessions#log_out'
         end
       end
 

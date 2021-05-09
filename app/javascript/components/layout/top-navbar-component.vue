@@ -41,6 +41,8 @@
 
 <script>
 
+import { logoutUser } from './../../api/users.js';
+
 export default {
 
   computed: {
@@ -50,8 +52,9 @@ export default {
   },
 
   methods: {
-    logout() {
+    async logout() {
       localStorage.removeItem('token');
+      await logoutUser();
       window.location.href = '/';
     },
   },
