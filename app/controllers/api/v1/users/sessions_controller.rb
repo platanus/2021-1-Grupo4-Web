@@ -13,10 +13,6 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def log_out
-    sign_out current_user
-  end
-
   private
 
   def load_user

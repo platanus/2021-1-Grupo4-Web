@@ -10,7 +10,6 @@ Rails.application.routes.draw do
         devise_scope :user do
           resources :registrations, only: [:create]
           resources :sessions, only: [:create]
-          delete '/log_out', to: 'sessions#log_out'
         end
       end
 
@@ -22,9 +21,12 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   mount Rswag::Ui::Engine => '/api-docs'
 
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users
   mount Sidekiq::Web => '/queue'
 
   resources :ingredients, only: [:index]

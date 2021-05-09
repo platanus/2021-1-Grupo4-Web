@@ -38,7 +38,7 @@ async function loginUser(userEmail, userPassword) {
 
 async function logoutUser() {
   return (axios
-    .delete('/api/v1/users/log_out',
+    .delete('/users/sign_out',
       {
         headers: {
           'X-CSRF-Token': CSRFToken,
