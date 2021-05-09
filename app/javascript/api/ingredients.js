@@ -1,26 +1,26 @@
-import axios from '../auth/authClient.js';
+import client from '../auth/authClient.js';
 
 async function getIngredients() {
-  return (axios
+  return (client
     .get('/ingredients', {
     }));
 }
 
 async function postIngredient(ingredient) {
-  return (axios
+  return (client
     .post('/ingredients',
       { ingredient },
     ));
 }
 
 async function deleteIngredient(ingredientId) {
-  return (axios
+  return (client
     .delete(`/ingredients/${ingredientId}`, {
     }));
 }
 
 async function editIngredient(ingredientId, ingredientInfo) {
-  return (axios
+  return (client
     .put(`/ingredients/${ingredientId}`, {
       ingredient: {
         'provider_id': ingredientInfo.providerId,
