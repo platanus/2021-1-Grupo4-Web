@@ -1,6 +1,4 @@
-class MenusController < ApplicationController
-  before_action :authenticate_user!
-  
+class MenusController < ApplicationController  
   def index; end
 
   def show; end

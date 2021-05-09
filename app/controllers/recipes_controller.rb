@@ -1,6 +1,4 @@
-class RecipesController < ApplicationController
-  before_action :authenticate_user!
-  
+class RecipesController < ApplicationController  
   def index; end
 
   def show; end
