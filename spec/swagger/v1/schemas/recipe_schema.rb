@@ -28,7 +28,11 @@ RECIPE_RESPONSE_SCHEMA = {
         instructions: { type: :string, example: 'Some instructions', 'x-nullable': true },
         cook_minutes: { type: :integer, example: 25, 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
-        updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
+        updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
+        ingredients: {
+          type: "array",
+          items: { "$ref" => "#/definitions/ingredient_response" }
+        }
       },
       required: []
     }

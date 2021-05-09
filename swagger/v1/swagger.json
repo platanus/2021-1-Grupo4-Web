@@ -463,6 +463,12 @@
               "type": "string",
               "example": "1984-06-04 09:00",
               "x-nullable": true
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ingredient_response"
+              }
             }
           },
           "required": []
