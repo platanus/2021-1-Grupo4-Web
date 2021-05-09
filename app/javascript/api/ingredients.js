@@ -1,38 +1,27 @@
-import axios from 'axios';
+import axios from '../auth/authClient.js';
 
-async function getIngredients(email, token) {
+async function getIngredients() {
   return (axios
-    .get('/api/v1/ingredients', {
-      params: {
-        'user_email': email,
-        'user_token': token,
-      },
+    .get('/ingredients', {
     }));
 }
 
-async function postIngredient(ingredient, email, token) {
+async function postIngredient(ingredient) {
   return (axios
-    .post('/api/v1/ingredients',
+    .post('/ingredients',
       { ingredient },
-      { params: {
-        'user_email': email,
-        'user_token': token,
-      } }));
+    ));
 }
 
-async function deleteIngredient(email, token, ingredientId) {
+async function deleteIngredient(ingredientId) {
   return (axios
-    .delete(`/api/v1/ingredients/${ingredientId}`, {
-      params: {
-        'user_email': email,
-        'user_token': token,
-      },
+    .delete(`/ingredients/${ingredientId}`, {
     }));
 }
 
-async function editIngredient(email, token, ingredientId, ingredientInfo) {
+async function editIngredient(ingredientId, ingredientInfo) {
   return (axios
-    .put(`/api/v1/ingredients/${ingredientId}`, {
+    .put(`/ingredients/${ingredientId}`, {
       ingredient: {
         'provider_id': ingredientInfo.providerId,
         'name': ingredientInfo.name,
@@ -43,10 +32,6 @@ async function editIngredient(email, token, ingredientId, ingredientInfo) {
         'measure': ingredientInfo.measure,
       },
     }, {
-      params: {
-        'user_email': email,
-        'user_token': token,
-      },
     }));
 }
 

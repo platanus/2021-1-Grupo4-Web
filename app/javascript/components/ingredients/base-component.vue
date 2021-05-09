@@ -105,11 +105,8 @@ export default {
   },
 
   async created() {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-
     try {
-      const response = await getIngredients(email, token);
+      const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
@@ -136,8 +133,6 @@ export default {
     },
 
     async addIngredient() {
-      const token = localStorage.getItem('token');
-      const email = localStorage.getItem('email');
       this.showingAdd = !this.showingAdd;
 
       try {
@@ -146,7 +141,7 @@ export default {
           data:
             { data: { id, attributes },
             },
-        } = await postIngredient(this.$refs.addIngredientInfo.form, email, token);
+        } = await postIngredient(this.$refs.addIngredientInfo.form);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
         this.successResponse(status);
@@ -157,10 +152,8 @@ export default {
 
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
-      const token = localStorage.getItem('token');
-      const email = localStorage.getItem('email');
       try {
-        const res = await editIngredient(email, token, this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
+        const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
         this.updateIngredient(res);
         this.successResponse(res);
       } catch (error) {
@@ -170,10 +163,8 @@ export default {
 
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
-      const token = localStorage.getItem('token');
-      const email = localStorage.getItem('email');
       try {
-        const response = await deleteIngredient(email, token, this.ingredientToDelete.id);
+        const response = await deleteIngredient(this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
         this.successResponse(response);
       } catch (error) {
