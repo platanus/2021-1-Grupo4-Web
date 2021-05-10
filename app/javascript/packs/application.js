@@ -32,6 +32,10 @@ import InformationMenu from '../components/menus/new/base-information-menu.vue';
 import SearchRecipes from '../components/menus/new/base-search-recipe.vue';
 import AvailableRecipes from '../components/menus/new/base-available-recipes.vue';
 import RecipeCard from '../components/menus/new/base-recipe-card.vue';
+import CardData from '../components/menus/new/base-card-data.vue';
+import SelectedRecipes from '../components/menus/new/base-selected-recipes.vue';
+import RecipeSelected from '../components/menus/new/base-recipe-selected.vue';
+import RecipeSelectedData from '../components/menus/new/base-recipe-selected-data.vue';
 
 Vue.use(VueI18n);
 
@@ -63,6 +67,10 @@ Vue.component('InformationMenu', InformationMenu);
 Vue.component('SearchRecipes', SearchRecipes);
 Vue.component('AvailableRecipes', AvailableRecipes);
 Vue.component('RecipeCard', RecipeCard);
+Vue.component('CardData', CardData);
+Vue.component('SelectedRecipes', SelectedRecipes);
+Vue.component('RecipeSelected', RecipeSelected);
+Vue.component('RecipeSelectedData', RecipeSelectedData);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

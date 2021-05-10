@@ -8,15 +8,20 @@
     </div>
     <div class="flex">
       <!-- creador menu -->
-      <div class="flex flex-col items-start w-4/6 h-auto bg-gray-100 flex-grow-0 mr-5 p-10">
+      <div class="flex flex-col items-start w-4/6 h-auto bg-white flex-grow-0 mr-5 p-10">
         <information-menu />
-        <div class="min-w-min font-hind font-normal text-base text-black flex-grow-0 mb-5">Agregar recetas</div>
+        <div class="min-w-min font-hind font-normal text-base text-black flex-grow-0 mb-5">
+          Agregar recetas
+        </div>
         <search-recipes />
         <available-recipes />
       </div>
       <!-- recetas seleccionadas -->
-      <div class="flex items-start w-2/6 h-auto bg-gray-100 flex-grow-0 py-4 px-3">
-        hola
+      <div class="flex flex-col items-start w-2/6 h-auto bg-white flex-grow-0 py-4 px-3">
+        <div class="w-auto h-10 flex-grow-0 py-2 px-3 mb-2 font-hind font-bold text-base text-black">
+          Recetas seleccionadas
+        </div>
+        <selected-recipes />
       </div>
     </div>
   </div>
