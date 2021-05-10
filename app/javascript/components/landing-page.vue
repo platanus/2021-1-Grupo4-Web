@@ -1,8 +1,8 @@
 <template>
-<div>
+  <div>
     <br>
     <h3>¡¡¡ Welcome to KitchenGram !!!</h3>
-</div>
+  </div>
 </template>
 
 <script>
