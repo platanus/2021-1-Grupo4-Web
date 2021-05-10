@@ -137,7 +137,7 @@ export default {
 
   created() {
     const {
-      providerId: providerId,
+      providerId,
       name,
       sku,
       price,
