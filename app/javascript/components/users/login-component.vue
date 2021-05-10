@@ -28,13 +28,14 @@
         >
           {{ $t('msg.users.labelEmail') }}
         </label>
-        <input
+        <input 
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="email"
           type="email"
           :placeholder="$t('msg.users.placeholderEmail')"
           required
           v-model="form.userEmail"
+          v-on:change="check_mail()"
         >
       </div>
       <div class="mb-6">
@@ -53,6 +54,12 @@
           v-model="form.userPassword"
         >
       </div>
+      <div>
+        <message
+        :mail="form.userEmail"/>
+      </div>
+
+      
       <div class="flex items-center justify-between">
         <base-button
           :elements="{ placeholder: $t('msg.users.login'),
@@ -76,6 +83,7 @@ export default {
       },
       status: '',
       error: '',
+      message: '',
     };
   },
 
@@ -91,6 +99,19 @@ export default {
       } catch (error) {
         this.status = error.response.status;
         this.error = error;
+      }
+    },
+    check_mail(){
+      try {
+        const check = document.getElementById("email").includes("@")
+        if (!check){
+          this.message = "Mail invalido"
+        } else {
+          this.message = ""
+        }
+        return this.message
+      } catch {
+        return this.message
       }
     },
   },

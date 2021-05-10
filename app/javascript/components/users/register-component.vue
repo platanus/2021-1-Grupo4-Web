@@ -52,6 +52,10 @@
           type="password"
           placeholder="******************"
         >
+      <div>
+        <message
+        :mail="form.userEmail"/>
+      </div>
       </div>
       <div class="flex items-center justify-between">
         <base-button
