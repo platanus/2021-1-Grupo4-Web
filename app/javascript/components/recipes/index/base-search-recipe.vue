@@ -5,12 +5,20 @@
       :placeholder="placeholder"
       autocomplete="off"
     >
-    <span class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 bg-white border-2 border-solid border-blue-700 box-border rounded-full flex-none order-1 flex-grow-0 mx-2.5 text-blue-700">
+    <button
+      class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 bg-white border-2 border-solid
+      border-blue-700 box-border rounded-full flex-none order-1 flex-grow-0 mx-2.5 text-blue-700"
+      @click="filterByPrice()"
+    >
       {{ $t('msg.recipes.price') }}
-    </span>
-    <span class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 border-2 border-solid border-blue-700 box-border rounded-full flex-none order-2 flex-grow-0 mx-2.5 bg-blue-700 text-white">
+    </button>
+    <button
+      class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 border-2 border-solid
+      border-blue-700 box-border rounded-full flex-none order-2 flex-grow-0 mx-2.5 bg-blue-700 text-white"
+      @click="filterByPortions()"
+    >
       {{ $t('msg.recipes.portions') }}
-    </span>
+    </button>
   </div>
 </template>
 
@@ -18,6 +26,14 @@
 export default {
   props: {
     placeholder: { type: String, required: true },
+  },
+  methods: {
+    filterByPrice() {
+      this.$emit('filterByPrice');
+    },
+    filterByPortions() {
+      this.$emit('filterByPortions');
+    },
   },
 };
 </script>

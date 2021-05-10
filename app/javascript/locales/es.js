@@ -6,6 +6,21 @@ export default {
     yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
+    noElements: 'Aún no tienes',
+
+    users: {
+      registerTitle: 'Crear Cuenta',
+      loginTitle: 'Iniciar Sesión',
+      labelEmail: 'Correo',
+      labelPassword: 'Contraseña',
+      placeholderEmail: 'Ingresa tu correo',
+      register: 'Registrarse',
+      login: 'Iniciar Sesión',
+      logout: 'Cerrar Sesión',
+      successRegister: 'Usuario creado exitosamente',
+      failRegister: 'No se pudo registrar el usuario',
+      failLogin: 'No se pudo iniciar sesión',
+    },
 
     ingredients: {
       title: 'Ingredientes',
@@ -31,6 +46,16 @@ export default {
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
+      filter: {
+        price: 'Precio',
+        portions: 'Porciones',
+        minPortions: 'Mínimas',
+        maxPortions: 'Máximas',
+        minPrice: 'Mínimo',
+        maxPrice: 'Máximo',
+        aply: 'Aplicar',
+        delete: 'Borrar filtro',
+      },
     },
 
     menus: {
