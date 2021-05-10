@@ -9,6 +9,7 @@
     <!--SearchBar y Button-->
     <div class="flex items-center">
       <search
+        kind="ingredient"
         :placeholder="$t('msg.ingredients.search')"
       />
       <base-button
@@ -20,10 +21,16 @@
 
     <!--Table-->
     <div class="flex items-center">
+      <p
+        v-if="this.ingredients.length===0"
+      >
+        {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+      </p>
       <base-table
+        v-else
         :dots="true"
         :header="tableHeader"
-        :body="ingredients"
+        :body="this.ingredients"
         model-type="ingredients"
         @edit="toggleEditModal"
         @del="toggleDelModal"
@@ -40,6 +47,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
+        ref="addIngredientInfo"
         :units="['Kg','Litro']"
         :edit-mode="false"
       />
@@ -55,6 +63,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <ingredients-form
+        ref="editIngredientInfo"
         :units="['Kg','Litro']"
         :edit-mode="true"
         :ingredient="this.ingredientToEdit"
@@ -77,39 +86,107 @@
 
 <script>
 
+import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+
 export default {
-  props: {
-    ingredients: { type: Array, required: true },
-  },
+
   data() {
     return {
       showingAdd: false,
       showingEdit: false,
       showingDel: false,
       ingredientToEdit: {},
+      ingredientToDelete: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
+      ingredients: [],
+      status: '',
+      error: '',
     };
+  },
+
+  async created() {
+    try {
+      const response = await getIngredients();
+      this.ingredients = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
   },
 
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
     },
+
     toggleEditModal(ingredient) {
       this.showingEdit = !this.showingEdit;
       this.ingredientToEdit = ingredient;
     },
-    toggleDelModal() {
+
+    toggleDelModal(ingredient) {
       this.showingDel = !this.showingDel;
+      this.ingredientToDelete = ingredient;
     },
-    addIngredient() {
+
+    async addIngredient() {
       this.showingAdd = !this.showingAdd;
+
+      try {
+        const {
+          status,
+          data:
+            { data: { id, attributes },
+            },
+        } = await postIngredient(this.$refs.addIngredientInfo.form);
+        const ingredientToAdd = { id, ...attributes };
+        this.ingredients.push(ingredientToAdd);
+        this.successResponse(status);
+      } catch (error) {
+        this.errorResponse(error);
+      }
     },
-    editIngredient() {
+
+    async editIngredient() {
       this.showingEdit = !this.showingEdit;
+      try {
+        const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
+        this.updateIngredient(res);
+        this.successResponse(res);
+      } catch (error) {
+        this.errorResponse(error);
+      }
     },
-    deleteIngredient() {
+
+    async deleteIngredient() {
       this.showingDel = !this.showingDel;
+      try {
+        const response = await deleteIngredient(this.ingredientToDelete.id);
+        this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
+        this.successResponse(response);
+      } catch (error) {
+        this.errorResponse(error);
+      }
+    },
+
+    async updateIngredient(res) {
+      const ingredientEdited = { id: this.ingredientToEdit.id, ...JSON.parse(res.config.data).ingredient };
+      const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
+      this.ingredients.splice(objectIndex, 1);
+      this.ingredients.splice(objectIndex, 0, ingredientEdited);
+    },
+
+    async successResponse(status) {
+      this.status = status;
+      this.error = '';
+    },
+
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
     },
   },
 };
