@@ -44,6 +44,16 @@ export default {
       deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
       portions: 'Porciones',
+      filter: {
+        price: 'Precio',
+        portions: 'Porciones',
+        minPortions: 'Mínimas',
+        maxPortions: 'Máximas',
+        minPrice: 'Mínimo',
+        maxPrice: 'Máximo',
+        aply: 'Aplicar',
+        delete: 'Borrar filtro',
+      },
     },
 
     menus: {
