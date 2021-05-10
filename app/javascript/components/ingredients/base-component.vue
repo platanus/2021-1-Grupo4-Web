@@ -24,7 +24,11 @@
       <p
         v-if="this.ingredients.length===0"
       >
+<<<<<<< HEAD
         {{ $t('msg.notElements') }} {{ $t('msg.ingredients.title') }}
+=======
+        {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
       </p>
       <base-table
         v-else
@@ -105,11 +109,16 @@ export default {
   },
 
   async created() {
+<<<<<<< HEAD
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');
 
     try {
       const response = await getIngredients(email, token);
+=======
+    try {
+      const response = await getIngredients();
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
       this.ingredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
@@ -136,6 +145,7 @@ export default {
     },
 
     async addIngredient() {
+<<<<<<< HEAD
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
       this.showingAdd = !this.showingAdd;
@@ -145,6 +155,20 @@ export default {
         const ingredientToAdd = { id: response.data.data.id, ...response.data.data.attributes };
         this.ingredients.push(ingredientToAdd);
         this.successResponse(response);
+=======
+      this.showingAdd = !this.showingAdd;
+
+      try {
+        const {
+          status,
+          data:
+            { data: { id, attributes },
+            },
+        } = await postIngredient(this.$refs.addIngredientInfo.form);
+        const ingredientToAdd = { id, ...attributes };
+        this.ingredients.push(ingredientToAdd);
+        this.successResponse(status);
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
       } catch (error) {
         this.errorResponse(error);
       }
@@ -152,10 +176,15 @@ export default {
 
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
+<<<<<<< HEAD
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
       try {
         const res = await editIngredient(email, token, this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
+=======
+      try {
+        const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
         this.updateIngredient(res);
         this.successResponse(res);
       } catch (error) {
@@ -165,10 +194,15 @@ export default {
 
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
+<<<<<<< HEAD
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
       try {
         const response = await deleteIngredient(email, token, this.ingredientToDelete.id);
+=======
+      try {
+        const response = await deleteIngredient(this.ingredientToDelete.id);
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
         this.successResponse(response);
       } catch (error) {
@@ -183,8 +217,13 @@ export default {
       this.ingredients.splice(objectIndex, 0, ingredientEdited);
     },
 
+<<<<<<< HEAD
     async successResponse(response) {
       this.status = response.status;
+=======
+    async successResponse(status) {
+      this.status = status;
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
       this.error = '';
     },
 

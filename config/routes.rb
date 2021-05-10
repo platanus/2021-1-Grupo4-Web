@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :ingredients
       resources :providers
+      resources :menus
       resources :recipes
       namespace :users do
         devise_scope :user do
@@ -11,8 +12,9 @@ Rails.application.routes.draw do
         end
       end
 
-      # Ingredients
-      get '/search-ingredients', to: 'ingredients#search_ingredients'
+      # Ingredients by scraper
+      get '/search-jumbo-ingredients', to: 'ingredients#search_jumbo_ingredients'
+      get '/search-lider-ingredients', to: 'ingredients#search_lider_ingredients'
     end
   end
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from 'axios';
 
 async function getIngredients(email, token) {
@@ -41,6 +42,32 @@ async function deleteIngredient(email, token, ingredientId) {
 async function editIngredient(email, token, ingredientId, ingredientInfo) {
   return (axios
     .put(`/api/v1/ingredients/${ingredientId}`, {
+=======
+import client from '../auth/authClient.js';
+
+async function getIngredients() {
+  return (client
+    .get('/ingredients', {
+    }));
+}
+
+async function postIngredient(ingredient) {
+  return (client
+    .post('/ingredients',
+      { ingredient },
+    ));
+}
+
+async function deleteIngredient(ingredientId) {
+  return (client
+    .delete(`/ingredients/${ingredientId}`, {
+    }));
+}
+
+async function editIngredient(ingredientId, ingredientInfo) {
+  return (client
+    .put(`/ingredients/${ingredientId}`, {
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
       ingredient: {
         'provider_id': ingredientInfo.providerId,
         'name': ingredientInfo.name,
@@ -51,10 +78,13 @@ async function editIngredient(email, token, ingredientId, ingredientInfo) {
         'measure': ingredientInfo.measure,
       },
     }, {
+<<<<<<< HEAD
       params: {
         'user_email': email,
         'user_token': token,
       },
+=======
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
     }));
 }
 

@@ -1,13 +1,16 @@
 class Api::V1::IngredientsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
 
-  def search_ingredients
-    base_result = []
-    clients.each do |client|
-      base_result += client.new.products_by_query(query: search_params[:query])
-    end
+  def search_jumbo_ingredients
+    result = JumboClient.new.products_by_query(query: search_params[:query])
 
-    respond_with({ data: base_result })
+    respond_with({ data: result })
+  end
+
+  def search_lider_ingredients
+    result = LiderClient.new.products_by_query(query: search_params[:query])
+
+    respond_with({ data: result })
   end
 
   def index
@@ -31,10 +34,6 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   private
-
-  def clients
-    [JumboClient]
-  end
 
   def search_params
     params.permit(:query)

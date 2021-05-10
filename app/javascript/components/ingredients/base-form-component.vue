@@ -136,6 +136,7 @@ export default {
   },
 
   created() {
+<<<<<<< HEAD
     this.form = {
       providerId: this.ingredient.provider_id,
       name: this.ingredient.name,
@@ -144,6 +145,26 @@ export default {
       currency: this.ingredient.currency,
       quantity: this.ingredient.quantity,
       measure: this.ingredient.measure,
+=======
+    const {
+      providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
+    } = this.ingredient;
+
+    this.form = {
+      providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
     };
   },
 

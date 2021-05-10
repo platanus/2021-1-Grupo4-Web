@@ -5,9 +5,10 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
   let(:user_id) { user.id }
-  let(:jumbo_client) { JumboClient.new }
 
-  path '/search-ingredients' do
+  path '/search-jumbo-ingredients' do
+    let(:jumbo_client) { JumboClient.new }
+
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
     parameter name: :query, in: :query, type: :string
@@ -33,7 +34,62 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     get 'Search ingredients' do
       consumes 'application/json'
       produces 'application/json'
-      description 'Retrieves ingredients by different providers'
+      description 'Retrieves ingredients from Jumbo'
+
+      response '200', 'ingredients retrieved' do
+        schema(
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/provider_ingredient" }
+            }
+          },
+          required: [
+            :data
+          ]
+        )
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
+  path '/search-lider-ingredients' do
+    let(:lider_client) { LiderClient.new }
+
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+    parameter name: :query, in: :query, type: :string
+
+    let(:products) do
+      [
+        { price: "$ 1.150", measure: "500 g", name: "Pan coliza peruana", provider: "Lider" },
+        { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: "Lider" },
+        { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: "Lider" },
+        { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: "Lider" },
+        { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: "Lider" }
+      ]
+    end
+    let(:query) { 'pan' }
+
+    before do
+      allow(LiderClient).to receive(:new).and_return(lider_client)
+      allow(lider_client).to receive(:products_by_query).with(
+        query: 'pan'
+      ).and_return(products)
+    end
+
+    get 'Search ingredients' do
+      consumes 'application/json'
+      produces 'application/json'
+      description 'Retrieves ingredients from Lider'
 
       response '200', 'ingredients retrieved' do
         schema(

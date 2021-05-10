@@ -6,7 +6,11 @@ export default {
     yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
+<<<<<<< HEAD
     notElements: 'Aún no tienes',
+=======
+    noElements: 'Aún no tienes',
+>>>>>>> 888c52a7099f2d7f57fe31efdbc7c5d45422a123
 
     users: {
       registerTitle: 'Crear Cuenta',
