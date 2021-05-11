@@ -1,36 +1,39 @@
+/* eslint-disable linebreak-style */
 <template>
   <div>
     <!-- Title -->
-    <div>
-      <a href="/recipes">
-        <img
-          svg-inline
-          src="../../../../assets/images/left-arrow-svg.svg"
-          class="inline-block object-center h-8 w-8"
-        >
-      </a>
-      <h2 class="inline-block text-3xl h-8">
-        Crear Receta
-      </h2>
+    <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
+      <div class="flex items-center">
+        <a href="/recipes">
+          <img
+            class="h-6 w-6 text-white mx-2"
+            svg-inline
+            src="../../../../assets/images/arrow-left-svg.svg"
+          >
+        </a>
+        <div class="h-7 font-sans font-normal text-2xl text-black flex-grow mx-2">
+          Crear receta
+        </div>
+      </div>
     </div>
 
     <p>Datos básicos</p>
 
-    <div class="flex space-x-4">
+    <div class="grid grid-cols-4 gap-4">
       <search
         placeholder="Nombre"
-        :searchIcon="false"
-        class="flex-2"
+        :search-icon="false"
+        class="col-span-2 w-full"
       />
       <search
         placeholder="Porciones"
-        :searchIcon="false"
-        class="flex-1"
+        :search-icon="false"
+        class="w-full"
       />
       <search
-        placeholder="Tiempo de preparación"
-        :searchIcon="false"
-        class="flex-1"
+        placeholder="Tiempo de preparación w-full"
+        :search-icon="false"
+        class="w-full"
       />
     </div>
 
@@ -41,6 +44,7 @@
           :elements="getIngredients"
           :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
+          :drag="false"
         />
       </div>
       <div class="col-span-2">
@@ -49,6 +53,7 @@
           :elements="getSteps"
           :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
+          :drag="true"
         />
       </div>
     </div>
@@ -66,26 +71,28 @@
 <script>
 export default {
   props: {
-    objects: { type: Array, required: true }
+    objects: { type: Array, required: true },
   },
   methods: {
     create() {
-      return null
+      return null;
     },
   },
   computed: {
     getSteps() {
-      let steps = [this.objects[this.objects.length - 1]];
+      const steps = [this.objects[this.objects.length - 1]];
       const parsedSteps = JSON.parse(steps).instructions;
-      let new_steps = parsedSteps.split('\n');
-      return new_steps;
+      const newSteps = parsedSteps.split('\n');
+
+      return newSteps;
     },
     getIngredients() {
-      let new_array = []
+      const newArray = [];
       for (let i = 0; i < this.objects.length - 1; i++) {
-        new_array.push(this.objects[i]);
+        newArray.push(this.objects[i]);
       }
-      return new_array
+
+      return newArray;
     },
   },
 };

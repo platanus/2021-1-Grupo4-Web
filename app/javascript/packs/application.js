@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.esm';
 import VueI18n from 'vue-i18n';
 import '../css/application.css';
+import '../css/tailwind.css';
 
 import Locales from '../locales/locales.js';
 
@@ -22,9 +23,11 @@ import RecipeIngredients from '../components/recipes/show/base-recipe-ingredient
 import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
 import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
 import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
-import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
-import List from '../components/recipes/create/list-component.vue';
-import Container from '../components/recipes/create/container-component.vue';
+import CreateRecipes from '../components/recipes/create/base-create-recipes-component.vue';
+import List from '../components/recipes/create/base-list-component.vue';
+import Container from '../components/recipes/create/base-container-component.vue';
+import TextBox from '../components/base/base-text-box-component';
+import DragAndDrop from '../components/base/base-drag-and-drop-component';
 
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
@@ -58,6 +61,8 @@ Vue.component('InstructionStep', InstructionStep);
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('List', List);
 Vue.component('Container', Container);
+Vue.component('TextBox', TextBox);
+Vue.component('DragAndDrop', DragAndDrop);
 
 Vue.component('NewMenuContainer', NewMenuContainer);
 Vue.component('MenusContainer', MenusContainer);
