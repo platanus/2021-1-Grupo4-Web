@@ -13,7 +13,18 @@
       @filterByPrice="toggleFilterByPriceModal"
       @filterByPortions="toggleFilterByPortionsModal"
     />
-    <recipes :allrecipes="recipes" />
+    <p
+      class="my-4"
+      v-if="this.recipes.length === 0"
+    >
+      {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
+    </p>
+    <div v-else>
+      <recipes
+        :allrecipes="this.recipes"
+      />
+    </div>
+    <!-- <recipes :allrecipes="recipes" /> -->
     <pagination />
     <!--Price Filter Modal-->
     <filter-popup
@@ -41,17 +52,42 @@
 </template>
 
 <script>
+
+import { getRecipes } from './../../../api/recipes.js';
+
 export default {
-  props: {
-    recipes: { type: Array, required: true },
-  },
   data() {
     return {
+      recipeToEdit: {},
+      recipeToDelete: {},
+      recipes: [],
+      status: '',
+      error: '',
       showingFilterByPrice: false,
       showingFilterByPortions: false,
     };
   },
+  async created() {
+    try {
+      const response = await getRecipes();
+      this.recipes = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
+  },
   methods: {
+    async successResponse(response) {
+      this.status = response.status;
+      this.error = '';
+    },
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
+    },
     toggleFilterByPriceModal() {
       this.showingFilterByPrice = !this.showingFilterByPrice;
     },
