@@ -3,29 +3,53 @@
     <form class="w-full max-w-lg">
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
-          <input-form
+          <!--Name -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-name"
+          >
+            {{ $t('msg.ingredients.name') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             id="ingredient-name"
             type="text"
             :placeholder="$t('msg.ingredients.name')"
-            :value="editMode ? ingredient.name : ''"
-          />
+            v-model="form.name"
+          >
         </div>
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <input-form
+          <!--Quantity -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-quantity"
+          >
+            {{ $t('msg.ingredients.quantity') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            v-model="form.quantity"
             id="ingredient-amount"
             type="number"
             :placeholder="$t('msg.ingredients.quantity')"
-            :value="editMode ? ingredient.quantity : ''"
-          />
+          >
         </div>
         <div class="relative">
+          <!--Measure -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-unit"
+          >
+            {{ $t('msg.ingredients.measure') }}
+          </label>
           <select
             class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
             rounded leading-tight focus:outline-none"
             id="ingredient-unit"
+            v-model="form.measure"
           >
             <!--Add Mode unit Unselected -->
             <option
@@ -66,12 +90,20 @@
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
-          <input-form
+          <!--Price -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-price"
+          >
+            {{ $t('msg.ingredients.price') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             id="ingredient-price"
+            v-model="form.price"
             type="number"
             :placeholder="$t('msg.ingredients.price')"
-            :value="editMode? ingredient.price : ''"
-          />
+          >
         </div>
       </div>
     </form>
@@ -87,6 +119,42 @@ export default {
       return {};
     } },
     units: { type: Array, required: true },
+  },
+
+  data() {
+    return {
+      form: {
+        providerId: null,
+        name: '',
+        sku: null,
+        price: '',
+        currency: 'CLP',
+        quantity: '',
+        measure: '',
+      },
+    };
+  },
+
+  created() {
+    const {
+      providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
+    } = this.ingredient;
+
+    this.form = {
+      providerId,
+      name,
+      sku,
+      price,
+      currency,
+      quantity,
+      measure,
+    };
   },
 
   computed: {

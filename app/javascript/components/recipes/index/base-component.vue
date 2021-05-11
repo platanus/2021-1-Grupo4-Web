@@ -13,7 +13,7 @@
       class="my-4"
       v-if="this.recipes.length===0"
     >
-      {{ $t('msg.notElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
+      {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
     </p>
     <div v-else>
       <recipes
@@ -60,6 +60,20 @@ export default {
     async errorResponse(error) {
       this.status = error.response.status;
       this.error = error;
+    },
+  },
+  data() {
+    return {
+      showingFilterByPrice: false,
+      showingFilterByPortions: false,
+    };
+  },
+  methods: {
+    toggleFilterByPriceModal() {
+      this.showingFilterByPrice = !this.showingFilterByPrice;
+    },
+    toggleFilterByPortionsModal() {
+      this.showingFilterByPortions = !this.showingFilterByPortions;
     },
   },
 };
