@@ -15,15 +15,15 @@
         </div>
       </div>
       <div class="flex items-center">
-        <a
+        <button
           class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-purple-600 rounded flex-grow-0 mx-2 text-purple-600"
           @click="toggleDelModal"
         >
           {{ $t('msg.recipes.delete') }}
-        </a>
-        <div class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-blue-700 rounded flex-grow-0 mx-2 text-blue-700">
+        </button>
+        <button class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-blue-700 rounded flex-grow-0 mx-2 text-blue-700">
           {{ $t('msg.recipes.edit') }}
-        </div>
+        </button>
       </div>
     </div>
     <!--Info-->
@@ -38,7 +38,7 @@
     </div>
     <!--DeleteModal-->
     <base-modal
-      @ok="toggleDelModal"
+      @ok="deleteRecipe"
       @cancel="toggleDelModal"
       v-if="showingDel"
       :title="$t('msg.recipes.delete')"
@@ -52,7 +52,7 @@
 
 <script>
 
-import { getRecipe } from './../../../api/recipes.js';
+import { getRecipe, deleteRecipe } from './../../../api/recipes.js';
 
 export default {
   props: {
@@ -85,6 +85,16 @@ export default {
       this.showingDel = !this.showingDel;
     },
 
+    async deleteRecipe() {
+      try {
+        const response = await deleteRecipe(this.recipe.id);
+        window.location.href = '/recipes';
+        this.successResponse(response);
+      } catch (error) {
+        this.errorResponse(error);
+      }
+    },
+
     async successResponse(status) {
       this.status = status;
       this.error = '';
@@ -94,6 +104,7 @@ export default {
       this.status = error.response.status;
       this.error = error;
     },
+
   },
 
 };
