@@ -12,7 +12,7 @@
       filter=".action-button"
       class="w-full max-w-md"
       tag="ul"
-    -->
+    >
       <container
         v-for="element in elements"
         :key="element.id"
