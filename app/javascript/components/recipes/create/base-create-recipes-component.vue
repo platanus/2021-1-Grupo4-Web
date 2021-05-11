@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 <template>
   <div>
     <!-- Title -->
@@ -107,17 +108,19 @@ export default {
   },
   computed: {
     getSteps() {
-      let steps = [this.objects[this.objects.length - 1]];
+      const steps = [this.objects[this.objects.length - 1]];
       const parsedSteps = JSON.parse(steps).instructions;
-      let new_steps = parsedSteps.split('\n');
-      return new_steps;
+      const newSteps = parsedSteps.split('\n');
+
+      return newSteps;
     },
     getIngredients() {
-      let new_array = []
+      const newArray = [];
       for (let i = 0; i < this.objects.length - 1; i++) {
-        new_array.push(this.objects[i]);
+        newArray.push(this.objects[i]);
       }
-      return new_array
+
+      return newArray;
     },
   },
 };
