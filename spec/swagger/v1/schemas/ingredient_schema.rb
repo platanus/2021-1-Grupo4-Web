@@ -1,13 +1,13 @@
 INGREDIENT_SCHEMA = {
   type: :object,
   properties: {
-    provider_id: { type: :integer, example: 666, 'x-nullable': true },
-    name: { type: :string, example: 'Some name', 'x-nullable': true },
-    sku: { type: :string, example: 'Some sku', 'x-nullable': true },
-    price: { type: :integer, example: 666, 'x-nullable': true },
-    currency: { type: :string, example: 'Some currency', 'x-nullable': true },
-    quantity: { type: :integer, example: 666, 'x-nullable': true },
-    measure: { type: :string, example: 'Some measure', 'x-nullable': true },
+    provider_id: { type: :integer, example: 1, 'x-nullable': true },
+    name: { type: :string, example: 'Harina', 'x-nullable': true },
+    sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
+    price: { type: :integer, example: 2990, 'x-nullable': true },
+    currency: { type: :string, example: 'CLP', 'x-nullable': true },
+    quantity: { type: :integer, example: 2, 'x-nullable': true },
+    measure: { type: :string, example: 'unidad', 'x-nullable': true }
   },
   required: [
     :name,
@@ -27,14 +27,14 @@ INGREDIENT_RESPONSE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
-        provider_id: { type: :integer, example: 666, 'x-nullable': true },
-        user_id: { type: :integer, example: 666, 'x-nullable': true },
-        name: { type: :string, example: 'Some name', 'x-nullable': true },
-        sku: { type: :string, example: 'Some sku', 'x-nullable': true },
-        price: { type: :integer, example: 666, 'x-nullable': true },
-        currency: { type: :string, example: 'Some currency', 'x-nullable': true },
-        quantity: { type: :integer, example: 666, 'x-nullable': true },
-        measure: { type: :string, example: 'Some measure', 'x-nullable': true },
+        provider_id: { type: :integer, example: 1, 'x-nullable': true },
+        user_id: { type: :integer, example: 1, 'x-nullable': true },
+        name: { type: :string, example: 'Harina', 'x-nullable': true },
+        sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
+        price: { type: :integer, example: 2990, 'x-nullable': true },
+        currency: { type: :string, example: 'CLP', 'x-nullable': true },
+        quantity: { type: :integer, example: 2, 'x-nullable': true },
+        measure: { type: :string, example: 'unidad', 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },

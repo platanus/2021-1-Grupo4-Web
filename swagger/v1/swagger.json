@@ -42,37 +42,37 @@
       "properties": {
         "provider_id": {
           "type": "integer",
-          "example": 666,
+          "example": 1,
           "x-nullable": true
         },
         "name": {
           "type": "string",
-          "example": "Some name",
+          "example": "Harina",
           "x-nullable": true
         },
         "sku": {
           "type": "string",
-          "example": "Some sku",
+          "example": "SK28CD2",
           "x-nullable": true
         },
         "price": {
           "type": "integer",
-          "example": 666,
+          "example": 2990,
           "x-nullable": true
         },
         "currency": {
           "type": "string",
-          "example": "Some currency",
+          "example": "CLP",
           "x-nullable": true
         },
         "quantity": {
           "type": "integer",
-          "example": 666,
+          "example": 2,
           "x-nullable": true
         },
         "measure": {
           "type": "string",
-          "example": "Some measure",
+          "example": "unidad",
           "x-nullable": true
         }
       },
@@ -100,42 +100,42 @@
           "properties": {
             "provider_id": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "user_id": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "name": {
               "type": "string",
-              "example": "Some name",
+              "example": "Harina",
               "x-nullable": true
             },
             "sku": {
               "type": "string",
-              "example": "Some sku",
+              "example": "SK28CD2",
               "x-nullable": true
             },
             "price": {
               "type": "integer",
-              "example": 666,
+              "example": 2990,
               "x-nullable": true
             },
             "currency": {
               "type": "string",
-              "example": "Some currency",
+              "example": "CLP",
               "x-nullable": true
             },
             "quantity": {
               "type": "integer",
-              "example": 666,
+              "example": 2,
               "x-nullable": true
             },
             "measure": {
               "type": "string",
-              "example": "Some measure",
+              "example": "unidad",
               "x-nullable": true
             },
             "created_at": {
@@ -188,17 +188,17 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "Some name",
+          "example": "Jumbo",
           "x-nullable": true
         },
         "address": {
           "type": "string",
-          "example": "Some address",
+          "example": "Av. Francisco Bilbao 223",
           "x-nullable": true
         },
         "country": {
           "type": "string",
-          "example": "Some country",
+          "example": "Chile",
           "x-nullable": true
         }
       },
@@ -224,17 +224,17 @@
           "properties": {
             "name": {
               "type": "string",
-              "example": "Some name",
+              "example": "Jumbo",
               "x-nullable": true
             },
             "address": {
               "type": "string",
-              "example": "Some address",
+              "example": "Av. Francisco Bilbao 223",
               "x-nullable": true
             },
             "country": {
               "type": "string",
-              "example": "Some country",
+              "example": "Chile",
               "x-nullable": true
             },
             "created_at": {
@@ -285,29 +285,13 @@
     "menu": {
       "type": "object",
       "properties": {
-        "user_id": {
-          "type": "integer",
-          "example": 666,
-          "x-nullable": true
-        },
         "name": {
           "type": "string",
-          "example": "Some name",
-          "x-nullable": true
-        },
-        "created_at": {
-          "type": "string",
-          "example": "1984-06-04 09:00",
-          "x-nullable": true
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "1984-06-04 09:00",
+          "example": "Menú de almuerzo",
           "x-nullable": true
         }
       },
       "required": [
-        "user_id",
         "name"
       ]
     },
@@ -325,14 +309,9 @@
         "attributes": {
           "type": "object",
           "properties": {
-            "user_id": {
-              "type": "integer",
-              "example": 666,
-              "x-nullable": true
-            },
             "name": {
               "type": "string",
-              "example": "Some menu name",
+              "example": "Menú de almuerzo",
               "x-nullable": true
             },
             "created_at": {
@@ -383,28 +362,24 @@
     "recipe": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "example": "1"
-        },
         "name": {
           "type": "string",
-          "example": "Some name",
+          "example": "Pastel de choclo",
           "x-nullable": true
         },
         "portions": {
           "type": "integer",
-          "example": 1,
+          "example": 4,
           "x-nullable": true
         },
         "instructions": {
-          "type": "text",
+          "type": "string",
           "example": "Some instructions",
           "x-nullable": true
         },
         "cook_minutes": {
           "type": "integer",
-          "example": 1,
+          "example": 25,
           "x-nullable": true
         }
       },
@@ -413,60 +388,6 @@
         "portions",
         "instructions",
         "cook_minutes"
-      ]
-    },
-    "recipe_response": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "1"
-        },
-        "type": {
-          "type": "string",
-          "example": "recipe"
-        },
-        "attributes": {
-          "type": "object",
-          "properties": {
-            "user_id": {
-              "type": "integer",
-              "example": 666,
-              "x-nullable": true
-            },
-            "portions": {
-              "type": "integer",
-              "example": 1,
-              "x-nullable": true
-            },
-            "instructions": {
-              "type": "text",
-              "example": "Some instructions",
-              "x-nullable": true
-            },
-            "cook_minutes": {
-              "type": "integer",
-              "example": 1,
-              "x-nullable": true
-            },
-            "created_at": {
-              "type": "string",
-              "example": "1984-06-04 09:00",
-              "x-nullable": true
-            },
-            "updated_at": {
-              "type": "string",
-              "example": "1984-06-04 09:00",
-              "x-nullable": true
-            }
-          },
-          "required": []
-        }
-      },
-      "required": [
-        "id",
-        "type",
-        "attributes"
       ]
     },
     "recipes_collection": {
@@ -492,6 +413,71 @@
       },
       "required": [
         "data"
+      ]
+    },
+    "recipe_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "ingredient"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "example": "Pastel de choclo",
+              "x-nullable": true
+            },
+            "portions": {
+              "type": "integer",
+              "example": 4,
+              "x-nullable": true
+            },
+            "instructions": {
+              "type": "string",
+              "example": "Some instructions",
+              "x-nullable": true
+            },
+            "cook_minutes": {
+              "type": "integer",
+              "example": 25,
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ingredient_response"
+              }
+            }
+          },
+          "required": []
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
       ]
     }
   },
@@ -884,9 +870,6 @@
         "responses": {
           "200": {
             "description": "menu updated"
-          },
-          "401": {
-            "description": "user unauthorized"
           }
         }
       },

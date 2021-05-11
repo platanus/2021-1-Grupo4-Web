@@ -1,7 +1,7 @@
 MENU_SCHEMA = {
   type: :object,
   properties: {
-    name: { type: :string, example: 'Some name', 'x-nullable': true }
+    name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true }
   },
   required: [
     :name
@@ -16,8 +16,7 @@ MENU_RESPONSE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
-        user_id: { type: :integer, example: 666, 'x-nullable': true },
-        name: { type: :string, example: 'Some name', 'x-nullable': true },
+        name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },
