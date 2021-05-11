@@ -28,8 +28,8 @@
     </div>
     <!--Info-->
     <recipe-info
-      :portions="this.recipe.portions"
-      :cook-minutes="this.recipe.cookMinutes"
+      :portions="recipe.portions"
+      :cook-minutes="recipe.cookMinutes"
     />
     <!--Body-->
     <div class="flex items-start w-auto h-auto self-stretch flex-grow-0 my-4">
@@ -62,7 +62,11 @@ export default {
   data() {
     return {
       showingDel: false,
-      recipe: {},
+      recipe: {
+        name: '',
+        portions: 0,
+        cookMinutes: 0,
+      },
     };
   },
 
@@ -70,7 +74,6 @@ export default {
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
-      console.log(this.recipe.portions);
       this.successResponse(response);
     } catch (error) {
       this.errorResponse(error);
