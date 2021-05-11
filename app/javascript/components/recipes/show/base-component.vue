@@ -3,13 +3,15 @@
     <!--Title-->
     <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
       <div class="flex items-center">
-        <img
-          class="h-6 w-6 text-white mx-2"
-          svg-inline
-          src="../../../../assets/images/arrow-left-svg.svg"
-        >
+        <a href="/recipes">
+          <img
+            class="h-6 w-6 text-white mx-2"
+            svg-inline
+            src="../../../../assets/images/arrow-left-svg.svg"
+          >
+        </a>
         <div class="h-7 font-sans font-normal text-2xl text-black flex-grow mx-2">
-          Lazaña Vegetariana
+          {{ this.recipe.name }}
         </div>
       </div>
       <div class="flex items-center">
@@ -25,7 +27,10 @@
       </div>
     </div>
     <!--Info-->
-    <recipe-info />
+    <recipe-info
+      :portions="this.recipe.portions"
+      :cook-minutes="this.recipe.cookMinutes"
+    />
     <!--Body-->
     <div class="flex items-start w-auto h-auto self-stretch flex-grow-0 my-4">
       <recipe-ingredients />
@@ -47,15 +52,44 @@
 
 <script>
 
+import { getRecipe } from './../../../api/recipes.js';
+
 export default {
+  props: {
+    recipeId: { type: Number, required: true },
+  },
+
   data() {
     return {
       showingDel: false,
+      recipe: {},
     };
   },
+
+  async created() {
+    try {
+      const response = await getRecipe(this.recipeId);
+      this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
+      console.log(this.recipe.portions);
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
+  },
+
   methods: {
     toggleDelModal() {
       this.showingDel = !this.showingDel;
+    },
+
+    async successResponse(status) {
+      this.status = status;
+      this.error = '';
+    },
+
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
     },
   },
 

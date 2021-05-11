@@ -19,7 +19,7 @@
         src="../../../../assets/images/chart-pie-svg.svg"
       >
       <div class="w-24 h-5 font-sans font-normal text-base text-black flex-grow-0">
-        12 {{ $t('msg.recipes.portions') }}
+        {{ portions }} {{ $t('msg.recipes.portions') }}
       </div>
     </div>
     <!-- minutes -->
@@ -30,7 +30,7 @@
         src="../../../../assets/images/clock-svg.svg"
       >
       <div class="w-36 h-5 font-sans font-normal text-base text-black flex-grow-0">
-        105 {{ $t('msg.recipes.minutes') }}
+        {{ cookMinutes }} {{ $t('msg.recipes.minutes') }}
       </div>
     </div>
   </div>
@@ -39,6 +39,9 @@
 <script>
 
 export default {
-
+  props: {
+    portions: { type: Number, required: true },
+    cookMinutes: { type: Number, required: true },
+  },
 };
 </script>

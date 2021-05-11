@@ -5,7 +5,10 @@
       :recipe-portions="portions"
       :recipe-minutes="minutes"
     />
-    <price-recipe :recipe-price="price" />
+    <price-recipe
+      :recipe-price="price"
+      :id-recipe="id"
+    />
   </div>
 </template>
 
@@ -16,6 +19,7 @@ export default {
     portions: { type: Number, required: true },
     minutes: { type: Number, required: true },
     price: { type: Number, required: true },
+    id: { type: String, required: true },
   },
 };
 </script>

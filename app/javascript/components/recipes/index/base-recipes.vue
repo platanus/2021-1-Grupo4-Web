@@ -8,6 +8,7 @@
         :portions="recipe.portions"
         :minutes="recipe.cookMinutes"
         :price="5000"
+        :id="recipe.id"
       />
     </div>
   </div>
