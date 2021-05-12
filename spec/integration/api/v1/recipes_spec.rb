@@ -175,20 +175,29 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
     let(:id) { existent_recipe.id }
     let(:ingredient_id) { existent_ingredient.id }
 
-    before do
-      create(:recipe_ingredient, recipe: existent_recipe, ingredient: existent_ingredient)
-    end
-
     post 'Add ingredient to recipe' do
       description 'Add existing ingredient to specific recipe'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :ingredient_id, in: :body, required: true, schema: { type: :integer }
-      parameter name: :ingredient_quantity, in: :body, required: true, schema: { type: :integer }
+      parameter(name: :recipe_ingredient, in: :body,
+                schema: {
+                  type: "object",
+                  properties: {
+                    recipe_ingredient: { "$ref" => "#/definitions/recipe_ingredient" }
+                  },
+                  required: [
+                    :recipe_ingredient
+                  ]
+                })
+
+      let(:recipe_ingredient) do
+        {
+          ingredient_id: ingredient_id,
+          ingredient_quantity: 3
+        }
+      end
 
       response '200', 'recipe ingredient added' do
-        let(:ingredient_quantity) { 3 }
-
         run_test!
       end
 
@@ -219,20 +228,30 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       description 'Remove existing ingredient of specific recipe'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :ingredient_id, in: :body, required: true, schema: { type: :integer }
+      parameter(name: :recipe_ingredient, in: :body,
+                schema: {
+                  type: "object",
+                  properties: {
+                    recipe_ingredient: { "$ref" => "#/definitions/recipe_ingredient" }
+                  },
+                  required: [
+                    :recipe_ingredient
+                  ]
+                })
 
-      response '200', 'recipe ingredient removed' do
+      let(:recipe_ingredient) do
+        {
+          ingredient_id: ingredient_id,
+          ingredient_quantity: 3
+        }
+      end
+
+      response '201', 'recipe ingredient removed' do
         run_test!
       end
 
       response '401', 'user unauthorized' do
         let(:user_token) { 'invalid' }
-
-        run_test!
-      end
-
-      response '404', 'recipe not found' do
-        let(:ingredient_id) { 'invalid' }
 
         run_test!
       end
