@@ -8,11 +8,11 @@
       <recipe-selected />
     </div>
     <div class="flex justify-end w-auto h-16 bg-white self-stretch flex-grow-0 py-5 font-hind font-bold text-base text-black">
-      Total del menú: $25.000
+      {{ $t('msg.menus.menuPrice') }}: $25.000
     </div>
     <div class="flex justify-end w-auto h-12 self-stretch flex-grow-0">
       <button class="py-1.5 px-10 bg-green-500 shadow-sm rounded-md font-hind font-normal text-base text-white">
-        Crear menú
+        {{ $t('msg.menus.create') }}
       </button>
     </div>
   </div>

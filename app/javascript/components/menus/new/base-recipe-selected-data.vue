@@ -9,27 +9,27 @@
       <!-- recipe portions -->
       <div class="flex items-center w-auto h-4 flex-grow-0 mb-0.5">
         <div class="w-auto h-4 font-hind font-normal text-xs text-black flex-grow-0 mr-0.5">
-          Porciones
+          {{ $t('msg.menus.portions') }}
         </div>
         <!-- botones e input -->
-        <div class="flex items-center w-12 h-3 flex-grow-0">
+        <div class="flex items-center w-12 h-3 ml-2 flex-grow-0">
           <!-- minus -->
-          <div class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0 mr-0.5">
+          <button class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0 mr-0.5">
             <img
               svg-inline
               src="../../../../assets/images/minus-svg.svg"
               class="w-3 h-3"
             >
-          </div>
+          </button>
           <input class="w-5 h-3 bg-white border border-gray-300 rounded-sm flex-grow-0 mr-0.5">
           <!-- plus -->
-          <div class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0">
+          <button class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0">
             <img
               svg-inline
               src="../../../../assets/images/plus-svg.svg"
               class="w-3 h-3"
             >
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -56,9 +56,12 @@ export default {
       menuName: 'Nombre menú',
       portions: 'Porciones',
       price: 'Precio',
+      minutes: 'minutos',
       addRecipes: 'Agregar recetas',
       selectedRecipes: 'Recetas seleccionadas',
       searchRecipes: 'Buscar recetas',
+      recipes: 'Recetas',
+      menuPrice: 'Total del menú',
     },
   },
 };

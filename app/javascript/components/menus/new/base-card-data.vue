@@ -15,7 +15,7 @@
           >
         </div>
         <div class="h-5 w-auto font-hind font-light text-sm text-black flex-grow-0">
-          5 porciones
+          5 {{ $t('msg.menus.portions').toLowerCase() }}
         </div>
       </div>
       <div class="flex items-center h-5 w-auto flex-grow-0 mr-2">
@@ -39,7 +39,7 @@
           >
         </div>
         <div class="h-5 w-auto font-hind font-light text-sm text-black flex-grow-0">
-          20 minutos
+          20 {{ $t('msg.menus.minutes') }}
         </div>
       </div>
     </div>
