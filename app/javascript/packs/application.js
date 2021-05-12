@@ -29,6 +29,7 @@ import PageNumber from '../components/recipes/index/base-page-number.vue';
 
 import MenusContainer from '../components/menus/base-component.vue';
 import SearchMenu from '../components/menus/base-search-menu.vue';
+import MenusTable from '../components/menus/base-menus-table.vue';
 
 Vue.use(VueI18n);
 
@@ -57,6 +58,7 @@ Vue.component('PageNumber', PageNumber);
 
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('SearchMenu', SearchMenu);
+Vue.component('MenusTable', MenusTable);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

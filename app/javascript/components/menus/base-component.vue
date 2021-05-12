@@ -7,7 +7,7 @@
     </div>
     <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <search-menu :placeholder="$t('msg.menus.search')" />
-      <base-table
+      <menus-table
         :dots="true"
         :header="tableHeader"
         :body="menus"
