@@ -6,6 +6,95 @@
   },
   "basePath": "/api/v1",
   "definitions": {
+    "recipe_ingredient_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "recipe_ingredient"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "recipe_id": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": false
+            },
+            "ingredient_id": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": false
+            },
+            "ingredient_quantity": {
+              "type": "integer",
+              "example": 3,
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": []
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "recipe_ingredient": {
+      "type": "object",
+      "properties": {
+        "ingredient_id": {
+          "type": "integer",
+          "example": 1,
+          "x-nullable": false
+        },
+        "ingredient_quantity": {
+          "type": "integer",
+          "example": 3,
+          "x-nullable": true
+        }
+      }
+    },
+    "recipe_ingredients_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/recipe_ingredient"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "recipe_ingredient_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/recipe_ingredient"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
     "recipe_step_update": {
       "type": "object",
       "properties": {
@@ -429,9 +518,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -1148,6 +1235,140 @@
           },
           "404": {
             "description": "provider not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/recipes/{recipe_id}/recipe_ingredients": {
+      "parameters": [
+        {
+          "name": "recipe_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Creates Recipe Ingredient",
+        "description": "Creates Recipe Ingredient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "recipe_ingredient",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recipe_ingredient": {
+                  "$ref": "#/definitions/recipe_ingredient"
+                }
+              },
+              "required": [
+                "recipe_ingredient"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "recipe_ingredient created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/recipes/{recipe_id}/recipe_ingredients/{id}": {
+      "parameters": [
+        {
+          "name": "recipe_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Updates Recipe Ingredient",
+        "description": "Updates Recipe Ingredient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "recipe_ingredient",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recipe_ingredient": {
+                  "$ref": "#/definitions/recipe_ingredient"
+                }
+              },
+              "required": [
+                "recipe_ingredient"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "recipe_ingredient updated"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Recipe Ingredient",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific recipe_ingredient",
+        "responses": {
+          "204": {
+            "description": "recipe_ingredient deleted"
+          },
+          "404": {
+            "description": "recipe_ingredient not found"
           },
           "401": {
             "description": "user unauthorized"
