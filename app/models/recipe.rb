@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   has_many :menus, through: :menu_recipes, dependent: nil
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients, dependent: nil
+  has_many :steps, dependent: :destroy, class_name: "RecipeStep"
 end
 
 # == Schema Information
