@@ -52,6 +52,13 @@ export default {
       edit: 'Editar menú',
       delete: 'Eliminar menú',
       deleteMsg: 'Estás seguro de que deseas eliminar este menú?',
+      create: 'Crear Menú',
+      menuName: 'Nombre menú',
+      portions: 'Porciones',
+      price: 'Precio',
+      addRecipes: 'Agregar recetas',
+      selectedRecipes: 'Recetas seleccionadas',
+      searchRecipes: 'Buscar recetas',
     },
   },
 };
