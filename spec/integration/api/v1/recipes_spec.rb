@@ -163,4 +163,79 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       end
     end
   end
+
+  path '/recipes/{id}/add_ingredient' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    parameter name: :id, in: :path, type: :integer
+
+    let!(:existent_recipe) { create(:recipe, user_id: user.id) }
+    let!(:existent_ingredient) { create(:ingredient, user_id: user.id) }
+    let(:id) { existent_recipe.id }
+    let(:ingredient_id) { existent_ingredient.id }
+
+    before do
+      create(:recipe_ingredient, recipe: existent_recipe, ingredient: existent_ingredient)
+    end
+
+    post 'Add ingredient to recipe' do
+      description 'Add existing ingredient to specific recipe'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :ingredient_id, in: :body, required: true, schema: { type: :integer }
+      parameter name: :ingredient_quantity, in: :body, required: true, schema: { type: :integer }
+
+      response '200', 'recipe ingredient added' do
+        let(:ingredient_quantity) { 3 }
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
+  path '/recipes/{id}/remove_ingredient' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    parameter name: :id, in: :path, type: :integer
+
+    let!(:existent_recipe) { create(:recipe, user_id: user.id) }
+    let!(:existent_ingredient) { create(:ingredient, user_id: user.id) }
+    let(:id) { existent_recipe.id }
+    let(:ingredient_id) { existent_ingredient.id }
+
+    before do
+      create(:recipe_ingredient, recipe: existent_recipe, ingredient: existent_ingredient)
+    end
+
+    post 'Remove ingredient of recipe' do
+      description 'Remove existing ingredient of specific recipe'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :ingredient_id, in: :body, required: true, schema: { type: :integer }
+
+      response '200', 'recipe ingredient removed' do
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+
+      response '404', 'recipe not found' do
+        let(:ingredient_id) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
 end

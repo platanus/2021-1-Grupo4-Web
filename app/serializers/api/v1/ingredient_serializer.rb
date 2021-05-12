@@ -8,7 +8,6 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
     :sku,
     :price,
     :currency,
-    :quantity,
     :measure,
     :created_at,
     :updated_at

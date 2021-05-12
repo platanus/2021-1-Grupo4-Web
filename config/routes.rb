@@ -4,7 +4,12 @@ Rails.application.routes.draw do
       resources :ingredients
       resources :providers
       resources :menus
-      resources :recipes
+      resources :recipes do
+        member do
+          post :add_ingredient
+          post :remove_ingredient
+        end
+      end
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]
