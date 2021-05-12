@@ -87,6 +87,7 @@ export default {
         this.status = response.status;
         this.error = '';
         localStorage.setItem('token', response.data.data.attributes.authentication_token);
+        localStorage.setItem('email', response.data.data.attributes.email);
         window.location.href = '/ingredients';
       } catch (error) {
         this.status = error.response.status;

@@ -26,6 +26,14 @@ import InfoRecipe from '../components/recipes/index/base-info-recipe.vue';
 import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
 import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
+import FilterPopup from '../components/recipes/index/base-filter-popup.vue';
+
+import RecipeShow from '../components/recipes/show/base-component.vue';
+import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
+import RecipeIngredients from '../components/recipes/show/base-recipe-ingredients.vue';
+import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
+import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
+import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 
 Vue.use(VueI18n);
 
@@ -51,6 +59,14 @@ Vue.component('InfoRecipe', InfoRecipe);
 Vue.component('PriceRecipe', PriceRecipe);
 Vue.component('Pagination', Pagination);
 Vue.component('PageNumber', PageNumber);
+Vue.component('FilterPopup', FilterPopup);
+
+Vue.component('RecipeShow', RecipeShow);
+Vue.component('RecipeInfo', RecipeInfo);
+Vue.component('RecipeIngredients', RecipeIngredients);
+Vue.component('RecipeIngredient', RecipeIngredient);
+Vue.component('RecipeInstructions', RecipeInstructions);
+Vue.component('InstructionStep', InstructionStep);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

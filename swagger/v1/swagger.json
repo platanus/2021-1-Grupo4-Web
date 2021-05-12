@@ -42,37 +42,37 @@
       "properties": {
         "provider_id": {
           "type": "integer",
-          "example": 666,
+          "example": 1,
           "x-nullable": true
         },
         "name": {
           "type": "string",
-          "example": "Some name",
+          "example": "Harina",
           "x-nullable": true
         },
         "sku": {
           "type": "string",
-          "example": "Some sku",
+          "example": "SK28CD2",
           "x-nullable": true
         },
         "price": {
           "type": "integer",
-          "example": 666,
+          "example": 2990,
           "x-nullable": true
         },
         "currency": {
           "type": "string",
-          "example": "Some currency",
+          "example": "CLP",
           "x-nullable": true
         },
         "quantity": {
           "type": "integer",
-          "example": 666,
+          "example": 2,
           "x-nullable": true
         },
         "measure": {
           "type": "string",
-          "example": "Some measure",
+          "example": "unidad",
           "x-nullable": true
         }
       },
@@ -100,42 +100,42 @@
           "properties": {
             "provider_id": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "user_id": {
               "type": "integer",
-              "example": 666,
+              "example": 1,
               "x-nullable": true
             },
             "name": {
               "type": "string",
-              "example": "Some name",
+              "example": "Harina",
               "x-nullable": true
             },
             "sku": {
               "type": "string",
-              "example": "Some sku",
+              "example": "SK28CD2",
               "x-nullable": true
             },
             "price": {
               "type": "integer",
-              "example": 666,
+              "example": 2990,
               "x-nullable": true
             },
             "currency": {
               "type": "string",
-              "example": "Some currency",
+              "example": "CLP",
               "x-nullable": true
             },
             "quantity": {
               "type": "integer",
-              "example": 666,
+              "example": 2,
               "x-nullable": true
             },
             "measure": {
               "type": "string",
-              "example": "Some measure",
+              "example": "unidad",
               "x-nullable": true
             },
             "created_at": {
@@ -149,9 +149,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -190,17 +188,17 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "Some name",
+          "example": "Jumbo",
           "x-nullable": true
         },
         "address": {
           "type": "string",
-          "example": "Some address",
+          "example": "Av. Francisco Bilbao 223",
           "x-nullable": true
         },
         "country": {
           "type": "string",
-          "example": "Some country",
+          "example": "Chile",
           "x-nullable": true
         }
       },
@@ -226,17 +224,17 @@
           "properties": {
             "name": {
               "type": "string",
-              "example": "Some name",
+              "example": "Jumbo",
               "x-nullable": true
             },
             "address": {
               "type": "string",
-              "example": "Some address",
+              "example": "Av. Francisco Bilbao 223",
               "x-nullable": true
             },
             "country": {
               "type": "string",
-              "example": "Some country",
+              "example": "Chile",
               "x-nullable": true
             },
             "created_at": {
@@ -250,9 +248,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -286,42 +282,20 @@
         "data"
       ]
     },
-    "recipe": {
+    "menu": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "example": "1"
-        },
         "name": {
           "type": "string",
-          "example": "Some name",
-          "x-nullable": true
-        },
-        "portions": {
-          "type": "integer",
-          "example": 1,
-          "x-nullable": true
-        },
-        "instructions": {
-          "type": "text",
-          "example": "Some instructions",
-          "x-nullable": true
-        },
-        "cook_minutes": {
-          "type": "integer",
-          "example": 1,
+          "example": "Menú de almuerzo",
           "x-nullable": true
         }
       },
       "required": [
-        "name",
-        "portions",
-        "instructions",
-        "cook_minutes"
+        "name"
       ]
     },
-    "recipe_response": {
+    "menu_response": {
       "type": "object",
       "properties": {
         "id": {
@@ -330,29 +304,14 @@
         },
         "type": {
           "type": "string",
-          "example": "recipe"
+          "example": "menu"
         },
         "attributes": {
           "type": "object",
           "properties": {
-            "user_id": {
-              "type": "integer",
-              "example": 666,
-              "x-nullable": true
-            },
-            "portions": {
-              "type": "integer",
-              "example": 1,
-              "x-nullable": true
-            },
-            "instructions": {
-              "type": "text",
-              "example": "Some instructions",
-              "x-nullable": true
-            },
-            "cook_minutes": {
-              "type": "integer",
-              "example": 1,
+            "name": {
+              "type": "string",
+              "example": "Menú de almuerzo",
               "x-nullable": true
             },
             "created_at": {
@@ -366,15 +325,69 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
         "id",
         "type",
         "attributes"
+      ]
+    },
+    "menus_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/menu_response"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "menu_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/menu_response"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "recipe": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Pastel de choclo",
+          "x-nullable": true
+        },
+        "portions": {
+          "type": "integer",
+          "example": 4,
+          "x-nullable": true
+        },
+        "instructions": {
+          "type": "string",
+          "example": "Some instructions",
+          "x-nullable": true
+        },
+        "cook_minutes": {
+          "type": "integer",
+          "example": 25,
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "name",
+        "portions",
+        "instructions",
+        "cook_minutes"
       ]
     },
     "recipes_collection": {
@@ -401,10 +414,75 @@
       "required": [
         "data"
       ]
+    },
+    "recipe_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "ingredient"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": true
+            },
+            "name": {
+              "type": "string",
+              "example": "Pastel de choclo",
+              "x-nullable": true
+            },
+            "portions": {
+              "type": "integer",
+              "example": 4,
+              "x-nullable": true
+            },
+            "instructions": {
+              "type": "string",
+              "example": "Some instructions",
+              "x-nullable": true
+            },
+            "cook_minutes": {
+              "type": "integer",
+              "example": 25,
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ingredient_response"
+              }
+            }
+          },
+          "required": []
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
     }
   },
   "paths": {
-    "/search-ingredients": {
+    "/search-jumbo-ingredients": {
       "parameters": [
         {
           "name": "user_email",
@@ -430,7 +508,58 @@
         "produces": [
           "application/json"
         ],
-        "description": "Retrieves ingredients by different providers",
+        "description": "Retrieves ingredients from Jumbo",
+        "responses": {
+          "200": {
+            "description": "ingredients retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/provider_ingredient"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/search-lider-ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Search ingredients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves ingredients from Lider",
         "responses": {
           "200": {
             "description": "ingredients retrieved",
@@ -611,6 +740,151 @@
           },
           "401": {
             "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/menus": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Menus",
+        "description": "Retrieves all the menus",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Menus retrieved",
+            "schema": {
+              "$ref": "#/definitions/menus_collection"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates Menu",
+        "description": "Creates Menu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menu": {
+                  "$ref": "#/definitions/menu"
+                }
+              },
+              "required": [
+                "menu"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "menu created"
+          }
+        }
+      }
+    },
+    "/menus/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Menu",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "menu retrieved",
+            "schema": {
+              "$ref": "#/definitions/menu_resource"
+            }
+          },
+          "404": {
+            "description": "invalid menu id"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates Menu",
+        "description": "Updates Menu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menu": {
+                  "$ref": "#/definitions/menu"
+                }
+              },
+              "required": [
+                "menu"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "menu updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Menu",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific menu",
+        "responses": {
+          "204": {
+            "description": "menu deleted"
+          },
+          "404": {
+            "description": "menu not found"
           }
         }
       }

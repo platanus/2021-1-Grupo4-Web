@@ -8,6 +8,7 @@ class Api::V1::RecipeSerializer < ActiveModel::Serializer
     :instructions,
     :cook_minutes,
     :created_at,
-    :updated_at
+    :updated_at,
+    :ingredients
   )
 end

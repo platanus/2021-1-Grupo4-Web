@@ -6,6 +6,7 @@ export default {
     yesDelete: 'Sí, Eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
+    noElements: 'Aún no tienes',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -38,11 +39,23 @@ export default {
       title: 'Recetas',
       search: 'Buscar por nombre',
       add: 'Agregar receta',
-      edit: 'Editar receta',
-      delete: 'Eliminar receta',
+      edit: 'Editar',
+      delete: 'Eliminar',
       deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
+      minutes: 'minutos',
       portions: 'Porciones',
+      steps: 'Pasos',
+      filter: {
+        price: 'Precio',
+        portions: 'Porciones',
+        minPortions: 'Mínimas',
+        maxPortions: 'Máximas',
+        minPrice: 'Mínimo',
+        maxPrice: 'Máximo',
+        aply: 'Aplicar',
+        delete: 'Borrar filtro',
+      },
     },
 
     menus: {
