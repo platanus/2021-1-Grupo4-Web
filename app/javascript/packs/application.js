@@ -28,8 +28,6 @@ import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
 
 import MenusContainer from '../components/menus/index/base-component.vue';
-import SearchMenu from '../components/menus/index/base-search-menu.vue';
-import MenusTable from '../components/menus/index/base-menus-table.vue';
 
 Vue.use(VueI18n);
 
@@ -57,8 +55,6 @@ Vue.component('Pagination', Pagination);
 Vue.component('PageNumber', PageNumber);
 
 Vue.component('MenusContainer', MenusContainer);
-Vue.component('SearchMenu', SearchMenu);
-Vue.component('MenusTable', MenusTable);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

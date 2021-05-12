@@ -20,9 +20,16 @@
 </template>
 
 <script>
+import SearchMenu from './base-search-menu.vue';
+import MenusTable from './base-menus-table.vue';
+
 export default {
   props: {
     menus: { type: Array, required: true },
+  },
+  components: {
+    SearchMenu,
+    MenusTable,
   },
   data() {
     return {
