@@ -40,7 +40,8 @@
       v-if="drag"
     >
       <drag-and-drop
-        :elements="elements"
+        :elements="this.steps"
+        :svg="svg"
       />
 
       <text-box
@@ -70,6 +71,7 @@ export default {
   data() {
     return {
       par: false,
+      steps: [],
     };
   },
   methods: {
@@ -82,7 +84,11 @@ export default {
       return this.par;
     },
     addStep() {
-      return null;
+      const text = document.getElementById('textarea');
+      this.steps.push(text.value);
+      console.log(this.steps);
+      text.value = '';
+      this.$forceUpdate();
     },
   },
 };
