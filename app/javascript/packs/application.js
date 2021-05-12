@@ -17,7 +17,7 @@ import BaseModal from '../components/base/base-modal-component.vue';
 import IngredientsForm from '../components/ingredients/base-form-component';
 import Register from '../components/users/register-component.vue';
 import Login from '../components/users/login-component.vue';
-
+import LandingPage from '../components/landing-page.vue';
 import RecipesContainer from '../components/recipes/index/base-component.vue';
 import SearchRecipe from '../components/recipes/index/base-search-recipe.vue';
 import Recipes from '../components/recipes/index/base-recipes.vue';
@@ -26,6 +26,14 @@ import InfoRecipe from '../components/recipes/index/base-info-recipe.vue';
 import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
 import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
+import FilterPopup from '../components/recipes/index/base-filter-popup.vue';
+
+import RecipeShow from '../components/recipes/show/base-component.vue';
+import RecipeInfo from '../components/recipes/show/base-recipe-info.vue';
+import RecipeIngredients from '../components/recipes/show/base-recipe-ingredients.vue';
+import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.vue';
+import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
+import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 
 import NewMenuContainer from '../components/menus/new/base-component.vue';
 
@@ -44,7 +52,7 @@ Vue.component('BaseModal', BaseModal);
 Vue.component('IngredientsForm', IngredientsForm);
 Vue.component('Register', Register);
 Vue.component('Login', Login);
-
+Vue.component('LandingPage', LandingPage);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('SearchRecipe', SearchRecipe);
 Vue.component('Recipes', Recipes);
@@ -53,6 +61,14 @@ Vue.component('InfoRecipe', InfoRecipe);
 Vue.component('PriceRecipe', PriceRecipe);
 Vue.component('Pagination', Pagination);
 Vue.component('PageNumber', PageNumber);
+Vue.component('FilterPopup', FilterPopup);
+
+Vue.component('RecipeShow', RecipeShow);
+Vue.component('RecipeInfo', RecipeInfo);
+Vue.component('RecipeIngredients', RecipeIngredients);
+Vue.component('RecipeIngredient', RecipeIngredient);
+Vue.component('RecipeInstructions', RecipeInstructions);
+Vue.component('InstructionStep', InstructionStep);
 
 Vue.component('NewMenuContainer', NewMenuContainer);
 

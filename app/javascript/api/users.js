@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const tokenEl = document && document.querySelector('meta[name="csrf-token"]');
+const CSRFToken = tokenEl && tokenEl.getAttribute('content');
+
 async function registerUser(userEmail, userPassword) {
   return (axios
     .post('/api/v1/users/registrations', {
@@ -7,7 +10,13 @@ async function registerUser(userEmail, userPassword) {
         email: userEmail,
         password: userPassword,
       },
-    }));
+    },
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
+    },
+    ));
 }
 
 async function loginUser(userEmail, userPassword) {
@@ -17,8 +26,26 @@ async function loginUser(userEmail, userPassword) {
         email: userEmail,
         password: userPassword,
       },
-    })
+    },
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
+    },
+    )
   );
 }
 
-export { registerUser, loginUser };
+async function logoutUser() {
+  return (axios
+    .delete('/users/sign_out',
+      {
+        headers: {
+          'X-CSRF-Token': CSRFToken,
+        },
+      },
+    )
+  );
+}
+
+export { registerUser, loginUser, logoutUser };

@@ -32,7 +32,19 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
       description 'Creates Menu'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :menu, in: :body)
+      parameter(
+        name: :menu,
+        in: :body,
+        schema: {
+          type: "object",
+          properties: {
+            menu: { "$ref" => "#/definitions/menu" }
+          },
+          required: [
+            :menu
+          ]
+        }
+      )
 
       response '201', 'menu created' do
         let(:menu) do
@@ -73,7 +85,19 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
       description 'Updates Menu'
       consumes 'application/json'
       produces 'application/json'
-      parameter(name: :menu, in: :body)
+      parameter(
+        name: :menu,
+        in: :body,
+        schema: {
+          type: "object",
+          properties: {
+            menu: { "$ref" => "#/definitions/menu" }
+          },
+          required: [
+            :menu
+          ]
+        }
+      )
 
       response '200', 'menu updated' do
         let(:menu) do
