@@ -7,7 +7,7 @@
     >
     <img
       svg-inline
-      src="../../../assets/images/magnifyng-glass-svg.svg"
+      src="../../../../assets/images/magnifyng-glass-svg.svg"
       class="w-6 h-6 absolute left-5 top-5"
     >
     <button class="flex py-2 px-10 bg-green-600 rounded-md flex-grow-0 font-hind font-normal text-lg text-white">

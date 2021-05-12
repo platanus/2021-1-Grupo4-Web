@@ -27,9 +27,9 @@ import PriceRecipe from '../components/recipes/index/base-price-recipe.vue';
 import Pagination from '../components/recipes/index/base-pagination.vue';
 import PageNumber from '../components/recipes/index/base-page-number.vue';
 
-import MenusContainer from '../components/menus/base-component.vue';
-import SearchMenu from '../components/menus/base-search-menu.vue';
-import MenusTable from '../components/menus/base-menus-table.vue';
+import MenusContainer from '../components/menus/index/base-component.vue';
+import SearchMenu from '../components/menus/index/base-search-menu.vue';
+import MenusTable from '../components/menus/index/base-menus-table.vue';
 
 Vue.use(VueI18n);
 
