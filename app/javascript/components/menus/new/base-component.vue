@@ -33,11 +33,11 @@ import AvailableRecipes from './base-available-recipes.vue';
 import SelectedRecipes from './base-selected-recipes.vue';
 
 export default {
-components: {
-    InformationMenu,
-    SearchRecipes,
-    AvailableRecipes,
-    SelectedRecipes
-  },
-};
+  components: {
+      InformationMenu,
+      SearchRecipes,
+      AvailableRecipes,
+      SelectedRecipes,
+    },
+  };
 </script>
