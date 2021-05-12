@@ -6,6 +6,11 @@ API_V1 = {
   },
   basePath: '/api/v1',
   definitions: {
+    recipe_step_update: RECIPE_STEP_UPDATE_SCHEMA,
+    recipe_step_response: RECIPE_STEP_RESPONSE_SCHEMA,
+    recipe_step: RECIPE_STEP_SCHEMA,
+    recipe_steps_collection: RECIPE_STEPS_COLLECTION_SCHEMA,
+    recipe_step_resource: RECIPE_STEP_RESOURCE_SCHEMA,
     user: USER_SCHEMA,
     provider_ingredient: PROVIDER_INGREDIENT_SCHEMA,
     ingredient: INGREDIENT_SCHEMA,

@@ -16,7 +16,7 @@ RECIPE_RESPONSE_SCHEMA = {
   type: :object,
   properties: {
     id: { type: :string, example: '1' },
-    type: { type: :string, example: 'ingredient' },
+    type: { type: :string, example: 'recipe' },
     attributes: {
       type: :object,
       properties: {
@@ -29,6 +29,15 @@ RECIPE_RESPONSE_SCHEMA = {
         ingredients: {
           type: "array",
           items: { "$ref" => "#/definitions/ingredient_response" }
+        },
+        steps: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/recipe_step_response" }
+            }
+          }
         }
       },
       required: []
