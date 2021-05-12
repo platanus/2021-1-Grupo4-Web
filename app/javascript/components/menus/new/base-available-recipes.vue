@@ -11,7 +11,11 @@
 </template>
 
 <script>
-export default {
+import RecipeCard from './base-recipe-card.vue';
 
+export default {
+  components: {
+    RecipeCard,
+  },
 };
 </script>

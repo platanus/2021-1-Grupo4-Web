@@ -27,7 +27,17 @@
 </template>
 
 <script>
-export default {
+import InformationMenu from './base-information-menu.vue';
+import SearchRecipes from './base-search-recipe.vue';
+import AvailableRecipes from './base-available-recipes.vue';
+import SelectedRecipes from './base-selected-recipes.vue';
 
+export default {
+components: {
+    InformationMenu,
+    SearchRecipes,
+    AvailableRecipes,
+    SelectedRecipes
+  },
 };
 </script>

@@ -8,7 +8,11 @@
 </template>
 
 <script>
-export default {
+import RecipeSelectedData from './base-recipe-selected-data.vue';
 
+export default {
+  components: {
+    RecipeSelectedData,
+  },
 };
 </script>

@@ -13,7 +13,11 @@
 </template>
 
 <script>
-export default {
+import CardData from './base-card-data.vue';
 
+export default {
+  components: {
+    CardData,
+  },
 };
 </script>
