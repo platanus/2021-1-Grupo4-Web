@@ -80,11 +80,6 @@ export default {
   computed: {
     parsedElements() {
       const parsedElements = this.body.map((element) => JSON.parse(element));
-      console.log(parsedElements);
-      console.log(parsedElements[0]);
-      console.log(parsedElements[0].recipes);
-      console.log(typeof(parsedElements[0].recipes));
-      console.log(parsedElements[0].recipes[0]);
 
       return parsedElements;
     },
