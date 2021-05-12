@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="min-h-screen w-screen bg-gray-200 flex items-center justify-center"
+    class="w-full bg-gray-200 flex items-center justify-center"
   >
     <draggable
       :list="elements"
@@ -15,7 +15,7 @@
       <container
         v-for="element in elements"
         :key="element.id"
-        :element="element"
+        :text="element"
         :svg="svg"
         :input="input"
         :color="color()"
@@ -30,6 +30,8 @@ import draggable from 'vuedraggable';
 export default {
   props: {
     elements: { type: Array, required: true },
+    svg: { type: Object, required: true },
+    input: { type: Boolean, default: false },
   },
   components: {
     draggable,
@@ -38,6 +40,7 @@ export default {
     return {
       enabled: true,
       dragging: false,
+      par: false,
     };
   },
   methods: {
@@ -46,6 +49,11 @@ export default {
     },
     onDelete(user) {
       console.log(`Deleting ${user.name}`);
+    },
+    color() {
+      this.par = !this.par;
+
+      return this.par;
     },
   },
 };
