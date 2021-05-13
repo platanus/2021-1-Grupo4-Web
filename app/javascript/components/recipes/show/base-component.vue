@@ -30,6 +30,7 @@
     <recipe-info
       :portions="recipe.portions"
       :cook-minutes="recipe.cookMinutes"
+      :ingredients="this.recipe.ingredients"
     />
     <!--Body-->
     <div class="flex items-start w-auto h-auto self-stretch flex-grow-0 my-4">

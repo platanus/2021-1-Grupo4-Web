@@ -8,7 +8,7 @@
         src="../../../../assets/images/dollar-svg.svg"
       >
       <div class="w-10 h-5 font-sans font-normal text-base text-black flex-grow-0">
-        17.000
+        {{ getPrice }}
       </div>
     </div>
     <!-- portions -->
@@ -42,6 +42,17 @@ export default {
   props: {
     portions: { type: Number, required: true },
     cookMinutes: { type: Number, required: true },
+    ingredients: { type: Array, required: true },
+  },
+  methods: {
+    ingredientFinalPrice(quantity, price) {
+      return (quantity * price);
+    },
+  },
+  computed: {
+    getPrice() {
+      return this.ingredients.map(element => this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+    },
   },
 };
 </script>
