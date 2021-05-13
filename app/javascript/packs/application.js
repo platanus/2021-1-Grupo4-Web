@@ -35,6 +35,8 @@ import RecipeIngredient from '../components/recipes/show/base-recipe-ingredient.
 import RecipeInstructions from '../components/recipes/show/base-recipe-instructions.vue';
 import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 
+import MenusContainer from '../components/menus/index/base-component.vue';
+
 Vue.use(VueI18n);
 
 Vue.component('TopNavbar', TopNavbar);
@@ -67,6 +69,8 @@ Vue.component('RecipeIngredients', RecipeIngredients);
 Vue.component('RecipeIngredient', RecipeIngredient);
 Vue.component('RecipeInstructions', RecipeInstructions);
 Vue.component('InstructionStep', InstructionStep);
+
+Vue.component('MenusContainer', MenusContainer);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

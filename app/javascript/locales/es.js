@@ -65,6 +65,10 @@ export default {
       edit: 'Editar menú',
       delete: 'Eliminar menú',
       deleteMsg: 'Estás seguro de que deseas eliminar este menú?',
+      name: 'Nombre',
+      totalPrice: 'Precio Total ($)',
+      recipesQuantity: 'Cantidad de recetas',
+      recipes: 'Recetas',
     },
   },
 };
