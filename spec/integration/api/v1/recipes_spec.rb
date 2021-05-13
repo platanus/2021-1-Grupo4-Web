@@ -1,6 +1,7 @@
 require 'swagger_helper'
 
-describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+describe 'Api::V1::Recipes', swagger_doc: 'v1/swagger.json' do
   let!(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
@@ -58,7 +59,6 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
             user_id: new_recipe.id,
             name: new_recipe.name,
             portions: new_recipe.portions,
-            instructions: new_recipe.instructions,
             cook_minutes: new_recipe.cook_minutes
           }
         end
@@ -126,7 +126,6 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
             user_id: user.id,
             name: 'Some name',
             portions: 666,
-            instructions: 'Some instructions',
             cook_minutes: 666
           }
         end
@@ -164,3 +163,4 @@ describe 'API::V1::Recipes', swagger_doc: 'v1/swagger.json' do
     end
   end
 end
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers

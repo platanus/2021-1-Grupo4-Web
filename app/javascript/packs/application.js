@@ -36,6 +36,7 @@ import RecipeInstructions from '../components/recipes/show/base-recipe-instructi
 import InstructionStep from '../components/recipes/show/base-instruction-step.vue';
 
 import NewMenuContainer from '../components/menus/new/base-component.vue';
+import MenusContainer from '../components/menus/index/base-component.vue';
 
 Vue.use(VueI18n);
 
@@ -71,6 +72,7 @@ Vue.component('RecipeInstructions', RecipeInstructions);
 Vue.component('InstructionStep', InstructionStep);
 
 Vue.component('NewMenuContainer', NewMenuContainer);
+Vue.component('MenusContainer', MenusContainer);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

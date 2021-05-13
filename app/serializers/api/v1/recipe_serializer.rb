@@ -5,10 +5,15 @@ class Api::V1::RecipeSerializer < ActiveModel::Serializer
     :user_id,
     :name,
     :portions,
-    :instructions,
     :cook_minutes,
     :created_at,
     :updated_at,
-    :ingredients
+    :ingredients,
+    :steps
   )
+
+  def steps
+    ActiveModelSerializers::SerializableResource.new(object.steps.rank(:step_order),
+                                                     each_serializer: Api::V1::RecipeStepSerializer)
+  end
 end

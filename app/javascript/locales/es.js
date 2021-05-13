@@ -73,8 +73,11 @@ export default {
       addRecipes: 'Agregar recetas',
       selectedRecipes: 'Recetas seleccionadas',
       searchRecipes: 'Buscar recetas',
-      recipes: 'Recetas',
       menuPrice: 'Total del menú',
+      name: 'Nombre',
+      totalPrice: 'Precio Total ($)',
+      recipesQuantity: 'Cantidad de recetas',
+      recipes: 'Recetas',
     },
   },
 };
