@@ -33,7 +33,7 @@
     />
     <!--Body-->
     <div class="flex items-start w-auto h-auto self-stretch flex-grow-0 my-4">
-      <recipe-ingredients />
+      <recipe-ingredients :ingredients="this.recipe.ingredients" />
       <recipe-instructions />
     </div>
     <!--DeleteModal-->
@@ -68,6 +68,7 @@ export default {
         name: '',
         portions: 0,
         cookMinutes: 0,
+        ingredients: [],
       },
     };
   },

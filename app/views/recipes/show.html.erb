@@ -1,7 +1,7 @@
 <div class="h-screen flex">
   <side-navbar active-element="recipes"></side-navbar>
   <div class="container ml-64 p-8 overflow-hidden">
-    <recipe-show :recipe-id = <%= params[:id]%>></recipe-show>
+    <recipe-show :recipe-id = "<%= params[:id]%>"></recipe-show>
   </div>
   
 </div>

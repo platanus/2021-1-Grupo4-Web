@@ -4,13 +4,11 @@
       {{ $t('msg.ingredients.title') }}
     </div>
     <div class="flex flex-col items-start p-4 w-56 bg-gray-200 rounded flex-grow-0 my-2.5">
-      <recipe-ingredient />
-      <recipe-ingredient />
-      <recipe-ingredient />
-      <recipe-ingredient />
-      <recipe-ingredient />
-      <recipe-ingredient />
-      <recipe-ingredient />
+      <recipe-ingredient
+        v-for="ingredient in ingredients"
+        :key="ingredient.id"
+        :ingredient="ingredient"
+      />
     </div>
   </div>
 </template>
@@ -18,6 +16,8 @@
 <script>
 
 export default {
-
+  props: {
+    ingredients: { type: Array, required: true },
+  },
 };
 </script>
