@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          <div class="flex flex-row items-center p-0 w-40 h-5 top-0 left-0 flex-none order-0 flex-grow-0 my-0">
+          <div class="flex flex-row items-center p-0 w-auto h-5 top-0 left-0 flex-none order-0 flex-grow-0 my-0">
             <div class="static w-4 h-4 flex-none order-0 flex-grow-0 mr-2">
               <img
                 class="h-5 w-5 text-white"
@@ -30,7 +30,7 @@
                 src="../../../../assets/images/clock-svg.svg"
               >
             </div>
-            <div class="static w-28 h-5 flex-none order-1 flex-grow-0">
+            <div class="static min-w-min h-5 flex-none order-1 flex-grow-0">
               {{ recipeMinutes + " minuto(s)" }}
             </div>
           </div>

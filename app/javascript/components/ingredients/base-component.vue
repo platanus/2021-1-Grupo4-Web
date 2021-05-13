@@ -86,7 +86,7 @@
 
 <script>
 
-import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+import { getIngredients, postIngredient, deleteIngredient, editIngredient } from '../../api/ingredients.js';
 
 export default {
 

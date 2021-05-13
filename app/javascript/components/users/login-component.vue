@@ -65,7 +65,7 @@
 
 <script>
 
-import { loginUser } from './../../api/users.js';
+import { loginUser } from '../../api/users.js';
 
 export default {
   data() {

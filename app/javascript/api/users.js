@@ -3,7 +3,7 @@ import axios from 'axios';
 const tokenEl = document && document.querySelector('meta[name="csrf-token"]');
 const CSRFToken = tokenEl && tokenEl.getAttribute('content');
 
-async function registerUser(userEmail, userPassword) {
+function registerUser(userEmail, userPassword) {
   return (axios
     .post('/api/v1/users/registrations', {
       user: {
@@ -19,7 +19,7 @@ async function registerUser(userEmail, userPassword) {
     ));
 }
 
-async function loginUser(userEmail, userPassword) {
+function loginUser(userEmail, userPassword) {
   return (axios
     .post('/api/v1/users/sessions', {
       user: {
