@@ -1,25 +1,25 @@
 import client from '../auth/authClient.js';
 
-async function getIngredients() {
+function getIngredients() {
   return (client
     .get('/ingredients', {
     }));
 }
 
-async function postIngredient(ingredient) {
+function postIngredient(ingredient) {
   return (client
     .post('/ingredients',
       { ingredient },
     ));
 }
 
-async function deleteIngredient(ingredientId) {
+function deleteIngredient(ingredientId) {
   return (client
     .delete(`/ingredients/${ingredientId}`, {
     }));
 }
 
-async function editIngredient(ingredientId, ingredientInfo) {
+function editIngredient(ingredientId, ingredientInfo) {
   return (client
     .put(`/ingredients/${ingredientId}`, {
       ingredient: {

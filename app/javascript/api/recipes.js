@@ -1,18 +1,18 @@
 import client from '../auth/authClient.js';
 
-async function getRecipes() {
+function getRecipes() {
   return (client
     .get('/recipes', {
     }));
 }
 
-async function getRecipe(recipeId) {
+function getRecipe(recipeId) {
   return (client
     .get(`/recipes/${recipeId}`, {
     }));
 }
 
-async function deleteRecipe(recipeId) {
+function deleteRecipe(recipeId) {
   return (client
     .delete(`/recipes/${recipeId}`, {
     }));

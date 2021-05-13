@@ -52,7 +52,7 @@
 
 <script>
 
-import { getRecipe, deleteRecipe } from './../../../api/recipes.js';
+import { getRecipe, deleteRecipe } from '../../../api/recipes.js';
 
 export default {
   props: {
@@ -62,6 +62,8 @@ export default {
   data() {
     return {
       showingDel: false,
+      status: '',
+      error: '',
       recipe: {
         name: '',
         portions: 0,

@@ -15,16 +15,15 @@
     />
     <p
       class="my-4"
-      v-if="this.recipes.length === 0"
+      v-if="recipes.length === 0"
     >
       {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
     </p>
     <div v-else>
       <recipes
-        :allrecipes="this.recipes"
+        :allrecipes="recipes"
       />
     </div>
-    <!-- <recipes :allrecipes="recipes" /> -->
     <pagination />
     <!--Price Filter Modal-->
     <filter-popup
@@ -53,13 +52,11 @@
 
 <script>
 
-import { getRecipes } from './../../../api/recipes.js';
+import { getRecipes } from '../../../api/recipes.js';
 
 export default {
   data() {
     return {
-      recipeToEdit: {},
-      recipeToDelete: {},
       recipes: [],
       status: '',
       error: '',

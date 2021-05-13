@@ -3,12 +3,8 @@
     <div class="flex-none order-2 flex-grow-0">
       <recipe
         v-for="recipe in allrecipes"
-        :key="recipe.name"
-        :name="recipe.name"
-        :portions="recipe.portions"
-        :minutes="recipe.cookMinutes"
-        :price="5000"
-        :id="recipe.id"
+        :key="recipe.id"
+        :recipe="recipe"
       />
     </div>
   </div>
