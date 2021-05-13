@@ -30,12 +30,13 @@
     <recipe-info
       :portions="recipe.portions"
       :cook-minutes="recipe.cookMinutes"
+      :recipe-price="getPrice"
       :ingredients="this.recipe.ingredients"
     />
     <!--Body-->
-    <div class="flex items-start w-auto h-auto self-stretch flex-grow-0 my-4">
+    <div class="flex items-start justify-between w-auto h-auto self-stretch flex-grow-0 my-4">
       <recipe-ingredients :ingredients="this.recipe.ingredients" />
-      <recipe-instructions />
+      <recipe-instructions :steps="this.recipe.steps.data" />
     </div>
     <!--DeleteModal-->
     <base-modal
@@ -70,6 +71,7 @@ export default {
         portions: 0,
         cookMinutes: 0,
         ingredients: [],
+        steps: { data: [] },
       },
     };
   },
@@ -88,7 +90,9 @@ export default {
     toggleDelModal() {
       this.showingDel = !this.showingDel;
     },
-
+    ingredientFinalPrice(quantity, price) {
+      return (quantity * price);
+    },
     async deleteRecipe() {
       try {
         const response = await deleteRecipe(this.recipe.id);
@@ -98,18 +102,20 @@ export default {
         this.errorResponse(error);
       }
     },
-
     async successResponse(status) {
       this.status = status;
       this.error = '';
     },
-
     async errorResponse(error) {
       this.status = error.response.status;
       this.error = error;
     },
-
   },
 
+  computed: {
+    getPrice() {
+      return this.recipe.ingredients.map(element => this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+    },
+  },
 };
 </script>
