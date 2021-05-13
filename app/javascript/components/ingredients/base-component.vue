@@ -105,6 +105,7 @@ export default {
   },
 
   async created() {
+    console.log(localStorage.getItem('token'));
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
