@@ -18,7 +18,11 @@ import IngredientsForm from '../components/ingredients/base-form-component';
 
 import CreateRecipes from '../components/recipes/create/create-recipes-component.vue';
 import List from '../components/recipes/create/list-component.vue';
-import Container from '../components/recipes/create/container-component.vue'
+import Container from '../components/recipes/create/container-component.vue';
+import AddIngredientModal from '../components/recipes/create/add-ingredient-modal-component.vue';
+import SelectedIngredients from '../components/recipes/create/selected-ingredients-component.vue';
+import SearchIngredientList from '../components/recipes/create/search-ingredient-list-component.vue';
+import AddButton from '../components/recipes/create/add-button-component.vue';
 
 Vue.use(VueI18n);
 
@@ -36,7 +40,11 @@ Vue.component('IngredientsForm', IngredientsForm);
 
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('List', List);
-Vue.component('Container', Container)
+Vue.component('Container', Container);
+Vue.component('AddIngredientModal', AddIngredientModal);
+Vue.component('SelectedIngredients', SelectedIngredients);
+Vue.component('SearchIngredientList', SearchIngredientList);
+Vue.component('AddButton', AddButton);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

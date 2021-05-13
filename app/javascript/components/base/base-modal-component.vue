@@ -18,7 +18,7 @@
       >&#8203;</span>
       <div
         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform
-       transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+       transition-all w-max sm:my-8 sm:align-middle"
       >
         <!--Title-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
