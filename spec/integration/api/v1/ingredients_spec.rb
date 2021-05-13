@@ -1,12 +1,13 @@
 require 'swagger_helper'
 
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup
 describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   let!(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
   let(:user_id) { user.id }
 
-  path '/search-jumbo-ingredients' do
+  path '/search-jumbo-products' do
     let(:jumbo_client) { JumboClient.new }
 
     parameter name: :user_email, in: :query, type: :string
@@ -31,7 +32,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
       ).and_return(products)
     end
 
-    get 'Search ingredients' do
+    get 'Search ingredients on Jumbo web' do
       consumes 'application/json'
       produces 'application/json'
       description 'Retrieves ingredients from Jumbo'
@@ -61,7 +62,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 
-  path '/search-lider-ingredients' do
+  path '/search-lider-products' do
     let(:lider_client) { LiderClient.new }
 
     parameter name: :user_email, in: :query, type: :string
@@ -86,7 +87,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
       ).and_return(products)
     end
 
-    get 'Search ingredients' do
+    get 'Search ingredients on Lider web' do
       consumes 'application/json'
       produces 'application/json'
       description 'Retrieves ingredients from Lider'
@@ -103,6 +104,74 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
           required: [
             :data
           ]
+        )
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
+  path '/search-cornershop-products' do
+    let(:cornershop_client) { CornershopClient.new }
+    let!(:provider) { create(:provider, name: 'Jumbo') }
+
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+    parameter name: :query, in: :query, type: :string
+
+    let(:search_response) do
+      [
+        {
+          provider: provider.as_json,
+          products:
+            [
+              {
+                price: 1950.0,
+                measure: "UN",
+                package: "Bolsa 600 g",
+                name: "Kingsbury - Pan molde perfecto blanco",
+                img_url: "https://s.cornershopapp.com/img-url"
+              },
+              {
+                price: 2250.0,
+                measure: "UN",
+                package: "Bolsa 10 rebanadas",
+                name: "Ideal - Pan molde XL",
+                img_url: "https://s.cornershopapp.com/img-url-2"
+              }
+            ]
+        }
+      ]
+    end
+    let(:query) { 'pan' }
+
+    before do
+      allow(CornershopClient).to receive(:new).and_return(cornershop_client)
+      allow(cornershop_client).to receive(:products_by_query).with(
+        query: 'pan'
+      ).and_return(search_response)
+    end
+
+    get 'Search products on Cornershop' do
+      consumes 'application/json'
+      produces 'application/json'
+      description 'Retrieves products from different markets'
+
+      response '200', 'products retrieved' do
+        schema(
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/cornershop_product" }
+            }
+          }
         )
 
         run_test!
@@ -283,3 +352,4 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 end
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup

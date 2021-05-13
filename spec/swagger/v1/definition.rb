@@ -13,6 +13,7 @@ API_V1 = {
     recipe_step_resource: RECIPE_STEP_RESOURCE_SCHEMA,
     user: USER_SCHEMA,
     provider_ingredient: PROVIDER_INGREDIENT_SCHEMA,
+    cornershop_product: CORNERSHOP_PRODUCT_SCHEMA,
     ingredient: INGREDIENT_SCHEMA,
     ingredient_response: INGREDIENT_RESPONSE_SCHEMA,
     ingredients_collection: INGREDIENTS_COLLECTION_SCHEMA,

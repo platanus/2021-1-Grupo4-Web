@@ -1,14 +1,20 @@
 class Api::V1::IngredientsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
 
-  def search_jumbo_ingredients
+  def search_jumbo_products
     result = JumboClient.new.products_by_query(query: search_params[:query])
 
     respond_with({ data: result })
   end
 
-  def search_lider_ingredients
+  def search_lider_products
     result = LiderClient.new.products_by_query(query: search_params[:query])
+
+    respond_with({ data: result })
+  end
+
+  def search_cornershop_products
+    result = CornershopClient.new.products_by_query(query: search_params[:query])
 
     respond_with({ data: result })
   end
