@@ -26,9 +26,14 @@ RECIPE_RESPONSE_SCHEMA = {
         cook_minutes: { type: :integer, example: 25, 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
-        ingredients: {
-          type: "array",
-          items: { "$ref" => "#/definitions/ingredient_response" }
+        recipe_ingredients: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/recipe_ingredient_response" }
+            }
+          }
         },
         steps: {
           type: "object",

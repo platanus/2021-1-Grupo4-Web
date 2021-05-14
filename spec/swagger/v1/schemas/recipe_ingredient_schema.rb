@@ -15,7 +15,7 @@ RECIPE_INGREDIENT_RESPONSE = {
       type: :object,
       properties: {
         recipe_id: { type: :integer, example: 1, 'x-nullable': false },
-        ingredient_id: { type: :integer, example: 1, 'x-nullable': false },
+        ingredient: { "$ref" => "#/definitions/ingredient_response" },
         ingredient_quantity: { type: :integer, example: 3, 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }

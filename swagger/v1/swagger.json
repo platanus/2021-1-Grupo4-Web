@@ -25,10 +25,8 @@
               "example": 1,
               "x-nullable": false
             },
-            "ingredient_id": {
-              "type": "integer",
-              "example": 1,
-              "x-nullable": false
+            "ingredient": {
+              "$ref": "#/definitions/ingredient_response"
             },
             "ingredient_quantity": {
               "type": "integer",
@@ -646,10 +644,15 @@
               "example": "1984-06-04 09:00",
               "x-nullable": true
             },
-            "ingredients": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ingredient_response"
+            "recipe_ingredients": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/recipe_ingredient_response"
+                  }
+                }
               }
             },
             "steps": {
