@@ -3,7 +3,11 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+    },
+  },
   plugins: [],
   purge: {
     enabled: process.env.NODE_ENV === 'production',
@@ -13,5 +17,5 @@ module.exports = {
       './app/**/*.js',
       './app/**/*.erb',
     ],
-  }
+  },
 };

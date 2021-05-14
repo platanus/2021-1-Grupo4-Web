@@ -25,7 +25,10 @@ export default {
     ingredients: {
       title: 'Ingredientes',
       search: 'Buscar ingrediente...',
+      searchInMarket: 'Buscar en supermercados',
+      selectMarket: 'Seleccionar supermercado',
       add: 'Agregar ingrediente',
+      searchAdd: 'Agregar',
       edit: 'Editar ingrediente',
       delete: 'Eliminar ingrediente',
       deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',

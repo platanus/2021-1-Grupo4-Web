@@ -17,6 +17,11 @@
                      color: 'bg-green-500 hover:bg-green-700 text-white' }"
         @click="toggleAddModal"
       />
+      <base-button
+        :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
+                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
+        @click="toggleSearchIngredientsModal"
+      />
     </div>
 
     <!--Table-->
@@ -50,6 +55,19 @@
         ref="addIngredientInfo"
         :units="['Kg','Litro']"
         :edit-mode="false"
+      />
+    </base-modal>
+
+    <!--SearchIngredientsModal-->
+    <base-modal
+      @cancel="toggleSearchIngredientsModal"
+      v-if="showingSearchIngredients"
+      :title="$t('msg.ingredients.searchInMarket')"
+      :ok-button-present="false"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <search-market-ingredients
+        @submit="addMarketIngredient"
       />
     </base-modal>
 
@@ -93,6 +111,7 @@ export default {
   data() {
     return {
       showingAdd: false,
+      showingSearchIngredients: false,
       showingEdit: false,
       showingDel: false,
       ingredientToEdit: {},
@@ -122,6 +141,10 @@ export default {
       this.showingAdd = !this.showingAdd;
     },
 
+    toggleSearchIngredientsModal() {
+      this.showingSearchIngredients = !this.showingSearchIngredients;
+    },
+
     toggleEditModal(ingredient) {
       this.showingEdit = !this.showingEdit;
       this.ingredientToEdit = ingredient;
@@ -142,6 +165,24 @@ export default {
             { data: { id, attributes },
             },
         } = await postIngredient(this.$refs.addIngredientInfo.form);
+        const ingredientToAdd = { id, ...attributes };
+        this.ingredients.push(ingredientToAdd);
+        this.successResponse(status);
+      } catch (error) {
+        this.errorResponse(error);
+      }
+    },
+
+    async addMarketIngredient(productForm) {
+      this.showingSearchIngredients = !this.showingSearchIngredients;
+
+      try {
+        const {
+          status,
+          data:
+            { data: { id, attributes },
+            },
+        } = await postIngredient(productForm);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
         this.successResponse(status);
