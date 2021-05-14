@@ -6,30 +6,28 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
   let(:user_id) { user.id }
+  let(:query) { 'pan' }
+
+  let(:products) do
+    [
+      { price: "$ 1.150", measure: "500 g", name: "Pan coliza peruana", provider: provider },
+      { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: provider },
+      { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: provider },
+      { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: provider },
+      { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: provider }
+    ]
+  end
 
   path '/search-jumbo-products' do
-    let(:jumbo_client) { JumboClient.new }
+    let(:jumbo_client) { instance_double('JumboClient', products_by_query: products) }
+    let(:provider) { 'Jumbo' }
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
     parameter name: :query, in: :query, type: :string
 
-    let(:products) do
-      [
-        { price: "$ 1.150", measure: "500 g", name: "Pan coliza peruana", provider: "Jumbo" },
-        { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: "Jumbo" },
-        { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: "Jumbo" },
-        { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: "Jumbo" },
-        { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: "Jumbo" }
-      ]
-    end
-    let(:query) { 'pan' }
-
     before do
       allow(JumboClient).to receive(:new).and_return(jumbo_client)
-      allow(jumbo_client).to receive(:products_by_query).with(
-        query: 'pan'
-      ).and_return(products)
     end
 
     get 'Search ingredients on Jumbo web' do
@@ -63,28 +61,15 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   end
 
   path '/search-lider-products' do
-    let(:lider_client) { LiderClient.new }
+    let(:lider_client) { instance_double('LiderClient', products_by_query: products) }
+    let(:provider) { 'Lider' }
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
     parameter name: :query, in: :query, type: :string
 
-    let(:products) do
-      [
-        { price: "$ 1.150", measure: "500 g", name: "Pan coliza peruana", provider: "Lider" },
-        { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: "Lider" },
-        { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: "Lider" },
-        { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: "Lider" },
-        { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: "Lider" }
-      ]
-    end
-    let(:query) { 'pan' }
-
     before do
       allow(LiderClient).to receive(:new).and_return(lider_client)
-      allow(lider_client).to receive(:products_by_query).with(
-        query: 'pan'
-      ).and_return(products)
     end
 
     get 'Search ingredients on Lider web' do
@@ -118,14 +103,20 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   end
 
   path '/search-cornershop-products' do
-    let(:cornershop_client) { CornershopClient.new }
+    let(:cornershop_client) do
+      instance_double('CornershopClient', products_by_query: products)
+    end
     let!(:provider) { create(:provider, name: 'Jumbo') }
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
     parameter name: :query, in: :query, type: :string
 
-    let(:search_response) do
+    before do
+      allow(CornershopClient).to receive(:new).and_return(cornershop_client)
+    end
+
+    let(:products) do
       [
         {
           provider: provider.as_json,
@@ -148,14 +139,6 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             ]
         }
       ]
-    end
-    let(:query) { 'pan' }
-
-    before do
-      allow(CornershopClient).to receive(:new).and_return(cornershop_client)
-      allow(cornershop_client).to receive(:products_by_query).with(
-        query: 'pan'
-      ).and_return(search_response)
     end
 
     get 'Search products on Cornershop' do
