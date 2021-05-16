@@ -3,7 +3,6 @@
     <div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
-          <!--Name -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="ingredient-name"
@@ -35,7 +34,7 @@
               </button>
             </span>
             <span
-              v-if="loading"
+              v-else
               class="flex pl-3 my-auto"
             >
               <base-spinner />
@@ -67,7 +66,7 @@
         </select>
       </div>
       <div
-        v-if="!loading && market != null"
+        v-if="!loading && market !== null"
         class="flex flex-wrap"
       >
         <div
@@ -90,6 +89,7 @@
 
 <script>
 import { searchCornershopIngredients } from '../../api/ingredients';
+import MarketIngredient from './market-ingredient.vue';
 
 export default {
   data() {
@@ -102,7 +102,9 @@ export default {
       market: null,
     };
   },
-
+  components: {
+    MarketIngredient,
+  },
   methods: {
     async searchIngredients() {
       this.loading = true;
@@ -118,7 +120,7 @@ export default {
         this.loading = false;
       }
     },
-    addMarketIngredient(event, productIdx) {
+    addMarketIngredient(_, productIdx) {
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
         providerId: this.productsByMarket[this.market].provider.id,

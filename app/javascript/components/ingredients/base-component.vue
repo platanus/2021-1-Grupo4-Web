@@ -104,7 +104,8 @@
 
 <script>
 
-import { getIngredients, postIngredient, deleteIngredient, editIngredient } from '../../api/ingredients.js';
+import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+import SearchMarketIngredients from './search-market-ingredients-component';
 
 export default {
 
@@ -121,6 +122,10 @@ export default {
       status: '',
       error: '',
     };
+  },
+
+  components: {
+    SearchMarketIngredients,
   },
 
   async created() {
@@ -174,13 +179,14 @@ export default {
     },
 
     async addMarketIngredient(productForm) {
-      this.showingSearchIngredients = !this.showingSearchIngredients;
+      this.toggleSearchIngredientsModal();
 
       try {
         const {
           status,
           data:
-            { data: { id, attributes },
+            {
+              data: { id, attributes },
             },
         } = await postIngredient(productForm);
         const ingredientToAdd = { id, ...attributes };
