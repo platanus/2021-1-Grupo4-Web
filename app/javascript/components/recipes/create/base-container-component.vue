@@ -14,7 +14,7 @@
             v-if="input"
             id="grams"
             type="text"
-            placeholder="Hay que arreglar el value"
+            placeholder="XXX"
             value=""
           >
           <span v-if="input">{{ parsedElements.measure }} </span>
@@ -38,7 +38,7 @@
     </div>
 
     <div
-      v-else
+      v-else-if="!edit"
       :class="color ? 'bg-white' : 'bg-gray-100'"
     >
       <div class="p-4 flex items-center justify-items-center">
@@ -53,7 +53,7 @@
         <div class="flex-auto m-1">
           <span>{{ text }}</span>
         </div>
-        <div class="flex-none text-right m-2">
+        <div class="flex-none text-right m-2 grid justify-item-end">
           <button>
             <img
               class="w-4 h-4"
@@ -62,13 +62,54 @@
             >
           </button>
           <dropdown
+            class="text-left"
             v-if="svg.dropdown"
             :elements="{
               edit:true,
               del:true
             }"
+            @edit="editStep"
+            @del="delStep"
           />
         </div>
+      </div>
+    </div>
+
+    <div
+      v-else
+      :class="color ? 'bg-white' : 'bg-gray-100'"
+    >
+      <div class="p-4 flex items-center justify-items-center">
+        <div class="justify-self-start flex-none m-2">
+          <img
+            v-if="svg.sixdots"
+            svg-inline
+            class="w-4 h-4 "
+            src="../../../../assets/images/menu-recipe-svg.svg"
+          >
+        </div>
+        <text-box
+          tid="newTextBox"
+          class="flex-1"
+          :value="text"
+        />
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div />
+        <base-button
+          :elements="{
+            placeholder: $t('msg.recipes.cancel'),
+            color: 'text-black border-2 border-gray-300 align-center hover:bg-gray-300 h-8 text-base w-full'
+          }"
+          @click="cancel"
+        />
+        <base-button
+          :elements="{
+            placeholder: $t('msg.recipes.accept'),
+            color: 'text-black border-2 border-purple-400 align-center hover:bg-gray-300 h-8 text-base w-full'
+          }"
+          @click="acceptEdit"
+        />
       </div>
     </div>
   </div>
@@ -83,11 +124,33 @@ export default {
     svg: { type: Object, required: true },
     color: { type: Boolean, required: true },
   },
+  data() {
+    return {
+      edit: false,
+    };
+  },
   computed: {
     parsedElements() {
       const parsedElements = JSON.parse(this.text);
 
       return parsedElements;
+    },
+  },
+  methods: {
+    editStep() {
+      this.edit = !this.edit;
+      this.$forceUpdate();
+    },
+    delStep() {
+      this.$emit('del', this.text);
+    },
+    acceptEdit() {
+      const text = document.getElementById('newTextBox').value;
+      this.$emit('edit', this.text, text);
+      this.edit = !this.edit;
+    },
+    cancel() {
+      this.edit = !this.edit;
     },
   },
 };
