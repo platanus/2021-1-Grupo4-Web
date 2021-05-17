@@ -7,7 +7,7 @@
     />
     <price-recipe
       :id-recipe="recipe.id"
-      :recipe-price="getPrice"
+      :recipe-price="recipePrice"
     />
   </div>
 </template>
@@ -23,8 +23,9 @@ export default {
     },
   },
   computed: {
-    getPrice() {
-      return this.recipe.ingredients.map(element => this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+    recipePrice() {
+      return this.recipe.ingredients.map(element =>
+        this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
     },
   },
 };

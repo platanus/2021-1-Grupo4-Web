@@ -30,7 +30,7 @@
     <recipe-info
       :portions="recipe.portions"
       :cook-minutes="recipe.cookMinutes"
-      :recipe-price="getPrice"
+      :recipe-price="recipePrice"
       :ingredients="this.recipe.ingredients"
     />
     <!--Body-->
@@ -113,8 +113,9 @@ export default {
   },
 
   computed: {
-    getPrice() {
-      return this.recipe.ingredients.map(element => this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+    recipePrice() {
+      return this.recipe.ingredients.map(element =>
+        this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
     },
   },
 };
