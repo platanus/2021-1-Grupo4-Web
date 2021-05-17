@@ -34,10 +34,10 @@ import SelectedRecipes from './base-selected-recipes.vue';
 
 export default {
   components: {
-      InformationMenu,
-      SearchRecipes,
-      AvailableRecipes,
-      SelectedRecipes,
-    },
-  };
+    InformationMenu,
+    SearchRecipes,
+    AvailableRecipes,
+    SelectedRecipes,
+  },
+};
 </script>
