@@ -3,6 +3,7 @@
     id="app"
     class="w-full bg-gray-200 flex items-center justify-center"
   >
+    {{ elements }}
     <draggable
       :list="elements"
       :animation="200"
@@ -11,7 +12,7 @@
       filter=".action-button"
       class="w-full max-w-md"
       tag="ul"
-    >
+    -->
       <container
         v-for="element in elements"
         :key="element.id"
@@ -32,9 +33,13 @@ export default {
     elements: { type: Array, required: true },
     svg: { type: Object, required: true },
     input: { type: Boolean, default: false },
+    forceupdate: { type: Boolean, required: true },
   },
   components: {
     draggable,
+  },
+  mounted() {
+    console.log('montado');
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Title -->
-    <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
+    <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-3">
       <div class="flex items-center">
         <a href="/recipes">
           <img
@@ -11,44 +11,49 @@
           >
         </a>
         <div class="h-7 font-sans font-normal text-2xl text-black flex-grow mx-2">
-          Crear receta
+          {{ $t('msg.recipes.create') }}
         </div>
       </div>
     </div>
 
-    <p>Datos básicos</p>
+    <p class="text-xl">
+      {{ $t('msg.recipes.basic') }}
+    </p>
 
     <div class="grid grid-cols-4 gap-4">
-      <search
-        placeholder="Nombre"
+      <input
+        :placeholder="$t('msg.recipes.name')"
         :search-icon="false"
-        class="col-span-2 w-full"
-      />
-      <search
-        placeholder="Porciones"
+        class="col-span-2 w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
+      >
+      <input
+        :placeholder="$t('msg.recipes.portions')"
         :search-icon="false"
-        class="w-full"
-      />
-      <search
-        placeholder="Tiempo de preparación w-full"
+        class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
+      >
+      <input
+        :placeholder="$t('msg.recipes.preparation')"
         :search-icon="false"
-        class="w-full"
-      />
+        class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-200 border-gray-300"
+      >
     </div>
 
     <div class="grid grid-cols-3 gap-4">
       <div>
         <list
-          placeholder="Ingredientes"
+          :placeholder="$t('msg.recipes.ingredients')"
           :elements="getIngredients"
           :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
           :drag="false"
         />
       </div>
-      <div class="col-span-2">
+      <div
+        id="steps"
+        class="col-span-2"
+      >
         <list
-          placeholder="Pasos"
+          :placeholder="$t('msg.recipes.steps')"
           :elements="getSteps"
           :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
@@ -56,14 +61,20 @@
         />
       </div>
     </div>
-
-    <base-button
-      :elements="{
-        placeholder: 'Crear receta',
-        color: 'bg-blue-600 text-white hover:bg-white text-blue-600'
-      }"
-      @click="create"
-    />
+    <div class="grid grid-cols-6">
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <base-button
+        :elements="{
+          placeholder: $t('msg.recipes.create'),
+          color: 'bg-blue-600 text-white hover:bg-blue-400'
+        }"
+        @click="create"
+      />
+    </div>
   </div>
 </template>
 
