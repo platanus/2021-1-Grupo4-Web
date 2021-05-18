@@ -8,7 +8,7 @@
         src="../../../../assets/images/dollar-svg.svg"
       >
       <div class="w-10 h-5 font-sans font-normal text-base text-black flex-grow-0">
-        17.000
+        {{ recipePrice }}
       </div>
     </div>
     <!-- portions -->
@@ -42,6 +42,7 @@ export default {
   props: {
     portions: { type: Number, required: true },
     cookMinutes: { type: Number, required: true },
+    recipePrice: { type: Number, required: true },
   },
 };
 </script>

@@ -6,8 +6,8 @@
       :recipe-minutes="recipe.cookMinutes"
     />
     <price-recipe
-      :recipe-price="5000"
       :id-recipe="recipe.id"
+      :recipe-price="recipePrice"
     />
   </div>
 </template>
@@ -16,6 +16,17 @@
 export default {
   props: {
     recipe: { type: Object, required: true },
+  },
+  methods: {
+    ingredientFinalPrice(quantity, price) {
+      return (quantity * price);
+    },
+  },
+  computed: {
+    recipePrice() {
+      return this.recipe.ingredients.map(element =>
+        this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+    },
   },
 };
 </script>
