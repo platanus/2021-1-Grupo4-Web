@@ -79,7 +79,7 @@
             :name="product.name"
             :price="product.price"
             :package-description="product.package"
-            @submit="addMarketIngredient($event, idx)"
+            @submit="addMarketIngredient(idx)"
           />
         </div>
       </div>
@@ -120,7 +120,7 @@ export default {
         this.loading = false;
       }
     },
-    addMarketIngredient(_, productIdx) {
+    addMarketIngredient(productIdx) {
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
         providerId: this.productsByMarket[this.market].provider.id,
