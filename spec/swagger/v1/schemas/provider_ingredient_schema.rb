@@ -6,7 +6,6 @@ PROVIDER_INGREDIENT_SCHEMA = {
     name: { type: :string },
     price: { type: :string },
     measure: { type: :string },
-    provider: { type: :string },
-    provider_id: { type: :string }
+    provider: { type: :string }
   }
 }

@@ -10,7 +10,7 @@ RSpec.describe Recipe, type: :model do
   it { is_expected.to have_many(:ingredients).through(:recipe_ingredients) }
 
   describe 'it has all the attributes' do
-    ["name", "portions", "cook_minutes"].each do |attribute|
+    ["name", "portions", "instructions", "cook_minutes"].each do |attribute|
       it "includes the #{attribute} attribute" do
         expect(recipe.attributes).to include(attribute)
       end

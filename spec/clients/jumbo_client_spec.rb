@@ -16,8 +16,6 @@ RSpec.describe JumboClient do
   let(:product) { instance_double('Product') }
   let(:products) { [product] }
 
-  let!(:provider) { create(:provider, name: 'Jumbo') }
-
   def call_products_by_query
     described_class.new.products_by_query(query: query)
   end
@@ -60,8 +58,7 @@ RSpec.describe JumboClient do
           price: expected_price,
           measure: expected_measure,
           name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
+          provider: 'Jumbo'
         }
       ]
     end
@@ -89,8 +86,7 @@ RSpec.describe JumboClient do
           price: expected_price,
           measure: expected_measure,
           name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
+          provider: 'Jumbo'
         }
       ]
     end
@@ -118,8 +114,7 @@ RSpec.describe JumboClient do
           price: expected_price,
           measure: expected_measure,
           name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
+          provider: 'Jumbo'
         }
       ]
     end
