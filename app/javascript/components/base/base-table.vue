@@ -13,8 +13,8 @@
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="element in body"
-        :key="element.name"
+        v-for="parsedElement in parsedElements"
+        :key="parsedElement.name"
         class="bg-white border-4 border-gray-200"
       >
         <td
@@ -23,7 +23,7 @@
           class="content-center py-2"
         >
           <p class="content-center text-center ml-2 font-semibold">
-            {{ element[property] }}
+            {{ parsedElement[property] }}
           </p>
         </td>
         <td
@@ -35,8 +35,8 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient(element)"
-            @del="deleteIngredient(element)"
+            @edit="editIngredient(parsedElement)"
+            @del="deleteIngredient"
           />
         </td>
       </tr>
@@ -57,11 +57,19 @@ export default {
     editIngredient(element) {
       this.$emit('edit', element);
     },
-    deleteIngredient(element) {
-      this.$emit('del', element);
+    deleteIngredient() {
+      this.$emit('del');
     },
   },
 
+  computed: {
+    parsedElements() {
+      const parsedElements = this.body.map((element) => JSON.parse(element));
+
+      return parsedElements;
+    },
+
+  },
 };
 
 </script>
