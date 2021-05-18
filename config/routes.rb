@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/queue'
 
   resources :ingredients, only: [:index]
-  resources :recipes, only: [:index, :show]
-  resources :menus, only: [:index]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :recipes, only: [:index]
+  resources :menus, only: [:index, :new]
 end
