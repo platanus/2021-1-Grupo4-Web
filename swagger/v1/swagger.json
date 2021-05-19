@@ -228,6 +228,60 @@
         }
       }
     },
+    "cornershop_product": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "example": "Jumbo"
+            },
+            "address": {
+              "type": "string",
+              "example": "Av. Bilbao 223"
+            },
+            "country": {
+              "type": "string",
+              "exampel": "CL"
+            }
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "float",
+                "example": 2290.0
+              },
+              "measure": {
+                "type": "string",
+                "example": "UN"
+              },
+              "package": {
+                "type": "string",
+                "example": "600 grs."
+              },
+              "name": {
+                "type": "string",
+                "example": "Kingsbury - Pan molde perfecto blanco"
+              },
+              "img_url": {
+                "type": "string",
+                "example": "https://s.cornershopapp.com/img-url"
+              }
+            }
+          }
+        }
+      }
+    },
     "ingredient": {
       "type": "object",
       "properties": {
@@ -678,7 +732,7 @@
     }
   },
   "paths": {
-    "/search-jumbo-ingredients": {
+    "/search-jumbo-products": {
       "parameters": [
         {
           "name": "user_email",
@@ -697,7 +751,7 @@
         }
       ],
       "get": {
-        "summary": "Search ingredients",
+        "summary": "Search ingredients on Jumbo web",
         "consumes": [
           "application/json"
         ],
@@ -729,7 +783,7 @@
         }
       }
     },
-    "/search-lider-ingredients": {
+    "/search-lider-products": {
       "parameters": [
         {
           "name": "user_email",
@@ -748,7 +802,7 @@
         }
       ],
       "get": {
-        "summary": "Search ingredients",
+        "summary": "Search ingredients on Lider web",
         "consumes": [
           "application/json"
         ],
@@ -772,6 +826,54 @@
               "required": [
                 "data"
               ]
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/search-cornershop-products": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Search products on Cornershop",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves products from different markets",
+        "responses": {
+          "200": {
+            "description": "products retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/cornershop_product"
+                  }
+                }
+              }
             }
           },
           "401": {
