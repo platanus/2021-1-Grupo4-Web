@@ -73,13 +73,15 @@
         <div class="mr-10">
           <search-ingredient-list 
             :ingredients="objects"
+            @addIngredient="addIngredient"
           />
         </div>
         <selected-ingredients 
-          :elements="objects"
+          :elements="selectedIngredients"
           :svg="{sixdots: true, cancel: false, menu_recipe: true}"
           :input="false"
           :placeholder="'------'"
+          :addIngredientKey="addIngredientKey"
         /> 
       </div>
     </base-modal>
@@ -98,6 +100,8 @@ export default {
     return {
       steps: this.objects,
       showingAddIngredientModal: true,
+      selectedIngredients: [],
+      addIngredientKey: 0,
     }
   },
   methods: {
@@ -107,6 +111,11 @@ export default {
     toggleAddIngredientModal(){
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
     },
+    addIngredient(object){
+     this.selectedIngredients.push(object);
+     this.addIngredientKey += 1;
+     alert(this.addIngredientKey);
+    }
   },
   computed: {
     getSteps() {

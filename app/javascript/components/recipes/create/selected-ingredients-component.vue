@@ -2,8 +2,8 @@
   <div class="flex w-80 flex-col">
     <span class="flex content-center justify-center">Ingredientes seleccionados</span>
     <div class="flex p-4 grid grid-cols-2 items-center justify-between "
-      v-for="element in parsedElements"
-      :key="element.id"
+      v-for="element in elements"
+      :key="element.name"
       :class="color() ? 'bg-white' : 'bg-gray-100'"
     >
       <span class="flex content-center justify-center">
@@ -23,6 +23,7 @@ export default {
     svg: { type: Object, required: true },
     placeholder: { type: String, required: true },
     input: { type: Boolean, required: true },
+    addIngredientKey: { type: Number, required: true }
   },
   data() {
     return {
@@ -37,13 +38,6 @@ export default {
       this.par = !this.par
       return this.par;
     },
-  },
-  computed: {
-    parsedElements() {
-      const parsedElements = this.elements.map((element) => JSON.parse(element));
-      return parsedElements;
-    },
-
   },
 }
 </script>

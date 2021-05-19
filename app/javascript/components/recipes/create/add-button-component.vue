@@ -1,11 +1,7 @@
  <template> 
-  <base-button
-      :elements="{
-        placeholder: '+',
-        color: 'hover:bg-gray text-black'
-      }"
+  <button
       @click="clickButton"
-    />
+  > + </button>
 </template>
 
 <script>
@@ -21,8 +17,7 @@ export default {
   },
   methods: {
     clickButton() {
-      this.$emit('click');
-      alert("aaaaaaaaaaaaa");
+      this.$emit('addIngredient', this.object);
     },
   },
 }
