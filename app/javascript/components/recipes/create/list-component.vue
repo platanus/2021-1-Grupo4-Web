@@ -90,7 +90,6 @@ export default {
   },
   data() {
     return {
-      par: false,
       steps: [],
       forceupdate: false,
     };
