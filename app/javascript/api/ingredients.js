@@ -35,4 +35,15 @@ function editIngredient(ingredientId, ingredientInfo) {
     }));
 }
 
-export { getIngredients, postIngredient, deleteIngredient, editIngredient };
+async function searchCornershopIngredients(query) {
+  return (client
+    .get('/search-cornershop-products', {
+      params: {
+        query,
+      },
+    },
+    )
+  );
+}
+
+export { getIngredients, postIngredient, deleteIngredient, editIngredient, searchCornershopIngredients };

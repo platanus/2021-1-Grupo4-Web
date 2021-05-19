@@ -45,7 +45,9 @@ class CornershopClient
   end
 
   def get_price(product)
-    product['original_price'] || product['price']
+    price = product['original_price'] || product['price']
+
+    price.to_i
   end
 
   def get_measure(product)
@@ -71,6 +73,8 @@ class CornershopClient
   end
 
   def products_url(query, locality)
-    "#{BASE_URL}?query=#{query}&country=#{DEFAULT_COUNTRY_CODE}&locality=#{locality}"
+    url = "#{BASE_URL}?query=#{query}&country=#{DEFAULT_COUNTRY_CODE}&locality=#{locality}"
+
+    URI::DEFAULT_PARSER.escape(url)
   end
 end
