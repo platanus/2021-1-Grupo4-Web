@@ -3,7 +3,17 @@ RECIPE_SCHEMA = {
   properties: {
     name: { type: :string, example: 'Pastel de choclo', 'x-nullable': true },
     portions: { type: :integer, example: 4, 'x-nullable': true },
-    cook_minutes: { type: :integer, example: 25, 'x-nullable': true }
+    cook_minutes: { type: :integer, example: 25, 'x-nullable': true },
+    steps_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          description: { type: :string, example: 'Horneamos la masa', 'x-nullable': false },
+          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true }
+        }
+      }
+    }
   },
   required: [
     :name,

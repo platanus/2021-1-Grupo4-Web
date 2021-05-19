@@ -6,7 +6,7 @@ class RecipeStep < ApplicationRecord
   before_validation :set_initial_step_order, on: :create
 
   validates :description, presence: true
-  ranks :step_order
+  ranks :step_order, with_same: :recipe_id
 end
 
 def set_initial_step_order

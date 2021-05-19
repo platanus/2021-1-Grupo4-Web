@@ -35,7 +35,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
     params.require(:recipe).permit(
       :name,
       :portions,
-      :cook_minutes
+      :cook_minutes,
+      steps_attributes: [:description, :media_url]
     )
   end
 end
