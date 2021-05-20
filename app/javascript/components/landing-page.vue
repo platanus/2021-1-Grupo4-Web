@@ -1,7 +1,8 @@
 <template>
   <div>
-    <br>
-    <h3>¡¡¡ Welcome to KitchenGram !!!</h3>
+    <h1 class="text-4xl">
+      {{ $t('msg.welcome') }}
+    </h1>
   </div>
 </template>
 
