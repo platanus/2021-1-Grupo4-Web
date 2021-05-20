@@ -31,11 +31,10 @@
       :portions="recipe.portions"
       :cook-minutes="recipe.cookMinutes"
       :recipe-price="recipePrice"
-      :ingredients="this.recipe.ingredients"
     />
     <!--Body-->
     <div class="flex items-start justify-between w-auto h-auto self-stretch flex-grow-0 my-4">
-      <recipe-ingredients :ingredients="this.recipe.ingredients" />
+      <recipe-ingredients :recipe-ingredients="this.recipe.recipeIngredients.data" />
       <recipe-instructions :steps="this.recipe.steps.data" />
     </div>
     <!--DeleteModal-->
@@ -70,7 +69,7 @@ export default {
         name: '',
         portions: 0,
         cookMinutes: 0,
-        ingredients: [],
+        recipeIngredients: { data: [] },
         steps: { data: [] },
       },
     };
@@ -114,8 +113,9 @@ export default {
 
   computed: {
     recipePrice() {
-      return this.recipe.ingredients.map(element =>
-        this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+      return this.recipe.recipeIngredients.data.map(element =>
+        this.ingredientFinalPrice(element.attributes.ingredient.quantity,
+          element.attributes.ingredient.price)).reduce((acc, curVal) => acc + curVal, 0);
     },
   },
 };
