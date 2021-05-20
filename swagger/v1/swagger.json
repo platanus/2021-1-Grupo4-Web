@@ -248,7 +248,7 @@
             },
             "country": {
               "type": "string",
-              "exampel": "CL"
+              "example": "CL"
             }
           }
         },
@@ -621,6 +621,24 @@
           "type": "integer",
           "example": 25,
           "x-nullable": true
+        },
+        "steps_attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "example": "Horneamos la masa",
+                "x-nullable": false
+              },
+              "media_url": {
+                "type": "string",
+                "example": "https://media-url",
+                "x-nullable": true
+              }
+            }
+          }
         }
       },
       "required": [
