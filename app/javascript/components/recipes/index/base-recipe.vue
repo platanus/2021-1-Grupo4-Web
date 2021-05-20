@@ -24,8 +24,9 @@ export default {
   },
   computed: {
     recipePrice() {
-      return this.recipe.ingredients.map(element =>
-        this.ingredientFinalPrice(element.quantity, element.price)).reduce((acc, curVal) => acc + curVal, 0);
+      return this.recipe.recipeIngredients.data.map(element =>
+        this.ingredientFinalPrice(element.attributes.ingredient.quantity, 
+        element.attributes.ingredient.price)).reduce((acc, curVal) => acc + curVal, 0);
     },
   },
 };
