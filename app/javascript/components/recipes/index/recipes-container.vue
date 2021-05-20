@@ -8,23 +8,13 @@
         {{ $t('msg.recipes.add') }}
       </span>
     </div>
-    <search-recipe
+    <search-bar-recipes
       :placeholder="$t('msg.recipes.search')"
       @filterByPrice="toggleFilterByPriceModal"
       @filterByPortions="toggleFilterByPortionsModal"
     />
-    <p
-      class="my-4"
-      v-if="recipes.length === 0"
-    >
-      {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
-    </p>
-    <div v-else>
-      <recipes
-        :allrecipes="recipes"
-      />
-    </div>
-    <pagination />
+    <recipes-list :allrecipes="recipes" />
+    <recipes-pagination />
     <!--Price Filter Modal-->
     <filter-popup
       @ok="toggleFilterByPriceModal"
@@ -51,40 +41,30 @@
 </template>
 
 <script>
-
-import { getRecipes } from '../../../api/recipes.js';
+import SearchBarRecipes from './search-bar-recipes';
+import RecipesList from './recipes-list/recipes-list';
+import RecipesPagination from './pagination/recipes-pagination';
+import FilterPopup from './filter-popup';
 
 export default {
+
+  components: {
+    SearchBarRecipes,
+    RecipesList,
+    RecipesPagination,
+    FilterPopup,
+  },
+
+  props: {
+    recipes: { type: Array, required: true },
+  },
   data() {
     return {
-      recipes: [],
-      status: '',
-      error: '',
       showingFilterByPrice: false,
       showingFilterByPortions: false,
     };
   },
-  async created() {
-    try {
-      const response = await getRecipes();
-      this.recipes = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-      this.successResponse(response);
-    } catch (error) {
-      this.errorResponse(error);
-    }
-  },
   methods: {
-    async successResponse(response) {
-      this.status = response.status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
-    },
     toggleFilterByPriceModal() {
       this.showingFilterByPrice = !this.showingFilterByPrice;
     },

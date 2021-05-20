@@ -33,7 +33,7 @@
         <!--Content-->
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="w-full mt-3 text-center sm:mt-0 sm:mx-4 sm:text-left">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <div class="mt-2">
                 <slot />
               </div>
@@ -44,7 +44,6 @@
         <!--Buttons-->
         <div class="bg-white px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <base-button
-            v-if="okButtonPresent"
             :elements="{
               placeholder: okButtonLabel,
               color: 'bg-green-500 hover:bg-green-700 text-white'
@@ -69,8 +68,7 @@
 export default {
   props: {
     title: { type: String, required: true },
-    okButtonPresent: { type: Boolean, required: false, default: true },
-    okButtonLabel: { type: String, required: false, default: 'Ok' },
+    okButtonLabel: { type: String, required: true },
     cancelButtonLabel: { type: String, required: true },
   },
   methods: {

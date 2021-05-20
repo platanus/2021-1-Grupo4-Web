@@ -6,8 +6,8 @@
       </div>
     </div>
     <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
-      <search-menu :placeholder="$t('msg.menus.search')" />
-      <menus-table
+      <search-bar-menus :placeholder="$t('msg.menus.search')" />
+      <main-table-menus
         :dots="true"
         :header="tableHeader"
         :body="menus"
@@ -20,16 +20,16 @@
 </template>
 
 <script>
-import SearchMenu from './base-search-menu.vue';
-import MenusTable from './base-menus-table.vue';
+import MainTableMenus from './main-table-menus';
+import SearchBarMenus from './search-bar-menus';
 
 export default {
   props: {
     menus: { type: Array, required: true },
   },
   components: {
-    SearchMenu,
-    MenusTable,
+    SearchBarMenus,
+    MainTableMenus,
   },
   data() {
     return {
