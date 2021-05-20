@@ -3,7 +3,7 @@
     <div class="min-w-min h-5 font-sans font-normal text-base text-black flex-grow-0">
       {{ ingredient.name }}
     </div>
-    <div class="w-9 h-5 font-sans font-normal text-base text-black flex-grow-0">
+    <div class="w-9 font-sans text-base text-black truncate">
       {{ ingredient.quantity }} {{ ingredient.measure }}
     </div>
   </div>

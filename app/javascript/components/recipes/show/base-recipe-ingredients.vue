@@ -5,9 +5,9 @@
     </div>
     <div class="flex flex-col items-start p-4 min-w-min bg-gray-200 rounded flex-grow-0 my-2.5">
       <recipe-ingredient
-        v-for="ingredient in ingredients"
-        :key="ingredient.id"
-        :ingredient="ingredient"
+        v-for="recipeIngredient in recipeIngredients"
+        :key="recipeIngredient.id"
+        :ingredient="recipeIngredient.attributes.ingredient"
       />
     </div>
   </div>
@@ -17,7 +17,7 @@
 
 export default {
   props: {
-    ingredients: { type: Array, required: true },
+    recipeIngredients: { type: Array, required: true },
   },
 };
 </script>
