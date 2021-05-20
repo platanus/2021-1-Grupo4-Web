@@ -1,5 +1,6 @@
 export default {
   msg: {
+    welcome: 'Bienvenido a KitchenGram!',
     add: 'Agregar',
     edit: 'Editar',
     delete: 'Eliminar',
