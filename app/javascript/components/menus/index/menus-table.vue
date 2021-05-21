@@ -1,3 +1,4 @@
+
 <template>
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">

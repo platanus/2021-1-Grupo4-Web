@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 import { getRecipes } from '../../../api/recipes.js';
 import Filters from './filters';
 import FilterPopupContent from './filter-popup-content';
@@ -76,7 +75,6 @@ export default {
     RecipesPagination,
     RecipesList,
   },
-
   data() {
     return {
       recipes: [],

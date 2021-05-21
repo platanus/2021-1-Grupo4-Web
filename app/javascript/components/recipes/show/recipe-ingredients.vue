@@ -1,64 +1,26 @@
 <template>
   <div class="flex flex-col items-start pt-4 min-w-min h-auto flex-grow-0 ml-2">
-    <div class="w-28 h-6 font-sans font-normal text-lg text-black font-bold flex-grow-0 mt-2.5 mb-6">
+    <div class="w-28 h-6 font-sans font-normal text-lg text-black flex-grow-0 my-2.5">
       {{ $t('msg.ingredients.title') }}
     </div>
-    <div class="flex items-center">
-      <p
-        v-if="recipeIngredients.length === 0"
-      >
-        {{ $t('msg.recipes.noIngredients') }}
-      </p>
-      <table
-        v-else
-        class="min-w-full divide-y divide-gray-200"
-      >
-        <thead class="justify-between bg-gray-600 border-4 border-gray-600">
-          <tr class="text-left">
-            <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
-            </th>
-            <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.quantity') }}</span>
-            </th>
-            <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.measure') }}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="bg-gray-200">
-          <tr
-            v-for="ingredient in recipeIngredients"
-            :key="ingredient.attributes.ingredient.id"
-            class="bg-white border-4 border-gray-200 text-left"
-          >
-            <!-- ingredient name -->
-            <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
-                {{ ingredient.attributes.ingredient.name }}
-              </p>
-            </td>
-            <!-- quantity in recipe -->
-            <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
-                {{ ingredient.attributes.ingredientQuantity }}
-              </p>
-            </td>
-            <!-- ingredient unit -->
-            <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
-                {{ ingredient.attributes.ingredient.measure }}
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="flex flex-col items-start p-4 min-w-min bg-gray-200 rounded flex-grow-0 my-2.5">
+      <recipe-ingredients-item
+        v-for="recipeIngredient in recipeIngredients"
+        :key="recipeIngredient.id"
+        :ingredient="recipeIngredient.attributes.ingredient"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import RecipeIngredientsItem from './recipe-ingredients-item';
+
 export default {
+  components: {
+    RecipeIngredientsItem,
+  },
+
   props: {
     recipeIngredients: { type: Array, required: true },
   },

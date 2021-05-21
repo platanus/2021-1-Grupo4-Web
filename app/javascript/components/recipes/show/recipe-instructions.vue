@@ -3,6 +3,7 @@
     <div class="w-13 h-6 font-sans font-normal text-lg text-black font-bold flex-grow-0 mt-2.5 mb-6">
       {{ $t('msg.recipes.steps') }}
     </div>
+<<<<<<< HEAD:app/javascript/components/recipes/show/recipe-instructions.vue
     <p
       v-if="steps.length === 0"
     >
@@ -12,6 +13,9 @@
       v-else
       class="flex flex-col items-start w-auto h-auto self-stretch flex-grow-0 my-2.5"
     >
+=======
+    <div class="flex flex-col items-start w-auto h-auto self-stretch flex-grow-0 my-2.5">
+>>>>>>> 59d3ed4... refactor(components-names): modify name of components and import:app/javascript/components/recipes/show/base-recipe-instructions.vue
       <recipe-instructions-step
         v-for="step in steps"
         :key="step.id"

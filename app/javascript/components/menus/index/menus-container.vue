@@ -5,49 +5,28 @@
         {{ $t('msg.menus.title') }}
       </div>
     </div>
-    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
-      <div class="flex items-center pb-6">
-        <menus-search-bar :placeholder="$t('msg.menus.search')" />
-        <base-button
-          :elements="{ placeholder: $t('msg.menus.add'),
-                       color: 'bg-green-500 hover:bg-green-700 text-white' }"
-          @click="redirectAddMenu"
-        />
-      </div>
-      <div class="flex items-center">
-        <p
-          v-if="this.menus.length===0"
-        >
-          {{ $t('msg.noElements') }} {{ $t('msg.menus.title') }}
-        </p>
-        <menus-table
-          v-else
-          :menus="menus"
-          @edit="toggleEditModal"
-          @del="toggleDelModal"
-        />
-      </div>
+    <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <menus-search-bar :placeholder="$t('msg.menus.search')" />
+      <menus-table
+        :dots="true"
+        :header="tableHeader"
+        :body="menus"
+        model-type="menus"
+        @edit="toggleEditModal"
+        @del="toggleDelModal"
+      />
     </div>
-    <!--DeleteModal-->
-    <base-modal
-      @ok="deleteMenu"
-      @cancel="toggleDelModal"
-      v-if="showingDel"
-      :title="$t('msg.menus.delete')"
-      :ok-button-label="$t('msg.yesDelete')"
-      :cancel-button-label="$t('msg.cancel')"
-    >
-      <p>{{ $t('msg.menus.deleteMsg') }}</p>
-    </base-modal>
   </div>
 </template>
 
 <script>
-import { getMenus, deleteMenu } from './../../../api/menus.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
 
 export default {
+  props: {
+    menus: { type: Array, required: true },
+  },
   components: {
     MenusSearchBar,
     MenusTable,
@@ -56,42 +35,16 @@ export default {
     return {
       showingEdit: false,
       showingDel: false,
-      menus: [],
-      menuToDelete: {},
+      tableHeader: ['name', 'totalPrice', 'recipesQuantity', 'recipes'],
     };
   },
-  async created() {
-    try {
-      const response = await getMenus();
-      this.menus = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-      this.error = '';
-    } catch (error) {
-      this.error = error;
-    }
-  },
+
   methods: {
-    redirectAddMenu() {
-      window.location.href = '/menus/new';
-    },
     toggleEditModal() {
       this.showingEdit = !this.showingEdit;
     },
-    toggleDelModal(menu) {
+    toggleDelModal() {
       this.showingDel = !this.showingDel;
-      this.menuToDelete = menu;
-    },
-    async deleteMenu() {
-      this.showingDel = !this.showingDel;
-      try {
-        await deleteMenu(this.menuToDelete.id);
-        this.menus = this.menus.filter(item => item.id !== this.menuToDelete.id);
-        this.error = '';
-      } catch (error) {
-        this.error = error;
-      }
     },
   },
 };
