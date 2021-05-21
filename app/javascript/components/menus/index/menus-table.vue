@@ -87,8 +87,8 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient(parsedElement)"
-            @del="deleteIngredient"
+            @edit="editIngredient(menu)"
+            @del="deleteIngredient(menu)"
           />
         </td>
       </tr>
@@ -111,8 +111,8 @@ export default {
     editIngredient(element) {
       this.$emit('edit', element);
     },
-    deleteIngredient() {
-      this.$emit('del');
+    deleteIngredient(element) {
+      this.$emit('del', element);
     },
   },
 };

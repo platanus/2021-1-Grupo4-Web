@@ -28,11 +28,22 @@
         />
       </div>
     </div>
+    <!--DeleteModal-->
+    <base-modal
+      @ok="deleteMenu"
+      @cancel="toggleDelModal"
+      v-if="showingDel"
+      :title="$t('msg.menus.delete')"
+      :ok-button-label="$t('msg.yesDelete')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <p>{{ $t('msg.menus.deleteMsg') }}</p>
+    </base-modal>
   </div>
 </template>
 
 <script>
-import { getMenus } from './../../../api/menus.js';
+import { getMenus, deleteMenu } from './../../../api/menus.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
 
@@ -47,6 +58,7 @@ export default {
       showingEdit: false,
       showingDel: false,
       menus: [],
+      menuToDelete: {},
     };
   },
 
@@ -70,8 +82,19 @@ export default {
     toggleEditModal() {
       this.showingEdit = !this.showingEdit;
     },
-    toggleDelModal() {
+    toggleDelModal(menu) {
       this.showingDel = !this.showingDel;
+      this.menuToDelete = menu;
+    },
+    async deleteMenu() {
+      this.showingDel = !this.showingDel;
+      try {
+        await deleteMenu(this.menuToDelete.id);
+        this.menus = this.menus.filter(item => item.id !== this.menuToDelete.id);
+        this.error = '';
+      } catch (error) {
+        this.error = error;
+      }
     },
   },
 };

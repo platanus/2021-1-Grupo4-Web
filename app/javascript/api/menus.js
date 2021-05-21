@@ -6,4 +6,10 @@ function getMenus() {
     }));
 }
 
-export { getMenus };
+function deleteMenu(menuId) {
+  return (client
+    .delete(`/menus/${menuId}`, {
+    }));
+}
+
+export { getMenus, deleteMenu };
