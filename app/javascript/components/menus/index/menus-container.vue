@@ -6,15 +6,30 @@
       </div>
     </div>
     <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
-      <menus-search-bar :placeholder="$t('msg.menus.search')" />
-      <menus-table
-        :dots="true"
-        :header="tableHeader"
-        :body="menus"
-        model-type="menus"
-        @edit="toggleEditModal"
-        @del="toggleDelModal"
-      />
+      <div class="flex items-center pb-6">
+        <menus-search-bar :placeholder="$t('msg.menus.search')" />
+        <base-button
+          :elements="{ placeholder: $t('msg.menus.add'),
+                       color: 'bg-green-500 hover:bg-green-700 text-white' }"
+          @click="redirectAddMenu"
+        />
+      </div>
+      <div class="flex items-center">
+        <p
+          v-if="this.menus.length===0"
+        >
+          {{ $t('msg.noElements') }} {{ $t('msg.menus.title') }}
+        </p>
+        <menus-table
+          v-else
+          :dots="true"
+          :header="tableHeader"
+          :body="menus"
+          model-type="menus"
+          @edit="toggleEditModal"
+          @del="toggleDelModal"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +55,9 @@ export default {
   },
 
   methods: {
+    redirectAddMenu() {
+      window.location.href = '/menus/new';
+    },
     toggleEditModal() {
       this.showingEdit = !this.showingEdit;
     },
