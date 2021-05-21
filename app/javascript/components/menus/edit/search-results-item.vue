@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center mr-4">
+  <div
+    class="flex items-center pr-4"
+    :class="selected ? 'bg-gray-200' : ''"
+  >
     <img
       svg-inline
       src="../../../../assets/images/recipe.jpg"
@@ -7,17 +10,17 @@
     >
     <div>
       <p class="py-2 px-3 font-medium">
-        {{ recipe }}
+        {{ recipe.name }}
       </p>
       <div>
         <p class="py-2 px-3 text-xs inline-block">
-          XX porciones
+          {{ recipe.portions }} {{ $t('msg.recipes.portions') }}
         </p>
         <p class="py-2 px-3 text-xs inline-block">
           $XX.XXX CLP
         </p>
         <p class="py-2 px-3 text-xs inline-block">
-          XX minutos
+          {{ recipe.cookMinutes }} {{ $t('msg.recipes.minutes') }}
         </p>
       </div>
     </div>
@@ -25,7 +28,7 @@
       <input
         type="checkbox"
         class="form-checkbox h-5 w-5 color-yellow-500"
-        checked
+        v-model="selected"
       >
     </div>
   </div>
@@ -34,7 +37,13 @@
 <script>
 export default {
   props: {
-    recipe: { type: String, required: true },
+    recipe: { type: Object, required: true },
+  },
+
+  data() {
+    return {
+      selected: false,
+    };
   },
 
 };

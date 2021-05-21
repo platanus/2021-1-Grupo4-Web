@@ -12,7 +12,7 @@
     <tbody class="bg-gray-200">
       <tr
         v-for="recipe in recipesResult"
-        :key="recipe"
+        :key="recipe.id"
         class="bg-white border-2 border-gray-200 text-left"
       >
         <td key="recipe">
