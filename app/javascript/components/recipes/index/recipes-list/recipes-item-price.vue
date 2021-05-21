@@ -10,7 +10,7 @@
       <img
         class="h-5 w-5 text-white"
         svg-inline
-        src="../../../../assets/images/keyboard-arrow-right-svg.svg"
+        src="../../../../../assets/images/keyboard-arrow-right-svg.svg"
       >
     </a>
   </div>

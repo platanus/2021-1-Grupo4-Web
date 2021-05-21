@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import RecipeCard from './base-recipe-card.vue';
+import RecipeCard from './available-recipe-card.vue';
 
 export default {
   components: {

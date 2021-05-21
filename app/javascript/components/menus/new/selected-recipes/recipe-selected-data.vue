@@ -17,7 +17,7 @@
           <button class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0 mr-0.5">
             <img
               svg-inline
-              src="../../../../assets/images/minus-svg.svg"
+              src="../../../../../assets/images/minus-svg.svg"
               class="w-3 h-3"
             >
           </button>
@@ -26,7 +26,7 @@
           <button class="w-3 h-3 bg-gray-300 shadow-sm flex-grow-0">
             <img
               svg-inline
-              src="../../../../assets/images/plus-svg.svg"
+              src="../../../../../assets/images/plus-svg.svg"
               class="w-3 h-3"
             >
           </button>
@@ -38,7 +38,7 @@
       <div class="w-3 h-3 bg-red-500 shadow-sm rounded-md flex-grow-0 my-1.5">
         <img
           svg-inline
-          src="../../../../assets/images/cross-svg.svg"
+          src="../../../../../assets/images/cross-svg.svg"
           class="w-3 h-3 text-white"
         >
       </div>

@@ -10,7 +10,7 @@
         <div class="w-3 h-3 flex-grow-0 mr-2">
           <img
             svg-inline
-            src="../../../../assets/images/chart-pie-svg.svg"
+            src="../../../../../assets/images/chart-pie-svg.svg"
             class="w-3 h-3 text-yellow-700"
           >
         </div>
@@ -22,7 +22,7 @@
         <div class="w-3 h-3 flex-grow-0 mr-2">
           <img
             svg-inline
-            src="../../../../assets/images/dolar-svg.svg"
+            src="../../../../../assets/images/dolar-svg.svg"
             class="w-3 h-3 text-yellow-700"
           >
         </div>
@@ -34,7 +34,7 @@
         <div class="w-3 h-3 flex-grow-0 mr-2">
           <img
             svg-inline
-            src="../../../../assets/images/clock-svg.svg"
+            src="../../../../../assets/images/clock-svg.svg"
             class="w-3 h-3 text-yellow-700"
           >
         </div>

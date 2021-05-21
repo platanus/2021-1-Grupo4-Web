@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import PageNumber from './page-number';
+
 export default {
+  components: {
+    PageNumber,
+  },
 };
 </script>

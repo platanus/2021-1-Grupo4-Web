@@ -30,7 +30,7 @@
           v-if="dots"
           class="content-center"
         >
-          <dropdown
+          <dots-dropdown
             :elements="{
               edit:true,
               del:true
