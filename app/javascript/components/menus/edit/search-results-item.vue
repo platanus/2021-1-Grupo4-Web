@@ -27,7 +27,7 @@
     <div class="">
       <input
         type="checkbox"
-        class="form-checkbox h-5 w-5 color-yellow-500"
+        class="form-checkbox h-5 w-5 text-yellow-500"
         v-model="selected"
       >
     </div>

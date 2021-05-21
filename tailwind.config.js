@@ -24,7 +24,9 @@ module.exports = {
       opacity: ['disabled'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     content: [
