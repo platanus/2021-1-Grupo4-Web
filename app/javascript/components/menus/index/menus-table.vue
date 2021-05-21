@@ -3,46 +3,83 @@
     <thead class="justify-between">
       <tr class="bg-yellow-500 border-4 border-yellow-500 py-1 text-left">
         <th
-          v-for="attribute in header"
-          :key="attribute"
           class="pl-2"
         >
-          <span class="text-white font-bold">{{ $t(`msg.${modelType}.${attribute}`) }}</span>
+          <span class="text-white font-bold">{{ $t('msg.menus.name') }}</span>
         </th>
-        <th v-if="dots" />
+        <th
+          class="pl-2"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.totalPrice') }}</span>
+        </th>
+        <th
+          class="pl-2"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
+        </th>
+        <th
+          class="pl-2"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
+        </th>
+        <th />
       </tr>
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="parsedElement in parsedElements"
-        :key="parsedElement.name"
+        v-for="menu in menus"
+        :key="menu.id"
         class="bg-white border-4 border-gray-200"
       >
+        <!-- name -->
         <td
-          v-for="property in header"
-          :key="property"
+          key="name"
           class="content-center py-2 pl-2"
         >
           <p
-            v-if="property!='recipes'"
             class="content-center font-semibold text-left"
           >
-            {{ parsedElement[property] }}
+            {{ menu.name }}
           </p>
+        </td>
+        <!-- totalPrice -->
+        <td
+          key="totalPrice"
+          class="content-center py-2 pl-2"
+        >
+          <p
+            class="content-center font-semibold text-left"
+          >
+            {{ 20.000 }}
+          </p>
+        </td>
+        <!-- recipesQuantity -->
+        <td
+          key="recipesQuantity"
+          class="content-center py-2 pl-2"
+        >
+          <menus-table-recipes-quantity
+            :menu="menu"
+          />
+        </td>
+        <!-- recipes -->
+        <td
+          key="recipes"
+          class="content-center py-2 pl-2"
+        >
           <div
-            v-else
             class="flex flex-col"
           >
             <div
-              v-for="element in parsedElement[property]"
-              :key="element"
+              v-for="recipe in menu.recipes"
+              :key="recipe"
             >
-              {{ element }}
+              {{ recipe }}
             </div>
           </div>
         </td>
+        <!-- dots -->
         <td
-          v-if="dots"
           class="content-center"
         >
           <dots-dropdown
@@ -60,13 +97,15 @@
 </template>
 
 <script>
+import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 
 export default {
+  components: {
+    MenusTableRecipesQuantity,
+  },
+
   props: {
-    header: { type: Array, required: true },
-    body: { type: Array, required: true },
-    dots: { type: Boolean, required: true },
-    modelType: { type: String, required: true },
+    menus: { type: Array, required: true },
   },
   methods: {
     editIngredient(element) {
@@ -75,15 +114,6 @@ export default {
     deleteIngredient() {
       this.$emit('del');
     },
-  },
-
-  computed: {
-    parsedElements() {
-      const parsedElements = this.body.map((element) => JSON.parse(element));
-
-      return parsedElements;
-    },
-
   },
 };
 

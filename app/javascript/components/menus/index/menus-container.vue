@@ -22,10 +22,7 @@
         </p>
         <menus-table
           v-else
-          :dots="true"
-          :header="tableHeader"
-          :body="menus"
-          model-type="menus"
+          :menus="menus"
           @edit="toggleEditModal"
           @del="toggleDelModal"
         />
@@ -35,23 +32,35 @@
 </template>
 
 <script>
+import { getMenus } from './../../../api/menus.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
 
 export default {
-  props: {
-    menus: { type: Array, required: true },
-  },
   components: {
     MenusSearchBar,
     MenusTable,
   },
+
   data() {
     return {
       showingEdit: false,
       showingDel: false,
-      tableHeader: ['name', 'totalPrice', 'recipesQuantity', 'recipes'],
+      menus: [],
     };
+  },
+
+  async created() {
+    try {
+      const response = await getMenus();
+      this.menus = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.error = '';
+    } catch (error) {
+      this.error = error;
+    }
   },
 
   methods: {

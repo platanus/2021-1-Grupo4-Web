@@ -88,9 +88,9 @@ export default {
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
-      this.successResponse(response);
+      this.status = status;
     } catch (error) {
-      this.errorResponse(error);
+      this.error = error;
     }
   },
 
@@ -103,20 +103,12 @@ export default {
     },
     async deleteRecipe() {
       try {
-        const response = await deleteRecipe(this.recipe.id);
+        await deleteRecipe(this.recipe.id);
         window.location.href = '/recipes';
-        this.successResponse(response);
+        this.error = '';
       } catch (error) {
-        this.errorResponse(error);
+        this.error = error;
       }
-    },
-    async successResponse(status) {
-      this.status = status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
     },
   },
 

@@ -14,7 +14,7 @@
     <tbody class="bg-gray-200">
       <tr
         v-for="element in body"
-        :key="element.name"
+        :key="element.id"
         class="bg-white border-4 border-gray-200"
       >
         <td
