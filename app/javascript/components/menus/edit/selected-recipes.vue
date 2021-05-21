@@ -13,9 +13,15 @@
       />
     </div>
     <div class="pr-4 pb-4 bg-gray-200 border-4 text-right text-black h-14">
-      <p class="block text-xs">{{ $t('msg.menus.addedSubtotal') }}: $10.000</p>
-      <p class="block text-xs">{{ $t('msg.menus.previousSubtotal') }}: $10.000</p>
-      <p class="block text-xs font-bold">{{ $t('msg.menus.totalMenuPrice') }}: $20.000</p>
+      <p class="block text-xs">
+        {{ $t('msg.menus.addedSubtotal') }}: $10.000
+      </p>
+      <p class="block text-xs">
+        {{ $t('msg.menus.previousSubtotal') }}: $10.000
+      </p>
+      <p class="block text-xs font-bold">
+        {{ $t('msg.menus.totalMenuPrice') }}: $20.000
+      </p>
     </div>
   </div>
 </template>
