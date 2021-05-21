@@ -44,17 +44,12 @@
     <!--EditModal-->
     <base-modal
       @ok="editMenu"
-<<<<<<< HEAD
       @cancel="closeEditModal"
-=======
-      @cancel="toggleEditModal"
->>>>>>> 7cda7c7... feat(modal-connection): add modal connection to edit button
       v-if="showingEdit"
       :title="$t('msg.menus.edit')"
       :ok-button-label="$t('msg.save')"
       :cancel-button-label="$t('msg.cancel')"
     >
-<<<<<<< HEAD
       <!-- Search Bar -->
       <div class="flex items-center mx-6">
         <menu-recipes-search-bar
@@ -79,9 +74,6 @@
           :menu-to-edit="menuToEdit"
         />
       </div>
-=======
-      <p>Aquí va el contenido</p>
->>>>>>> 7cda7c7... feat(modal-connection): add modal connection to edit button
     </base-modal>
   </div>
 </template>
@@ -153,7 +145,6 @@ export default {
         this.error = error;
       }
     },
-<<<<<<< HEAD
     // Add methods
     redirectAddMenu() {
       window.location.href = '/menus/new';
@@ -180,10 +171,6 @@ export default {
     editMenu() {
       // save changes
       this.closeEditModal();
-=======
-    editMenu() {
-      this.showingEdit = !this.showingEdit;
->>>>>>> 7cda7c7... feat(modal-connection): add modal connection to edit button
     },
   },
 };

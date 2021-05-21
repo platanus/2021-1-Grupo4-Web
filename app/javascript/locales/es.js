@@ -14,6 +14,8 @@ export default {
     deleteFilters: 'Borrar filtros',
     min: 'Mínimo',
     max: 'Máximo',
+    results: 'Resultados',
+    noResults: 'No se encontraron resultados',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -104,7 +106,7 @@ export default {
       minutes: 'minutos',
       addRecipes: 'Agregar recetas',
       selectedRecipes: 'Recetas seleccionadas',
-      searchRecipes: 'Buscar recetas',
+      searchRecipes: 'Buscar recetas...',
       menuPrice: 'Total del menú',
       name: 'Nombre',
       totalPrice: 'Precio Total ($)',
