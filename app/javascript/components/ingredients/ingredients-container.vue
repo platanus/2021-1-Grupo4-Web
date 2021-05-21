@@ -1,104 +1,109 @@
 /* eslint-disable no-console */
 <template>
   <div>
-    <!--Title-->
-    <h2 class="text-4xl">
-      {{ $t('msg.ingredients.title') }}
-    </h2>
+    <div class="flex flex-col">
+      <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
+        <!--Title-->
+        <div class="text-4xl order-0 flex-grow-0">
+          {{ $t('msg.ingredients.title') }}
+        </div>
+      </div>
+      <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+        <!--SearchBar y Button-->
+        <div class="flex items-center">
+          <ingredients-search-bar
+            kind="ingredient"
+            :placeholder="$t('msg.ingredients.search')"
+          />
+          <base-button
+            :elements="{ placeholder: $t('msg.ingredients.add'),
+                         color: 'bg-green-500 hover:bg-green-700 text-white' }"
+            @click="toggleAddModal"
+          />
+          <base-button
+            :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
+                         color: 'bg-green-500 hover:bg-green-700 text-white' }"
+            @click="toggleSearchIngredientsModal"
+          />
+        </div>
 
-    <!--SearchBar y Button-->
-    <div class="flex items-center">
-      <ingredients-search-bar
-        kind="ingredient"
-        :placeholder="$t('msg.ingredients.search')"
-      />
-      <base-button
-        :elements="{ placeholder: $t('msg.ingredients.add'),
-                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
-        @click="toggleAddModal"
-      />
-      <base-button
-        :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
-                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
-        @click="toggleSearchIngredientsModal"
-      />
-    </div>
+        <!--Table-->
+        <div class="flex items-center">
+          <p
+            v-if="this.ingredients.length===0"
+          >
+            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+          </p>
+          <base-table
+            v-else
+            :dots="true"
+            :header="tableHeader"
+            :body="this.ingredients"
+            model-type="ingredients"
+            @edit="toggleEditModal"
+            @del="toggleDelModal"
+          />
+        </div>
+      </div>
 
-    <!--Table-->
-    <div class="flex items-center">
-      <p
-        v-if="this.ingredients.length===0"
+      <!--AddModal-->
+      <base-modal
+        @ok="addIngredient"
+        @cancel="toggleAddModal"
+        v-if="showingAdd"
+        :title="$t('msg.ingredients.add')"
+        :ok-button-label="$t('msg.add')"
+        :cancel-button-label="$t('msg.cancel')"
       >
-        {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
-      </p>
-      <base-table
-        v-else
-        :dots="true"
-        :header="tableHeader"
-        :body="this.ingredients"
-        model-type="ingredients"
-        @edit="toggleEditModal"
-        @del="toggleDelModal"
-      />
+        <ingredients-form
+          ref="addIngredientInfo"
+          :units="['Kg','Litro']"
+          :edit-mode="false"
+        />
+      </base-modal>
+
+      <!--SearchIngredientsModal-->
+      <base-modal
+        @cancel="toggleSearchIngredientsModal"
+        v-if="showingSearchIngredients"
+        :title="$t('msg.ingredients.searchInMarket')"
+        :ok-button-present="false"
+        :cancel-button-label="$t('msg.cancel')"
+      >
+        <search-market-ingredients
+          @submit="addMarketIngredient"
+        />
+      </base-modal>
+
+      <!--EditModal-->
+      <base-modal
+        @ok="editIngredient"
+        @cancel="toggleEditModal"
+        v-if="showingEdit"
+        :title="$t('msg.ingredients.edit')"
+        :ok-button-label="$t('msg.save')"
+        :cancel-button-label="$t('msg.cancel')"
+      >
+        <ingredients-form
+          ref="editIngredientInfo"
+          :units="['Kg','Litro']"
+          :edit-mode="true"
+          :ingredient="this.ingredientToEdit"
+        />
+      </base-modal>
+
+      <!--DeleteModal-->
+      <base-modal
+        @ok="deleteIngredient"
+        @cancel="toggleDelModal"
+        v-if="showingDel"
+        :title="$t('msg.ingredients.delete')"
+        :ok-button-label="$t('msg.yesDelete')"
+        :cancel-button-label="$t('msg.cancel')"
+      >
+        <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
+      </base-modal>
     </div>
-
-    <!--AddModal-->
-    <base-modal
-      @ok="addIngredient"
-      @cancel="toggleAddModal"
-      v-if="showingAdd"
-      :title="$t('msg.ingredients.add')"
-      :ok-button-label="$t('msg.add')"
-      :cancel-button-label="$t('msg.cancel')"
-    >
-      <ingredients-form
-        ref="addIngredientInfo"
-        :units="['Kg','Litro']"
-        :edit-mode="false"
-      />
-    </base-modal>
-
-    <!--SearchIngredientsModal-->
-    <base-modal
-      @cancel="toggleSearchIngredientsModal"
-      v-if="showingSearchIngredients"
-      :title="$t('msg.ingredients.searchInMarket')"
-      :ok-button-present="false"
-      :cancel-button-label="$t('msg.cancel')"
-    >
-      <search-market-ingredients
-        @submit="addMarketIngredient"
-      />
-    </base-modal>
-
-    <!--EditModal-->
-    <base-modal
-      @ok="editIngredient"
-      @cancel="toggleEditModal"
-      v-if="showingEdit"
-      :title="$t('msg.ingredients.edit')"
-      :ok-button-label="$t('msg.save')"
-      :cancel-button-label="$t('msg.cancel')"
-    >
-      <ingredients-form
-        ref="editIngredientInfo"
-        :units="['Kg','Litro']"
-        :edit-mode="true"
-        :ingredient="this.ingredientToEdit"
-      />
-    </base-modal>
-
-    <!--DeleteModal-->
-    <base-modal
-      @ok="deleteIngredient"
-      @cancel="toggleDelModal"
-      v-if="showingDel"
-      :title="$t('msg.ingredients.delete')"
-      :ok-button-label="$t('msg.yesDelete')"
-      :cancel-button-label="$t('msg.cancel')"
-    >
-      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
-    </base-modal>
   </div>
 </template>
 
