@@ -112,6 +112,9 @@ export default {
       totalPrice: 'Precio Total ($)',
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
+      addedSubtotal: 'Subtotal agregado',
+      previousSubtotal: 'Subtotal previo',
+      totalMenuPrice: 'Precio total del menú',
     },
   },
 };
