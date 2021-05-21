@@ -42,7 +42,7 @@ export default {
 
     recipes: {
       title: 'Recetas',
-      search: 'Buscar por nombre',
+      search: 'Buscar receta...',
       add: 'Agregar receta',
       edit: 'Editar',
       delete: 'Eliminar',
@@ -65,7 +65,7 @@ export default {
 
     menus: {
       title: 'Menús',
-      search: 'Buscar menú',
+      search: 'Buscar menú...',
       add: 'Agregar menú',
       edit: 'Editar menú',
       delete: 'Eliminar menú',

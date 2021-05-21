@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center justify-between bg-gray-800 p-6 h-16">
+  <nav class="flex items-center justify-between bg-black p-6 h-16">
     <!--Left Buttons -->
     <div class="flex items-center flex-shrink-0 text-white mr-6">
       <a

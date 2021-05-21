@@ -1,48 +1,80 @@
 <template>
   <table class="min-w-full divide-y divide-gray-200">
-    <thead class="justify-between">
-      <tr class="bg-yellow-500 border-4 border-yellow-500 py-1 text-left">
+    <thead class="justify-between bg-gray-600 border-4 border-gray-600">
+      <tr class="text-left">
         <th
-          v-for="attribute in header"
-          :key="attribute"
-          class="pl-2"
+          class="px-8 py-3"
         >
-          <span class="text-white font-bold">{{ $t(`msg.${modelType}.${attribute}`) }}</span>
+          <span class="text-white font-bold">{{ $t('msg.menus.name') }}</span>
         </th>
-        <th v-if="dots" />
+        <th
+          class="px-8 py-3"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.totalPrice') }}</span>
+        </th>
+        <th
+          class="px-8 py-3"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
+        </th>
+        <th
+          class="px-8 py-3"
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
+        </th>
+        <th
+          class="px-8 py-3"
+        />
       </tr>
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="parsedElement in parsedElements"
-        :key="parsedElement.name"
-        class="bg-white border-4 border-gray-200"
+        v-for="menu in menus"
+        :key="menu.id"
+        class="bg-white border-4 border-gray-200 text-left"
       >
+        <!-- name -->
         <td
-          v-for="property in header"
-          :key="property"
-          class="content-center py-2 pl-2"
+          key="name"
+          class="py-2 px-8"
         >
           <p
-            v-if="property!='recipes'"
-            class="content-center font-semibold text-left"
+            class="ml-2 font-medium"
           >
-            {{ parsedElement[property] }}
+            {{ menu.name }}
           </p>
-          <div
-            v-else
-            class="flex flex-col"
-          >
-            <div
-              v-for="element in parsedElement[property]"
-              :key="element"
-            >
-              {{ element }}
-            </div>
-          </div>
         </td>
+        <!-- totalPrice -->
         <td
-          v-if="dots"
+          key="totalPrice"
+          class="py-2 px-8"
+        >
+          <p
+            class="ml-2 font-medium"
+          >
+            ${{ 20000 }}
+          </p>
+        </td>
+        <!-- recipesQuantity -->
+        <td
+          key="recipesQuantity"
+          class="py-2 px-8"
+        >
+          <menus-table-recipes-quantity
+            :menu="menu"
+          />
+        </td>
+        <!-- recipes -->
+        <td
+          key="recipes"
+          class="py-2 px-8"
+        >
+          <menus-table-recipes
+            :menu="menu"
+          />
+        </td>
+        <!-- dots -->
+        <td
           class="content-center"
         >
           <dots-dropdown
@@ -50,8 +82,8 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient(parsedElement)"
-            @del="deleteIngredient"
+            @edit="editIngredient(menu)"
+            @del="deleteIngredient(menu)"
           />
         </td>
       </tr>
@@ -60,31 +92,24 @@
 </template>
 
 <script>
+import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
+import MenusTableRecipes from './menus-table-recipes';
 
 export default {
+  components: {
+    MenusTableRecipesQuantity,
+    MenusTableRecipes,
+  },
   props: {
-    header: { type: Array, required: true },
-    body: { type: Array, required: true },
-    dots: { type: Boolean, required: true },
-    modelType: { type: String, required: true },
+    menus: { type: Array, required: true },
   },
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
     },
-    deleteIngredient() {
-      this.$emit('del');
+    deleteIngredient(element) {
+      this.$emit('del', element);
     },
-  },
-
-  computed: {
-    parsedElements() {
-      const parsedElements = this.body.map((element) => JSON.parse(element));
-
-      return parsedElements;
-    },
-
   },
 };
-
 </script>
