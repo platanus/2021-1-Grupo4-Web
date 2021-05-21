@@ -71,7 +71,7 @@
             class="flex flex-col"
           >
             <div
-              v-for="recipe in menu.recipes"
+              v-for="recipe in recipesMenus"
               :key="recipe"
             >
               {{ recipe }}
@@ -107,6 +107,13 @@ export default {
   props: {
     menus: { type: Array, required: true },
   },
+
+  data() {
+    return {
+      recipesMenus: ['recipe1', 'recipe2', 'recipe3'],
+    };
+  },
+
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
