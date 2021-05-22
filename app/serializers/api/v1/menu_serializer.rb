@@ -3,8 +3,14 @@ class Api::V1::MenuSerializer < ActiveModel::Serializer
 
   attributes(
     :name,
-    :recipes_menu,
+    :menu_recipes,
     :created_at,
     :updated_at
   )
+
+  def menu_recipes
+    ActiveModelSerializers::SerializableResource.new(
+      object.menu_recipes, each_serializer: Api::V1::MenuRecipeSerializer
+    )
+  end
 end
