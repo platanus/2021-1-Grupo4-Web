@@ -38,12 +38,28 @@
 export default {
   props: {
     recipe: { type: Object, required: true },
+    recipesOfMenu: { type: Array, required: true },
   },
 
   data() {
     return {
       selected: false,
     };
+  },
+
+  created() {
+    const recipesIds = this.recipesOfMenu.map((element) => element.id);
+    this.selected = recipesIds.includes(this.recipe.id);
+  },
+
+  watch: {
+    selected(val) {
+      if (val) {
+        this.$emit('pushRecipe', this.recipe);
+      } else {
+        this.$emit('removeRecipe', this.recipe);
+      }
+    },
   },
 
 };
