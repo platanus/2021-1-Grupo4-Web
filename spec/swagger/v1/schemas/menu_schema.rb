@@ -18,7 +18,16 @@ MENU_RESPONSE_SCHEMA = {
       properties: {
         name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
-        updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
+        updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
+        menu_recipes: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/menu_recipe_response" }
+            }
+          }
+        }
       },
       required: []
     }
