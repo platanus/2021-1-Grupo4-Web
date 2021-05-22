@@ -46,8 +46,8 @@
             {{ $t('msg.ingredients.measure') }}
           </label>
           <select
-            class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
-            rounded leading-tight focus:outline-none"
+            class="appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
+            rounded leading-tight focus:outline-none bg-none"
             id="ingredient-unit"
             v-model="form.measure"
           >
