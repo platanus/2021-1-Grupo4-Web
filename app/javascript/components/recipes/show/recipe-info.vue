@@ -8,7 +8,7 @@
         src="../../../../assets/images/dollar-svg.svg"
       >
       <div class="w-10 h-5 font-sans font-normal text-base text-black flex-grow-0">
-        {{ recipePrice }}
+        ${{ recipePrice }}
       </div>
     </div>
     <!-- portions -->
