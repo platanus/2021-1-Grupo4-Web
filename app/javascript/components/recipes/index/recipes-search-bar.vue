@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-start items-center p-0 static w-min-content h-12 flex-none order-1 flex-grow-0 mt-6">
+  <div class="flex flex-row justify-start items-center p-0 static w-min-content h-12 flex-none flex-grow-0">
     <div class="flex my-4 items-center justify-start">
       <form method="GET">
         <div class="relative text-yellow-700">
@@ -25,20 +25,6 @@
         </div>
       </form>
     </div>
-    <button
-      class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 bg-white border-2 border-solid
-      border-blue-700 box-border rounded-full flex-none order-1 flex-grow-0 mx-2.5 text-blue-700"
-      @click="filterByPrice()"
-    >
-      {{ $t('msg.recipes.price') }}
-    </button>
-    <button
-      class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 border-2 border-solid
-      border-blue-700 box-border rounded-full flex-none order-2 flex-grow-0 mx-2.5 bg-blue-700 text-white"
-      @click="filterByPortions()"
-    >
-      {{ $t('msg.recipes.portions') }}
-    </button>
   </div>
 </template>
 
@@ -46,14 +32,6 @@
 export default {
   props: {
     placeholder: { type: String, required: true },
-  },
-  methods: {
-    filterByPrice() {
-      this.$emit('filterByPrice');
-    },
-    filterByPortions() {
-      this.$emit('filterByPortions');
-    },
   },
 };
 </script>

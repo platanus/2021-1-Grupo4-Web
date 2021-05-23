@@ -1,66 +1,75 @@
 <template>
-  <div>
-    <div class="flex flex-row justify-between items-center h-8 order-0 flex-grow-0 mt-1 mb-4">
+  <div class="flex flex-col">
+    <!-- Title -->
+    <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.recipes.title') }}
       </div>
-      <span class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded order-1 flex-grow-0 text-white">
-        {{ $t('msg.recipes.add') }}
-      </span>
     </div>
-    <recipes-search-bar
-      :placeholder="$t('msg.recipes.search')"
-      @filterByPrice="toggleFilterByPriceModal"
-      @filterByPortions="toggleFilterByPortionsModal"
-    />
-    <p
-      class="my-4"
-      v-if="recipes.length === 0"
-    >
-      {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
-    </p>
-    <div v-else>
-      <recipes-list
-        :allrecipes="recipes"
+
+    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <!-- Search Bar and Add Button -->
+      <div class="flex items-center pb-6">
+        <recipes-search-bar
+          :placeholder="$t('msg.recipes.search')"
+        />
+        <base-button
+          :elements="{ placeholder: $t('msg.recipes.add'),
+                       color: 'bg-green-500 hover:bg-green-700 text-white' }"
+        />
+      </div>
+      <!-- Filters -->
+      <filters
+        :filters="filters"
+        :filter-options="filterOptions"
+        @filters="toggleFiltersModal"
       />
+      <!-- Content -->
+      <p
+        class="my-4"
+        v-if="recipes.length === 0"
+      >
+        {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
+      </p>
+      <div v-else>
+        <recipes-list
+          :allrecipes="recipes"
+        />
+      </div>
+
+      <!--Pagination-->
+      <recipes-pagination />
     </div>
-    <recipes-pagination />
-    <!--Price Filter Modal-->
-    <filter-popup
-      @ok="toggleFilterByPriceModal"
-      @cancel="toggleFilterByPriceModal"
-      v-if="showingFilterByPrice"
-      :title="$t('msg.recipes.filter.price')"
-      :min="$t('msg.recipes.filter.minPrice')"
-      :max="$t('msg.recipes.filter.maxPrice')"
+
+    <!-- Filters Modal-->
+    <base-modal
+      @ok="updateFilters"
+      @cancel="toggleFiltersModal"
+      v-if="showingFiltersModal"
+      :title="$t('msg.filters')"
+      :ok-button-label="$t('msg.apply')"
+      :cancel-button-label="$t('msg.deleteFilters')"
     >
-      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
-    </filter-popup>
-    <!--Portions Filter Modal-->
-    <filter-popup
-      @ok="toggleFilterByPortionsModal"
-      @cancel="toggleFilterByPortionsModal"
-      v-if="showingFilterByPortions"
-      :title="$t('msg.recipes.filter.portions')"
-      :min="$t('msg.recipes.filter.minPortions')"
-      :max="$t('msg.recipes.filter.maxPortions')"
-    >
-      <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
-    </filter-popup>
+      <filter-popup-content
+        ref="filtersInfo"
+      />
+    </base-modal>
   </div>
 </template>
 
 <script>
 
 import { getRecipes } from '../../../api/recipes.js';
-import FilterPopup from './filter-popup';
+import Filters from './filters';
+import FilterPopupContent from './filter-popup-content';
 import RecipesSearchBar from './recipes-search-bar';
 import RecipesPagination from './pagination/recipes-pagination';
 import RecipesList from './recipes-list/recipes-list';
 
 export default {
   components: {
-    FilterPopup,
+    Filters,
+    FilterPopupContent,
     RecipesSearchBar,
     RecipesPagination,
     RecipesList,
@@ -69,9 +78,10 @@ export default {
   data() {
     return {
       recipes: [],
+      filters: { price: { min: '', max: '' }, portions: { min: '', max: '' } },
+      filterOptions: ['price', 'portions'],
       error: '',
-      showingFilterByPrice: false,
-      showingFilterByPortions: false,
+      showingFiltersModal: false,
     };
   },
   async created() {
@@ -87,11 +97,12 @@ export default {
     }
   },
   methods: {
-    toggleFilterByPriceModal() {
-      this.showingFilterByPrice = !this.showingFilterByPrice;
+    toggleFiltersModal() {
+      this.showingFiltersModal = !this.showingFiltersModal;
     },
-    toggleFilterByPortionsModal() {
-      this.showingFilterByPortions = !this.showingFilterByPortions;
+    updateFilters() {
+      this.showingFiltersModal = !this.showingFiltersModal;
+      this.filters = this.$refs.filtersInfo.filters;
     },
   },
 };

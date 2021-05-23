@@ -9,6 +9,11 @@ export default {
     cancel: 'Cancelar',
     noElements: 'Aún no tienes',
     seeMore: 'Ver Más',
+    filters: 'Filtros',
+    apply: 'Aplicar',
+    deleteFilters: 'Borrar filtros',
+    min: 'Mínimo',
+    max: 'Máximo',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -51,16 +56,6 @@ export default {
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
-      filter: {
-        price: 'Precio',
-        portions: 'Porciones',
-        minPortions: 'Mínimas',
-        maxPortions: 'Máximas',
-        minPrice: 'Mínimo',
-        maxPrice: 'Máximo',
-        aply: 'Aplicar',
-        delete: 'Borrar filtro',
-      },
     },
 
     menus: {
