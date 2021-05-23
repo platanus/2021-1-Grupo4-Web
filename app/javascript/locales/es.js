@@ -41,6 +41,7 @@ export default {
       deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
       price: 'Precio',
+      unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',
       measure: 'Unidad',
     },
