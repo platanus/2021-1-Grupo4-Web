@@ -1,6 +1,7 @@
 require 'swagger_helper'
 
-describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
   let!(:user) { create(:user) }
   let(:user_email) { user.email }
   let(:user_token) { user.authentication_token }
@@ -50,6 +51,23 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
         let(:menu) do
           {
             name: 'Some name'
+          }
+        end
+
+        run_test!
+      end
+
+      response '404', 'recipe not of user' do
+        let!(:other_user_recipe) { create(:recipe) }
+        let(:menu) do
+          {
+            name: 'Some name',
+            menu_recipes_attributes: [
+              {
+                recipe_id: other_user_recipe.id,
+                recipe_quantity: 5
+              }
+            ]
           }
         end
 
@@ -126,3 +144,4 @@ describe 'ApiV1::Menus', swagger_doc: 'v1/swagger.json' do
     end
   end
 end
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
