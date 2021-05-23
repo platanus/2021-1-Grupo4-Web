@@ -57,7 +57,6 @@ export default {
   methods: {
     toggleSeeMore() {
       this.showingSeeMore = !this.showingSeeMore;
-      console.log('Ver más');
     },
   },
 
