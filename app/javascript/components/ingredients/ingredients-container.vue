@@ -34,12 +34,9 @@
           >
             {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
           </p>
-          <base-table
+          <ingredients-table
             v-else
-            :dots="true"
-            :header="tableHeader"
-            :body="this.ingredients"
-            model-type="ingredients"
+            :ingredients="this.ingredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"
           />
@@ -112,6 +109,7 @@
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
 import IngredientsSearchBar from './ingredients-search-bar';
 import IngredientsForm from './ingredients-form';
+import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
 
 export default {
@@ -124,7 +122,6 @@ export default {
       showingDel: false,
       ingredientToEdit: {},
       ingredientToDelete: {},
-      tableHeader: ['name', 'price', 'quantity', 'measure'],
       ingredients: [],
       status: '',
       error: '',
@@ -135,6 +132,7 @@ export default {
     IngredientsSearchBar,
     IngredientsForm,
     SearchMarketIngredients,
+    IngredientsTable,
   },
 
   async created() {
