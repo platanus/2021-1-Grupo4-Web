@@ -66,7 +66,6 @@
         <search-results
           :recipes-result="searchedRecipes"
           :menu-to-edit="menuToEdit"
-          :hardcoded-menu-recipes="hardcodedMenuRecipes"
           @pushRecipe="pushRecipe"
           @removeRecipe="removeRecipe"
         />

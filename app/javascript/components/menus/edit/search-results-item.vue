@@ -3,11 +3,13 @@
     class="flex items-center pr-4"
     :class="selected ? 'bg-gray-200' : ''"
   >
+    <!-- Image -->
     <img
       svg-inline
       src="../../../../assets/images/recipe.jpg"
       class="w-20 h-20 text-yellow-700"
     >
+    <!-- Name and info -->
     <div>
       <p class="py-2 px-3 font-medium">
         {{ recipe.name }}
@@ -24,6 +26,7 @@
         </p>
       </div>
     </div>
+    <!-- Checkbox -->
     <div class="">
       <input
         type="checkbox"
