@@ -56,6 +56,8 @@ export default {
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
+      noIngredients: 'Esta receta aún no tiene ingredientes',
+      noSteps: 'Esta receta aún no tiene pasos',
     },
 
     menus: {

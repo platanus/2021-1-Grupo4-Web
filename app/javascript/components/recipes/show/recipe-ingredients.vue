@@ -7,9 +7,12 @@
       <p
         v-if="recipeIngredients.length === 0"
       >
-        {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+        {{ $t('msg.recipes.noIngredients') }}
       </p>
-      <table class="min-w-full divide-y divide-gray-200">
+      <table
+        v-else
+        class="min-w-full divide-y divide-gray-200"
+      >
         <thead class="justify-between bg-gray-600 border-4 border-gray-600">
           <tr class="text-left">
             <th class="px-8 py-3">
