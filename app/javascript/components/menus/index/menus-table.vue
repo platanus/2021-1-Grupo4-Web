@@ -67,16 +67,9 @@
           key="recipes"
           class="content-center py-2 pl-2"
         >
-          <div
-            class="flex flex-col"
-          >
-            <div
-              v-for="recipe in menu.recipesMenus"
-              :key="recipe"
-            >
-              {{ recipe }}
-            </div>
-          </div>
+          <menus-table-recipes
+            :menu="menu"
+          />
         </td>
         <!-- dots -->
         <td
@@ -98,10 +91,12 @@
 
 <script>
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
+import MenusTableRecipes from './menus-table-recipes';
 
 export default {
   components: {
     MenusTableRecipesQuantity,
+    MenusTableRecipes,
   },
 
   props: {

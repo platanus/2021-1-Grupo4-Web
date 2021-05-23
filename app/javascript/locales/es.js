@@ -8,6 +8,7 @@ export default {
     save: 'Guardar',
     cancel: 'Cancelar',
     noElements: 'Aún no tienes',
+    seeMore: 'Ver Más',
 
     users: {
       registerTitle: 'Crear Cuenta',

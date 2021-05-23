@@ -14,7 +14,7 @@ export default {
 
   computed: {
     recipesQuantity() {
-      return this.menu.recipesMenu.length;
+      return this.menu.menuRecipes.data.length;
     },
   },
 
