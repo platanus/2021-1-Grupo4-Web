@@ -2,7 +2,7 @@
   <div class="flex flex-row justify-start items-center p-0 static w-min-content h-12 flex-none flex-grow-0">
     <!-- Filter Button -->
     <button
-      class="flex-row border-2 border-gray-800 rounded-lg px-6"
+      class="flex-row border-2 border-gray-800 rounded-lg px-6 focus:outline-none"
       @click="filtersButtonClick()"
     >
       <img

@@ -14,7 +14,7 @@
       <!--Logged -->
       <template v-if="logged">
         <button
-          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0"
+          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
           @click="logout"
         >
           {{ $t('msg.users.logout') }}

@@ -25,12 +25,12 @@
         <!-- Buttons -->
         <div class="flex items-center">
           <button
-            class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-red-600 rounded flex-grow-0 mx-2 text-red-600"
+            class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-red-600 rounded flex-grow-0 mx-2 text-red-600 focus:outline-none"
             @click="toggleDelModal"
           >
             {{ $t('msg.recipes.delete') }}
           </button>
-          <button class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-gray-800 rounded flex-grow-0 mx-2 text-gray-800">
+          <button class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-gray-800 rounded flex-grow-0 mx-2 text-gray-800 focus:outline-none">
             {{ $t('msg.recipes.edit') }}
           </button>
         </div>

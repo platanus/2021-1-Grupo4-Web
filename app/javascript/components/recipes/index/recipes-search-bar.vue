@@ -18,7 +18,7 @@
           <input
             type="search"
             name="q"
-            class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0"
+            class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
             :placeholder="placeholder"
             autocomplete="off"
           >

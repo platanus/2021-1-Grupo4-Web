@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button @click="openDropdown">
+    <button
+      class="focus:outline-none"
+      @click="openDropdown"
+    >
       <img
         svg-inline
         src="../../../assets/images/dropdown-svg.svg"
