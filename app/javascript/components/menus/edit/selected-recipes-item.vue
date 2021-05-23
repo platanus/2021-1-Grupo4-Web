@@ -16,9 +16,16 @@
         <p class="py-2 px-3 text-xs inline-block">
           $XX.XXX CLP
         </p>
-        <p class="py-2 px-3 text-xs inline-block">
-          {{ recipe.cookMinutes }} {{ $t('msg.recipes.minutes') }}
-        </p>
+        <img
+          svg-inline
+          src="../../../../assets/images/plus-svg.svg"
+          class="h-6 w-6"
+        >
+        <img
+          svg-inline
+          src="../../../../assets/images/minus-svg.svg"
+          class="h-6 w-6"
+        >
       </div>
     </div>
   </div>
