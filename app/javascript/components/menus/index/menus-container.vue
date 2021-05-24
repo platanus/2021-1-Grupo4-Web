@@ -50,30 +50,11 @@
       :ok-button-label="$t('msg.save')"
       :cancel-button-label="$t('msg.cancel')"
     >
-      <!-- Search Bar -->
-      <div class="flex items-center mx-6">
-        <menu-recipes-search-bar
-          :placeholder="$t('msg.menus.searchRecipes')"
-        />
-      </div>
-      <!-- Body -->
-      <div class="flex items-start  mx-6">
-        <p
-          v-if="menus.length===0"
-        >
-          {{ $t('msg.noResults') }}
-        </p>
-        <search-results
-          :recipes-result="searchedRecipes"
-          :menu-to-edit="menuToEdit"
-          @pushRecipe="pushRecipe"
-          @removeRecipe="removeRecipe"
-        />
-        <selected-recipes
-          :selected-recipes="selectedRecipes"
-          :menu-to-edit="menuToEdit"
-        />
-      </div>
+      <new-edit-menu-container
+        :menu-to-edit="menuToEdit"
+        :searched-recipes="searchedRecipes"
+        :recipes-menu-to-edit="recipesMenuToEdit"
+      />
     </base-modal>
   </div>
 </template>
@@ -83,17 +64,11 @@ import { getMenus, deleteMenu } from './../../../api/menus.js';
 import { getRecipes } from './../../../api/recipes.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
-import MenuRecipesSearchBar from '../edit/menu-recipes-search-bar';
-import SearchResults from '../edit/search-results';
-import SelectedRecipes from '../edit/selected-recipes';
 
 export default {
   components: {
     MenusSearchBar,
     MenusTable,
-    MenuRecipesSearchBar,
-    SearchResults,
-    SelectedRecipes,
   },
 
   data() {
@@ -105,7 +80,7 @@ export default {
       menuToDelete: {},
       searchedRecipes: [],
       error: '',
-      selectedRecipes: [],
+      recipesMenuToEdit: [],
     };
   },
 
@@ -156,20 +131,11 @@ export default {
     openEditModal(menu) {
       this.showingEdit = !this.showingEdit;
       this.menuToEdit = menu;
-      this.selectedRecipes = [... this.menuToEdit.menuRecipes.data];
+      this.recipesMenuToEdit = [... this.menuToEdit.menuRecipes.data];
     },
     closeEditModal() {
       this.showingEdit = !this.showingEdit;
-      this.selectedRecipes = [];
-    },
-    pushRecipe(menuRecipe) {
-      this.selectedRecipes.push(menuRecipe);
-    },
-    removeRecipe(recipe) {
-      const parsedId = parseInt(recipe.id, 10);
-      const indexToRemove = this.selectedRecipes.findIndex((element) =>
-        parseInt(element.attributes.recipe.id, 10) === parsedId);
-      this.selectedRecipes.splice(indexToRemove, 1);
+      this.recipesMenuToEdit = [];
     },
     editMenu() {
       // save changes
