@@ -11,7 +11,7 @@
         <base-button
           :elements="{ placeholder: $t('msg.menus.add'),
                        color: 'bg-green-500 hover:bg-green-700 text-white' }"
-          @click="redirectAddMenu"
+          @click="openAddModal"
         />
       </div>
       <div class="flex items-center">
@@ -51,7 +51,24 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <new-edit-menu-container
+        :edit-mode="true"
         :menu-to-edit="menuToEdit"
+        :searched-recipes="searchedRecipes"
+        :recipes-menu-to-edit="recipesMenuToEdit"
+      />
+    </base-modal>
+
+    <!--AddModal-->
+    <base-modal
+      @ok="addMenu"
+      @cancel="closeAddModal"
+      v-if="showingAdd"
+      :title="$t('msg.menus.add')"
+      :ok-button-label="$t('msg.add')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <new-edit-menu-container
+        :edit-mode="false"
         :searched-recipes="searchedRecipes"
         :recipes-menu-to-edit="recipesMenuToEdit"
       />
@@ -64,17 +81,20 @@ import { getMenus, deleteMenu } from './../../../api/menus.js';
 import { getRecipes } from './../../../api/recipes.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
+import NewEditMenuContainer from '../new-edit/new-edit-menu-container';
 
 export default {
   components: {
     MenusSearchBar,
     MenusTable,
+    NewEditMenuContainer,
   },
 
   data() {
     return {
       showingEdit: false,
       showingDel: false,
+      showingAdd: false,
       menus: [],
       menuToEdit: { 'menuRecipes': { 'data': [] } },
       menuToDelete: {},
@@ -124,8 +144,17 @@ export default {
       }
     },
     // Add methods
-    redirectAddMenu() {
-      window.location.href = '/menus/new';
+    openAddModal() {
+      this.showingAdd = !this.showingAdd;
+      this.recipesMenuToEdit = [];
+    },
+    closeAddModal() {
+      this.showingAdd = !this.showingAdd;
+      this.recipesMenuToEdit = [];
+    },
+    addMenu() {
+      // prepare data and post menu
+      this.closeAddModal();
     },
     // Edit methods
     openEditModal(menu) {
@@ -138,7 +167,7 @@ export default {
       this.recipesMenuToEdit = [];
     },
     editMenu() {
-      // save changes
+      // prepare data and save changes
       this.closeEditModal();
     },
   },

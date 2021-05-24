@@ -52,7 +52,8 @@ export default {
   },
 
   created() {
-    const recipesIds = this.recipesOfMenu.map((element) => element.attributes.recipe.id);
+    const recipesLen = this.recipesOfMenu.length;
+    const recipesIds = recipesLen === 0 ? [] : this.recipesOfMenu.map((element) => element.attributes.recipe.id);
     this.selected = recipesIds.includes(parseInt(this.recipe.id, 10));
   },
 

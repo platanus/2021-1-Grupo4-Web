@@ -20,7 +20,7 @@
     <div class="flex items-start  mx-6">
       <search-results
         :recipes-result="searchedRecipes"
-        :menu-to-edit="menuToEdit"
+        :recipes-menu-to-edit="recipesMenuToEdit"
         @pushRecipe="pushRecipe"
         @removeRecipe="removeRecipe"
       />
@@ -45,7 +45,10 @@ export default {
   },
 
   props: {
-    menuToEdit: { type: Object, required: true },
+    editMode: { type: Boolean, required: true },
+    menuToEdit: { type: Object, default() {
+      return {};
+    } },
     searchedRecipes: { type: Array, required: true },
     recipesMenuToEdit: { type: Array, required: true },
   },
@@ -53,8 +56,16 @@ export default {
   data() {
     return {
       selectedRecipes: [...this.recipesMenuToEdit],
-      menuName: this.menuToEdit.name,
+      menuName: '',
     };
+  },
+
+  created() {
+    if (this.editMode) {
+      this.menuName = this.menuToEdit.name;
+    } else {
+
+    }
   },
 
   methods: {

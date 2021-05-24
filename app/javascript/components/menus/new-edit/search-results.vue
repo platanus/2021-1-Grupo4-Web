@@ -16,7 +16,7 @@
         <td key="recipe">
           <search-results-item
             :recipe="recipeResult"
-            :recipes-of-menu="menuToEdit.menuRecipes.data"
+            :recipes-of-menu="recipesMenuToEdit"
             @push="pushRecipe"
             @remove="removeRecipe"
           />
@@ -36,7 +36,7 @@ export default {
 
   props: {
     recipesResult: { type: Array, required: true },
-    menuToEdit: { type: Object, required: true },
+    recipesMenuToEdit: { type: Array, required: true },
   },
 
   methods: {

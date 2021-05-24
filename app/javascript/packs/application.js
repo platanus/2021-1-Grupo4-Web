@@ -25,7 +25,6 @@ import RecipeEdit from '../components/recipes/edit/recipe-edit.vue';
 import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
-import NewEditMenuContainer from '../components/menus/new-edit/new-edit-menu-container';
 
 import formatCurrency from '../filters/format-currency.js';
 
@@ -52,7 +51,6 @@ Vue.component('RecipeEdit', RecipeEdit);
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
-Vue.component('NewEditMenuContainer', NewEditMenuContainer);
 
 Vue.filter('currency', formatCurrency);
 
