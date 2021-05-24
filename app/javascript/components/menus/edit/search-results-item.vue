@@ -32,6 +32,7 @@
         type="checkbox"
         class="form-checkbox h-5 w-5 text-yellow-500"
         v-model="selected"
+        @click="updateSelected"
       >
     </div>
   </div>
@@ -51,16 +52,16 @@ export default {
   },
 
   created() {
-    const recipesIds = this.recipesOfMenu.map((element) => element.id);
-    this.selected = recipesIds.includes(this.recipe.id);
+    const recipesIds = this.recipesOfMenu.map((element) => element.attributes.recipe.id);
+    this.selected = recipesIds.includes(parseInt(this.recipe.id, 10));
   },
 
-  watch: {
-    selected(val) {
-      if (val) {
-        this.$emit('push', this.recipe);
-      } else {
+  methods: {
+    updateSelected() {
+      if (this.selected) {
         this.$emit('remove', this.recipe);
+      } else {
+        this.$emit('push', this.recipe);
       }
     },
   },

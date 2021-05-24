@@ -7,11 +7,11 @@
     >
     <div>
       <p class="py-2 px-3 font-medium">
-        {{ recipe.name }}
+        {{ recipe.attributes.recipe.name }}
       </p>
       <div class="mr-10">
         <p class="py-2 px-3 text-xs inline-block">
-          {{ recipe.portions }} {{ $t('msg.recipes.portions') }}
+          {{ recipe.attributes.recipe.portions }} {{ $t('msg.recipes.portions') }}
         </p>
         <p class="py-2 px-3 text-xs inline-block">
           $XX.XXX CLP
@@ -24,7 +24,7 @@
         >
         <input
           class="inline block shadow hover:bg-none appearance-none border rounded w-12 h-5 text-gray-700 text-xs leading-tight focus:outline-none focus:shadow-outline"
-          :id="`quantity${recipe.id}`"
+          :id="`quantity${menu.id}-${recipe.id}`"
           type="text"
           v-model="quantity"
         >
@@ -43,10 +43,11 @@
 export default {
   props: {
     recipe: { type: Object, required: true },
+    menu: { type: Object, required: true },
   },
   data() {
     return {
-      quantity: this.recipe.recipeQuantity,
+      quantity: this.recipe.attributes.recipeQuantity,
     };
   },
 

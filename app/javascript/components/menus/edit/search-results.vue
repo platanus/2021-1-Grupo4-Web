@@ -9,13 +9,13 @@
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="recipe in recipesResult"
-        :key="recipe.id"
+        v-for="recipeResult in recipesResult"
+        :key="recipeResult.id"
         class="bg-white border-2 border-gray-200 text-left"
       >
         <td key="recipe">
           <search-results-item
-            :recipe="recipe"
+            :recipe="recipeResult"
             :recipes-of-menu="menuToEdit.menuRecipes.data"
             @push="pushRecipe"
             @remove="removeRecipe"
@@ -40,24 +40,15 @@ export default {
   },
 
   methods: {
-    pushRecipe(recipe) {
-      const menuRecipesIds = this.menuToEdit.menuRecipes.data.map((element) => element.id);
-      // If recipe is already part of menu
-      let recipeToPush = {};
-      if (menuRecipesIds.includes(recipe.id)) {
-        const menuRecipe = this.menuToEdit.menuRecipes.data.filter(item => item.id === recipe.id)[0];
-        recipeToPush = { ...menuRecipe.attributes.recipe, recipeQuantity: menuRecipe.attributes.recipeQuantity };
-      } else {
-        const defaultQuantity = 1;
-        recipeToPush = { ...recipe, recipeQuantity: defaultQuantity };
-      }
+    pushRecipe(recipeResult) {
+      const defaultQuantity = 1;
+      const recipeToPush = { attributes: { recipe: recipeResult, recipeQuantity: defaultQuantity } };
       this.$emit('pushRecipe', recipeToPush);
     },
 
-    removeRecipe(recipe) {
-      this.$emit('removeRecipe', recipe);
+    removeRecipe(recipeResult) {
+      this.$emit('removeRecipe', recipeResult);
     },
   },
 };
-
 </script>

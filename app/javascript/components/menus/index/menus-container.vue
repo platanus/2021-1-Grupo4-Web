@@ -104,7 +104,6 @@ export default {
       menuToDelete: {},
       searchedRecipes: [],
       error: '',
-      selectedRecipes: [],
     };
   },
   async created() {

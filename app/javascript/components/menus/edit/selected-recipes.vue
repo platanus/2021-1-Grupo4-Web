@@ -10,6 +10,7 @@
     >
       <selected-recipes-item
         :recipe="recipe"
+        :menu="menuToEdit"
       />
     </div>
     <div class="pr-4 pb-4 bg-gray-200 border-4 text-right text-black h-14">
@@ -36,6 +37,7 @@ export default {
 
   props: {
     selectedRecipes: { type: Array, required: true },
+    menuToEdit: { type: Object, required: true },
   },
 
   computed: {
