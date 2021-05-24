@@ -1,6 +1,5 @@
 <template>
   <div>
-  <p>HOLA</p>
   <p>{{this.providers}}</p>
   <table>
     <tr 
@@ -25,14 +24,10 @@ export default {
   async created() {
     try {
       const response = await getProviders();
-      console.log("AA",response.data);
-
       this.providers = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
-      console.log("HOA",this.providers)
-
       this.successResponse(response);
     } catch (error) {
       this.errorResponse(error);
