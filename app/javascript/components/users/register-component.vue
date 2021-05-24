@@ -85,9 +85,10 @@ export default {
       try {
         const response = await registerUser(this.form.userEmail, this.form.userPassword);
         localStorage.setItem('token', response.data.data.attributes.authentication_token);
+        localStorage.setItem('email', response.data.data.attributes.email);
         this.status = response.status;
         this.error = '';
-        window.location.href = '/ingredients';
+        window.location.href = '/';
       } catch (error) {
         this.status = error.response.status;
         this.error = error;
