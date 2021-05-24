@@ -12,10 +12,10 @@ function deleteMenu(menuId) {
     }));
 }
 
-function postMenu(menuInfo) {
+function postMenu(menu) {
   return (client
     .post('/menus',
-      { menuInfo },
+      { menu },
     ));
 }
 

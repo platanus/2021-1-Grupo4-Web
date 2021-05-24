@@ -154,10 +154,30 @@ export default {
       this.showingAdd = !this.showingAdd;
       this.recipesMenuToEdit = [];
     },
-    addMenu() {
-      // prepare data and post menu
-      console.log(this.$refs.addMenuInfo.selectedRecipes);
-      console.log(this.$refs.addMenuInfo.menuName);
+    prepareRecipesInfo(recipes) {
+      const recipesInfo = [];
+      for (const recipe of recipes) {
+        const recipeInfo = {};
+        recipeInfo.recipeId = parseInt(recipe.attributes.recipe.id, 10);
+        recipeInfo.recipeQuantity = recipe.attributes.recipeQuantity;
+        recipesInfo.push(recipeInfo);
+      }
+
+      return recipesInfo;
+    },
+    async addMenu() {
+      const recipesInfo = this.prepareRecipesInfo(this.$refs.addMenuInfo.selectedRecipes);
+      const menuToPost = { name: this.$refs.addMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
+      try {
+        const {
+          data:
+            { data: { id, attributes },
+            },
+        } = await postMenu(menuToPost);
+        this.menus.push({ id, ...attributes });
+      } catch (error) {
+        this.error = error;
+      }
       this.closeAddModal();
     },
     // Edit methods
