@@ -106,30 +106,38 @@ export default {
     };
   },
 
-  async created() {
-    try {
-      const response = await getMenus();
-      this.menus = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-      this.error = '';
-    } catch (error) {
-      this.error = error;
-    }
-    try {
-      const response = await getRecipes();
-      this.searchedRecipes = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-      this.error = '';
-    } catch (error) {
-      this.error = error;
-    }
+  created() {
+    this.getAllMenus();
+    this.getAllRecipes();
   },
 
   methods: {
+    // Get menus
+    async getAllMenus() {
+      try {
+        const response = await getMenus();
+        this.menus = response.data.data.map((element) => ({
+          id: element.id,
+          ...element.attributes,
+        }));
+        this.error = '';
+      } catch (error) {
+        this.error = error;
+      }
+    },
+    // Get recipes
+    async getAllRecipes() {
+      try {
+        const response = await getRecipes();
+        this.searchedRecipes = response.data.data.map((element) => ({
+          id: element.id,
+          ...element.attributes,
+        }));
+        this.error = '';
+      } catch (error) {
+        this.error = error;
+      }
+    },
     // Delete methods
     toggleDelModal(menu) {
       this.showingDel = !this.showingDel;
@@ -175,6 +183,7 @@ export default {
             },
         } = await postMenu(menuToPost);
         this.menus.push({ id, ...attributes });
+        this.error = '';
       } catch (error) {
         this.error = error;
       }
@@ -190,10 +199,17 @@ export default {
       this.showingEdit = !this.showingEdit;
       this.recipesMenuToEdit = [];
     },
-    editMenu() {
-      // prepare data and save changes
-      console.log(this.$refs.editMenuInfo.selectedRecipes);
-      console.log(this.$refs.editMenuInfo.menuName);
+    async editMenu() {
+      const recipesInfo = this.prepareRecipesInfo(this.$refs.editMenuInfo.selectedRecipes);
+      const menuToPost = { name: this.$refs.editMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
+      console.log(this.menuToEdit);
+      try {
+        await editMenu(this.menuToEdit.id, menuToPost);
+        this.getAllMenus();
+        this.error = '';
+      } catch (error) {
+        this.error = error;
+      }
       this.closeEditModal();
     },
   },

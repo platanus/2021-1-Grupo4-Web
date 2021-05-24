@@ -19,10 +19,10 @@ function postMenu(menu) {
     ));
 }
 
-function editMenu(menuId, menuInfo) {
+function editMenu(menuId, menu) {
   return (client
     .put(`/menus/${menuId}`,
-      { menuInfo }, {
+      { menu }, {
       }));
 }
 
