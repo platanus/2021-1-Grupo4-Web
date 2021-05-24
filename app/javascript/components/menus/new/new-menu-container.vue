@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import InformationMenu from './base-information-menu.vue';
-import SearchRecipes from './base-search-recipe.vue';
-import AvailableRecipes from './base-available-recipes.vue';
-import SelectedRecipes from './base-selected-recipes.vue';
+import InformationMenu from './information-menu.vue';
+import SearchRecipes from './search-recipes.vue';
+import AvailableRecipes from './available-recipes/available-recipes.vue';
+import SelectedRecipes from './selected-recipes/selected-recipes.vue';
 
 export default {
   components: {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import CardData from './base-card-data.vue';
+import CardData from './available-recipe-card-data.vue';
 
 export default {
   components: {

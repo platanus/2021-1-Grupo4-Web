@@ -8,7 +8,7 @@
         {{ $t('msg.recipes.add') }}
       </span>
     </div>
-    <search-recipe
+    <recipes-search-bar
       :placeholder="$t('msg.recipes.search')"
       @filterByPrice="toggleFilterByPriceModal"
       @filterByPortions="toggleFilterByPortionsModal"
@@ -20,11 +20,11 @@
       {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
     </p>
     <div v-else>
-      <recipes
+      <recipes-list
         :allrecipes="recipes"
       />
     </div>
-    <pagination />
+    <recipes-pagination />
     <!--Price Filter Modal-->
     <filter-popup
       @ok="toggleFilterByPriceModal"
@@ -53,8 +53,19 @@
 <script>
 
 import { getRecipes } from '../../../api/recipes.js';
+import FilterPopup from './filter-popup';
+import RecipesSearchBar from './recipes-search-bar';
+import RecipesPagination from './pagination/recipes-pagination';
+import RecipesList from './recipes-list/recipes-list';
 
 export default {
+  components: {
+    FilterPopup,
+    RecipesSearchBar,
+    RecipesPagination,
+    RecipesList,
+  },
+
   data() {
     return {
       recipes: [],

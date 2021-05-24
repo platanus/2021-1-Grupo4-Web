@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import RecipeSelectedData from './base-recipe-selected-data.vue';
+import RecipeSelectedData from './recipe-selected-data.vue';
 
 export default {
   components: {

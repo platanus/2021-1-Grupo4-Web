@@ -54,8 +54,17 @@
 <script>
 
 import { getRecipe, deleteRecipe } from '../../../api/recipes.js';
+import RecipeIngredients from './recipe-ingredients';
+import RecipeInstructions from './recipe-instructions';
+import RecipeInfo from './recipe-info';
 
 export default {
+  components: {
+    RecipeIngredients,
+    RecipeInstructions,
+    RecipeInfo,
+  },
+
   props: {
     recipeId: { type: Number, required: true },
   },

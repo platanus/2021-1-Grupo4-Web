@@ -8,7 +8,7 @@
 
     <!--SearchBar y Button-->
     <div class="flex items-center">
-      <search
+      <ingredients-search-bar
         kind="ingredient"
         :placeholder="$t('msg.ingredients.search')"
       />
@@ -105,7 +105,9 @@
 <script>
 
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
-import SearchMarketIngredients from './search-market-ingredients-component';
+import IngredientsSearchBar from './ingredients-search-bar';
+import IngredientsForm from './ingredients-form';
+import SearchMarketIngredients from './search-market-ingredients';
 
 export default {
 
@@ -125,6 +127,8 @@ export default {
   },
 
   components: {
+    IngredientsSearchBar,
+    IngredientsForm,
     SearchMarketIngredients,
   },
 

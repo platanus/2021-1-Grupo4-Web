@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-start pt-0 pl-0 pr-0 pb-8 absolute w-64 h-screen left-0 top-16 bg-gray-800">
     <a href="/ingredients">
-      <item
+      <side-navbar-item
         :label="$t('msg.ingredients.title')"
         :active="activeElement==='ingredients'"
       >
@@ -10,11 +10,11 @@
           svg-inline
           src="../../../assets/images/ingredients-svg.svg"
         >
-      </item>
+      </side-navbar-item>
     </a>
 
     <a href="/recipes">
-      <item
+      <side-navbar-item
         :label="$t('msg.recipes.title')"
         :active="activeElement==='recipes'"
       >
@@ -23,11 +23,11 @@
           svg-inline
           src="../../../assets/images/recipes-svg.svg"
         >
-      </item>
+      </side-navbar-item>
     </a>
 
     <a href="/menus">
-      <item
+      <side-navbar-item
         :label="$t('msg.menus.title')"
         :active="activeElement==='menus'"
       >
@@ -36,13 +36,19 @@
           svg-inline
           src="../../../assets/images/menus-svg.svg"
         >
-      </item>
+      </side-navbar-item>
     </a>
   </div>
 </template>
 
 <script>
+import SideNavbarItem from './side-navbar-item';
+
 export default {
+  components: {
+    SideNavbarItem,
+  },
+
   props: {
     activeElement: { type: String, required: true },
   },

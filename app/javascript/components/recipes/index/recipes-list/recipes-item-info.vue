@@ -14,7 +14,7 @@
               <img
                 class="h-5 w-5 text-white"
                 svg-inline
-                src="../../../../assets/images/chart-pie-svg.svg"
+                src="../../../../../assets/images/chart-pie-svg.svg"
               >
             </div>
             <div class="satic w-28 h-5 flex-none order-1 flex-grow-0">
@@ -27,7 +27,7 @@
               <img
                 class="h-5 w-5 text-white"
                 svg-inline
-                src="../../../../assets/images/clock-svg.svg"
+                src="../../../../../assets/images/clock-svg.svg"
               >
             </div>
             <div class="static min-w-min h-5 flex-none order-1 flex-grow-0">

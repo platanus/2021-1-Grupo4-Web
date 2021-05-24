@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import RecipeSelected from './base-recipe-selected.vue';
+import RecipeSelected from './recipe-selected.vue';
 
 export default {
   components: {

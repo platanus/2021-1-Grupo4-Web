@@ -4,7 +4,7 @@
       {{ $t('msg.recipes.steps') }}
     </div>
     <div class="flex flex-col items-start w-auto h-auto self-stretch flex-grow-0 my-2.5">
-      <instruction-step
+      <recipe-instructions-step
         v-for="step in steps"
         :key="step.id"
         :step="step.attributes"
@@ -15,8 +15,13 @@
 </template>
 
 <script>
+import RecipeInstructionsStep from './recipe-instructions-step';
 
 export default {
+  components: {
+    RecipeInstructionsStep,
+  },
+
   props: {
     steps: { type: Array, required: true },
   },
