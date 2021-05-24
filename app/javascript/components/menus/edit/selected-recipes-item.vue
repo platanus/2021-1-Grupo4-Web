@@ -7,7 +7,7 @@
     >
     <div>
       <p class="py-2 px-3 font-medium">
-        {{ recipe.name }} {{ recipe.id }}
+        {{ recipe.name }}
       </p>
       <div class="mr-10">
         <p class="py-2 px-3 text-xs inline-block">
@@ -20,6 +20,7 @@
           svg-inline
           src="../../../../assets/images/minus-svg.svg"
           class="h-5 w-5 inline-block cursor-pointer"
+          @click="subtract"
         >
         <input
           class="inline block shadow hover:bg-none appearance-none border rounded w-12 h-5 text-gray-700 text-xs leading-tight focus:outline-none focus:shadow-outline"
@@ -31,6 +32,7 @@
           svg-inline
           src="../../../../assets/images/plus-svg.svg"
           class="h-5 w-5 inline-block cursor-pointer"
+          @click="add"
         >
       </div>
     </div>
@@ -46,6 +48,15 @@ export default {
     return {
       quantity: this.recipe.recipeQuantity,
     };
+  },
+
+  methods: {
+    subtract() {
+      this.quantity -= 1;
+    },
+    add() {
+      this.quantity += 1;
+    },
   },
 
 };

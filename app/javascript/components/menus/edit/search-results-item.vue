@@ -12,7 +12,7 @@
     <!-- Name and info -->
     <div class="mr-20">
       <p class="py-2 px-3 font-medium">
-        {{ recipe.name }} {{ recipe.id }}
+        {{ recipe.name }}
       </p>
       <div>
         <p class="py-2 px-3 text-xs inline-block">
