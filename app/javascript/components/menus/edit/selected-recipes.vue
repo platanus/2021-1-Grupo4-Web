@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col ml-6">
+  <div class="flex-col ml-10">
     <div class="flex items-center pl-3 bg-gray-600 border-4 border-gray-600 text-left text-white font-bold  h-10">
       {{ $t('msg.menus.selectedRecipes') }} ({{ numberOfResults }})
     </div>

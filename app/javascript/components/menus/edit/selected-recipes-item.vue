@@ -7,9 +7,9 @@
     >
     <div>
       <p class="py-2 px-3 font-medium">
-        {{ recipe.name }}
+        {{ recipe.name }} {{ recipe.id }}
       </p>
-      <div>
+      <div class="mr-10">
         <p class="py-2 px-3 text-xs inline-block">
           {{ recipe.portions }} {{ $t('msg.recipes.portions') }}
         </p>
@@ -18,13 +18,19 @@
         </p>
         <img
           svg-inline
-          src="../../../../assets/images/plus-svg.svg"
-          class="h-6 w-6"
+          src="../../../../assets/images/minus-svg.svg"
+          class="h-5 w-5 inline-block cursor-pointer"
+        >
+        <input
+          class="inline block shadow hover:bg-none appearance-none border rounded w-12 h-5 text-gray-700 text-xs leading-tight focus:outline-none focus:shadow-outline"
+          :id="`quantity${recipe.id}`"
+          type="text"
+          v-model="quantity"
         >
         <img
           svg-inline
-          src="../../../../assets/images/minus-svg.svg"
-          class="h-6 w-6"
+          src="../../../../assets/images/plus-svg.svg"
+          class="h-5 w-5 inline-block cursor-pointer"
         >
       </div>
     </div>
@@ -35,6 +41,11 @@
 export default {
   props: {
     recipe: { type: Object, required: true },
+  },
+  data() {
+    return {
+      quantity: this.recipe.recipeQuantity,
+    };
   },
 
 };

@@ -2,9 +2,7 @@
   <table class="divide-y divide-gray-200">
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">
       <tr class="text-left">
-        <th
-          class="px-8 py-3"
-        >
+        <th class="px-8 py-3">
           <span class="text-white font-bold">{{ $t('msg.results') }}</span>
         </th>
       </tr>
@@ -19,8 +17,8 @@
           <search-results-item
             :recipe="recipe"
             :recipes-of-menu="menuToEdit.menuRecipes.data"
-            @pushRecipe="pushRecipe"
-            @removeRecipe="removeRecipe"
+            @push="pushRecipe"
+            @remove="removeRecipe"
           />
         </td>
       </tr>
@@ -41,20 +39,19 @@ export default {
     menuToEdit: { type: Object, required: true },
   },
 
-  // data() {
-  //   return {
-  //     recipesResultUpdate: this.recipesResult,
-  //   };
-  // },
-
-  // created() {
-  //   // this.recipesResultUpdate = [... this.recipesResultUpdate, this.menuToEdit.menuRecipes];
-  //   console.log([... this.recipesResultUpdate, this.menuToEdit.menuRecipes]);
-  // },
-
   methods: {
     pushRecipe(recipe) {
-      this.$emit('pushRecipe', recipe);
+      const menuRecipesIds = this.menuToEdit.menuRecipes.data.map((element) => element.id);
+      // If recipe is already part of menu
+      let recipeToPush = {};
+      if (menuRecipesIds.includes(recipe.id)) {
+        const menuRecipe = this.menuToEdit.menuRecipes.data.filter(item => item.id === recipe.id)[0];
+        recipeToPush = { ...menuRecipe.attributes.recipe, recipeQuantity: menuRecipe.attributes.recipeQuantity };
+      } else {
+        const defaultQuantity = 1;
+        recipeToPush = { ...recipe, recipeQuantity: defaultQuantity };
+      }
+      this.$emit('pushRecipe', recipeToPush);
     },
 
     removeRecipe(recipe) {

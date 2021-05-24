@@ -10,9 +10,9 @@
       class="w-20 h-20 text-yellow-700"
     >
     <!-- Name and info -->
-    <div>
+    <div class="mr-20">
       <p class="py-2 px-3 font-medium">
-        {{ recipe.name }}
+        {{ recipe.name }} {{ recipe.id }}
       </p>
       <div>
         <p class="py-2 px-3 text-xs inline-block">
@@ -58,9 +58,9 @@ export default {
   watch: {
     selected(val) {
       if (val) {
-        this.$emit('pushRecipe', this.recipe);
+        this.$emit('push', this.recipe);
       } else {
-        this.$emit('removeRecipe', this.recipe);
+        this.$emit('remove', this.recipe);
       }
     },
   },
