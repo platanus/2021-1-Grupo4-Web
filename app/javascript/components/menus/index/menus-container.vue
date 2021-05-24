@@ -95,6 +95,7 @@ export default {
     SearchResults,
     SelectedRecipes,
   },
+
   data() {
     return {
       showingEdit: false,
@@ -104,8 +105,10 @@ export default {
       menuToDelete: {},
       searchedRecipes: [],
       error: '',
+      selectedRecipes: [],
     };
   },
+
   async created() {
     try {
       const response = await getMenus();
@@ -128,6 +131,7 @@ export default {
       this.error = error;
     }
   },
+
   methods: {
     // Delete methods
     toggleDelModal(menu) {
