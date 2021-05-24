@@ -66,7 +66,6 @@ import FilterPopupContent from './filter-popup-content';
 import RecipesSearchBar from './recipes-search-bar';
 import RecipesPagination from './pagination/recipes-pagination';
 import RecipesList from './recipes-list/recipes-list';
-
 export default {
   components: {
     Filters,

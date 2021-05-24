@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD:app/javascript/components/recipes/index/recipes-list/recipes-item.vue
   <div class="flex flex-row justify-between items-center p-6 static h-24 bg-white border-2 border-solid border-gray-400 box-border my-2 flex-none flex-grow-0 self-stretch">
-=======
-  <div class="flex flex-row justify-between items-center p-6 static h-24 bg-white border-2 border-solid border-gray-400 box-border my-2 flex-none flex-grow-0 self-stretch m-0">
->>>>>>> 59d3ed4... refactor(components-names): modify name of components and import:app/javascript/components/recipes/index/base-recipe.vue
     <recipes-item-info
       :recipe-name="recipe.name"
       :recipe-portions="recipe.portions"
@@ -21,12 +17,10 @@ import RecipesItemInfo from './recipes-item-info';
 import RecipesItemPrice from './recipes-item-price';
 
 export default {
-
   components: {
     RecipesItemInfo,
     RecipesItemPrice,
   },
-
   props: {
     recipe: { type: Object, required: true },
   },
