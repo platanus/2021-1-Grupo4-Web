@@ -32,7 +32,7 @@
         </label>
         <input
           v-model="form.userEmail"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
           id="email"
           type="email"
           :placeholder="$t('msg.users.placeholderEmail')"
@@ -47,7 +47,7 @@
         </label>
         <input
           v-model="form.userPassword"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
           id="password"
           type="password"
           placeholder="******************"

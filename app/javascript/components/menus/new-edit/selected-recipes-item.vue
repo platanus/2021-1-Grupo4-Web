@@ -23,7 +23,7 @@
           @click="subtract"
         >
         <input
-          class="inline block shadow hover:bg-none appearance-none border rounded w-12 h-5 text-gray-700 text-xs leading-tight focus:outline-none focus:shadow-outline"
+          class="inline block shadow hover:bg-none appearance-none border rounded w-12 h-5 text-gray-700 text-xs leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
           :id="`quantity${menu.id}-${recipe.id}`"
           type="text"
           v-model="quantity"

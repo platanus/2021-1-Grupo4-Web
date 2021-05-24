@@ -29,7 +29,7 @@
           {{ $t('msg.users.labelEmail') }}
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
           id="email"
           type="email"
           :placeholder="$t('msg.users.placeholderEmail')"
@@ -45,7 +45,7 @@
           {{ $t('msg.users.labelPassword') }}
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
           id="password"
           type="password"
           placeholder="******************"

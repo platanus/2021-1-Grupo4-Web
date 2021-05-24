@@ -11,7 +11,7 @@
             {{ $t('msg.ingredients.name') }}
           </label>
           <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
             id="ingredient-name"
             type="text"
             :placeholder="$t('msg.ingredients.name')"
@@ -30,7 +30,7 @@
             {{ $t('msg.ingredients.quantity') }}
           </label>
           <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
             v-model="form.quantity"
             id="ingredient-amount"
             type="number"
@@ -47,7 +47,8 @@
           </label>
           <select
             class="appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
-            rounded leading-tight focus:outline-none bg-none"
+            rounded leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring
+            focus:ring-gray-100 focus:ring-opacity-50 bg-none"
             id="ingredient-unit"
             v-model="form.measure"
           >
@@ -98,7 +99,7 @@
             {{ $t('msg.ingredients.price') }}
           </label>
           <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
             id="ingredient-price"
             v-model="form.price"
             type="number"

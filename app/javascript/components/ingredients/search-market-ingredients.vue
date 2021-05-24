@@ -11,7 +11,7 @@
           </label>
           <div class="flex w-full">
             <input
-              class="appearance-none block w-1/2 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
+              class="appearance-none block w-1/2 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
               id="ingredient-name"
               type="text"
               :placeholder="$t('msg.ingredients.name')"

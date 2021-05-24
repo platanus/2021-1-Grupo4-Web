@@ -6,12 +6,12 @@
         {{ $t('msg.recipes.price') }}
       </p>
       <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border roundedflex-grow-0 my-1"
+        class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
         :placeholder="$t('msg.min')"
         v-model="filters.price.min"
       >
       <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+        class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
         :placeholder="$t('msg.max')"
         v-model="filters.price.max"
       >
@@ -23,12 +23,12 @@
         {{ $t('msg.recipes.portions') }}
       </p>
       <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border roundedflex-grow-0 my-1"
+        class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
         :placeholder="$t('msg.min')"
         v-model="filters.portions.min"
       >
       <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+        class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:border-gray-600 focus:border-opacity-70 focus:ring focus:ring-gray-100 focus:ring-opacity-50"
         :placeholder="$t('msg.max')"
         v-model="filters.portions.max"
       >
