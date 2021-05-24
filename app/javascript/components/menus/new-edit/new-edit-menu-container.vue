@@ -63,8 +63,6 @@ export default {
   created() {
     if (this.editMode) {
       this.menuName = this.menuToEdit.name;
-    } else {
-
     }
   },
 

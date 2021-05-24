@@ -12,4 +12,18 @@ function deleteMenu(menuId) {
     }));
 }
 
-export { getMenus, deleteMenu };
+function postMenu(menuInfo) {
+  return (client
+    .post('/menus',
+      { menuInfo },
+    ));
+}
+
+function editMenu(menuId, menuInfo) {
+  return (client
+    .put(`/menus/${menuId}`,
+      { menuInfo }, {
+      }));
+}
+
+export { getMenus, deleteMenu, postMenu, editMenu };

@@ -51,6 +51,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <new-edit-menu-container
+        ref="editMenuInfo"
         :edit-mode="true"
         :menu-to-edit="menuToEdit"
         :searched-recipes="searchedRecipes"
@@ -68,6 +69,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <new-edit-menu-container
+        ref="addMenuInfo"
         :edit-mode="false"
         :searched-recipes="searchedRecipes"
         :recipes-menu-to-edit="recipesMenuToEdit"
@@ -77,7 +79,7 @@
 </template>
 
 <script>
-import { getMenus, deleteMenu } from './../../../api/menus.js';
+import { getMenus, deleteMenu, postMenu, editMenu } from './../../../api/menus.js';
 import { getRecipes } from './../../../api/recipes.js';
 import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
@@ -154,6 +156,8 @@ export default {
     },
     addMenu() {
       // prepare data and post menu
+      console.log(this.$refs.addMenuInfo.selectedRecipes);
+      console.log(this.$refs.addMenuInfo.menuName);
       this.closeAddModal();
     },
     // Edit methods
@@ -168,6 +172,8 @@ export default {
     },
     editMenu() {
       // prepare data and save changes
+      console.log(this.$refs.editMenuInfo.selectedRecipes);
+      console.log(this.$refs.editMenuInfo.menuName);
       this.closeEditModal();
     },
   },
