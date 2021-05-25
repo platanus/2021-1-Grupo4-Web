@@ -1,10 +1,11 @@
 <template>
   <div class="flex w-80 flex-col">
     <span class="flex content-center justify-center">Ingredientes seleccionados</span>
-    <div class="flex p-4 grid grid-cols-2 items-center justify-between "
-      v-for="element in elements"
-      :key="element.name"
-      :class="color() ? 'bg-white' : 'bg-gray-100'"
+    <div 
+    class="flex p-4 grid grid-cols-2 items-center justify-between "
+      v-for="(element, index) in elements"
+      :key="index"
+      :class="index%2 === 0 ? 'bg-white' : 'bg-gray-100'"
     >
       <span class="flex content-center justify-center">
         {{ element.name }}
@@ -25,18 +26,9 @@ export default {
     input: { type: Boolean, required: true },
     addIngredientKey: { type: Number, required: true }
   },
-  data() {
-    return {
-      par: false,
-    }
-  },
   methods: {
     search() {
       return null;
-    },
-    color() {
-      this.par = !this.par
-      return this.par;
     },
   },
 }

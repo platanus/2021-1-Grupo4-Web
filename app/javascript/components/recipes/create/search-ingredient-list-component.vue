@@ -40,7 +40,7 @@
            <p class="content-center text-center ml-2 font-semibold">
              <add-button 
               :object=parsedElement
-              @addIngredient = "addIngredient"
+              @addIngredient="addIngredient"
              />
            </p>
           </td>
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     addIngredient(object) {
-      this.$emit('addIngredient', object);
+      this.$emit('addIngredient2', object);
     },
   },
   computed: {
