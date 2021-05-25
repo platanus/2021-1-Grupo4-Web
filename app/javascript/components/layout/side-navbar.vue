@@ -38,6 +38,18 @@
         >
       </side-navbar-item>
     </a>
+    <a href="/providers">
+      <side-navbar-item
+        :label="$t('msg.providers.title')"
+        :active="activeElement==='providers'"
+      >
+        <img
+          class="h-5 w-5 text-white"
+          svg-inline
+          src="../../../assets/images/provider-svg.svg"
+        >
+      </side-navbar-item>
+    </a>
   </div>
 </template>
 

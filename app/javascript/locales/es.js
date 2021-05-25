@@ -103,7 +103,8 @@ export default {
       address: 'Dirección',
       country: 'Pais',
       add: 'Agregar Proveedor',
-      delete: 'Eliminar proveedot',
+      delete: 'Eliminar proveedor',
+      edit: 'Editar Proveedor',
       deleteMsg: 'Estás seguro de que deseas eliminar este proveedor?',
 
     },

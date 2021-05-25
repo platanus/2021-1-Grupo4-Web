@@ -42,7 +42,21 @@
     >
       <providers-form
         ref="addProviderInfo"
-        :edit-mode="false"
+      />
+    </base-modal>
+
+    <!--EditModal-->
+    <base-modal
+      @ok="editProvider"
+      @cancel="toggleEditModal"
+      v-if="showingEdit"
+      :title="$t('msg.providers.edit')"
+      :ok-button-label="$t('msg.save')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <providers-form
+        ref="editProviderInfo"
+        :provider="this.providerToEdit"
       />
     </base-modal>
     
@@ -62,7 +76,7 @@
 </template>
 
 <script>
-import { getProviders, postProvider, deleteProvider } from './../../api/providers.js';
+import { getProviders, postProvider, deleteProvider, editProvider } from './../../api/providers.js';
 import ProvidersSearchBar from './providers-search-bar';
 import ProvidersForm from './providers-form';
 
@@ -71,6 +85,7 @@ export default {
     return {
       showingDel: false,
       showingAdd: false,
+      showingEdit: false,
       providers: [],
       providerToDelete: {},
       providerToEdit: {},
@@ -103,7 +118,7 @@ export default {
       this.providerToDelete = provider;
     },
     toggleEditModal(provider) {
-      //this.showingEdit = !this.showingEdit;
+      this.showingEdit = !this.showingEdit;
       this.providerToEdit = provider;
     },
 
@@ -122,6 +137,24 @@ export default {
       } catch (error) {
         this.errorResponse(error);
       }
+    },
+
+    async editProvider() {
+      this.showingEdit = !this.showingEdit;
+      try {
+        const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
+        this.updateProvider(res);
+        this.successResponse(res);
+      } catch (error) {
+        this.errorResponse(error);
+      }
+    },
+
+    async updateProvider(res) {
+      const providerEdited = { id: this.providerToEdit.id, ...JSON.parse(res.config.data).provider };
+      const objectIndex = this.providers.findIndex((obj => obj.id === this.providerToEdit.id));
+      this.providers.splice(objectIndex, 1);
+      this.providers.splice(objectIndex, 0, providerEdited);
     },
 
     async deleteProvider() {
