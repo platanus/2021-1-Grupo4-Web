@@ -50,6 +50,18 @@ describe 'API::V1::RecipeIngredients', swagger_doc: 'v1/swagger.json' do
 
         run_test!
       end
+
+      response '404', 'ingredient is not of user' do
+        let(:other_user_ingredient) { create(:ingredient) }
+        let(:recipe_ingredient) do
+          {
+            ingredient_id: other_user_ingredient.id,
+            ingredient_quantity: 3
+          }
+        end
+
+        run_test!
+      end
     end
   end
 
@@ -97,6 +109,18 @@ describe 'API::V1::RecipeIngredients', swagger_doc: 'v1/swagger.json' do
       response '401', 'user unauthorized' do
         let(:recipe_ingredient) { {} }
         let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+
+      response '404', 'ingredient is not of user' do
+        let(:other_user_ingredient) { create(:ingredient) }
+        let(:recipe_ingredient) do
+          {
+            ingredient_id: other_user_ingredient.id,
+            ingredient_quantity: 3
+          }
+        end
 
         run_test!
       end

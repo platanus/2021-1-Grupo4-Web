@@ -1651,6 +1651,9 @@
           },
           "401": {
             "description": "user unauthorized"
+          },
+          "404": {
+            "description": "ingredient is not of user"
           }
         }
       }
@@ -1712,6 +1715,9 @@
           },
           "401": {
             "description": "user unauthorized"
+          },
+          "404": {
+            "description": "ingredient is not of user"
           }
         }
       },
