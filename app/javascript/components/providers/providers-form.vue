@@ -65,7 +65,6 @@
 
 export default {
   props: {
-    editMode: { type: Boolean, required: true },
     provider: { type: Object, default() {
       return {};
     } },
@@ -94,16 +93,6 @@ export default {
       country,
     };
   },
-
-  //   computed: {
-  //     formUnits() {
-  //       if (!this.editMode) {
-  //         return this.units;
-  //       }
-
-//       return this.units.filter(unit => unit !== this.ingredient.measure);
-//     },
-//   },
 };
 
 </script>
