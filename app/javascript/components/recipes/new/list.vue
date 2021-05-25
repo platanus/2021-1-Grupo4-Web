@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     search() {
-      return null;
+      this.$emit('search');
     },
     color(list, element) {
       const two = 2;

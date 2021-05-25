@@ -52,6 +52,7 @@
           :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
           :drag="false"
+          @search="toggleAddIngredientModal"
         />
       </div>
       <div
@@ -77,16 +78,48 @@
         @click="create"
       />
     </div>
+
+    <base-modal
+      @ok="addIngredientstoRecipe"
+      @cancel="toggleAddIngredientModal"
+      v-if="showingAddIngredientModal"
+      :title="$t('msg.ingredients.add')"
+      :ok-button-label="$t('msg.add')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <div class="flex f-row w-full">
+        <div class="mr-10">
+          <search-ingredient-list 
+            :ingredients="getIngredients"
+            @add-ingredient="addIngredient"
+          />
+        </div>
+        <selected-ingredients 
+          :elements="selectedIngredients"
+          :svg="{sixdots: true, cancel: false, menu_recipe: true}"
+          :input="false"
+          :placeholder="'-'"
+          @delete-ingredient="deleteIngredient"
+        /> 
+      </div>
+    </base-modal>
+
   </div>
 </template>
 
 <script>
 import List from './list.vue';
 import { postRecipe } from '../../../api/recipes.js';
+import BaseModalComponent from '../../base/base-modal.vue';
+import SelectedIngredients from './selected-ingredients.vue';
+import SearchIngredientList from './search-ingredient-list.vue';
 
 export default {
   components: {
     List,
+    BaseModalComponent,
+    SelectedIngredients,
+    SearchIngredientList,
   },
   props: {
     objects: { type: Array, required: true },
@@ -101,6 +134,8 @@ export default {
       },
       steps: [],
       error: '',
+      showingAddIngredientModal: false,
+      selectedIngredients: [],
     };
   },
   methods: {
@@ -125,14 +160,37 @@ export default {
         media_url: 'https://media_url', // eslint-disable-line camelcase
       });
     },
+    toggleAddIngredientModal(){
+      this.showingAddIngredientModal = !this.showingAddIngredientModal;
+    },
+    addIngredient(object){
+      var i;
+      for (i = 0; i < this.selectedIngredients.length; i++) {
+        if (this.selectedIngredients[i] == object){
+          return;
+        }
+      }
+      this.selectedIngredients.push(object);
+    },
+    addIngredientstoRecipe(){
+      this.selectedIngredients.forEach(ingredient => {
+        this.objects.push(JSON.stringify(ingredient));
+        alert(JSON.stringify(ingredient));
+      });
+      this.selectedIngredients = [];
+      this.showingAddIngredientModal = !this.showingAddIngredientModal;
+      this.$forceUpdate();
+    },
+    deleteIngredient(index){
+      this.selectedIngredients.splice(index, 1);
+    }
   },
   computed: {
     getIngredients() {
       const newArray = [];
-      for (let i = 0; i < this.objects.length - 1; i++) {
+      for (let i = 0; i < this.objects.length; i++) {
         newArray.push(this.objects[i]);
       }
-
       return newArray;
     },
   },
