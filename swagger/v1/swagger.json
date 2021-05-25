@@ -6,6 +6,93 @@
   },
   "basePath": "/api/v1",
   "definitions": {
+    "menu_recipe_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "type": {
+          "type": "string",
+          "example": "menu_recipe"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "menu_id": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": false
+            },
+            "recipe": {
+              "$ref": "#/definitions/recipe_response"
+            },
+            "recipe_quantity": {
+              "type": "integer",
+              "example": 3,
+              "x-nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "1984-06-04 09:00",
+              "x-nullable": true
+            }
+          },
+          "required": []
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "menu_recipe": {
+      "type": "object",
+      "properties": {
+        "recipe_id": {
+          "type": "integer",
+          "example": 1,
+          "x-nullable": false
+        },
+        "recipe_quantity": {
+          "type": "integer",
+          "example": 3,
+          "x-nullable": true
+        }
+      }
+    },
+    "menu_recipes_collection": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/menu_recipe"
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "menu_recipe_resource": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/menu_recipe"
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
     "recipe_ingredient_response": {
       "type": "object",
       "properties": {
@@ -568,6 +655,17 @@
               "type": "string",
               "example": "1984-06-04 09:00",
               "x-nullable": true
+            },
+            "menu_recipes": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/menu_recipe_response"
+                  }
+                }
+              }
             }
           },
           "required": []
@@ -1053,6 +1151,143 @@
           },
           "404": {
             "description": "ingredient not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/menus/{menu_id}/menu_recipes": {
+      "parameters": [
+        {
+          "name": "menu_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Creates Menu Recipe",
+        "description": "Creates Menu Recipe",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu_recipe",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menu_recipe": {
+                  "$ref": "#/definitions/menu_recipe"
+                }
+              },
+              "required": [
+                "menu_recipe"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "menu_recipe created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          },
+          "404": {
+            "description": "recipe not found"
+          }
+        }
+      }
+    },
+    "/menus/{menu_id}/menu_recipes/{id}": {
+      "parameters": [
+        {
+          "name": "menu_id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Updates Menu Recipe",
+        "description": "Updates Menu Recipe",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menu_recipe",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menu_recipe": {
+                  "$ref": "#/definitions/menu_recipe"
+                }
+              },
+              "required": [
+                "menu_recipe"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "menu_recipe updated"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes Menu Recipe",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Deletes specific menu_recipe",
+        "responses": {
+          "204": {
+            "description": "menu_recipe deleted"
+          },
+          "404": {
+            "description": "menu_recipe not found"
           },
           "401": {
             "description": "user unauthorized"

@@ -2,10 +2,6 @@ class Menu < ApplicationRecord
   belongs_to :user
   has_many :menu_recipes, dependent: :destroy
   has_many :recipes, through: :menu_recipes, dependent: nil
-
-  def recipes_menu
-    menu_recipes.map { |r| [r.recipe, r.recipe_quantity] }
-  end
 end
 
 # == Schema Information

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :ingredients
       resources :providers
-      resources :menus
+      resources :menus do
+        resources :menu_recipes, only: [:create, :update, :destroy]
+      end
       resources :recipes do
         resources :recipe_ingredients, only: [:create, :update, :destroy]
         resources :recipe_steps, only: [:create, :update, :destroy]
