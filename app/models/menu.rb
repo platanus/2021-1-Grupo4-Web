@@ -2,6 +2,7 @@ class Menu < ApplicationRecord
   belongs_to :user
   has_many :menu_recipes, dependent: :destroy
   has_many :recipes, through: :menu_recipes, dependent: nil
+  accepts_nested_attributes_for :menu_recipes
 end
 
 # == Schema Information
