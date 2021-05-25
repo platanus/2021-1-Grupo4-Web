@@ -11,6 +11,11 @@ function postProvider(provider) {
       { provider },
     ));
 }
+function deleteProvider(providerID) {
+  return (client
+    .delete(`/providers/${providerID}`, {
+    }));
+}
 
 // eslint-disable-next-line import/prefer-default-export
-export { getProviders, postProvider };
+export { getProviders, postProvider, deleteProvider };
