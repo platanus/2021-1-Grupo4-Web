@@ -20,10 +20,7 @@
           <span v-if="input">{{ parsedElements.measure }} </span>
         </div>
         <div :class="input ? '' : 'flex-auto m-1'">
-          <span v-if="input">{{ parsedElements.name }}</span>
-          <div v-if="!input">
-            <span>{{ text }}</span>
-          </div>
+          <span>{{ parsedElements.name }}</span>
         </div>
         <div class="text-right">
           <button>
@@ -131,7 +128,7 @@ export default {
   },
   computed: {
     parsedElements() {
-      const parsedElements = JSON.parse(this.text);
+      const parsedElements = JSON.parse(this.element);
 
       return parsedElements;
     },

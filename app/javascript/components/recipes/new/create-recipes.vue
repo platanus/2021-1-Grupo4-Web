@@ -62,16 +62,12 @@
       </div>
     </div>
     <div class="grid grid-cols-6">
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
       <base-button
         :elements="{
           placeholder: $t('msg.recipes.create'),
           color: 'bg-blue-600 text-white hover:bg-blue-400 mb-4'
         }"
+        class="col-start-6"
         @click="create"
       />
     </div>

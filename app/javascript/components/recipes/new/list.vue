@@ -9,7 +9,7 @@
         :key="element"
       >
         <container
-          :text="element"
+          :element="element"
           :svg="svg"
           :input="input"
           :color="color('elements', element)"
@@ -39,11 +39,6 @@
     <div
       v-if="drag"
     >
-      <!--drag-and-drop
-        :elements="this.steps"
-        :svg="svg"
-        :forceupdate="this.forceupdate"
-      /-->
       <div
         v-for="step in this.steps"
         :key="step"
@@ -63,16 +58,13 @@
       />
 
       <div class="grid grid-cols-4">
-        <div />
-        <div />
-        <div />
         <base-button
           :elements="{
             placeholder: $t('msg.recipes.addstep'),
             color: 'bg-white text-black border-2 border-blue-600 align-center hover:bg-gray-300 h-12 -mx-2'
           }"
           @click="addStep"
-          class="w-full"
+          class="w-full col-start-4"
         />
       </div>
     </div>
@@ -81,12 +73,10 @@
 
 <script>
 import Container from './container.vue';
-import DragAndDrop from '../../base/base-drag-and-drop.vue';
 
 export default {
   components: {
     Container,
-    DragAndDrop,
   },
   props: {
     elements: { type: Array, required: true },
@@ -106,15 +96,14 @@ export default {
       return null;
     },
     color(list, element) {
+      const two = 2;
       if (list === 'elements') {
-        // eslint-disable-next-line no-magic-numbers
-        const index = this.elements.indexOf(element) % 2;
+        const index = this.elements.indexOf(element) % two;
         if (index === 0) {
           return true;
         }
       } else {
-        // eslint-disable-next-line no-magic-numbers
-        const index = this.steps.indexOf(element) % 2;
+        const index = this.steps.indexOf(element) % two;
         if (index === 0) {
           return true;
         }
