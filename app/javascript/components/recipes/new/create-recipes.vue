@@ -54,7 +54,6 @@
       >
         <list
           :placeholder="$t('msg.recipes.steps')"
-          :elements="getSteps"
           :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
           :drag="true"
@@ -90,13 +89,6 @@ export default {
     },
   },
   computed: {
-    getSteps() {
-      const steps = [this.objects[this.objects.length - 1]];
-      const parsedSteps = JSON.parse(steps).instructions;
-      const newSteps = parsedSteps.split('\n');
-
-      return newSteps;
-    },
     getIngredients() {
       const newArray = [];
       for (let i = 0; i < this.objects.length - 1; i++) {

@@ -79,7 +79,7 @@ export default {
     Container,
   },
   props: {
-    elements: { type: Array, required: true },
+    elements: { type: Array, default: () => ([]) },
     svg: { type: Object, required: true },
     placeholder: { type: String, required: true },
     input: { type: Boolean, required: true },
