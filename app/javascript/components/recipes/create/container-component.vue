@@ -61,7 +61,7 @@
               src="../../../../assets/images/cancel-svg.svg"
             >
           </button>
-          <dropdown
+          <dots-dropdown
             class="text-left"
             v-if="svg.dropdown"
             :elements="{

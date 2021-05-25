@@ -25,7 +25,7 @@ import CreateRecipes from '../components/recipes/create/create-recipes-component
 import List from '../components/recipes/create/list-component.vue';
 import Container from '../components/recipes/create/container-component.vue';
 import TextBox from '../components/base/base-text-box';
-import DragAndDrop from '../components/base/drag-and-drop';
+import DragAndDrop from '../components/base/base-drag-and-drop';
 
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';

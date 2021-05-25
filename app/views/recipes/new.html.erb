@@ -1,6 +1,6 @@
-<div class="flex">
+<div class="flex h-screen">
   <side-navbar active-element="recipes"></side-navbar>
-  <div class="container ml-64 px-20 py-10 overflow-hidden">
+  <div class="container ml-64 px-20 py-10 overflow-scroll">
       <create-recipes
         :objects="<%= [
           {"name": "Manzana","price": 1000, "quantity": 1.5, "measure": "Kg"}.to_json,
