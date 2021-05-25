@@ -124,10 +124,14 @@ export default {
     },
     addStep() {
       const text = document.getElementById('textarea');
-      this.steps.push(text.value);
-      text.value = '';
-      this.forceUpdate = true;
-      this.$forceUpdate();
+      if (this.steps.includes(text.value) === false) {
+        this.steps.push(text.value);
+        text.value = '';
+        this.forceUpdate = true;
+        this.$forceUpdate();
+      } else {
+        alert(this.$t('msg.recipes.alert')); // eslint-disable-line no-alert
+      }
     },
     deleteStep(originalText) {
       const index = this.steps.indexOf(originalText);
