@@ -4,9 +4,12 @@
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.recipes.title') }}
       </div>
-      <span class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded order-1 flex-grow-0 text-white">
+      <a
+        class="flex flex-row justify-center items-center px-3 h-8 bg-blue-700 rounded order-1 flex-grow-0 text-white cursor-pointer"
+        href="/recipes/new"
+      >
         {{ $t('msg.recipes.add') }}
-      </span>
+      </a>
     </div>
     <recipes-search-bar
       :placeholder="$t('msg.recipes.search')"
