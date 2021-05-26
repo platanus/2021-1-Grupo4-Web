@@ -37,6 +37,21 @@
             v-model="form.address"
           >
         </div>
+        <div class="relative">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="provider-address"
+          >
+            {{ $t('msg.providers.address') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="provider-address"
+            type="text"
+            :placeholder="$t('msg.providers.address')"
+            v-model="form.address"
+          >
+        </div>
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
@@ -54,6 +69,40 @@
             type="text"
             :placeholder="$t('msg.providers.country')"
             v-model="form.country"
+          >
+        </div>
+        <div class="relative">
+          <!--Country -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="provider-country"
+          >
+            {{ $t('msg.providers.country') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="provider-country"
+            type="text"
+            :placeholder="$t('msg.providers.country')"
+            v-model="form.country"
+          >
+        </div>
+      </div>
+      <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="w-full px-3">
+          <!--Name -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="provider-name"
+          >
+            {{ $t('msg.providers.name') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="provider-name"
+            type="text"
+            :placeholder="$t('msg.providers.name')"
+            v-model="form.name"
           >
         </div>
       </div>
