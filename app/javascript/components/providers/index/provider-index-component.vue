@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <!-- <div>
     <h2 class="text-4xl">
       {{ $t('msg.providers.title') }}
     </h2>
     <div class="flex items-center">
-        <providers-search-bar
-        kind="provider"
-        :placeholder="$t('msg.providers.search')"
-        />
+    <providers-search-bar
+      kind="provider"
+      :placeholder="$t('msg.providers.search')"
+    />
       <base-button
         :elements="{ placeholder: $t('msg.providers.add'),
                      color: 'bg-green-500 hover:bg-green-700 text-white' }"
@@ -31,7 +31,6 @@
       />
     </div>
 
-    <!--AddModal-->
     <base-modal
       @ok="addProvider"
       @cancel="toggleAddModal"
@@ -45,7 +44,6 @@
       />
     </base-modal>
 
-    <!--EditModal-->
     <base-modal
       @ok="editProvider"
       @cancel="toggleEditModal"
@@ -59,8 +57,6 @@
         :provider="this.providerToEdit"
       />
     </base-modal>
-    
-    <!--DeleteModal-->
     <base-modal
       @ok="deleteProvider"
       @cancel="toggleDelModal"
@@ -70,15 +66,44 @@
       :cancel-button-label="$t('msg.cancel')">
       <p>{{ $t('msg.providers.deleteMsg') }}</p>
     </base-modal>
-    
   </div>
-  
+   -->
+  <div>
+    <div class="flex justify-between items-center h-8">
+      <div class="w-auto h-7 font-sans font-normal text-2xl text-black flex-none flex-grow-0">
+        {{ $t('msg.providers.title') }}
+      </div>
+      <button
+        class="flex justify-center items-center align-center px-3 w-auto h-8 text-white rounded flex-none flex-grow-0 bg-blue-700"
+        @click="toggleAddModal"
+      >
+        Agregar Proveedor
+      </button>
+    </div>
+    <div class="flex items-start flex-col w-full">
+      <div class="flex flex-row items-start flex-none flex-gwow-0">
+        <provider-item />
+      </div>
+    </div>
+    <base-modal
+      @ok="addProvider"
+      @cancel="toggleAddModal"
+      v-if="showingAdd"
+      :title="$t('msg.providers.add')"
+      :ok-button-label="$t('msg.add')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <providers-form
+        ref="addProviderInfo"
+      />
+    </base-modal>
+  </div>
 </template>
 
 <script>
-import { getProviders, postProvider, deleteProvider, editProvider } from './../../api/providers.js';
-import ProvidersSearchBar from './providers-search-bar';
+import { getProviders, postProvider, deleteProvider, editProvider } from './../../../api/providers.js';
 import ProvidersForm from './providers-form';
+import ProviderItem from './provider-item';
 
 export default {
   data() {
@@ -90,11 +115,11 @@ export default {
       providerToDelete: {},
       providerToEdit: {},
       tableHeader: ['name', 'address', 'country'],
-    }
+    };
   },
   components: {
-    ProvidersSearchBar,
-    ProvidersForm
+    ProvidersForm,
+    ProviderItem,
   },
 
   async created() {
@@ -176,7 +201,7 @@ export default {
       this.status = error.response.status;
       this.error = error;
     },
-  }
+  },
 };
 
 </script>

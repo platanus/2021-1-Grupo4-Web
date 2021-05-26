@@ -22,87 +22,88 @@
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <!--Address -->
+          <!--Correo -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
-            for="provider-address"
+            for="provider-email"
           >
-            {{ $t('msg.providers.address') }}
+            {{ $t('msg.providers.email') }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            id="provider-address"
+            id="provider-email"
             type="text"
-            :placeholder="$t('msg.providers.address')"
-            v-model="form.address"
+            :placeholder="$t('msg.providers.email')"
+            v-model="form.email"
           >
+          <!--Phone -->
         </div>
         <div class="relative">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
-            for="provider-address"
+            for="provider-phone"
           >
-            {{ $t('msg.providers.address') }}
+            {{ $t('msg.providers.phone') }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            id="provider-address"
+            id="provider-phone"
             type="text"
-            :placeholder="$t('msg.providers.address')"
-            v-model="form.address"
+            :placeholder="'+569'"
+            v-model="form.phone"
           >
         </div>
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <!--Country -->
+          <!--WebpageUrl -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
-            for="provider-country"
+            for="provider-webpageUrl"
           >
-            {{ $t('msg.providers.country') }}
+            {{ $t('msg.providers.webpageUrl') }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            id="provider-country"
+            id="provider-webpageUrl"
             type="text"
-            :placeholder="$t('msg.providers.country')"
-            v-model="form.country"
+            :placeholder="$t('msg.providers.webpageUrl')"
+            v-model="form.webpageUrl"
           >
         </div>
         <div class="relative">
-          <!--Country -->
+          <!--DeliberyDays -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
-            for="provider-country"
+            for="provider-deliveryDays"
           >
-            {{ $t('msg.providers.country') }}
+            {{ $t('msg.providers.deliveryDays') }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            id="provider-country"
+            id="provider-deliveryDays"
             type="text"
-            :placeholder="$t('msg.providers.country')"
-            v-model="form.country"
+            :placeholder="$t('msg.providers.deliveryDays')"
+            v-model="form.deliveryDays"
           >
         </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
-          <!--Name -->
+          <!--minimumPurchase -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
-            for="provider-name"
+            for="provider-minimumPurchase"
           >
-            {{ $t('msg.providers.name') }}
+            {{ $t('msg.providers.minimumPurchase') }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            id="provider-name"
+            id="provider-minimumPurchase"
             type="text"
-            :placeholder="$t('msg.providers.name')"
-            v-model="form.name"
+            :placeholder="$t('msg.providers.minimumPurchase')"
+            v-model="form.minimumPurchase"
           >
         </div>
       </div>
@@ -123,8 +124,11 @@ export default {
     return {
       form: {
         name: '',
-        address: '',
-        country: '',
+        email: '',
+        wabpageUrl: '',
+        minimumPurchase: '',
+        deliveryDays: '',
+        phone: '',
       },
     };
   },
@@ -132,14 +136,20 @@ export default {
   created() {
     const {
       name,
-      address,
-      country,
+      email,
+      wabpageUrl,
+      minimumPurchase,
+      deliveryDays,
+      phone,
     } = this.provider;
 
     this.form = {
       name,
-      address,
-      country,
+      email,
+      wabpageUrl,
+      minimumPurchase,
+      deliveryDays,
+      phone,
     };
   },
 };

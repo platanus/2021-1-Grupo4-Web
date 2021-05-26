@@ -25,7 +25,7 @@ import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
 
-import ProviderIndexContainer from '../components/providers/provider-index-component.vue';
+import ProviderIndexContainer from '../components/providers/index/provider-index-component.vue';
 
 Vue.use(VueI18n);
 
