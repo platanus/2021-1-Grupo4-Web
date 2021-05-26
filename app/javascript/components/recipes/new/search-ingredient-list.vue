@@ -9,22 +9,14 @@
     <table class="min-w-full divide-y divide-gray-200 border-2">
       <thead class="justify-between">
         <tr class="bg-gray-100  py-1">
-<<<<<<< HEAD
           <th
-=======
-          <th 
->>>>>>> feat(frontend/recipe-modal): add modal to create recipe
             class="border-solid border-2 border-color-gray-300"
             v-for="attribute in header"
             :key="attribute"
           >
             <span class="text-black font-bold">{{ $t(`msg.ingredients.${attribute}`) }}</span>
           </th>
-<<<<<<< HEAD
           <th />
-=======
-          <th/>
->>>>>>> feat(frontend/recipe-modal): add modal to create recipe
         </tr>
       </thead>
       <tbody>
