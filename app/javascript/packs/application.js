@@ -9,6 +9,7 @@ import BaseModal from '../components/base/base-modal.vue';
 import BaseTable from '../components/base/base-table.vue';
 import DotsDropdown from '../components/base/dots-dropdown.vue';
 import BaseSpinner from '../components/base/base-spinner.vue';
+import TextBox from '../components/base/base-text-box.vue';
 
 import TopNavbar from '../components/layout/top-navbar.vue';
 import SideNavbar from '../components/layout/side-navbar.vue';
@@ -20,6 +21,7 @@ import LandingPage from '../components/landing-page.vue';
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
 import RecipeShow from '../components/recipes/show/recipe-show.vue';
+import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
 
@@ -30,6 +32,7 @@ Vue.component('BaseModal', BaseModal);
 Vue.component('BaseButton', BaseButton);
 Vue.component('DotsDropdown', DotsDropdown);
 Vue.component('BaseSpinner', BaseSpinner);
+Vue.component('TextBox', TextBox);
 
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
@@ -41,6 +44,7 @@ Vue.component('LandingPage', LandingPage);
 Vue.component('IngredientsContainer', IngredientsContainer);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('RecipeShow', RecipeShow);
+Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
 

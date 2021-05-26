@@ -1,5 +1,6 @@
 class Api::V1::RecipeIngredientsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
+  before_action :verify_owned_ingredient, only: [:create, :update]
 
   def create
     respond_with recipe_ingredients.create!(recipe_ingredient_params)
@@ -25,6 +26,10 @@ class Api::V1::RecipeIngredientsController < Api::V1::BaseController
 
   def recipe
     @recipe ||= current_user.recipes.find_by!(id: params[:recipe_id])
+  end
+
+  def verify_owned_ingredient
+    current_user.ingredients.find_by!(id: recipe_ingredient_params[:ingredient_id])
   end
 
   def recipe_ingredient_params
