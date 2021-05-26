@@ -9,14 +9,14 @@
     <table class="min-w-full divide-y divide-gray-200 border-2">
       <thead class="justify-between">
         <tr class="bg-gray-100  py-1">
-          <th 
+          <th
             class="border-solid border-2 border-color-gray-300"
             v-for="attribute in header"
             :key="attribute"
           >
             <span class="text-black font-bold">{{ $t(`msg.ingredients.${attribute}`) }}</span>
           </th>
-          <th/>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -34,8 +34,7 @@
               {{ ingredient[property] }}
             </p>
           </td>
-          <td
-          class="content-center py-2">
+          <td class="content-center py-2">
            <p class="content-center text-center ml-2 font-semibold">
              <add-button 
               :object=ingredient

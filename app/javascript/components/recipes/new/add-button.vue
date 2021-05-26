@@ -1,7 +1,9 @@
- <template> 
+<template>
   <button
-      @click="clickButton"
-  > + </button>
+    @click="clickButton"
+  >
+    + 
+  </button>
 </template>
 
 <script>
