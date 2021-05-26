@@ -1,5 +1,6 @@
 require 'swagger_helper'
 
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
 describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
   let(:user) { create(:user) }
   let(:user_email) { user.email }
@@ -56,7 +57,12 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
           {
             name: 'Some name',
             address: 'Some address',
-            country: 'Some country'
+            country: 'Some country',
+            phone: '+56 2 912912',
+            email: 'email@platan.us',
+            delivery_days: 2,
+            minimum_purchase: 13_000,
+            webpage_url: 'someurl.com'
           }
         end
 
@@ -125,7 +131,12 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
           {
             name: 'Some name',
             address: 'Some address',
-            country: 'Some country'
+            country: 'Some country',
+            phone: '+56 2 912912',
+            email: 'email@platan.us',
+            delivery_days: 2,
+            minimum_purchase: 13_000,
+            webpage_url: 'someurl.com'
           }
         end
 
@@ -162,3 +173,4 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
     end
   end
 end
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers

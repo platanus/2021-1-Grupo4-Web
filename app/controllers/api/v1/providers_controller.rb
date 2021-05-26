@@ -31,7 +31,12 @@ class Api::V1::ProvidersController < Api::V1::BaseController
     params.require(:provider).permit(
       :name,
       :address,
-      :country
+      :country,
+      :email,
+      :webpage_url,
+      :phone,
+      :minimum_purchase,
+      :delivery_days
     )
   end
 end
