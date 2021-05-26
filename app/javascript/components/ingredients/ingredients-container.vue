@@ -121,7 +121,6 @@ export default {
       ingredientToDelete: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
       ingredients: [],
-      status: '',
       error: '',
     };
   },
@@ -139,9 +138,9 @@ export default {
         id: element.id,
         ...element.attributes,
       }));
-      this.successResponse(response);
+      this.error = '';
     } catch (error) {
-      this.errorResponse(error);
+      this.error = error;
     }
   },
 
@@ -169,16 +168,15 @@ export default {
 
       try {
         const {
-          status,
           data:
             { data: { id, attributes },
             },
         } = await postIngredient(this.$refs.addIngredientInfo.form);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
-        this.successResponse(status);
+        this.error = '';
       } catch (error) {
-        this.errorResponse(error);
+        this.error = error;
       }
     },
 
@@ -187,7 +185,6 @@ export default {
 
       try {
         const {
-          status,
           data:
             {
               data: { id, attributes },
@@ -195,9 +192,9 @@ export default {
         } = await postIngredient(productForm);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
-        this.successResponse(status);
+        this.error = '';
       } catch (error) {
-        this.errorResponse(error);
+        this.error = error;
       }
     },
 
@@ -206,20 +203,20 @@ export default {
       try {
         const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
         this.updateIngredient(res);
-        this.successResponse(res);
+        this.error = '';
       } catch (error) {
-        this.errorResponse(error);
+        this.error = error;
       }
     },
 
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
       try {
-        const response = await deleteIngredient(this.ingredientToDelete.id);
+        await deleteIngredient(this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
-        this.successResponse(response);
+        this.error = '';
       } catch (error) {
-        this.errorResponse(error);
+        this.error = error;
       }
     },
 
@@ -228,16 +225,6 @@ export default {
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
       this.ingredients.splice(objectIndex, 1);
       this.ingredients.splice(objectIndex, 0, ingredientEdited);
-    },
-
-    async successResponse(status) {
-      this.status = status;
-      this.error = '';
-    },
-
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
     },
   },
 };

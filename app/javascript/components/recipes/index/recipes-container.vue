@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       recipes: [],
-      status: '',
       error: '',
       showingFilterByPrice: false,
       showingFilterByPortions: false,
@@ -85,20 +84,12 @@ export default {
         id: element.id,
         ...element.attributes,
       }));
-      this.successResponse(response);
+      this.error = '';
     } catch (error) {
-      this.errorResponse(error);
+      this.error = error;
     }
   },
   methods: {
-    async successResponse(response) {
-      this.status = response.status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
-    },
     toggleFilterByPriceModal() {
       this.showingFilterByPrice = !this.showingFilterByPrice;
     },
