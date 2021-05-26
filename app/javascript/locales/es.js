@@ -50,6 +50,17 @@ export default {
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
+      create: 'Crear receta',
+      basic: 'Datos básicos',
+      name: 'Nombre',
+      preparation: 'Tiempo de preparación',
+      step: 'Paso de la receta...',
+      ingredients: 'Ingredientes',
+      cost: 'Costo total',
+      more: 'Buscar más ingredientes',
+      addstep: 'Agregar paso',
+      cancel: 'Cancelar',
+      accept: 'Aceptar',
       filter: {
         price: 'Precio',
         portions: 'Porciones',
@@ -60,6 +71,7 @@ export default {
         aply: 'Aplicar',
         delete: 'Borrar filtro',
       },
+      alert: 'Ese paso ya existe',
     },
 
     menus: {
