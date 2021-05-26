@@ -48,7 +48,7 @@
       <div>
         <list
           :placeholder="$t('msg.recipes.ingredients')"
-          :elements="getIngredients"
+          :elements="ingredients"
           :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
           :drag="false"
@@ -136,6 +136,7 @@ export default {
       error: '',
       showingAddIngredientModal: false,
       selectedIngredients: [],
+      ingredients: [],
     };
   },
   methods: {
@@ -174,8 +175,7 @@ export default {
     },
     addIngredientstoRecipe(){
       this.selectedIngredients.forEach(ingredient => {
-        this.objects.push(JSON.stringify(ingredient));
-        alert(JSON.stringify(ingredient));
+        this.ingredients.push(JSON.stringify(ingredient));
       });
       this.selectedIngredients = [];
       this.showingAddIngredientModal = !this.showingAddIngredientModal;

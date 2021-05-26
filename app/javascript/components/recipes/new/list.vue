@@ -5,8 +5,8 @@
     </h2>
     <div v-if="!drag">
       <div
-        v-for="element in elements"
-        :key="element"
+        v-for="(element, index) in elements"
+        :key="index"
       >
         <container
           :element="element"
