@@ -81,8 +81,8 @@
 </template>
 
 <script>
-import postRecipe from '../../../api/recipes.js';
 import List from './list.vue';
+import { postRecipe } from '../../../api/recipes.js';
 
 export default {
   components: {
@@ -110,15 +110,12 @@ export default {
 
         return false;
       }
-
       try {
-        const data = await postRecipe(this.recipe);
-        console.log(data);
+        await postRecipe(this.recipe);
+        window.location = '/recipes';
       } catch (error) {
         this.error = error;
-        console.log(error);
       }
-      console.log(this.recipe);
 
       return null;
     },
