@@ -7,16 +7,12 @@
 <script>
 export default {
   props: {
-    object: {type: Object, required:true}
-  },
-  data() {
-    return {
-    }
+    object: { type: Object, required: true },
   },
   methods: {
     clickButton() {
       this.$emit('add-ingredient', this.object);
     },
   },
-}
+};
 </script>
