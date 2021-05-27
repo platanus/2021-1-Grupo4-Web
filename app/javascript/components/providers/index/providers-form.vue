@@ -116,6 +116,8 @@
 export default {
   props: {
     provider: { type: Object, default() {
+      console.log(this.provider);
+
       return {};
     } },
   },

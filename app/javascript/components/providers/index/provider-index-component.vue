@@ -80,9 +80,16 @@
         Agregar Proveedor
       </button>
     </div>
-    <div class="flex items-start flex-col w-full">
-      <div class="flex flex-row items-start flex-none flex-gwow-0">
-        <provider-item />
+
+    <div
+      class="flex items-start flex-col w-full"
+      v-for="element in this.providers"
+      :key="element.id"
+    >
+      <div class="flex flex-row items-start flex-none flex-grow-0 order-none">
+        <provider-item
+          :provider="element"
+        />
       </div>
     </div>
     <base-modal
@@ -102,7 +109,6 @@
 
 <script>
 import { getProviders, postProvider, deleteProvider, editProvider } from './../../../api/providers.js';
-import ProvidersForm from './providers-form';
 import ProviderItem from './provider-item';
 
 export default {
@@ -118,7 +124,6 @@ export default {
     };
   },
   components: {
-    ProvidersForm,
     ProviderItem,
   },
 
