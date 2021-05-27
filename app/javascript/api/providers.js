@@ -21,9 +21,11 @@ function editProvider(providerId, providerInfo) {
     .put(`/providers/${providerId}`, {
       provider: {
         'name': providerInfo.name,
-        'address': providerInfo.address,
-        'country': providerInfo.country,
-
+        'phone': providerInfo.phone,
+        'webpageUrl': providerInfo.webpageUrl,
+        'email': providerInfo.email,
+        'minimumPurchase': providerInfo.minimumPurchase,
+        'deliveryDays': providerInfo.deliveryDays,
       },
     }, {
     }));

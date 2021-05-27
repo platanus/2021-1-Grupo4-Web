@@ -116,8 +116,6 @@
 export default {
   props: {
     provider: { type: Object, default() {
-      console.log(this.provider);
-
       return {};
     } },
   },
@@ -127,7 +125,7 @@ export default {
       form: {
         name: '',
         email: '',
-        wabpageUrl: '',
+        webpageUrl: '',
         minimumPurchase: '',
         deliveryDays: '',
         phone: '',
@@ -139,7 +137,7 @@ export default {
     const {
       name,
       email,
-      wabpageUrl,
+      webpageUrl,
       minimumPurchase,
       deliveryDays,
       phone,
@@ -148,7 +146,7 @@ export default {
     this.form = {
       name,
       email,
-      wabpageUrl,
+      webpageUrl,
       minimumPurchase,
       deliveryDays,
       phone,

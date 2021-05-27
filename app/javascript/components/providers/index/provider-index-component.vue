@@ -86,12 +86,15 @@
       v-for="element in this.providers"
       :key="element.id"
     >
-      <div class="flex flex-row items-start flex-none flex-grow-0 order-none">
+      <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-5/12">
         <provider-item
           :provider="element"
+          @update="updateProvider"
+          @del="deleteProvider"
         />
       </div>
     </div>
+
     <base-modal
       @ok="addProvider"
       @cancel="toggleAddModal"
@@ -108,8 +111,9 @@
 </template>
 
 <script>
-import { getProviders, postProvider, deleteProvider, editProvider } from './../../../api/providers.js';
+import { getProviders, postProvider } from './../../../api/providers.js';
 import ProviderItem from './provider-item';
+import ProvidersForm from './providers-form';
 
 export default {
   data() {
@@ -125,6 +129,7 @@ export default {
   },
   components: {
     ProviderItem,
+    ProvidersForm,
   },
 
   async created() {
@@ -161,6 +166,7 @@ export default {
             { data: { id, attributes },
             },
         } = await postProvider(this.$refs.addProviderInfo.form);
+        console.log(attributes);
         const providerToAdd = { id, ...attributes };
         this.providers.push(providerToAdd);
         this.successResponse(status);
@@ -169,29 +175,21 @@ export default {
       }
     },
 
-    async editProvider() {
+    async updateProvider(res, providerId) {
       this.showingEdit = !this.showingEdit;
-      try {
-        const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
-        this.updateProvider(res);
-        this.successResponse(res);
-      } catch (error) {
-        this.errorResponse(error);
-      }
-    },
-
-    async updateProvider(res) {
-      const providerEdited = { id: this.providerToEdit.id, ...JSON.parse(res.config.data).provider };
-      const objectIndex = this.providers.findIndex((obj => obj.id === this.providerToEdit.id));
+      console.log('A', res.config.data);
+      const providerEdited = { id: providerId, ...JSON.parse(res.config.data).provider };
+      const objectIndex = this.providers.findIndex((obj => obj.id === providerId));
       this.providers.splice(objectIndex, 1);
       this.providers.splice(objectIndex, 0, providerEdited);
+      console.log('A', this.providers);
     },
 
-    async deleteProvider() {
+    async deleteProvider(id, response) {
       this.showingDel = !this.showingDel;
       try {
-        const response = await deleteProvider(this.providerToDelete.id);
-        this.providers = this.providers.filter(item => item.id !== this.providerToDelete.id);
+        // const response = await deleteProvider(id);
+        this.providers = this.providers.filter(item => item.id !== id);
         this.successResponse(response);
       } catch (error) {
         this.errorResponse(error);

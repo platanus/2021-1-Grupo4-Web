@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0">
-    <div class="flex items-center w-80 h-auto flex-none self-stretch flex-grow-0 my-4">
+  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mb-6 w-full order-1">
+    <div class="flex flex-row items-center w-full h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
       <!-- Imagen -->
-      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mr-2" />
+      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mr-2 order-none" />
       <!-- Info -->
       <div class="flex flex-col items-start w-auto h-auto flex-none self-stretch flex-grow mr-2">
         <!-- nombre Proveedor -->
@@ -57,9 +57,9 @@
     <div
       v-if="this.showingDetails"
     >
-      <div class="flex flex-col items-start flex-none order-1 flex-grow-0">
+      <div class="flex flex-col items-start flex-none order-1 flex-grow-0 w-full">
         <!-- Pagina Web -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 justify-between">
+        <div class="flex flex-row items-start items-center flex-none order-none flex-grow-0 justify-between">
           <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
@@ -70,17 +70,17 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400  underline">
+            <p class="flex font-normal font-sans text-base items-center text-gray-400 underline">
               Página Web
             </p>
           </div>
           <!-- Link -->
-          <p class="flex items-center underline text-blue-700 font-normal font-sans">
+          <p class="flex items-center underline text-blue-700 font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
             {{ provider.webpageUrl }}
           </p>
         </div>
         <!-- Minimo Compra -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 justify-between">
+        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between">
           <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
@@ -91,17 +91,17 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400  underline">
+            <p class="flex font-normal font-sans text-base items-center text-gray-400">
               Mínimo de Compra
             </p>
           </div>
           <!-- Minimo -->
-          <p class="flex items-center text-black font-normal font-sans">
+          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
             {{ provider.minimumPurchase }}
           </p>
         </div>
         <!-- Tiempo de Despacho -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 justify-between">
+        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between mb-2">
           <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
@@ -112,25 +112,25 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400  underline">
+            <p class="flex font-normal font-sans text-base items-center text-gray-400">
               Tiempo de Despacho
             </p>
           </div>
           <!-- Tiempo -->
-          <p class="flex items-center text-black font-normal font-sans">
+          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
             {{ provider.deliveryDays }}
           </p>
         </div>
       </div>
-      <div class="flex flex-row items-start flex-none order-2 flex-grow-0 self-stretch w-full">
+      <div class="flex flex-row items-start flex-none order-2 flex-grow-0 self-stretch w-full justify-between">
         <button
-          class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1"
+          class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1 px-2 mr-2"
           @click="toggleDelModal"
         >
           Eliminar Proveedor
         </button>
         <button
-          class="flex flex-row items-center justify-center text-blue-700 bg-white rounded flex-none order-1 flex-grow-1"
+          class="flex flex-row items-center justify-center text-blue-700 bg-white rounded flex-none order-1 flex-grow-1 px-2"
           @click="toggleEditModal"
         >
           Editar Proveedor
@@ -188,38 +188,35 @@ export default {
       this.showingDetails = !this.showingDetails;
       this.providerToOpen = provider;
     },
-    toggleDelModal(provider) {
+    toggleDelModal() {
       this.showingDel = !this.showingDel;
-      this.providerToDelete = provider;
+      this.providerToDelete = this.provider;
     },
-    toggleEditModal(provider) {
+    toggleEditModal() {
       this.showingEdit = !this.showingEdit;
-      this.providerToEdit = provider;
+      this.providerToEdit = this.provider;
     },
     async editProvider() {
+      // this.$emit('edit', this.providerToEdit);
+      console.log('Proveedor a editar', this.providerToEdit);
       this.showingEdit = !this.showingEdit;
       try {
+        console.log('FORM', this.$refs.editProviderInfo.form);
         const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
-        this.updateProvider(res);
-        this.successResponse(res);
+        console.log('RES', res.config.data);
+        this.$emit('update', res, this.providerToEdit.id);
+        //     this.updateProvider(res);
+        //     this.successResponse(res);
       } catch (error) {
         this.errorResponse(error);
       }
     },
 
-    async updateProvider(res) {
-      const providerEdited = { id: this.providerToEdit.id, ...JSON.parse(res.config.data).provider };
-      const objectIndex = this.providers.findIndex((obj => obj.id === this.providerToEdit.id));
-      this.providers.splice(objectIndex, 1);
-      this.providers.splice(objectIndex, 0, providerEdited);
-    },
-
     async deleteProvider() {
-      this.showingDel = !this.showingDel;
+      this.$emit('del', this.provider.id);
       try {
         const response = await deleteProvider(this.providerToDelete.id);
-        this.providers = this.providers.filter(item => item.id !== this.providerToDelete.id);
-        this.successResponse(response);
+        this.$emit('del', this.provider.id, response);
       } catch (error) {
         this.errorResponse(error);
       }
