@@ -121,9 +121,6 @@ export default {
     SelectedIngredients,
     SearchIngredientList,
   },
-  props: {
-    objects: { type: Array, required: true },
-  },
   data() {
     return {
       recipe: {
@@ -184,18 +181,10 @@ export default {
     },
     addIngredientsToRecipe() {
       this.selectedIngredients.forEach(ingredient => {
-        let existent = false;
-        this.ingredients.forEach(existentIngredient => {
-          if (ingredient.id === JSON.parse(existentIngredient).id) {
-            existent = true;
-
-            return;// este return es equivalente a un continue dentro del foreach
-          }
-        });
-        if (existent) {
+        if (this.ingredients.includes(ingredient)) {
           return;
         }
-        this.ingredients.push(JSON.stringify(ingredient));
+        this.ingredients.push(ingredient);
       });
       this.selectedIngredients = [];
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
