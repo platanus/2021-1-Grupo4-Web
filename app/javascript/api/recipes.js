@@ -18,4 +18,11 @@ function deleteRecipe(recipeId) {
     }));
 }
 
-export { getRecipes, getRecipe, deleteRecipe };
+function postRecipe(recipe) {
+  return (client
+    .post('/recipes',
+      { recipe },
+    ));
+}
+
+export { getRecipes, getRecipe, deleteRecipe, postRecipe };

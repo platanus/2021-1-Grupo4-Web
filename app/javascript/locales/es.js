@@ -72,7 +72,8 @@ export default {
         aply: 'Aplicar',
         delete: 'Borrar filtro',
       },
-      alert: 'Ese paso ya existe',
+      alertExistingStep: 'Ese paso ya existe',
+      alertEmptyStep: 'Ingresa información al paso',
     },
 
     menus: {

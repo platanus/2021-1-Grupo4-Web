@@ -22,18 +22,24 @@
 
     <div class="grid grid-cols-4 gap-4">
       <input
+        id="name"
         :placeholder="$t('msg.recipes.name')"
         :search-icon="false"
+        v-model="recipe.name"
         class="col-span-2 w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
       >
       <input
+        id="portions"
         :placeholder="$t('msg.recipes.portions')"
         :search-icon="false"
+        v-model="recipe.portions"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
       >
       <input
+        id="preparation"
         :placeholder="$t('msg.recipes.preparation')"
         :search-icon="false"
+        v-model="recipe.cook_minutes"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-200 border-gray-300"
       >
     </div>
@@ -57,6 +63,7 @@
           :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
           :drag="true"
+          @update="addStep"
         />
       </div>
     </div>
@@ -75,6 +82,7 @@
 
 <script>
 import List from './list.vue';
+import { postRecipe } from '../../../api/recipes.js';
 
 export default {
   components: {
@@ -83,9 +91,39 @@ export default {
   props: {
     objects: { type: Array, required: true },
   },
+  data() {
+    return {
+      recipe: {
+        name: '',
+        portions: '',
+        cook_minutes: '', // eslint-disable-line camelcase
+        steps_attributes: [], // eslint-disable-line camelcase
+      },
+      steps: [],
+      error: '',
+    };
+  },
   methods: {
-    create() {
+    async create() {
+      if (this.recipe.name === '' || this.recipe.portions === '' || this.recipe.preparation === '') {
+        alert(this.$t('msg.recipes.alertEmptyStep')); // eslint-disable-line no-alert
+
+        return false;
+      }
+      try {
+        await postRecipe(this.recipe);
+        window.location = '/recipes';
+      } catch (error) {
+        this.error = error;
+      }
+
       return null;
+    },
+    addStep(step) {
+      this.recipe.steps_attributes.push({
+        description: step,
+        media_url: 'https://media_url', // eslint-disable-line camelcase
+      });
     },
   },
   computed: {
