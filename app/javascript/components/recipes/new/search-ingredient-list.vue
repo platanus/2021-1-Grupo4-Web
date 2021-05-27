@@ -36,10 +36,11 @@
           </td>
           <td class="content-center py-2">
             <p class="content-center text-center ml-2 font-semibold">
-              <add-button
-                :object="ingredient"
-                @add-ingredient="addIngredient"
-              />
+              <button
+                @click="addIngredient(ingredient)"
+              >
+                +
+              </button>
             </p>
           </td>
         </tr>
@@ -49,10 +50,7 @@
 </template>
 
 <script>
-import addButton from './add-button.vue';
-
 export default {
-  components: { addButton },
   props: {
     ingredients: { type: Array, required: true },
   },

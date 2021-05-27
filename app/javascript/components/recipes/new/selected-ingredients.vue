@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-80 flex-col">
-    <span class="flex content-center justify-center">Ingredientes seleccionados</span>
+    <span class="flex content-center justify-center">{{ $t('msg.ingredients.selected') }}</span>
     <div
       class="flex p-4 grid grid-cols-2 items-center justify-between "
       v-for="(element, index) in elements"

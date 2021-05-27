@@ -164,11 +164,8 @@ export default {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
     },
     addIngredient(object) {
-      let i;
-      for (i = 0; i < this.selectedIngredients.length; i++) {
-        if (this.selectedIngredients[i] === object) {
-          return;
-        }
+      if (this.selectedIngredients.includes(object)) {
+        return;
       }
       this.selectedIngredients.push(object);
     },

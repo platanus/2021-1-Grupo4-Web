@@ -24,9 +24,6 @@ import RecipeShow from '../components/recipes/show/recipe-show.vue';
 import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
-import AddButton from '../components/recipes/new/add-button.vue';
-import SelectedIngredients from '../components/recipes/new/selected-ingredients.vue';
-import SearchIngredientList from '../components/recipes/new/search-ingredient-list.vue';
 
 import formatCurrency from '../filters/format-currency.js';
 
@@ -50,9 +47,6 @@ Vue.component('IngredientsContainer', IngredientsContainer);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('RecipeShow', RecipeShow);
 Vue.component('CreateRecipes', CreateRecipes);
-Vue.component('AddButton', AddButton);
-Vue.component('SelectedIngredients', SelectedIngredients);
-Vue.component('SearchIngredientList', SearchIngredientList);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
 

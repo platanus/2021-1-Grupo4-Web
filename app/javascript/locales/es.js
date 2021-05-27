@@ -44,6 +44,7 @@ export default {
       unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',
       measure: 'Unidad',
+      selected: 'Ingredientes seleccionados'
     },
 
     recipes: {
