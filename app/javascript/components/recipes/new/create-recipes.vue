@@ -186,12 +186,13 @@ export default {
       this.selectedIngredients.forEach(ingredient => {
         var existent = false;
         this.ingredients.forEach(existentIngredient => {
-          if (ingredient.id === JSON.parse(existentIngredient).id){
+          if (ingredient.id === JSON.parse(existentIngredient).id) {
             existent = true;
+
             return;// este return es equivalente a un continue dentro del foreach
           }
         });
-        if (existent){
+        if (existent) {
           return;
         }
         this.ingredients.push(JSON.stringify(ingredient));
