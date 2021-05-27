@@ -89,8 +89,8 @@
     >
       <div class="flex f-row w-full">
         <div class="mr-10">
-          <search-ingredient-list
-            :ingredients="getIngredients"
+          <search-ingredient-list 
+            :ingredients="my_ingredients"
             @add-ingredient="addIngredient"
           />
         </div>
@@ -112,6 +112,7 @@ import { postRecipe } from '../../../api/recipes.js';
 import BaseModal from '../../base/base-modal.vue';
 import SelectedIngredients from './selected-ingredients.vue';
 import SearchIngredientList from './search-ingredient-list.vue';
+import { getIngredients } from './../../../api/ingredients.js';
 
 export default {
   components: {
@@ -135,8 +136,21 @@ export default {
       error: '',
       showingAddIngredientModal: false,
       selectedIngredients: [],
+      my_ingredients: [],
       ingredients: [],
     };
+  },
+  async created() {
+    try {
+      const response = await getIngredients();
+      this.my_ingredients = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
   },
   methods: {
     async create() {
@@ -170,6 +184,16 @@ export default {
     },
     addIngredientsToRecipe() {
       this.selectedIngredients.forEach(ingredient => {
+        var existent = false;
+        this.ingredients.forEach(existent_ingredient =>{
+          if (ingredient.id == JSON.parse(existent_ingredient)["id"]){
+            existent = true;
+            return;// este return es equivalente a un continue dentro del foreach
+          }
+        });
+        if (existent){
+          return;
+        }
         this.ingredients.push(JSON.stringify(ingredient));
       });
       this.selectedIngredients = [];
@@ -179,14 +203,14 @@ export default {
     deleteIngredient(index) {
       this.selectedIngredients.splice(index, 1);
     },
-  },
-  computed: {
-    getIngredients() {
-      const newArray = [];
-      for (let i = 0; i < this.objects.length; i++) {
-        newArray.push(this.objects[i]);
-      }
-      return newArray;
+    async successResponse(status) {
+      this.status = status;
+      this.error = '';
+    },
+
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
     },
   },
 };
