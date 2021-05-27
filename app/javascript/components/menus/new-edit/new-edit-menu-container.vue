@@ -27,6 +27,7 @@
       <selected-recipes
         :selected-recipes="selectedRecipes"
         :menu-to-edit="menuToEdit"
+        @changeQuantity="changeQuantity"
       />
     </div>
   </div>
@@ -75,6 +76,14 @@ export default {
       const indexToRemove = this.selectedRecipes.findIndex((element) =>
         parseInt(element.attributes.recipe.id, 10) === parsedId);
       this.selectedRecipes.splice(indexToRemove, 1);
+    },
+    changeQuantity(recipeQuantityObjetc) {
+      const newValue = recipeQuantityObjetc.quantity;
+      const recipeToUpdate = recipeQuantityObjetc.recipe;
+      const indexToUpdate = this.selectedRecipes.findIndex((element) =>
+        parseInt(element.attributes.recipe.id, 10) === parseInt(recipeToUpdate.attributes.recipe.id, 10));
+      const recipeUpdated = { attributes: { recipe: recipeToUpdate.attributes.recipe, recipeQuantity: newValue } };
+      this.selectedRecipes.splice(indexToUpdate, 1, recipeUpdated);
     },
   },
 };

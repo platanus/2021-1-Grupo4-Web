@@ -1,11 +1,14 @@
 <template>
   <div class="flex flex-col">
+    <!-- Title -->
     <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.menus.title') }}
       </div>
     </div>
+    <!-- Content bg-white -->
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <!-- Search bar and Add button -->
       <div class="flex items-center pb-6">
         <menus-search-bar :placeholder="$t('msg.menus.search')" />
         <base-button
@@ -14,6 +17,7 @@
           @click="openAddModal"
         />
       </div>
+      <!-- Table -->
       <div class="flex items-center">
         <p
           v-if="this.menus.length===0"
@@ -201,11 +205,10 @@ export default {
     },
     async editMenu() {
       const recipesInfo = this.prepareRecipesInfo(this.$refs.editMenuInfo.selectedRecipes);
-      const menuToPost = { name: this.$refs.editMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
-      console.log(this.menuToEdit);
+      const menuToPut = { name: this.$refs.editMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
       try {
-        await editMenu(this.menuToEdit.id, menuToPost);
-        this.getAllMenus();
+        const res = await editMenu(this.menuToEdit.id, menuToPut);
+        // this.getAllMenus();
         this.error = '';
       } catch (error) {
         this.error = error;

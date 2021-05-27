@@ -11,6 +11,7 @@
       <selected-recipes-item
         :recipe="recipe"
         :menu="menuToEdit"
+        @changeQuantity="changeQuantity"
       />
     </div>
     <div class="pr-4 pb-4 bg-gray-200 border-4 text-right text-black h-14">
@@ -43,6 +44,11 @@ export default {
   computed: {
     numberOfResults() {
       return this.selectedRecipes.length;
+    },
+  },
+  methods: {
+    changeQuantity(recipeQuantityObjetc) {
+      this.$emit('changeQuantity', recipeQuantityObjetc);
     },
   },
 };
