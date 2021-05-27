@@ -185,8 +185,8 @@ export default {
     addIngredientsToRecipe() {
       this.selectedIngredients.forEach(ingredient => {
         var existent = false;
-        this.ingredients.forEach(existent_ingredient =>{
-          if (ingredient.id == JSON.parse(existent_ingredient)["id"]){
+        this.ingredients.forEach(existentIngredient => {
+          if (ingredient.id === JSON.parse(existentIngredient).id){
             existent = true;
             return;// este return es equivalente a un continue dentro del foreach
           }
