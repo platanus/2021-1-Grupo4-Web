@@ -89,8 +89,8 @@
     >
       <div class="flex f-row w-full">
         <div class="mr-10">
-          <search-ingredient-list 
-            :ingredients="my_ingredients"
+          <search-ingredient-list
+            :ingredients="myIngredients"
             @add-ingredient="addIngredient"
           />
         </div>
@@ -136,14 +136,14 @@ export default {
       error: '',
       showingAddIngredientModal: false,
       selectedIngredients: [],
-      my_ingredients: [],
+      myIngredients: [],
       ingredients: [],
     };
   },
   async created() {
     try {
       const response = await getIngredients();
-      this.my_ingredients = response.data.data.map((element) => ({
+      this.myIngredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
@@ -184,7 +184,7 @@ export default {
     },
     addIngredientsToRecipe() {
       this.selectedIngredients.forEach(ingredient => {
-        var existent = false;
+        let existent = false;
         this.ingredients.forEach(existentIngredient => {
           if (ingredient.id === JSON.parse(existentIngredient).id) {
             existent = true;
