@@ -35,12 +35,12 @@
             </p>
           </td>
           <td class="content-center py-2">
-           <p class="content-center text-center ml-2 font-semibold">
-             <add-button 
-              :object=ingredient
-              @add-ingredient="addIngredient"
-             />
-           </p>
+            <p class="content-center text-center ml-2 font-semibold">
+              <add-button
+                :object="ingredient"
+                @add-ingredient="addIngredient"
+              />
+            </p>
           </td>
         </tr>
       </tbody>
@@ -50,16 +50,16 @@
 
 <script>
 import addButton from './add-button.vue';
+
 export default {
   components: { addButton },
   props: {
-    ingredients: { type: Array, required: true }
+    ingredients: { type: Array, required: true },
   },
   data() {
     return {
-      current_page: 0,
-      header: ['name', 'price', 'quantity']
-    }
+      header: ['name', 'price', 'quantity'],
+    };
   },
   methods: {
     addIngredient(object) {
@@ -69,8 +69,9 @@ export default {
   computed: {
     parsedElements() {
       const parsedElements = this.ingredients.map((element) => JSON.parse(element));
+
       return parsedElements;
     },
-  }
-}
+  },
+};
 </script>

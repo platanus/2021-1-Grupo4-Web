@@ -1,8 +1,8 @@
 <template>
   <div class="flex w-80 flex-col">
     <span class="flex content-center justify-center">Ingredientes seleccionados</span>
-    <div 
-    class="flex p-4 grid grid-cols-2 items-center justify-between "
+    <div
+      class="flex p-4 grid grid-cols-2 items-center justify-between "
       v-for="(element, index) in elements"
       :key="index"
       :class="index%2 === 1 ? 'bg-white' : 'bg-gray-100'"
@@ -11,12 +11,12 @@
         {{ element.name }}
       </span>
       <button
-       @click="deleteIngredient(index)"
+        @click="deleteIngredient(index)"
       >
         <img
-              class="w-4 h-4"
-              src="../../../../assets/images/cancel-svg.svg"
-            >
+          class="w-4 h-4"
+          src="../../../../assets/images/cancel-svg.svg"
+        >
       </button>
     </div>
   </div>
@@ -34,9 +34,9 @@ export default {
     search() {
       return null;
     },
-    deleteIngredient(index){
+    deleteIngredient(index) {
       this.$emit('delete-ingredient', index);
     }
   },
-}
+};
 </script>

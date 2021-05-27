@@ -89,35 +89,34 @@
     >
       <div class="flex f-row w-full">
         <div class="mr-10">
-          <search-ingredient-list 
+          <search-ingredient-list
             :ingredients="getIngredients"
             @add-ingredient="addIngredient"
           />
         </div>
-        <selected-ingredients 
+        <selected-ingredients
           :elements="selectedIngredients"
           :svg="{sixdots: true, cancel: false, menu_recipe: true}"
           :input="false"
           :placeholder="'-'"
           @delete-ingredient="deleteIngredient"
-        /> 
+        />
       </div>
     </base-modal>
-
   </div>
 </template>
 
 <script>
 import List from './list.vue';
 import { postRecipe } from '../../../api/recipes.js';
-import BaseModalComponent from '../../base/base-modal.vue';
+import BaseModal from '../../base/base-modal.vue';
 import SelectedIngredients from './selected-ingredients.vue';
 import SearchIngredientList from './search-ingredient-list.vue';
 
 export default {
   components: {
     List,
-    BaseModalComponent,
+    BaseModal,
     SelectedIngredients,
     SearchIngredientList,
   },
@@ -161,19 +160,19 @@ export default {
         media_url: 'https://media_url', // eslint-disable-line camelcase
       });
     },
-    toggleAddIngredientModal(){
+    toggleAddIngredientModal() {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
     },
-    addIngredient(object){
-      var i;
+    addIngredient(object) {
+      let i;
       for (i = 0; i < this.selectedIngredients.length; i++) {
-        if (this.selectedIngredients[i] == object){
+        if (this.selectedIngredients[i] === object) {
           return;
         }
       }
       this.selectedIngredients.push(object);
     },
-    addIngredientstoRecipe(){
+    addIngredientstoRecipe() {
       this.selectedIngredients.forEach(ingredient => {
         this.ingredients.push(JSON.stringify(ingredient));
       });
@@ -183,7 +182,7 @@ export default {
     },
     deleteIngredient(index){
       this.selectedIngredients.splice(index, 1);
-    }
+    },
   },
   computed: {
     getIngredients() {
