@@ -180,7 +180,7 @@ export default {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
       this.$forceUpdate();
     },
-    deleteIngredient(index){
+    deleteIngredient(index) {
       this.selectedIngredients.splice(index, 1);
     },
   },

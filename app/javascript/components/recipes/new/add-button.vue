@@ -2,7 +2,7 @@
   <button
     @click="clickButton"
   >
-    + 
+    +
   </button>
 </template>
 

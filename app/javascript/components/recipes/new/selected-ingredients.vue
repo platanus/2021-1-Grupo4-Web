@@ -36,7 +36,7 @@ export default {
     },
     deleteIngredient(index) {
       this.$emit('delete-ingredient', index);
-    }
+    },
   },
 };
 </script>
