@@ -17,7 +17,7 @@
         <input
           type="search"
           name="q"
-          class="border-2 w-full border-yellow-700 py-2 text-sm text-yellow-700 pl-10 focus:outline-none focus:bg-white focus:text-yellow-700"
+          class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
           :placeholder="placeholder"
           autocomplete="off"
         >

@@ -9,6 +9,11 @@ export default {
     cancel: 'Cancelar',
     noElements: 'Aún no tienes',
     seeMore: 'Ver Más',
+    filters: 'Filtros',
+    apply: 'Aplicar',
+    deleteFilters: 'Borrar filtros',
+    min: 'Mínimo',
+    max: 'Máximo',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -36,13 +41,14 @@ export default {
       deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
       price: 'Precio',
+      unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',
       measure: 'Unidad',
     },
 
     recipes: {
       title: 'Recetas',
-      search: 'Buscar por nombre',
+      search: 'Buscar receta...',
       add: 'Agregar receta',
       edit: 'Editar',
       delete: 'Eliminar',
@@ -51,6 +57,8 @@ export default {
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
+      noIngredients: 'Esta receta aún no tiene ingredientes',
+      noSteps: 'Esta receta aún no tiene pasos',
       create: 'Crear receta',
       basic: 'Datos básicos',
       name: 'Nombre',
@@ -78,7 +86,7 @@ export default {
 
     menus: {
       title: 'Menús',
-      search: 'Buscar menú',
+      search: 'Buscar menú...',
       add: 'Agregar menú',
       edit: 'Editar menú',
       delete: 'Eliminar menú',

@@ -1,43 +1,45 @@
 <template>
   <table class="min-w-full divide-y divide-gray-200">
-    <thead class="justify-between">
-      <tr class="bg-yellow-500 border-4 border-yellow-500 py-1 text-left">
+    <thead class="justify-between bg-gray-600 border-4 border-gray-600">
+      <tr class="text-left">
         <th
-          class="pl-2"
+          class="px-8 py-3"
         >
           <span class="text-white font-bold">{{ $t('msg.menus.name') }}</span>
         </th>
         <th
-          class="pl-2"
+          class="px-8 py-3"
         >
           <span class="text-white font-bold">{{ $t('msg.menus.totalPrice') }}</span>
         </th>
         <th
-          class="pl-2"
+          class="px-8 py-3"
         >
           <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
         </th>
         <th
-          class="pl-2"
+          class="px-8 py-3"
         >
           <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
         </th>
-        <th />
+        <th
+          class="px-8 py-3"
+        />
       </tr>
     </thead>
     <tbody class="bg-gray-200">
       <tr
         v-for="menu in menus"
         :key="menu.id"
-        class="bg-white border-4 border-gray-200"
+        class="bg-white border-4 border-gray-200 text-left"
       >
         <!-- name -->
         <td
           key="name"
-          class="content-center py-2 pl-2"
+          class="py-2 px-8"
         >
           <p
-            class="content-center font-semibold text-left"
+            class="ml-2 font-medium"
           >
             {{ menu.name }}
           </p>
@@ -45,18 +47,18 @@
         <!-- totalPrice -->
         <td
           key="totalPrice"
-          class="content-center py-2 pl-2"
+          class="py-2 px-8"
         >
           <p
-            class="content-center font-semibold text-left"
+            class="ml-2 font-medium"
           >
-            {{ 20.000 }}
+            {{ 20000 | currency }}
           </p>
         </td>
         <!-- recipesQuantity -->
         <td
           key="recipesQuantity"
-          class="content-center py-2 pl-2"
+          class="py-2 px-8"
         >
           <menus-table-recipes-quantity
             :menu="menu"
@@ -65,7 +67,7 @@
         <!-- recipes -->
         <td
           key="recipes"
-          class="content-center py-2 pl-2"
+          class="py-2 px-8"
         >
           <menus-table-recipes
             :menu="menu"
@@ -98,11 +100,9 @@ export default {
     MenusTableRecipesQuantity,
     MenusTableRecipes,
   },
-
   props: {
     menus: { type: Array, required: true },
   },
-
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
@@ -112,5 +112,4 @@ export default {
     },
   },
 };
-
 </script>

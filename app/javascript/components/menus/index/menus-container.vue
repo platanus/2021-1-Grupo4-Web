@@ -5,7 +5,7 @@
         {{ $t('msg.menus.title') }}
       </div>
     </div>
-    <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <div class="flex items-center pb-6">
         <menus-search-bar :placeholder="$t('msg.menus.search')" />
         <base-button
@@ -52,7 +52,6 @@ export default {
     MenusSearchBar,
     MenusTable,
   },
-
   data() {
     return {
       showingEdit: false,
@@ -61,7 +60,6 @@ export default {
       menuToDelete: {},
     };
   },
-
   async created() {
     try {
       const response = await getMenus();
@@ -74,7 +72,6 @@ export default {
       this.error = error;
     }
   },
-
   methods: {
     redirectAddMenu() {
       window.location.href = '/menus/new';
