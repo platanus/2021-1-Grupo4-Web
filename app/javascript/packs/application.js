@@ -25,6 +25,8 @@ import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
 
+import formatCurrency from '../filters/format-currency.js';
+
 Vue.use(VueI18n);
 
 Vue.component('BaseTable', BaseTable);
@@ -47,6 +49,8 @@ Vue.component('RecipeShow', RecipeShow);
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
+
+Vue.filter('currency', formatCurrency);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

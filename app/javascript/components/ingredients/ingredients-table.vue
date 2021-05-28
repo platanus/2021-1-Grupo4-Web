@@ -37,7 +37,7 @@
         <!-- price -->
         <td class="py-2 px-8">
           <p class="ml-2 font-medium">
-            ${{ ingredient.price }}
+            {{ ingredient.price | currency }}
           </p>
         </td>
         <!-- quantity -->

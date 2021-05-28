@@ -52,7 +52,7 @@
           <p
             class="ml-2 font-medium"
           >
-            ${{ 20000 }}
+            {{ 20000 | currency }}
           </p>
         </td>
         <!-- recipesQuantity -->

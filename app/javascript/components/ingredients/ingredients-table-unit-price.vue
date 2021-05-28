@@ -1,6 +1,6 @@
 <template>
   <p class="ml-2 font-medium">
-    ${{ unitPrice }}
+    {{ unitPrice | currency }}
   </p>
 </template>
 
