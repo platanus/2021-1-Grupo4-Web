@@ -197,23 +197,16 @@ export default {
       this.providerToEdit = this.provider;
     },
     async editProvider() {
-      // this.$emit('edit', this.providerToEdit);
-      console.log('Proveedor a editar', this.providerToEdit);
       this.showingEdit = !this.showingEdit;
       try {
-        console.log('FORM', this.$refs.editProviderInfo.form);
         const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
-        console.log('RES', res.config.data);
         this.$emit('update', res, this.providerToEdit.id);
-        //     this.updateProvider(res);
-        //     this.successResponse(res);
       } catch (error) {
         this.errorResponse(error);
       }
     },
 
     async deleteProvider() {
-      this.$emit('del', this.provider.id);
       try {
         const response = await deleteProvider(this.providerToDelete.id);
         this.$emit('del', this.provider.id, response);
