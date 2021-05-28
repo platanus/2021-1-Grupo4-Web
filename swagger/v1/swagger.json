@@ -528,16 +528,39 @@
           "example": "Av. Francisco Bilbao 223",
           "x-nullable": true
         },
+        "email": {
+          "type": "string",
+          "example": "jumbo@uc.cl",
+          "x-nullable": true
+        },
+        "phone": {
+          "type": "string",
+          "example": "+56 2 99222122",
+          "x-nullable": true
+        },
         "country": {
           "type": "string",
           "example": "Chile",
           "x-nullable": true
+        },
+        "webpage_url": {
+          "type": "string",
+          "example": "https://jumbo.cl",
+          "x-nullable": true
+        },
+        "delivery_days": {
+          "type": "integer",
+          "example": 1,
+          "x-nullable": true
+        },
+        "minimum_purchase": {
+          "type": "integer",
+          "example": 15000,
+          "x-nullable": true
         }
       },
       "required": [
-        "name",
-        "address",
-        "country"
+        "name"
       ]
     },
     "provider_response": {
@@ -564,9 +587,34 @@
               "example": "Av. Francisco Bilbao 223",
               "x-nullable": true
             },
+            "email": {
+              "type": "string",
+              "example": "jumbo@uc.cl",
+              "x-nullable": true
+            },
+            "phone": {
+              "type": "string",
+              "example": "+56 2 99222122",
+              "x-nullable": true
+            },
             "country": {
               "type": "string",
               "example": "Chile",
+              "x-nullable": true
+            },
+            "webpage_url": {
+              "type": "string",
+              "example": "https://jumbo.cl",
+              "x-nullable": true
+            },
+            "delivery_days": {
+              "type": "integer",
+              "example": 1,
+              "x-nullable": true
+            },
+            "minimum_purchase": {
+              "type": "integer",
+              "example": 15000,
               "x-nullable": true
             },
             "created_at": {
@@ -621,6 +669,24 @@
           "type": "string",
           "example": "Menú de almuerzo",
           "x-nullable": true
+        },
+        "menu_recipes_attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "recipe_id": {
+                "type": "integer",
+                "example": 1,
+                "x-nullable": false
+              },
+              "recipe_quantity": {
+                "type": "integer",
+                "example": 5,
+                "x-nullable": true
+              }
+            }
+          }
         }
       },
       "required": [
@@ -1352,6 +1418,9 @@
         "responses": {
           "201": {
             "description": "menu created"
+          },
+          "404": {
+            "description": "recipe not of user"
           }
         }
       }
@@ -1651,6 +1720,9 @@
           },
           "401": {
             "description": "user unauthorized"
+          },
+          "404": {
+            "description": "ingredient is not of user"
           }
         }
       }
@@ -1712,6 +1784,9 @@
           },
           "401": {
             "description": "user unauthorized"
+          },
+          "404": {
+            "description": "ingredient is not of user"
           }
         }
       },

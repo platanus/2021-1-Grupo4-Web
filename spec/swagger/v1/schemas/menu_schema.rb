@@ -1,7 +1,17 @@
 MENU_SCHEMA = {
   type: :object,
   properties: {
-    name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true }
+    name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
+    menu_recipes_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          recipe_id: { type: :integer, example: 1, 'x-nullable': false },
+          recipe_quantity: { type: :integer, example: 5, 'x-nullable': true }
+        }
+      }
+    }
   },
   required: [
     :name
