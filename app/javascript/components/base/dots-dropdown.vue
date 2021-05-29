@@ -49,9 +49,11 @@ export default {
     },
     editIngredient() {
       this.$emit('edit');
+      this.active = !this.active;
     },
     deleteIngredient() {
       this.$emit('del');
+      this.active = !this.active;
     },
   },
 };
