@@ -44,7 +44,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -131,7 +133,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -240,7 +244,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -397,20 +403,28 @@
           "example": "CLP",
           "x-nullable": true
         },
-        "quantity": {
-          "type": "integer",
-          "example": 2,
-          "x-nullable": true
-        },
-        "measure": {
-          "type": "string",
-          "example": "unidad",
-          "x-nullable": true
-        },
         "inventory": {
           "type": "integer",
           "example": 10,
           "x-nullable": true
+        },
+        "ingredient_measures_attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Kg",
+                "x-nullable": false
+              },
+              "quantity": {
+                "type": "integer",
+                "example": 1,
+                "x-nullable": true
+              }
+            }
+          }
         }
       },
       "required": [
@@ -480,6 +494,17 @@
               "example": 10,
               "x-nullable": true
             },
+            "measures": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ingredient_measure_response"
+                  }
+                }
+              }
+            },
             "created_at": {
               "type": "string",
               "example": "1984-06-04 09:00",
@@ -491,7 +516,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -638,7 +665,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -795,7 +824,9 @@
               }
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -1068,7 +1099,9 @@
               }
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -1076,6 +1109,19 @@
         "type",
         "attributes"
       ]
+    },
+    "ingredient_measure_response": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "unidad"
+        },
+        "quantity": {
+          "type": "integer",
+          "example": 2
+        }
+      }
     }
   },
   "paths": {
