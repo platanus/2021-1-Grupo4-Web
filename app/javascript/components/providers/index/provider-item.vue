@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mb-6 w-full order-1">
-    <div class="flex flex-row items-center w-full h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
+  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mb-6 w-96 order-none">
+    <div class="flex flex-row items-center w-80 h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
       <!-- Imagen -->
       <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mr-2 order-none" />
       <!-- Info -->
@@ -57,10 +57,10 @@
     <div
       v-if="this.showingDetails"
     >
-      <div class="flex flex-col items-start flex-none order-1 flex-grow-0 w-full">
+      <div class="flex flex-col items-start flex-none order-1 flex-grow-0 w-80 mr-1">
         <!-- Pagina Web -->
-        <div class="flex flex-row items-start items-center flex-none order-none flex-grow-0 justify-between">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
+        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between">
+          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
               <img
@@ -75,13 +75,13 @@
             </p>
           </div>
           <!-- Link -->
-          <p class="flex items-center underline text-blue-700 font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
+          <div class="flex items-center underline text-blue-700 font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
             {{ provider.webpageUrl }}
-          </p>
+          </div>
         </div>
         <!-- Minimo Compra -->
         <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
+          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
               <img
@@ -96,13 +96,13 @@
             </p>
           </div>
           <!-- Minimo -->
-          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
-            {{ provider.minimumPurchase }}
+          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
+            $ {{ provider.minimumPurchase }}
           </p>
         </div>
         <!-- Tiempo de Despacho -->
         <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between mb-2">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-full">
+          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
             <!-- Icono -->
             <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
               <img
@@ -117,24 +117,28 @@
             </p>
           </div>
           <!-- Tiempo -->
-          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right w-full justify-items-end">
-            {{ provider.deliveryDays }}
+          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
+            {{ provider.deliveryDays }} días
           </p>
         </div>
       </div>
-      <div class="flex flex-row items-start flex-none order-2 flex-grow-0 self-stretch w-full justify-between">
-        <button
-          class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1 px-2 mr-2"
-          @click="toggleDelModal"
-        >
-          Eliminar Proveedor
-        </button>
-        <button
-          class="flex flex-row items-center justify-center text-blue-700 bg-white rounded flex-none order-1 flex-grow-1 px-2"
-          @click="toggleEditModal"
-        >
-          Editar Proveedor
-        </button>
+      <div class="flex flex-row items-start flex-none order-2 flex-grow-0 self-stretch w-full justify-between mx-2">
+        <div>
+          <button
+            class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1 px-2"
+            @click="toggleDelModal"
+          >
+            Eliminar Proveedor
+          </button>
+        </div>
+        <div>
+          <button
+            class="flex flex-row items-center justify-center text-blue-700 bg-white rounded flex-none order-1 flex-grow-1 px-2"
+            @click="toggleEditModal"
+          >
+            Editar Proveedor
+          </button>
+        </div>
       </div>
     </div>
     <base-modal

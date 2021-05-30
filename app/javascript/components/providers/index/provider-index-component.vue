@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between items-center h-8">
+    <div class="flex justify-between items-center h-8 mb-5">
       <div class="w-auto h-7 font-sans font-normal text-2xl text-black flex-none flex-grow-0">
         {{ $t('msg.providers.title') }}
       </div>
@@ -17,7 +17,7 @@
       v-for="element in this.providers"
       :key="element.id"
     >
-      <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-5/12">
+      <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-full">
         <provider-item
           :provider="element"
           @update="updateProvider"
