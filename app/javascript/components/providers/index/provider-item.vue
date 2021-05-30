@@ -75,7 +75,7 @@
             </p>
           </div>
           <!-- Link -->
-          <div class="flex items-center underline text-blue-700 font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
+          <div class="flex items-center underline text-blue-700 overflow-scroll font-normal font-sans order-1 text-right justify-items-end max-w-full">
             {{ provider.webpageUrl }}
           </div>
         </div>

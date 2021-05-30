@@ -12,17 +12,19 @@
       </button>
     </div>
 
-    <div
-      class="flex items-start flex-col w-full"
-      v-for="element in this.providers"
-      :key="element.id"
-    >
-      <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-full">
-        <provider-item
-          :provider="element"
-          @update="updateProvider"
-          @del="deleteProvider"
-        />
+    <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full">
+      <div
+        class="flex items-start w-6/12"
+        v-for="element in this.providers"
+        :key="element.id"
+      >
+        <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-full">
+          <provider-item
+            :provider="element"
+            @update="updateProvider"
+            @del="deleteProvider"
+          />
+        </div>
       </div>
     </div>
 
