@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 2021_06_10_220621) do
                                       unique: true
   end
 
+  create_table "ingredient_measures", force: :cascade do |t|
+    t.integer "quantity"
+    t.bigint "ingredient_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "index_ingredient_measures_on_ingredient_id"
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.bigint "provider_id"
     t.bigint "user_id", null: false
@@ -50,8 +59,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_220621) do
     t.string "sku"
     t.integer "price"
     t.string "currency"
-    t.integer "quantity"
-    t.string "measure"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "inventory", default: 0
@@ -137,6 +144,7 @@ ActiveRecord::Schema.define(version: 2021_06_10_220621) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ingredient_measures", "ingredients"
   add_foreign_key "ingredients", "providers"
   add_foreign_key "ingredients", "users"
   add_foreign_key "menu_recipes", "menus"

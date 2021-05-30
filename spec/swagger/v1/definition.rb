@@ -39,6 +39,7 @@ API_V1 = {
     recipe_update: RECIPE_UPDATE_SCHEMA,
     recipes_collection: RECIPES_COLLECTION_SCHEMA,
     recipe_resource: RECIPE_RESOURCE_SCHEMA,
-    recipe_response: RECIPE_RESPONSE_SCHEMA
+    recipe_response: RECIPE_RESPONSE_SCHEMA,
+    ingredient_measure_response: INGREDIENT_MEASURE_SCHEMA
   }
 }
