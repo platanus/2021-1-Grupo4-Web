@@ -48,6 +48,7 @@ export default {
       delete: 'Eliminar',
       deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
+      deleteNameFilter: 'Limpiar campo',
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',

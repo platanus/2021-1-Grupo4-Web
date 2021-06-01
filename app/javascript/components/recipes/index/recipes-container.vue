@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ recipes }}
     <div class="flex flex-row justify-between items-center h-8 order-0 flex-grow-0 mt-1 mb-4">
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.recipes.title') }}
@@ -17,6 +16,7 @@
       :recipes="this.recipes"
       @filterByPrice="toggleFilterByPriceModal"
       @filterByPortions="toggleFilterByPortionsModal"
+      @filterByName="updateRecipes"
     />
     <p
       class="my-4"
@@ -26,7 +26,7 @@
     </p>
     <div v-else>
       <recipes-list
-        :allrecipes="recipes"
+        :allrecipes="recipesToDisplay"
       />
     </div>
     <recipes-pagination />
@@ -74,6 +74,7 @@ export default {
   data() {
     return {
       recipes: [],
+      recipesToDisplay: [],
       error: '',
       showingFilterByPrice: false,
       showingFilterByPortions: false,
@@ -86,6 +87,7 @@ export default {
         id: element.id,
         ...element.attributes,
       }));
+      this.recipesToDisplay = this.recipes;
       this.error = '';
     } catch (error) {
       this.error = error;
@@ -97,6 +99,9 @@ export default {
     },
     toggleFilterByPortionsModal() {
       this.showingFilterByPortions = !this.showingFilterByPortions;
+    },
+    updateRecipes(data) {
+      this.recipesToDisplay = data;
     },
   },
 };

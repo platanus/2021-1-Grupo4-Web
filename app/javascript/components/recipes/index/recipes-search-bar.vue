@@ -1,15 +1,16 @@
 <template>
   <div class="flex flex-row justify-start items-center p-0 static w-min-content h-12 flex-none order-1 flex-grow-0 mt-6">
     <input
-      class="flex flex-row static w-96 h-12 mr-2.5 bg-white border-2 border-solid border-gray-400 border-box box-border rounded text-sm flex-none order-0 flex-grow-1 pl-4"
+      class="flex flex-row static w-96 h-12 mr-2.5 bg-white border-2 border-solid border-gray-400 border-box
+      box-border rounded text-sm flex-none order-0 flex-grow-1 pl-4 focus:outline-none focus-visible:ring"
       :placeholder="placeholder"
       autocomplete="off"
       v-model="searchQuery"
-      @keyup.enter="filterRecipes"
+      @keyup="filterRecipes()"
     >
     <button
       class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 bg-white border-2 border-solid
-      border-blue-700 box-border rounded-full flex-none order-1 flex-grow-0 mx-2.5 text-blue-700"
+      border-blue-700 box-border rounded-full flex-none order-1 flex-grow-0 mx-2.5 text-blue-700 "
       @click="filterByPrice()"
     >
       {{ $t('msg.recipes.price') }}
@@ -43,14 +44,16 @@ export default {
       this.$emit('filterByPortions');
     },
     filterRecipes() {
+      let data = this.recipes;
       if (this.searchQuery) {
-        return this.$root.recipes.filter(item => this.searchQuery
+        data = this.recipes.filter(item => this.searchQuery
           .toLowerCase()
           .split(' ')
           .every(text => item.name.toLowerCase().includes(text)));
       }
+      this.$emit('filterByName', data);
 
-      return this.$root.recipes;
+      return data;
     },
   },
 };
