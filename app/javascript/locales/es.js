@@ -49,11 +49,13 @@ export default {
     recipes: {
       title: 'Recetas',
       search: 'Buscar receta...',
+      searchIngredient: 'Buscar Ingrediente',
       add: 'Agregar receta',
       edit: 'Editar',
       delete: 'Eliminar',
       deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
+      unitary: 'Unitario',
       minutes: 'minutos',
       portions: 'Porciones',
       steps: 'Pasos',
