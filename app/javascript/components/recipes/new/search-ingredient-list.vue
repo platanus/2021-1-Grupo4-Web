@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="ingredient in parsedElements"
+          v-for="ingredient in ingredients"
           :key="ingredient.name"
           class="bg-white border-2"
         >
@@ -62,13 +62,6 @@ export default {
   methods: {
     addIngredient(object) {
       this.$emit('add-ingredient', object);
-    },
-  },
-  computed: {
-    parsedElements() {
-      const parsedElements = this.ingredients.map((element) => JSON.parse(element));
-
-      return parsedElements;
     },
   },
 };

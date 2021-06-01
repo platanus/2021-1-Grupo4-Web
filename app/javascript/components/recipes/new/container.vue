@@ -17,10 +17,10 @@
             placeholder="XXX"
             value=""
           >
-          <span v-if="input">{{ parsedElements.measure }} </span>
+          <span v-if="input">{{ element.measure }} </span>
         </div>
         <div :class="input ? '' : 'flex-auto m-1'">
-          <span>{{ parsedElements.name }}</span>
+          <span>{{ element.name }}</span>
         </div>
         <div class="text-right">
           <button>
@@ -116,7 +116,7 @@
 export default {
   props: {
     text: { type: String, default: () => ('') },
-    element: { type: String, default: () => ('') },
+    element: { type: Object, default: () => ({}) },
     input: { type: Boolean, required: true },
     svg: { type: Object, required: true },
     color: { type: Boolean, required: true },
@@ -125,13 +125,6 @@ export default {
     return {
       edit: false,
     };
-  },
-  computed: {
-    parsedElements() {
-      const parsedElements = JSON.parse(this.element);
-
-      return parsedElements;
-    },
   },
   methods: {
     editStep() {
