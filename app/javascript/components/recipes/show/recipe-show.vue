@@ -30,9 +30,12 @@
           >
             {{ $t('msg.recipes.delete') }}
           </button>
-          <button class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-gray-800 rounded flex-grow-0 mx-2 text-gray-800 focus:outline-none">
+          <a
+            :href="`/recipes/${recipeId}/edit`"
+            class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-gray-800 rounded flex-grow-0 mx-2 text-gray-800 focus:outline-none"
+          >
             {{ $t('msg.recipes.edit') }}
-          </button>
+          </a>
         </div>
       </div>
 

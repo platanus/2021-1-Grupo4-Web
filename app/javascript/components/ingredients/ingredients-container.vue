@@ -146,7 +146,6 @@ export default {
       this.error = error;
     }
   },
-
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
