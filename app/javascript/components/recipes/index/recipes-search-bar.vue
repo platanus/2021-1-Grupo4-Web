@@ -4,6 +4,8 @@
       class="flex flex-row static w-96 h-12 mr-2.5 bg-white border-2 border-solid border-gray-400 border-box box-border rounded text-sm flex-none order-0 flex-grow-1 pl-4"
       :placeholder="placeholder"
       autocomplete="off"
+      v-model="searchQuery"
+      @keyup.enter="filterRecipes"
     >
     <button
       class="flex flex-row items-center justify-center px-3 py-3 static w-auto h-8 bg-white border-2 border-solid
@@ -26,6 +28,12 @@
 export default {
   props: {
     placeholder: { type: String, required: true },
+    recipes: { type: Array, required: true },
+  },
+  data() {
+    return {
+      searchQuery: '',
+    };
   },
   methods: {
     filterByPrice() {
@@ -33,6 +41,16 @@ export default {
     },
     filterByPortions() {
       this.$emit('filterByPortions');
+    },
+    filterRecipes() {
+      if (this.searchQuery) {
+        return this.$root.recipes.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.$root.recipes;
     },
   },
 };

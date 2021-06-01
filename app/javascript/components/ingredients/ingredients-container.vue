@@ -8,10 +8,12 @@
 
     <!--SearchBar y Button-->
     <div class="flex items-center">
-      <ingredients-search-bar
-        kind="ingredient"
+      <input
+        class="border-2 w-1/4 border-yellow-700 py-2 text-sm text-yellow-700 px-2 focus:outline-none focus:bg-white focus:text-yellow-700"
         :placeholder="$t('msg.ingredients.search')"
-      />
+        @keyup.enter="filterIngredients"
+        v-model="searchQuery"
+      >
       <base-button
         :elements="{ placeholder: $t('msg.ingredients.add'),
                      color: 'bg-green-500 hover:bg-green-700 text-white' }"
@@ -35,7 +37,7 @@
         v-else
         :dots="true"
         :header="tableHeader"
-        :body="this.ingredients"
+        :body="filterIngredients()"
         model-type="ingredients"
         @edit="toggleEditModal"
         @del="toggleDelModal"
@@ -105,7 +107,6 @@
 <script>
 
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
-import IngredientsSearchBar from './ingredients-search-bar';
 import IngredientsForm from './ingredients-form';
 import SearchMarketIngredients from './search-market-ingredients';
 
@@ -120,13 +121,13 @@ export default {
       ingredientToEdit: {},
       ingredientToDelete: {},
       tableHeader: ['name', 'price', 'quantity', 'measure'],
+      searchQuery: null,
       ingredients: [],
       error: '',
     };
   },
 
   components: {
-    IngredientsSearchBar,
     IngredientsForm,
     SearchMarketIngredients,
   },
@@ -225,6 +226,17 @@ export default {
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
       this.ingredients.splice(objectIndex, 1);
       this.ingredients.splice(objectIndex, 0, ingredientEdited);
+    },
+
+    filterIngredients() {
+      if (this.searchQuery) {
+        return this.ingredients.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
     },
   },
 };
