@@ -22,8 +22,8 @@
 export default {
   props: {
     name: { type: String, required: true },
-    portions: { type: String, required: true },
-    cookMinutes: { type: String, required: true },
+    portions: { type: Number, required: true },
+    cookMinutes: { type: Number, required: true },
   },
 };
 </script>

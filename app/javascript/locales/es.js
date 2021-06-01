@@ -69,6 +69,7 @@ export default {
       ingredients: 'Ingredientes',
       cost: 'Costo total',
       more: 'Buscar más ingredientes',
+      selectedIngredients: 'Ingredientes seleccionados',
       addstep: 'Agregar paso',
       cancel: 'Cancelar',
       accept: 'Aceptar',
