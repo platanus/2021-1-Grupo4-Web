@@ -116,7 +116,7 @@
 export default {
   props: {
     text: { type: String, default: () => ('') },
-    element: { type: Object, default: () => ({}) },
+    element: { type: String, default: () => ('') },
     input: { type: Boolean, required: true },
     svg: { type: Object, required: true },
     color: { type: Boolean, required: true },
