@@ -5,7 +5,7 @@
       class="flex p-4 grid grid-cols-2 items-center justify-between "
       v-for="(element, index) in elements"
       :key="index"
-      :class="index%2 === 1 ? 'bg-white' : 'bg-gray-100'"
+      :class="index % 2 === 1 ? 'bg-white' : 'bg-gray-100'"
     >
       <span class="flex content-center justify-center">
         {{ element.name }}

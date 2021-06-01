@@ -80,7 +80,7 @@
     </div>
 
     <base-modal
-      @ok="addIngredientstoRecipe"
+      @ok="addIngredientsToRecipe"
       @cancel="toggleAddIngredientModal"
       v-if="showingAddIngredientModal"
       :title="$t('msg.ingredients.add')"
@@ -164,12 +164,11 @@ export default {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
     },
     addIngredient(object) {
-      if (this.selectedIngredients.includes(object)) {
-        return;
+      if (!this.selectedIngredients.includes(object)) {
+        this.selectedIngredients.push(object);
       }
-      this.selectedIngredients.push(object);
     },
-    addIngredientstoRecipe() {
+    addIngredientsToRecipe() {
       this.selectedIngredients.forEach(ingredient => {
         this.ingredients.push(JSON.stringify(ingredient));
       });
