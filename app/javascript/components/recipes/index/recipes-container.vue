@@ -41,13 +41,13 @@
       <!-- Content -->
       <p
         class="my-4"
-        v-if="recipes.length === 0"
+        v-if="recipesShow.length === 0"
       >
         {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
       </p>
       <div v-else>
         <recipes-list
-          :allrecipes="filterRecipes"
+          :allrecipes="recipesShow"
         />
       </div>
 
@@ -92,6 +92,9 @@ export default {
       recipes: [],
       recipesToDisplay: [],
       searchQuery: '',
+      recipesShow: [],
+      recipesAll: [],
+      recipesFiltered: [],
       filters: { price: { min: '', max: '' }, portions: { min: '', max: '' } },
       filterOptions: ['price', 'portions'],
       error: '',
@@ -101,7 +104,11 @@ export default {
   async created() {
     try {
       const response = await getRecipes();
-      this.recipes = response.data.data.map((element) => ({
+      this.recipesShow = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.recipesAll = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
@@ -123,12 +130,29 @@ export default {
     },
   },
   methods: {
+    updateRecipesFiltered() {
+      this.recipesFiltered = [];
+      for (let i = 0; i < this.recipesAll.length; i ++) {
+        if (this.recipesAll[i].portions >= this.filters.portions.min) {
+          if (this.recipesAll[i].portions <= this.filters.portions.max) {
+            this.recipesFiltered.push(this.recipesAll[i]);
+          }
+        }
+      }
+      this.recipesShow = this.recipesFiltered;
+    },
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
+      this.recipesShow = this.recipesAll;
+      this.filters.price.min = '';
+      this.filters.price.max = '';
+      this.filters.portions.min = '';
+      this.filters.portions.max = '';
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
       this.filters = this.$refs.filtersInfo.filters;
+      this.updateRecipesFiltered();
     },
     updateRecipes(data) {
       this.recipesToDisplay = data;
