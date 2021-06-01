@@ -52,9 +52,7 @@ import ProvidersForm from './providers-form';
 export default {
   data() {
     return {
-      showingDel: false,
       showingAdd: false,
-      showingEdit: false,
       providers: [],
     };
   },
@@ -107,8 +105,6 @@ export default {
     },
 
     async updateProvider(res, providerId) {
-      this.showingEdit = !this.showingEdit;
-
       const attributes = JSON.parse(res.config.data).provider;
       const newAttributes = this.changeKeys(attributes);
       const providerEdited = { id: providerId, ...newAttributes };
@@ -118,7 +114,6 @@ export default {
     },
 
     async deleteProvider(id, response) {
-      this.showingDel = !this.showingDel;
       try {
         this.providers = this.providers.filter(item => item.id !== id);
         this.successResponse(response);

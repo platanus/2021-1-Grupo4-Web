@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mb-6 w-96 order-none">
-    <div class="flex flex-row items-center w-80 h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
+    <div class="flex flex-row items-center w-auto h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
       <!-- Imagen -->
       <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mr-2 order-none" />
       <!-- Info -->
@@ -44,7 +44,7 @@
       </div>
       <!-- flecha -->
       <div
-        class="flex items-center w-6 h-6 flex-none self-stretch"
+        class="flex items-center w-6 h-6 flex-none self-stretch justify-self-end"
         @click="toggleOpenModal"
       >
         <img
