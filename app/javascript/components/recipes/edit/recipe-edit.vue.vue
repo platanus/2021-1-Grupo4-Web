@@ -30,7 +30,7 @@
       <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
-      <recipe-ingredients />
+      <recipe-ingredients :recipe-ingredients="this.recipe.recipeIngredients.data" />
     </div>
   </div>
 </template>
@@ -70,6 +70,5 @@ export default {
       this.error = error;
     }
   },
-
 };
 </script>

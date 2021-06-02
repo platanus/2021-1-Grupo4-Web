@@ -73,6 +73,7 @@ export default {
       addstep: 'Agregar paso',
       cancel: 'Cancelar',
       accept: 'Aceptar',
+      recipePrice: 'Total receta',
       filter: {
         price: 'Precio',
         portions: 'Porciones',

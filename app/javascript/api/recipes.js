@@ -25,4 +25,10 @@ function postRecipe(recipe) {
     ));
 }
 
-export { getRecipes, getRecipe, deleteRecipe, postRecipe };
+function getRecipeIngredients(recipeId) {
+  return (client
+    .get(`/recipes/${recipeId}/recipe_ingredients`, {
+    }));
+}
+
+export { getRecipes, getRecipe, deleteRecipe, postRecipe, getRecipeIngredients };

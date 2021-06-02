@@ -26,17 +26,17 @@
       </div>
       <div class="flex flex-col items-start w-full h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
         <selected-ingredient-card
-          v-for="ingredient in this.ingredients"
+          v-for="ingredient in recipeIngredients"
           :key="ingredient.id"
-          :name="ingredient.name"
-          :price="ingredient.price"
+          :name="ingredient.attributes.ingredient.name"
+          :price="ingredient.attributes.ingredient.price"
         >
           {{ ingredient.name }}
         </selected-ingredient-card>
       </div>
       <div class="flex w-auto h-auto items-start justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border flex-none self-stretch flex-grow-0">
         <div class="w-auto h-6 font-bold text-base text-black flex-none flex-grow-0 mx-2">
-          Total del menú
+          {{ $t('msg.recipes.recipePrice') }} ${{ recipePrice }}
         </div>
       </div>
     </div>
@@ -59,6 +59,9 @@ export default {
     addIngredientCard,
     selectedIngredientCard,
   },
+  props: {
+    recipeIngredients: { type: Array, required: true },
+  },
   async created() {
     try {
       const response = await getIngredients();
@@ -71,5 +74,12 @@ export default {
       this.error = error;
     }
   },
+  computed: {
+    recipePrice() {
+      // eslint-disable-next-line max-len
+      return this.recipeIngredients.map(ingredient => ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
+    },
+  },
 };
+
 </script>
