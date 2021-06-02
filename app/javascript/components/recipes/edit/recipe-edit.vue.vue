@@ -31,6 +31,26 @@
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
       <recipe-ingredients :recipe-ingredients="this.recipe.recipeIngredients.data" />
+      <!-- pasos -->
+      <div
+        class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
+      >
+        3. {{ $t('msg.recipes.steps') }}
+      </div>
+      <div class="mb-8">
+        <recipe-step
+          v-for="step in this.recipe.steps.data"
+          :key="step.id"
+          :step="step.attributes"
+        />
+      </div>
+      <div class="flex items-center justify-between w-auto h-24 flex-none self-stretch flex-grow-0 mb-8">
+        <input
+          class="w-3/4 h-24 bg-white border border-gray-300 box-boder rounded flex-none flex-grow-1 px-3 py-2"
+          :placeholder="$t('msg.recipes.step')"
+        >
+      </div>
+    <!--  botones -->
     </div>
   </div>
 </template>
@@ -39,6 +59,7 @@
 import { getRecipe } from '../../../api/recipes.js';
 import recipeBasicInfo from './recipe-basic-info.vue';
 import recipeIngredients from './recipe-ingredients.vue';
+import recipeStep from './recipe-step.vue';
 
 export default {
   props: {
@@ -47,6 +68,7 @@ export default {
   components: {
     recipeBasicInfo,
     recipeIngredients,
+    recipeStep,
   },
   data() {
     return {
