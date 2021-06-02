@@ -74,6 +74,7 @@ export default {
       cancel: 'Cancelar',
       accept: 'Aceptar',
       recipePrice: 'Total receta',
+      saveChanges: 'Guardar cambios',
       filter: {
         price: 'Precio',
         portions: 'Porciones',

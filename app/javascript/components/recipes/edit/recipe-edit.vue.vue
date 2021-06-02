@@ -46,11 +46,22 @@
       </div>
       <div class="flex items-center justify-between w-auto h-24 flex-none self-stretch flex-grow-0 mb-8">
         <input
-          class="w-3/4 h-24 bg-white border border-gray-300 box-boder rounded flex-none flex-grow-1 px-3 py-2"
+          class="w-3/4 h-24 bg-white border border-gray-300 box-boder rounded flex-none flex-grow-1 px-3 py-0.5"
           :placeholder="$t('msg.recipes.step')"
         >
+        <button class="flex justify-center items-center py-1.5 px-10 border border-gray-800 drop-shadow rounded-md flex-none flex-grow-0 font-ans font-normal text-base text-gray-800">
+          {{ $t('msg.recipes.addstep') }}
+        </button>
       </div>
-    <!--  botones -->
+      <!--  botones -->
+      <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
+        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8">
+          {{ $t('msg.recipes.cancel') }}
+        </button>
+        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0">
+          {{ $t('msg.recipes.saveChanges') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
