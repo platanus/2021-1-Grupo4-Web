@@ -240,7 +240,6 @@ export default {
       this.error = error;
     },
     openWindow() {
-      console.log('entre al window');
       // eslint-disable-next-line no-magic-numbers
       window.open(this.provider.webpageUrl, '_blank');
     },
