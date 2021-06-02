@@ -37,12 +37,21 @@
       >
         3. {{ $t('msg.recipes.steps') }}
       </div>
-      <div class="mb-8">
+      <div
+        class="mb-8"
+        v-if="this.recipe.steps.data.lenght > 0"
+      >
         <recipe-step
           v-for="step in this.recipe.steps.data"
           :key="step.id"
           :step="step.attributes"
         />
+      </div>
+      <div
+        class="flex items-start h-6 bg-gray-50 font-sans font-light text-base text-black flex-none self-stretch flex-grow-0 mb-3"
+        v-else
+      >
+        {{ $t('msg.recipes.noSteps') }}
       </div>
       <div class="flex items-center justify-between w-auto h-24 flex-none self-stretch flex-grow-0 mb-8">
         <input
