@@ -37,7 +37,7 @@
         </p>
         <menus-table
           v-else
-          :menus="filterMenus()"
+          :menus="filterMenus"
           @edit="toggleEditModal"
           @del="toggleDelModal"
         />
