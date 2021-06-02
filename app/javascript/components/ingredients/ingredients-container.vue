@@ -47,7 +47,7 @@
           </p>
           <ingredients-table
             v-else
-            :ingredients="filterIngredients()"
+            :ingredients="filterIngredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"
           />
@@ -157,6 +157,19 @@ export default {
     }
   },
 
+  computed: {
+    filterIngredients() {
+      if (this.searchQuery) {
+        return this.ingredients.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
+    },
+  },
+
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
@@ -238,17 +251,6 @@ export default {
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
       this.ingredients.splice(objectIndex, 1);
       this.ingredients.splice(objectIndex, 0, ingredientEdited);
-    },
-
-    filterIngredients() {
-      if (this.searchQuery) {
-        return this.ingredients.filter(item => this.searchQuery
-          .toLowerCase()
-          .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-
-      return this.ingredients;
     },
   },
 };

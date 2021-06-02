@@ -59,12 +59,10 @@
 
 <script>
 import { getMenus, deleteMenu } from './../../../api/menus.js';
-// import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
 
 export default {
   components: {
-    // MenusSearchBar,
     MenusTable,
   },
   data() {
@@ -88,6 +86,18 @@ export default {
       this.error = error;
     }
   },
+  computed: {
+    filterMenus() {
+      if (this.searchQuery) {
+        return this.menus.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.menus;
+    },
+  },
   methods: {
     redirectAddMenu() {
       window.location.href = '/menus/new';
@@ -108,16 +118,6 @@ export default {
       } catch (error) {
         this.error = error;
       }
-    },
-    filterMenus() {
-      if (this.searchQuery) {
-        return this.menus.filter(item => this.searchQuery
-          .toLowerCase()
-          .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-
-      return this.menus;
     },
   },
 };

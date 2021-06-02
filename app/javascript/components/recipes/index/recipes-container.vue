@@ -47,7 +47,7 @@
       </p>
       <div v-else>
         <recipes-list
-          :allrecipes="filterRecipes()"
+          :allrecipes="filterRecipes"
         />
       </div>
 
@@ -110,6 +110,18 @@ export default {
       this.error = error;
     }
   },
+  computed: {
+    filterRecipes() {
+      if (this.searchQuery) {
+        return this.recipes.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.recipes;
+    },
+  },
   methods: {
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
@@ -120,16 +132,6 @@ export default {
     },
     updateRecipes(data) {
       this.recipesToDisplay = data;
-    },
-    filterRecipes() {
-      if (this.searchQuery) {
-        return this.recipes.filter(item => this.searchQuery
-          .toLowerCase()
-          .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-
-      return this.recipes;
     },
   },
 };
