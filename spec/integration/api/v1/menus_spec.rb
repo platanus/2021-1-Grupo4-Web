@@ -109,7 +109,7 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
         schema: {
           type: "object",
           properties: {
-            menu: { "$ref" => "#/definitions/menu" }
+            menu: { "$ref" => "#/definitions/menu_update" }
           },
           required: [
             :menu

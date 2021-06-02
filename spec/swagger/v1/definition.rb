@@ -31,10 +31,12 @@ API_V1 = {
     providers_collection: PROVIDERS_COLLECTION_SCHEMA,
     provider_resource: PROVIDER_RESOURCE_SCHEMA,
     menu: MENU_SCHEMA,
+    menu_update: MENU_UPDATE_SCHEMA,
     menu_response: MENU_RESPONSE_SCHEMA,
     menus_collection: MENUS_COLLECTION_SCHEMA,
     menu_resource: MENU_RESOURCE_SCHEMA,
     recipe: RECIPE_SCHEMA,
+    recipe_update: RECIPE_UPDATE_SCHEMA,
     recipes_collection: RECIPES_COLLECTION_SCHEMA,
     recipe_resource: RECIPE_RESOURCE_SCHEMA,
     recipe_response: RECIPE_RESPONSE_SCHEMA
