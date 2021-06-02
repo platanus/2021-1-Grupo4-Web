@@ -208,7 +208,8 @@ export default {
       const menuToPut = { name: this.$refs.editMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
       try {
         const res = await editMenu(this.menuToEdit.id, menuToPut);
-        // this.getAllMenus();
+        console.log(res);
+        this.getAllMenus();
         this.error = '';
       } catch (error) {
         this.error = error;
