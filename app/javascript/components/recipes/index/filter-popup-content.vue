@@ -31,6 +31,7 @@
         class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
         :placeholder="$t('msg.max')"
         v-model="filters.portions.max"
+        id="portionsmax"
       >
     </div>
   </div>
@@ -39,6 +40,9 @@
 <script>
 
 export default {
+  props: {
+    actualfilters: { type: Object, required: true },
+  },
   data() {
     return {
       filters: {
@@ -52,6 +56,12 @@ export default {
         },
       },
     };
+  },
+
+  mounted() {
+    this.filters.portions.max = this.actualfilters.portions.max;
+    console.log("actuales",this.actualfilters)
+
   },
 };
 </script>

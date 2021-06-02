@@ -66,6 +66,7 @@
     >
       <filter-popup-content
         ref="filtersInfo"
+        :actualfilters="filters"
       />
     </base-modal>
   </div>
@@ -156,6 +157,7 @@ export default {
     },
     updateRecipes(data) {
       this.recipesToDisplay = data;
+      // this.updateRecipes();
     },
   },
 };
