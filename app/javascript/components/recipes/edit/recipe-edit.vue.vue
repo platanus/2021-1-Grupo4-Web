@@ -39,7 +39,7 @@
       </div>
       <div
         class="mb-8"
-        v-if="this.recipe.steps.data.lenght > 0"
+        v-if="this.recipe.steps.data.length > 0"
       >
         <recipe-step
           v-for="step in this.recipe.steps.data"

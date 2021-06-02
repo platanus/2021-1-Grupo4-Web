@@ -27,9 +27,11 @@
         <div class="flex items-start h-6 bg-gray-50 font-sans font-medium text-base text-black flex-none self-stretch flex-grow-0 mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
+        <!-- {{ recipeIngredients.length }}
+        {{ recipeIngredients }} -->
         <div
           class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
-          v-if="recipeIngredients.lenght > 0"
+          v-if="recipeIngredients.length > 0"
         >
           <selected-ingredient-card
             v-for="ingredient in recipeIngredients"
