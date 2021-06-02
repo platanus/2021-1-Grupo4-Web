@@ -17,14 +17,36 @@
         <div class="w-auto h-4 font-hind font-normal text-xs text-gray-600 flex-none flex-grow-0 mr-2">
           {{ $t('msg.recipes.portions') }}
         </div>
+        <button class="w-3 h-3 rounded-sm bg-gray-200 shadow-sm flex-none flex-grow-0 mr-0.5">
+          <img
+            class="h-3 w-3 text-white m-auto"
+            svg-inline
+            src="../../../../assets/images/plus-svg.svg"
+          >
+        </button>
+        <input class="w-5 h-3 bg-gray-20 border border-gray-200 flex-none flex-grow-0 mr-0.5">
+        <button class="w-3 h-3 rounded-sm bg-gray-200 shadow-sm flex-none flex-grow-0">
+          <img
+            class="h-3 w-3 text-white m-auto"
+            svg-inline
+            src="../../../../assets/images/minus-svg.svg"
+          >
+        </button>
       </div>
     </div>
     <!-- button -->
-    <button class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none flex-grow-0 my-auto mx-3">
-      <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none flex-grow-0">
-        {{ $t('msg.ingredients.searchAdd') }}
+    <div class="flex flex-col justify-center items-end w-auto h-20 flex-none self-stretch mr-2">
+      <div class="w-3 h-3 bg-red-500 shadow-sm rounded-md flex-none flex-grow-0 mb-1.5">
+        <img
+          class="h-3 w-3 text-white m-auto"
+          svg-inline
+          src="../../../../assets/images/cross-svg.svg"
+        >
       </div>
-    </button>
+      <div class="w-auto h-6 font-sans font-medium text-base text-right text-black flex-none flex-grow-0">
+        8.240
+      </div>
+    </div>
   </div>
 </template>
 
