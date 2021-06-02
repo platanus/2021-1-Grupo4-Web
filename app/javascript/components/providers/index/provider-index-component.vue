@@ -78,7 +78,18 @@ export default {
       this.showingAdd = !this.showingAdd;
     },
 
+    // eslint-disable-next-line max-statements
     async addProvider() {
+      try {
+        // eslint-disable-next-line no-magic-numbers
+        const firstElementsWeb = this.$refs.addProviderInfo.form.webpageUrl.slice(0, 5);
+        if (firstElementsWeb !== 'https') {
+          // eslint-disable-next-line vue/no-mutating-props
+          this.$refs.addProviderInfo.form.webpageUrl = `https://${this.$refs.addProviderInfo.form.webpageUrl}`;
+        }
+      // eslint-disable-next-line no-empty
+      } catch (error) {
+      }
       this.showingAdd = !this.showingAdd;
       try {
         const {

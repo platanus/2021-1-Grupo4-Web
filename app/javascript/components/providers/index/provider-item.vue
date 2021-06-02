@@ -75,7 +75,10 @@
             </p>
           </div>
           <!-- Link -->
-          <div class="flex items-center underline text-blue-700 overflow-scroll font-normal font-sans order-1 text-right justify-items-end max-w-full">
+          <div
+            class="flex items-center underline text-blue-700 overflow-scroll font-normal font-sans order-1 text-right justify-items-end max-w-full"
+            @click="openWindow"
+          >
             {{ provider.webpageUrl }}
           </div>
         </div>
@@ -201,6 +204,16 @@ export default {
       this.providerToEdit = this.provider;
     },
     async editProvider() {
+      try {
+        // eslint-disable-next-line no-magic-numbers
+        const firstElementsWeb = this.$refs.editProviderInfo.form.webpageUrl.slice(0, 5);
+        if (firstElementsWeb !== 'https') {
+          // eslint-disable-next-line vue/no-mutating-props
+          this.$refs.editProviderInfo.form.webpageUrl = `https://${this.$refs.editProviderInfo.form.webpageUrl}`;
+        }
+      // eslint-disable-next-line no-empty
+      } catch (error) {
+      }
       this.showingEdit = !this.showingEdit;
       try {
         const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
@@ -225,6 +238,11 @@ export default {
     async errorResponse(error) {
       this.status = error.response.status;
       this.error = error;
+    },
+    openWindow() {
+      console.log('entre al window');
+      // eslint-disable-next-line no-magic-numbers
+      window.open(this.provider.webpageUrl, '_blank');
     },
   },
 };
