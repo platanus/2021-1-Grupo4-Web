@@ -8,6 +8,7 @@ import BaseButton from '../components/base/base-button.vue';
 import BaseModal from '../components/base/base-modal.vue';
 import BaseTable from '../components/base/base-table.vue';
 import DotsDropdown from '../components/base/dots-dropdown.vue';
+import BaseDropdown from '../components/base/base-dropdown.vue';
 import BaseSpinner from '../components/base/base-spinner.vue';
 import TextBox from '../components/base/base-text-box.vue';
 
@@ -37,6 +38,7 @@ Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('BaseButton', BaseButton);
 Vue.component('DotsDropdown', DotsDropdown);
+Vue.component('BaseDropdown', BaseDropdown);
 Vue.component('BaseSpinner', BaseSpinner);
 Vue.component('TextBox', TextBox);
 
