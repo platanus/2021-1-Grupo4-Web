@@ -122,6 +122,7 @@ export default {
 
   data() {
     return {
+      showingAdd: false,
       form: {
         name: '',
         email: '',
@@ -151,6 +152,11 @@ export default {
       deliveryDays,
       phone,
     };
+  },
+  methods: {
+    toggleAddModal() {
+      this.showingAdd = !this.showingAdd;
+    },
   },
 };
 

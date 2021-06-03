@@ -90,7 +90,7 @@ export default {
       // eslint-disable-next-line no-empty
       } catch (error) {
       }
-      this.showingAdd = !this.showingAdd;
+      this.toggleAddModal();
       try {
         const {
           status,

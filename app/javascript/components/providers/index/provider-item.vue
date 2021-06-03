@@ -1,19 +1,19 @@
 <template>
-  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mb-6 w-96 order-none">
-    <div class="flex flex-row items-center w-auto h-auto flex-none self-stretch flex-grow-0 my-4 px-3">
+  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none mb-6 w-96 order-none">
+    <div class="flex flex-row items-center w-auto h-auto flex-none self-stretch my-4 px-3">
       <!-- Imagen -->
-      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none flex-grow-0 mr-2 order-none" />
+      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none mr-2 order-none" />
       <!-- Info -->
       <div class="flex flex-col items-start w-auto h-auto flex-none self-stretch flex-grow mr-2">
         <!-- nombre Proveedor -->
-        <div class="flex items-center w-auto h-5 flex-none flex-grow-0">
+        <div class="flex items-center w-auto h-5 flex-none">
           {{ provider.name }}
         </div>
-        <div class="flex flex-col items-start w-auto h-10 flex-none flex-grow-0 my-4">
+        <div class="flex flex-col items-start w-auto h-10 flex-none my-4">
           <!-- Mail -->
-          <div class="flex items-center w-auto h-5 flex-none flex-grow-0 mb-4">
+          <div class="flex items-center w-auto h-5 flex-none mb-4">
             <!-- Icono -->
-            <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
+            <div class="w-4 h-4 flex-none m-1.5">
               <img
                 svg-inline
                 src="../../../../assets/images/mail-svg.svg"
@@ -21,14 +21,14 @@
               >
             </div>
             <!-- Texto -->
-            <div class="flex w-auto h-5 font-normal font-sans text-base items-center text-gray-400 flex-grow-0 flex-none">
+            <div class="flex w-auto h-5 text-base items-center text-gray-400 flex-none">
               {{ provider.email }}
             </div>
           </div>
           <!-- Telefono -->
-          <div class="flex items-center w-auto h-5 flex-none flex-grow-0">
+          <div class="flex items-center w-auto h-5 flex-none">
             <!-- Icono -->
-            <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
+            <div class="w-4 h-4 flex-none m-1.5">
               <img
                 svg-inline
                 src="../../../../assets/images/phone-svg.svg"
@@ -36,7 +36,7 @@
               >
             </div>
             <!-- Texto -->
-            <div class="flex w-auto h-5 font-normal font-sans text-base items-center text-gray-400 flex-grow-0 flex-none">
+            <div class="flex w-auto h-5 text-base items-center text-gray-400 flex-none">
               {{ provider.phone }}
             </div>
           </div>
@@ -55,14 +55,14 @@
       </div>
     </div>
     <div
-      v-if="this.showingDetails"
+      v-if="showingDetails"
     >
-      <div class="flex flex-col items-start flex-none order-1 flex-grow-0 w-80 mr-1">
+      <div class="flex flex-col items-start flex-none order-1 w-80 mr-1">
         <!-- Pagina Web -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
+        <div class="flex flex-row items-start flex-none order-none w-full justify-between">
+          <div class="flex flex-row flex-none items-center order-none w-48">
             <!-- Icono -->
-            <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
+            <div class="w-4 h-4 flex-none m-1.5">
               <img
                 svg-inline
                 src="../../../../assets/images/webpage-svg.svg"
@@ -70,23 +70,23 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400 underline">
+            <p class="flex text-base items-center text-gray-400 underline">
               Página Web
             </p>
           </div>
           <!-- Link -->
           <div
-            class="flex items-center underline text-blue-700 overflow-scroll font-normal font-sans order-1 text-right justify-items-end max-w-full"
+            class="flex items-center underline text-blue-700 overflow-scroll order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
             {{ provider.webpageUrl }}
           </div>
         </div>
         <!-- Minimo Compra -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
+        <div class="flex flex-row items-start flex-none order-none w-full justify-between">
+          <div class="flex flex-row flex-none items-center order-none w-48">
             <!-- Icono -->
-            <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
+            <div class="w-4 h-4 flex-none m-1.5">
               <img
                 svg-inline
                 src="../../../../assets/images/dolar-svg.svg"
@@ -94,20 +94,20 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400">
+            <p class="flex text-base items-center text-gray-400">
               Mínimo de Compra
             </p>
           </div>
           <!-- Minimo -->
-          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
+          <p class="flex items-center text-black flex-none order-1 flex-grow-0 text-right justify-items-end">
             $ {{ provider.minimumPurchase }}
           </p>
         </div>
         <!-- Tiempo de Despacho -->
-        <div class="flex flex-row items-start flex-none order-none flex-grow-0 w-full justify-between mb-2">
-          <div class="flex flex-row flex-none items-center order-none flex-grow-0 w-48">
+        <div class="flex flex-row items-start flex-none order-none w-full justify-between mb-2">
+          <div class="flex flex-row flex-none items-center order-none w-48">
             <!-- Icono -->
-            <div class="w-4 h-4 flex-none flex-grow-0 m-1.5">
+            <div class="w-4 h-4 flex-none m-1.5">
               <img
                 svg-inline
                 src="../../../../assets/images/car-svg.svg"
@@ -115,17 +115,17 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex font-normal font-sans text-base items-center text-gray-400">
+            <p class="flex text-base items-center text-gray-400">
               Tiempo de Despacho
             </p>
           </div>
           <!-- Tiempo -->
-          <p class="flex items-center text-black font-normal font-sans flex-none order-1 flex-grow-0 text-right justify-items-end">
+          <p class="flex items-center text-black flex-none order-1 text-right justify-items-end">
             {{ provider.deliveryDays }} días
           </p>
         </div>
       </div>
-      <div class="flex flex-row items-start flex-none order-2 flex-grow-0 self-stretch w-full justify-between mx-2">
+      <div class="flex flex-row items-start flex-none order-2 self-stretch w-full justify-between mx-2">
         <div>
           <button
             class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1 px-2"

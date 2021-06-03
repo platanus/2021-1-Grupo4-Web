@@ -19,14 +19,7 @@ function deleteProvider(providerID) {
 function editProvider(providerId, providerInfo) {
   return (client
     .put(`/providers/${providerId}`, {
-      provider: {
-        'name': providerInfo.name,
-        'phone': providerInfo.phone,
-        'webpageUrl': providerInfo.webpageUrl,
-        'email': providerInfo.email,
-        'minimumPurchase': providerInfo.minimumPurchase,
-        'deliveryDays': providerInfo.deliveryDays,
-      },
+      provider: providerInfo,
     }, {
     }));
 }
