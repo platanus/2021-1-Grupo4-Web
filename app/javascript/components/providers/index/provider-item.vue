@@ -144,19 +144,16 @@
         </div>
       </div>
     </div>
-    <base-modal
-      @ok="editProvider"
-      @cancel="toggleEditModal"
+    <providers-form
+      @edit-provider="editProvider"
+      @toggle-edit-modal="toggleEditModal"
       v-if="showingEdit"
       :title="$t('msg.providers.edit')"
       :ok-button-label="$t('msg.save')"
       :cancel-button-label="$t('msg.cancel')"
-    >
-      <providers-form
-        ref="editProviderInfo"
-        :provider="this.providerToEdit"
-      />
-    </base-modal>
+      :showing-edit="showingEdit"
+      :provider="providerToEdit"
+    />
     <base-modal
       @ok="deleteProvider"
       @cancel="toggleDelModal"
@@ -203,20 +200,10 @@ export default {
       this.showingEdit = !this.showingEdit;
       this.providerToEdit = this.provider;
     },
-    async editProvider() {
+    async editProvider(provider) {
+      this.toggleEditModal();
       try {
-        // eslint-disable-next-line no-magic-numbers
-        const firstElementsWeb = this.$refs.editProviderInfo.form.webpageUrl.slice(0, 5);
-        if (firstElementsWeb !== 'https') {
-          // eslint-disable-next-line vue/no-mutating-props
-          this.$refs.editProviderInfo.form.webpageUrl = `https://${this.$refs.editProviderInfo.form.webpageUrl}`;
-        }
-      // eslint-disable-next-line no-empty
-      } catch (error) {
-      }
-      this.showingEdit = !this.showingEdit;
-      try {
-        const res = await editProvider(this.providerToEdit.id, this.$refs.editProviderInfo.form);
+        const res = await editProvider(this.providerToEdit.id, provider);
         this.$emit('update', res, this.providerToEdit.id);
       } catch (error) {
         this.errorResponse(error);
@@ -241,7 +228,11 @@ export default {
     },
     openWindow() {
       // eslint-disable-next-line no-magic-numbers
-      window.open(this.provider.webpageUrl, '_blank');
+      // eslint-disable-next-line no-negated-condition
+      const fullWebpageUrl = this.provider.webpageUrl
+        // eslint-disable-next-line no-magic-numbers
+        .slice(0, 5) !== 'https' ? `https://${this.provider.webpageUrl}` : this.provider.webpageUrl;
+      window.open(fullWebpageUrl, '_blank');
     },
   },
 };

@@ -28,18 +28,15 @@
       </div>
     </div>
 
-    <base-modal
-      @ok="addProvider"
-      @cancel="toggleAddModal"
+    <providers-form
+      @add-provider="addProvider"
+      @toggle-add-modal="toggleAddModal"
       v-if="showingAdd"
       :title="$t('msg.providers.add')"
       :ok-button-label="$t('msg.add')"
       :cancel-button-label="$t('msg.cancel')"
-    >
-      <providers-form
-        ref="addProviderInfo"
-      />
-    </base-modal>
+      :showing-add="showingAdd"
+    />
   </div>
 </template>
 
@@ -78,26 +75,15 @@ export default {
       this.showingAdd = !this.showingAdd;
     },
 
-    // eslint-disable-next-line max-statements
-    async addProvider() {
-      try {
-        // eslint-disable-next-line no-magic-numbers
-        const firstElementsWeb = this.$refs.addProviderInfo.form.webpageUrl.slice(0, 5);
-        if (firstElementsWeb !== 'https') {
-          // eslint-disable-next-line vue/no-mutating-props
-          this.$refs.addProviderInfo.form.webpageUrl = `https://${this.$refs.addProviderInfo.form.webpageUrl}`;
-        }
-      // eslint-disable-next-line no-empty
-      } catch (error) {
-      }
-      this.toggleAddModal();
+    async addProvider(provider) {
       try {
         const {
           status,
           data:
             { data: { id, attributes },
             },
-        } = await postProvider(this.$refs.addProviderInfo.form);
+        } = await postProvider(provider);
+        this.toggleAddModal();
         const providerToAdd = { id, ...attributes };
         this.providers.push(providerToAdd);
         this.successResponse(status);
@@ -105,6 +91,7 @@ export default {
         this.errorResponse(error);
       }
     },
+
     changeKeys(attributes) {
       const newKeys = {};
       const entries = Object.entries(attributes);
