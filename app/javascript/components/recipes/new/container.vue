@@ -9,6 +9,7 @@
       >
         <div class="justify-self-start">
           <input
+            v-model="ingredient.ingredientQuantity"
             class="w-16 h-12 self-center bg-white text-gray-700
             border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             v-if="input"
@@ -17,10 +18,10 @@
             placeholder="XXX"
             value=""
           >
-          <span v-if="input">{{ parsedElements.measure }} </span>
+          <span v-if="input">{{ element.measure }} </span>
         </div>
         <div :class="input ? '' : 'flex-auto m-1'">
-          <span>{{ parsedElements.name }}</span>
+          <span>{{ element.name }}</span>
         </div>
         <div class="text-right">
           <button>
@@ -124,14 +125,8 @@ export default {
   data() {
     return {
       edit: false,
+      ingredient: this.element,
     };
-  },
-  computed: {
-    parsedElements() {
-      const parsedElements = JSON.parse(this.element);
-
-      return parsedElements;
-    },
   },
   methods: {
     editStep() {

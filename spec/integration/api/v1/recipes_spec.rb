@@ -113,7 +113,7 @@ describe 'Api::V1::Recipes', swagger_doc: 'v1/swagger.json' do
                 schema: {
                   type: "object",
                   properties: {
-                    recipe: { "$ref" => "#/definitions/recipe" }
+                    recipe: { "$ref" => "#/definitions/recipe_update" }
                   },
                   required: [
                     :recipe

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button @click="openDropdown">
+    <button
+      class="focus:outline-none"
+      @click="openDropdown"
+    >
       <img
         svg-inline
         src="../../../assets/images/dropdown-svg.svg"
@@ -46,9 +49,11 @@ export default {
     },
     editIngredient() {
       this.$emit('edit');
+      this.active = !this.active;
     },
     deleteIngredient() {
       this.$emit('del');
+      this.active = !this.active;
     },
   },
 };

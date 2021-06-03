@@ -18,4 +18,17 @@ function deleteRecipe(recipeId) {
     }));
 }
 
-export { getRecipes, getRecipe, deleteRecipe };
+function postRecipe(recipe) {
+  return (client
+    .post('/recipes',
+      { recipe },
+    ));
+}
+
+function getRecipeIngredients(recipeId) {
+  return (client
+    .get(`/recipes/${recipeId}/recipe_ingredients`, {
+    }));
+}
+
+export { getRecipes, getRecipe, deleteRecipe, postRecipe, getRecipeIngredients };

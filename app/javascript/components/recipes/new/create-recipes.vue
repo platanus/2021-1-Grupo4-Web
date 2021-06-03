@@ -22,18 +22,24 @@
 
     <div class="grid grid-cols-4 gap-4">
       <input
+        id="name"
         :placeholder="$t('msg.recipes.name')"
         :search-icon="false"
+        v-model="recipe.name"
         class="col-span-2 w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
       >
       <input
+        id="portions"
         :placeholder="$t('msg.recipes.portions')"
         :search-icon="false"
+        v-model="recipe.portions"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
       >
       <input
+        id="preparation"
         :placeholder="$t('msg.recipes.preparation')"
         :search-icon="false"
+        v-model="recipe.cook_minutes"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-200 border-gray-300"
       >
     </div>
@@ -42,10 +48,11 @@
       <div>
         <list
           :placeholder="$t('msg.recipes.ingredients')"
-          :elements="getIngredients"
+          :elements="ingredients"
           :svg="{sixdots: false, cancel: true, menu_recipe: false, dropdown: false}"
           :input="true"
           :drag="false"
+          @search="toggleAddIngredientModal"
         />
       </div>
       <div
@@ -57,6 +64,7 @@
           :svg="{sixdots: true, cancel: false, menu_recipe: true, dropdown: true}"
           :input="false"
           :drag="true"
+          @update="addStep"
         />
       </div>
     </div>
@@ -70,32 +78,136 @@
         @click="create"
       />
     </div>
+
+    <base-modal
+      @ok="addIngredientsToRecipe"
+      @cancel="toggleAddIngredientModal"
+      v-if="showingAddIngredientModal"
+      :title="$t('msg.ingredients.add')"
+      :ok-button-label="$t('msg.add')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <div class="flex f-row w-full">
+        <div class="mr-10">
+          <search-ingredient-list
+            :ingredients="myIngredients"
+            @add-ingredient="addIngredient"
+          />
+        </div>
+        <selected-ingredients
+          :elements="selectedIngredients"
+          :svg="{sixdots: true, cancel: false, menu_recipe: true}"
+          :input="false"
+          :placeholder="'-'"
+          @delete-ingredient="deleteIngredient"
+        />
+      </div>
+    </base-modal>
   </div>
 </template>
 
 <script>
 import List from './list.vue';
+import { postRecipe } from '../../../api/recipes.js';
+import BaseModal from '../../base/base-modal.vue';
+import SelectedIngredients from './selected-ingredients.vue';
+import SearchIngredientList from './search-ingredient-list.vue';
+import { getIngredients } from './../../../api/ingredients.js';
 
 export default {
   components: {
     List,
+    BaseModal,
+    SelectedIngredients,
+    SearchIngredientList,
   },
-  props: {
-    objects: { type: Array, required: true },
+  data() {
+    return {
+      recipe: {
+        name: '',
+        portions: '',
+        cook_minutes: '', // eslint-disable-line camelcase
+        steps_attributes: [], // eslint-disable-line camelcase
+        recipe_ingredients_attributes: [], // eslint-disable-line camelcase
+      },
+      steps: [],
+      error: '',
+      showingAddIngredientModal: false,
+      selectedIngredients: [],
+      myIngredients: [],
+      ingredients: [],
+    };
+  },
+  async created() {
+    try {
+      const response = await getIngredients();
+      this.myIngredients = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+      this.successResponse(response);
+    } catch (error) {
+      this.errorResponse(error);
+    }
   },
   methods: {
-    create() {
-      return null;
-    },
-  },
-  computed: {
-    getIngredients() {
-      const newArray = [];
-      for (let i = 0; i < this.objects.length - 1; i++) {
-        newArray.push(this.objects[i]);
+    async create() {
+      if (this.recipe.name === '' || this.recipe.portions === '' || this.recipe.preparation === '') {
+        alert(this.$t('msg.recipes.alertEmptyStep')); // eslint-disable-line no-alert
+
+        return false;
+      }
+      this.ingredients.forEach(ingredient => {
+        this.recipe.recipe_ingredients_attributes.push({
+          'ingredient_id': ingredient.id,
+          'ingredient_quantity': ingredient.ingredientQuantity,
+        });
+      });
+      try {
+        await postRecipe(this.recipe);
+        window.location = '/recipes';
+      } catch (error) {
+        this.error = error;
       }
 
-      return newArray;
+      return null;
+    },
+    addStep(step) {
+      this.recipe.steps_attributes.push({
+        description: step,
+        media_url: 'https://media_url', // eslint-disable-line camelcase
+      });
+    },
+    toggleAddIngredientModal() {
+      this.showingAddIngredientModal = !this.showingAddIngredientModal;
+    },
+    addIngredient(object) {
+      if (!this.selectedIngredients.includes(object)) {
+        this.selectedIngredients.push(object);
+      }
+    },
+    addIngredientsToRecipe() {
+      this.selectedIngredients.forEach(ingredient => {
+        if (this.ingredients.includes(ingredient)) {
+          return;
+        }
+        this.ingredients.push(ingredient);
+      });
+      this.selectedIngredients = [];
+      this.showingAddIngredientModal = !this.showingAddIngredientModal;
+      this.$forceUpdate();
+    },
+    deleteIngredient(index) {
+      this.selectedIngredients.splice(index, 1);
+    },
+    async successResponse(status) {
+      this.status = status;
+      this.error = '';
+    },
+
+    async errorResponse(error) {
+      this.status = error.response.status;
+      this.error = error;
     },
   },
 };

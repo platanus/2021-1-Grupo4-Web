@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/queue'
 
   resources :ingredients, only: [:index]
-  resources :recipes, only: [:index, :show, :new]
+  resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :new]
   resources :providers, only: [:index, :new]
 end

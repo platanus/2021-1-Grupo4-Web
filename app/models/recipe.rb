@@ -6,6 +6,7 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients, dependent: nil
   has_many :steps, dependent: :destroy, class_name: "RecipeStep"
   accepts_nested_attributes_for :steps
+  accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
 end
 
 # == Schema Information

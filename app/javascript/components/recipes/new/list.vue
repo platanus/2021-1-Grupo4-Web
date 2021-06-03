@@ -5,8 +5,8 @@
     </h2>
     <div v-if="!drag">
       <div
-        v-for="element in elements"
-        :key="element"
+        v-for="(element, index) in elements"
+        :key="index"
       >
         <container
           :element="element"
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     search() {
-      return null;
+      this.$emit('search');
     },
     color(list, element) {
       const two = 2;
@@ -113,13 +113,16 @@ export default {
     },
     addStep() {
       const text = document.getElementById('textarea');
-      if (this.steps.includes(text.value) === false) {
+      if (text.value === '') {
+        alert(this.$t('msg.recipes.alertEmptyStep')); // eslint-disable-line no-alert
+      } else if (this.steps.includes(text.value) === false) {
         this.steps.push(text.value);
+        this.$emit('update', text.value);
         text.value = '';
         this.forceUpdate = true;
         this.$forceUpdate();
       } else {
-        alert(this.$t('msg.recipes.alert')); // eslint-disable-line no-alert
+        alert(this.$t('msg.recipes.alertExistingStep')); // eslint-disable-line no-alert
       }
     },
     deleteStep(originalText) {

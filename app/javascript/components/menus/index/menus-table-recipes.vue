@@ -17,15 +17,22 @@
     <base-modal
       @cancel="toggleSeeMore"
       v-if="showingSeeMore"
-      :title="$t('msg.recipes.title')"
+      :title="menu.name"
       :ok-button-present="false"
       :cancel-button-label="$t('msg.cancel')"
     >
+      <p class="text-lg">
+        {{ $t('msg.recipes.title') }}:
+      </p>
       <div
         v-for="recipe in menu.menuRecipes.data"
         :key="recipe.attributes.recipe.id"
+        class="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
       >
-        {{ recipe.attributes.recipeQuantity }} {{ recipe.attributes.recipe.name }}
+        <span class="bg-gray-600 h-2 w-2 m-2 rounded-full" />
+        <div class="flex-grow text-sm px-2">
+          {{ recipe.attributes.recipeQuantity }} {{ recipe.attributes.recipe.name }}
+        </div>
       </div>
     </base-modal>
   </div>

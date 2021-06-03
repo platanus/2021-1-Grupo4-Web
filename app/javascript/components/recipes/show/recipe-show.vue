@@ -1,42 +1,53 @@
 <template>
   <div>
-    <!--Title-->
-    <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
-      <div class="flex items-center">
-        <a href="/recipes">
-          <img
-            class="h-6 w-6 text-white mx-2"
-            svg-inline
-            src="../../../../assets/images/arrow-left-svg.svg"
+    <!-- Title and Back Button -->
+    <div class="flex items-center">
+      <a href="/recipes">
+        <img
+          class="h-6 w-6 text-white mx-2"
+          svg-inline
+          src="../../../../assets/images/arrow-left-svg.svg"
+        >
+      </a>
+      <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow mx-2">
+        {{ this.recipe.name }}
+      </div>
+    </div>
+
+    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
+        <!--Info-->
+        <recipe-info
+          :portions="recipe.portions"
+          :cook-minutes="recipe.cookMinutes"
+          :recipe-price="recipePrice"
+        />
+        <!-- Buttons -->
+        <div class="flex items-center">
+          <button
+            class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-red-600 rounded flex-grow-0 mx-2 text-red-600 focus:outline-none"
+            @click="toggleDelModal"
           >
-        </a>
-        <div class="h-7 font-sans font-normal text-2xl text-black flex-grow mx-2">
-          {{ this.recipe.name }}
+            {{ $t('msg.recipes.delete') }}
+          </button>
+          <a
+            :href="`/recipes/${recipeId}/edit`"
+            class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-gray-800 rounded flex-grow-0 mx-2 text-gray-800 focus:outline-none"
+          >
+            {{ $t('msg.recipes.edit') }}
+          </a>
         </div>
       </div>
-      <div class="flex items-center">
-        <button
-          class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-purple-600 rounded flex-grow-0 mx-2 text-purple-600"
-          @click="toggleDelModal"
-        >
-          {{ $t('msg.recipes.delete') }}
-        </button>
-        <button class="flex justify-center items-center px-3 w-24 h-8 bg-white border-2 border-blue-700 rounded flex-grow-0 mx-2 text-blue-700">
-          {{ $t('msg.recipes.edit') }}
-        </button>
+
+      <!-- Body-->
+      <div class="flex items-start justify-between w-auto h-auto self-stretch flex-grow-0 my-4">
+        <recipe-ingredients :recipe-ingredients="this.recipe.recipeIngredients.data" />
+      </div>
+      <div class="flex items-start justify-between w-auto h-auto self-stretch flex-grow-0 my-4">
+        <recipe-instructions :steps="this.recipe.steps.data" />
       </div>
     </div>
-    <!--Info-->
-    <recipe-info
-      :portions="recipe.portions"
-      :cook-minutes="recipe.cookMinutes"
-      :recipe-price="recipePrice"
-    />
-    <!--Body-->
-    <div class="flex items-start justify-between w-auto h-auto self-stretch flex-grow-0 my-4">
-      <recipe-ingredients :recipe-ingredients="this.recipe.recipeIngredients.data" />
-      <recipe-instructions :steps="this.recipe.steps.data" />
-    </div>
+
     <!--DeleteModal-->
     <base-modal
       @ok="deleteRecipe"

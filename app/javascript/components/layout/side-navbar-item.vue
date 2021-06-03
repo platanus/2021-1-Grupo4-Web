@@ -2,6 +2,7 @@
   <div>
     <button
       @click="clickButton"
+      class="focus:outline-none"
       :class="active ? 'bg-yellow-500' : 'bg-gray-800 hover:bg-gray-600'"
     >
       <div class="flex flex-row items-center pt-1 pl-10 pb-1 pr-2 static w-64 h-16 left-0">

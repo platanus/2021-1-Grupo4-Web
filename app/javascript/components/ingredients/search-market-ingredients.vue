@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-3">
+  <div class="pt-3 h-full w-96">
     <div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">

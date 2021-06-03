@@ -21,11 +21,16 @@ import LandingPage from '../components/landing-page.vue';
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
 import RecipeShow from '../components/recipes/show/recipe-show.vue';
+import RecipeEdit from '../components/recipes/edit/recipe-edit.vue';
 import CreateRecipes from '../components/recipes/new/create-recipes.vue';
 import MenusContainer from '../components/menus/index/menus-container.vue';
 import NewMenuContainer from '../components/menus/new/new-menu-container.vue';
 
+
 import ProviderIndexContainer from '../components/providers/index/provider-index-component.vue';
+
+import formatCurrency from '../filters/format-currency.js';
+
 
 Vue.use(VueI18n);
 
@@ -46,11 +51,16 @@ Vue.component('LandingPage', LandingPage);
 Vue.component('IngredientsContainer', IngredientsContainer);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('RecipeShow', RecipeShow);
+Vue.component('RecipeEdit', RecipeEdit);
 Vue.component('CreateRecipes', CreateRecipes);
 Vue.component('MenusContainer', MenusContainer);
 Vue.component('NewMenuContainer', NewMenuContainer);
 
+
 Vue.component('ProviderIndexContainer', ProviderIndexContainer);
+
+Vue.filter('currency', formatCurrency);
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
