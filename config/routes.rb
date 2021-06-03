@@ -40,4 +40,5 @@ Rails.application.routes.draw do
   resources :ingredients, only: [:index]
   resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :new]
+  resources :providers, only: [:index, :new]
 end
