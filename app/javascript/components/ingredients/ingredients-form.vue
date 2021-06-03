@@ -105,6 +105,17 @@
               {{ unit }}
             </option>
           </select>
+          <!-- Add new measures for ingredient -->
+          <base-modal
+            @ok="addMeasure"
+            @cancel="toggleModal"
+            v-if="showingMeasureModal"
+            :title="$t('msg.ingredients.add')"
+            :ok-button-label="$t('msg.add')"
+            :cancel-button-label="$t('msg.cancel')"
+          >
+
+          </base-modal>
 
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
@@ -139,10 +150,12 @@
 </template>
 
 <script>
+import baseModal from '../base/base-modal.vue';
 
 import { getProviders } from './../../api/providers.js';
 
 export default {
+  components: { baseModal },
   props: {
     editMode: { type: Boolean, required: true },
     ingredient: { type: Object, default() {
@@ -163,11 +176,16 @@ export default {
         quantity: '',
         measure: '',
       },
+      showingMeasureModal: false,
       providersNames: [],
     };
   },
-
-  async created() {
+  methods: {
+    addMeasure() {
+      this.showingMeasureModal = !this.showingMeasureModal;
+    },
+  },
+  created() {
     const {
       providerId,
       name,
