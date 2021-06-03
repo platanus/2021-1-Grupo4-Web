@@ -225,7 +225,8 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             price: 666,
             currency: 'Some currency',
             quantity: 666,
-            measure: 'Some measure'
+            measure: 'Some measure',
+            inventory: 25
           }
         end
 
@@ -298,7 +299,8 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             price: 666,
             currency: 'Some currency',
             quantity: 666,
-            measure: 'Some measure'
+            measure: 'Some measure',
+            inventory: 15
           }
         end
 

@@ -61,6 +61,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :currency,
       :quantity,
       :measure,
+      :inventory,
       :provider_id
     )
   end

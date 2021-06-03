@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup
 describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
   let!(:user) { create(:user) }
   let(:user_email) { user.email }
@@ -143,5 +143,64 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       end
     end
   end
+
+  path '/menus/{id}/reduce-inventory' do
+    parameter name: :id, in: :path, type: :integer
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    let!(:first_ingredient) { create(:ingredient, inventory: 12) }
+    let!(:second_ingredient) { create(:ingredient, inventory: 10) }
+    let!(:third_ingredient) { create(:ingredient, inventory: 2) }
+    let!(:first_recipe) { create(:recipe, ingredients: [first_ingredient, second_ingredient]) }
+    let!(:second_recipe) { create(:recipe, ingredients: [third_ingredient]) }
+    let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
+    let(:id) { existent_menu.id }
+
+    def set_recipes_quantities(quantity_for_each)
+      existent_menu.menu_recipes.each do |menu_recipe|
+        menu_recipe.update!(recipe_quantity: quantity_for_each)
+      end
+    end
+
+    def set_ingredients_quantities(recipe, quantity_for_each)
+      recipe.recipe_ingredients.each do |recipe_ingredient|
+        recipe_ingredient.update!(ingredient_quantity: quantity_for_each)
+      end
+    end
+
+    post 'Reduces inventory' do
+      description 'Reduces inventory of ingredients of menu through recipes'
+      consumes 'application/json'
+      produces 'application/json'
+
+      let(:recipes_quantities) { 3 }
+      let(:first_recipe_ingredients_quantities) { 1 }
+      let(:second_recipe_ingredients_quantities) { 2 }
+      let(:expected_inventory_first_ingredient) do
+        first_ingredient.inventory - first_recipe_ingredients_quantities * recipes_quantities
+      end
+      let(:expected_inventory_second_ingredient) do
+        second_ingredient.inventory - first_recipe_ingredients_quantities * recipes_quantities
+      end
+      let(:expected_inventory_thirdingredient) do
+        third_ingredient.inventory - second_recipe_ingredients_quantities * recipes_quantities
+      end
+
+      before do
+        set_recipes_quantities(recipes_quantities)
+        set_ingredients_quantities(first_recipe, first_recipe_ingredients_quantities)
+        set_ingredients_quantities(second_recipe, second_recipe_ingredients_quantities)
+      end
+
+      response '200', 'reduced inventory of menu' do
+        run_test! do
+          expect(first_ingredient.reload.inventory).to eq(9)
+          expect(second_ingredient.reload.inventory).to eq(7)
+          expect(third_ingredient.reload.inventory).to eq(0)
+        end
+      end
+    end
+  end
 end
-# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup

@@ -3,6 +3,13 @@ class Ingredient < ApplicationRecord
   belongs_to :provider, optional: true
   has_many :recipe_ingredients, dependent: :destroy
   has_many :recipes, through: :recipe_ingredients, dependent: nil
+
+  validates :inventory, numericality: { greater_than_or_equal_to: 0 }
+
+  def decrement_inventory!(quantity_to_decrement)
+    final_inventory = [inventory - quantity_to_decrement, 0].max
+    update!(inventory: final_inventory)
+  end
 end
 
 # == Schema Information
@@ -20,6 +27,7 @@ end
 #  measure     :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  inventory   :integer          default(0)
 #
 # Indexes
 #
