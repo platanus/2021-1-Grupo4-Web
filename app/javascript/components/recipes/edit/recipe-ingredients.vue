@@ -1,3 +1,4 @@
+/* eslint-disable vue/max-len */
 <template>
   <div class="flex items-start justify-between w-auto h-auto flex-none self-stretch flex-grow-0 mb-8">
     <!-- igredientes para agregar -->
@@ -11,10 +12,11 @@
         <!-- ingredientes disponibles -->
         <div class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
           <add-ingredient-card
-            v-for="ingredient in this.ingredients"
+            v-for="ingredient in ingredients"
             :key="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price"
+            @add="addIngredient(ingredient)"
           >
             {{ ingredient.name }}
           </add-ingredient-card>
@@ -27,8 +29,6 @@
         <div class="flex items-start h-6 bg-gray-50 font-sans font-medium text-base text-black flex-none self-stretch flex-grow-0 mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
-        <!-- {{ recipeIngredients.length }}
-        {{ recipeIngredients }} -->
         <div
           class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
           v-if="recipeIngredients.length > 0"
@@ -91,8 +91,14 @@ export default {
   },
   computed: {
     recipePrice() {
-      // eslint-disable-next-line max-len
-      return this.recipeIngredients.map(ingredient => ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
+      return this.recipeIngredients.map(ingredient =>
+        ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
+    },
+  },
+  methods: {
+    addIngredient(element) {
+      console.log(element);
+      this.newIngredientsSelected.push(element);
     },
   },
 };

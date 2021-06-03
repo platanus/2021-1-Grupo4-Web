@@ -15,7 +15,10 @@
       </div>
     </div>
     <!-- button -->
-    <button class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none flex-grow-0 my-auto mx-3">
+    <button
+      class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none flex-grow-0 my-auto mx-3"
+      @click="addIngredient()"
+    >
       <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none flex-grow-0">
         {{ $t('msg.ingredients.searchAdd') }}
       </div>
@@ -29,6 +32,11 @@ export default {
   props: {
     name: { type: String, required: true },
     price: { type: Number, required: true },
+  },
+  methods: {
+    addIngredient() {
+      this.$emit('add');
+    },
   },
 };
 </script>
