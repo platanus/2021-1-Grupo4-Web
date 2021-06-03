@@ -31,17 +31,20 @@
         </div>
         <div
           class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
-          v-if="recipeIngredients.length > 0"
+          v-if="selectedIngredients.length > 0"
         >
-          <selected-ingredient-card
+          <div
             v-for="ingredient in selectedIngredients"
             :key="ingredient.id"
-            :name="ingredient.name"
-            :price="ingredient.price"
-            @delete="deleteIngredient(ingredient)"
           >
-            {{ ingredient.name }}
-          </selected-ingredient-card>
+            <selected-ingredient-card
+              :name="ingredient.name"
+              :price="ingredient.price"
+              @delete="deleteIngredient(ingredient)"
+            >
+              {{ ingredient.name }}
+            </selected-ingredient-card>
+          </div>
         </div>
         <div
           class="flex items-start h-6 bg-gray-50 font-sans font-light text-base text-black flex-none self-stretch flex-grow-0 mb-3"
@@ -100,6 +103,7 @@ export default {
   watch: {
     recipeIngredients() {
       this.selectedIngredients = this.recipeIngredients.map(element => element.attributes.ingredient);
+      console.log(this.selectedIngredients);
     },
   },
   methods: {
