@@ -145,10 +145,6 @@ export default {
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
       this.recipesShow = this.recipesAll;
-      this.filters.price.min = '';
-      this.filters.price.max = '';
-      this.filters.portions.min = '';
-      this.filters.portions.max = '';
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
@@ -158,6 +154,7 @@ export default {
     updateRecipes(data) {
       this.recipesToDisplay = data;
       // this.updateRecipes();
+      this.updateRecipesFiltered();
     },
   },
 };
