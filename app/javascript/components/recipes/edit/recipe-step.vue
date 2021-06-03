@@ -11,12 +11,12 @@
     <!-- numero paso -->
     <div class="flex flex-col justify-center w-6 h-6 bg-yellow-500 shadow-sm rounded-full flex-none flex-grow-0 items-center mr-4 ">
       <div class="font-sans font-normal text-lg text-white my-auto">
-        {{ step.stepOrderRank + 1 }}
+        {{ index + 1 }}
       </div>
     </div>
     <!-- descripcion paso -->
     <div class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4">
-      {{ step.description }}
+      {{ step }}
     </div>
   </div>
 </template>
@@ -25,7 +25,8 @@
 
 export default {
   props: {
-    step: { type: Object, required: true },
+    step: { type: String, required: true },
+    index: { type: Number, required: true },
   },
 };
 </script>

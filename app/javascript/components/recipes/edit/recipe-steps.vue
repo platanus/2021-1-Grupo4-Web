@@ -7,12 +7,13 @@
     </div>
     <div
       class="mb-8"
-      v-if="recipe.steps.data.length > 0"
+      v-if="recipeSteps.length > 0"
     >
       <recipe-step
-        v-for="step in recipe.steps.data"
-        :key="step.id"
-        :step="step.attributes"
+        v-for="(step, index) in recipeSteps"
+        :key="index"
+        :step="step"
+        :index="index"
       />
     </div>
     <div
@@ -45,6 +46,7 @@ export default {
   data() {
     return {
       recipeSteps: [],
+      error: '',
     };
   },
   props: {
@@ -55,15 +57,21 @@ export default {
   },
   methods: {
     addStep() {
-      console.log(this.recipeSteps);
       const step = this.$refs.step.value;
       this.recipeSteps.push(step);
-      console.log(step);
-      console.log(this.recipeSteps);
+    },
+  },
+  watch: {
+    recipe() {
+      this.recipeSteps = this.recipe.steps.data.map(element => element.attributes.description);
     },
   },
   async created() {
-    this.recipeSteps = this.recipe.steps.data;
+    try {
+      this.recipeSteps = await this.recipe.steps.data.map(element => element.attributes.description);
+    } catch (error) {
+      this.error = error;
+    }
   },
 };
 </script>
