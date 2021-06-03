@@ -13,6 +13,7 @@
           :svg="svg"
           :input="input"
           :color="color('elements', element)"
+          @del-ingredient="delIngredient(element)"
         />
       </div>
     </div>
@@ -133,6 +134,11 @@ export default {
     editStep(originalText, newText) {
       const index = this.steps.indexOf(originalText);
       this.steps[index] = newText;
+      this.$forceUpdate();
+    },
+    delIngredient(ingredient) {
+      const index = this.elements.indexOf(ingredient);
+      this.elements.splice(index, 1);
       this.$forceUpdate();
     },
   },
