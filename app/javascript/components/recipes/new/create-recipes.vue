@@ -128,6 +128,7 @@ export default {
         portions: '',
         cook_minutes: '', // eslint-disable-line camelcase
         steps_attributes: [], // eslint-disable-line camelcase
+        recipe_ingredients_attributes: [], // eslint-disable-line camelcase
       },
       steps: [],
       error: '',
@@ -156,6 +157,12 @@ export default {
 
         return false;
       }
+      this.ingredients.forEach(ingredient => {
+        this.recipe.recipe_ingredients_attributes.push({
+          "ingredient_id": ingredient.id,
+          "ingredient_quantity": ingredient.ingredientQuantity,
+        });
+      });
       try {
         await postRecipe(this.recipe);
         window.location = '/recipes';

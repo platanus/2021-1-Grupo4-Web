@@ -9,6 +9,7 @@
       >
         <div class="justify-self-start">
           <input
+            v-model="element.ingredientQuantity"
             class="w-16 h-12 self-center bg-white text-gray-700
             border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             v-if="input"
