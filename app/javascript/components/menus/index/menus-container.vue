@@ -7,7 +7,22 @@
     </div>
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <div class="flex items-center pb-6">
-        <menus-search-bar :placeholder="$t('msg.menus.search')" />
+        <div class="relative text-yellow-700">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <img
+              svg-inline
+              src="../../../../assets/images/magnifyng-glass-svg.svg"
+              class="w-6 h-6 text-yellow-700"
+            >
+          </span>
+          <input
+            class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
+            :placeholder="$t('msg.menus.search')"
+            autocomplete="off"
+            @keyup="filterMenus"
+            v-model="searchQuery"
+          >
+        </div>
         <base-button
           :elements="{ placeholder: $t('msg.menus.add'),
                        color: 'bg-green-500 hover:bg-green-700 text-white' }"
@@ -22,7 +37,7 @@
         </p>
         <menus-table
           v-else
-          :menus="menus"
+          :menus="filterMenus"
           @edit="toggleEditModal"
           @del="toggleDelModal"
         />
@@ -44,12 +59,10 @@
 
 <script>
 import { getMenus, deleteMenu } from './../../../api/menus.js';
-import MenusSearchBar from './menus-search-bar.vue';
 import MenusTable from './menus-table.vue';
 
 export default {
   components: {
-    MenusSearchBar,
     MenusTable,
   },
   data() {
@@ -57,6 +70,7 @@ export default {
       showingEdit: false,
       showingDel: false,
       menus: [],
+      searchQuery: null,
       menuToDelete: {},
     };
   },
@@ -71,6 +85,18 @@ export default {
     } catch (error) {
       this.error = error;
     }
+  },
+  computed: {
+    filterMenus() {
+      if (this.searchQuery) {
+        return this.menus.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.menus;
+    },
   },
   methods: {
     redirectAddMenu() {

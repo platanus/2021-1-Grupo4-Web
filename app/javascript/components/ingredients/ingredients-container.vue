@@ -11,10 +11,21 @@
       <div class="flex flex-col p-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
         <!--SearchBar y Button-->
         <div class="flex items-center">
-          <ingredients-search-bar
-            kind="ingredient"
-            :placeholder="$t('msg.ingredients.search')"
-          />
+          <div class="relative text-yellow-700">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <img
+                svg-inline
+                src="../../../assets/images/magnifyng-glass-svg.svg"
+                class="w-6 h-6 text-yellow-700"
+              >
+            </span>
+            <input
+              class="my-4 py-2 pl-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
+              :placeholder="$t('msg.ingredients.search')"
+              @keyup="filterIngredients"
+              v-model="searchQuery"
+            >
+          </div>
           <base-button
             :elements="{ placeholder: $t('msg.ingredients.add'),
                          color: 'bg-green-500 hover:bg-green-700 text-white' }"
@@ -36,7 +47,7 @@
           </p>
           <ingredients-table
             v-else
-            :ingredients="this.ingredients"
+            :ingredients="filterIngredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"
           />
@@ -107,7 +118,6 @@
 <script>
 
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
-import IngredientsSearchBar from './ingredients-search-bar';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
@@ -123,12 +133,12 @@ export default {
       ingredientToEdit: {},
       ingredientToDelete: {},
       ingredients: [],
+      searchQuery: '',
       error: '',
     };
   },
 
   components: {
-    IngredientsSearchBar,
     IngredientsForm,
     SearchMarketIngredients,
     IngredientsTable,
@@ -146,6 +156,20 @@ export default {
       this.error = error;
     }
   },
+
+  computed: {
+    filterIngredients() {
+      if (this.searchQuery) {
+        return this.ingredients.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
+    },
+  },
+
   methods: {
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
