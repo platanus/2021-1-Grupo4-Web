@@ -34,10 +34,10 @@
           v-if="recipeIngredients.length > 0"
         >
           <selected-ingredient-card
-            v-for="ingredient in recipeIngredients"
+            v-for="ingredient in selectedIngredients"
             :key="ingredient.id"
-            :name="ingredient.attributes.ingredient.name"
-            :price="ingredient.attributes.ingredient.price"
+            :name="ingredient.name"
+            :price="ingredient.price"
           >
             {{ ingredient.name }}
           </selected-ingredient-card>
@@ -68,6 +68,7 @@ export default {
     return {
       ingredients: [],
       error: '',
+      selectedIngredients: [],
     };
   },
   components: {
@@ -95,10 +96,15 @@ export default {
         ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
     },
   },
+  watch: {
+    recipeIngredients() {
+      this.selectedIngredients = this.recipeIngredients.map(element => element.attributes.ingredient);
+    },
+  },
   methods: {
     addIngredient(element) {
       console.log(element);
-      this.newIngredientsSelected.push(element);
+      this.selectedIngredients.push(element);
     },
   },
 };
