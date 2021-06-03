@@ -18,6 +18,28 @@ MENU_SCHEMA = {
   ]
 }
 
+MENU_UPDATE_SCHEMA = {
+  type: :object,
+  properties: {
+    name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
+    menu_recipes_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1, 'x-nullable': true },
+          recipe_id: { type: :integer, example: 1, 'x-nullable': false },
+          recipe_quantity: { type: :integer, example: 5, 'x-nullable': true },
+          _destroy: { type: :boolean, example: false, 'x-nullable': true }
+        }
+      }
+    }
+  },
+  required: [
+    :name
+  ]
+}
+
 MENU_RESPONSE_SCHEMA = {
   type: :object,
   properties: {

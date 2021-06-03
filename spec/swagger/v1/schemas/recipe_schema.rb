@@ -4,6 +4,52 @@ RECIPE_SCHEMA = {
     name: { type: :string, example: 'Pastel de choclo', 'x-nullable': true },
     portions: { type: :integer, example: 4, 'x-nullable': true },
     cook_minutes: { type: :integer, example: 25, 'x-nullable': true },
+    recipe_ingredients_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          ingredient_id: { type: :integer, example: 2, 'x-nullable': false },
+          ingredient_quantity: { type: :integer, example: 5, 'x-nullable': false }
+        }
+      }
+    },
+    steps_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          description: { type: :string, example: 'Horneamos la masa', 'x-nullable': false },
+          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true }
+        }
+      }
+    }
+  },
+  required: [
+    :name,
+    :portions,
+    :cook_minutes
+  ]
+}
+
+RECIPE_UPDATE_SCHEMA = {
+  type: :object,
+  properties: {
+    name: { type: :string, example: 'Pastel de choclo', 'x-nullable': true },
+    portions: { type: :integer, example: 4, 'x-nullable': true },
+    cook_minutes: { type: :integer, example: 25, 'x-nullable': true },
+    recipe_ingredients_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1, 'x-nullable': true },
+          ingredient_id: { type: :integer, example: 2, 'x-nullable': false },
+          ingredient_quantity: { type: :integer, example: 5, 'x-nullable': false },
+          _destroy: { type: :boolean, example: false, 'x-nullable': true }
+        }
+      }
+    },
     steps_attributes: {
       type: "array",
       items: {
