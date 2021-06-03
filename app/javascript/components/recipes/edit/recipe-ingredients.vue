@@ -38,6 +38,7 @@
             :key="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price"
+            @delete="deleteIngredient(ingredient)"
           >
             {{ ingredient.name }}
           </selected-ingredient-card>
@@ -103,8 +104,15 @@ export default {
   },
   methods: {
     addIngredient(element) {
-      console.log(element);
+      console.log(this.selectedIngredients);
       this.selectedIngredients.push(element);
+    },
+    deleteIngredient(element) {
+      console.log(this.selectedIngredients);
+      const index = this.selectedIngredients.indexOf(element);
+      if (index > -1) {
+        this.selectedIngredients.splice(index, 1);
+      }
     },
   },
 };
