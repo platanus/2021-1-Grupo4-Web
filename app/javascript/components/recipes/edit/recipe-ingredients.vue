@@ -73,6 +73,8 @@ export default {
       ingredients: [],
       error: '',
       selectedIngredients: [],
+      // eslint-disable-next-line camelcase
+      selectedIngredients2: [],
     };
   },
   components: {
@@ -81,14 +83,18 @@ export default {
   },
   props: {
     recipeIngredients: { type: Array, required: true },
+    recipeIngredientId: { type: String, required: true },
   },
   async created() {
     try {
       const response = await getIngredients();
+      console.log('AA', response);
       this.ingredients = response.data.data.map((element) => ({
-        id: element.id,
+        // RecipeIngredientId: element.id,
+        IngredientId: element.id,
         ...element.attributes,
       }));
+      console.log('ingredientes', this.ingredients);
       this.error = '';
     } catch (error) {
       this.error = error;
@@ -102,14 +108,21 @@ export default {
   },
   watch: {
     recipeIngredients() {
+      this.selectedIngredients2.push({ id: this.recipeIngredients.id,
+        ingredientId: this.recipeIngredients.attributes.ingredient.id,
+        ingredientQuantity: this.recipeIngredients.attributes.ingredient.quantity,
+        _destroy: false });
+
       this.selectedIngredients = this.recipeIngredients.map(element => element.attributes.ingredient);
-      console.log(this.selectedIngredients);
     },
   },
   methods: {
     addIngredient(element) {
-      console.log(this.selectedIngredients);
+      console.log('elemento', element);
+      this.selectedIngredients2.push({ ingredientId: element.IngredientId,
+        ingredientQuantity: element.quantity, _destroy: false });
       this.selectedIngredients.push(element);
+      console.log(this.selectedIngredients2);
     },
     deleteIngredient(element) {
       console.log(this.selectedIngredients);

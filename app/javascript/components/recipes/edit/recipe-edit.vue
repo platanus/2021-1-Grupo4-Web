@@ -30,7 +30,10 @@
       <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
-      <recipe-ingredients :recipe-ingredients="recipe.recipeIngredients.data" />
+      <recipe-ingredients
+        :recipe-ingredients="recipe.recipeIngredients.data"
+        :recipe-ingredient-id="recipeIngredientId"
+      />
       <!-- pasos -->
       <recipe-steps :recipe="recipe" />
       <!--  botones -->
@@ -38,7 +41,8 @@
         <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8">
           {{ $t('msg.recipes.cancel') }}
         </button>
-        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0">
+        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
+          @click="UpdateRecipe">
           {{ $t('msg.recipes.saveChanges') }}
         </button>
       </div>
@@ -65,6 +69,7 @@ export default {
     return {
       status: '',
       error: '',
+      recipeIngredientId: '',
       recipe: {
         name: '',
         portions: 0,
@@ -77,11 +82,17 @@ export default {
   async created() {
     try {
       const response = await getRecipe(this.recipeId);
+      this.recipeIngredientId = response.data.data.id;
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
       this.error = error;
     }
+  },
+  methods: {
+    UpdateRecipe() {
+      // Hacer Post
+    },
   },
 };
 </script>
