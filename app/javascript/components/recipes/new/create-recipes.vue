@@ -159,8 +159,8 @@ export default {
       }
       this.ingredients.forEach(ingredient => {
         this.recipe.recipe_ingredients_attributes.push({
-          "ingredient_id": ingredient.id,
-          "ingredient_quantity": ingredient.ingredientQuantity,
+          'ingredient_id': ingredient.id,
+          'ingredient_quantity': ingredient.ingredientQuantity,
         });
       });
       try {
