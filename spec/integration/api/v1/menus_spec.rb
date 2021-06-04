@@ -157,17 +157,15 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
 
+    # rubocop:disable Rails/SkipsModelValidations
     def set_recipes_quantities(quantity_for_each)
-      existent_menu.menu_recipes.each do |menu_recipe|
-        menu_recipe.update!(recipe_quantity: quantity_for_each)
-      end
+      existent_menu.menu_recipes.update_all(recipe_quantity: quantity_for_each)
     end
 
     def set_ingredients_quantities(recipe, quantity_for_each)
-      recipe.recipe_ingredients.each do |recipe_ingredient|
-        recipe_ingredient.update!(ingredient_quantity: quantity_for_each)
-      end
+      recipe.recipe_ingredients.update_all(ingredient_quantity: quantity_for_each)
     end
+    # rubocop:enable Rails/SkipsModelValidations
 
     post 'Reduces inventory' do
       description 'Reduces inventory of ingredients of menu through recipes'
