@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="relative">
     <button
       class="focus:outline-none"
-      @click="openDropdown"
+      @click="toggleDropdown"
     >
       <img
         svg-inline
@@ -11,20 +11,20 @@
       >
     </button>
     <div v-if="active">
-      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer">
+      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10">
         <ul>
           <li class="hover:bg-gray-100">
             <a
               class="font-semibold block px-4 py-3"
               v-if="elements.edit"
-              @click="editIngredient"
+              @click="editElement"
             >{{ $t('msg.edit') }}</a>
           </li>
           <li class="hover:bg-gray-100">
             <a
               class="font-semibold block px-4 py-3"
               v-if="elements.del"
-              @click="deleteIngredient"
+              @click="deleteElement"
             >{{ $t('msg.delete') }}</a>
           </li>
         </ul>
@@ -44,16 +44,16 @@ export default {
     };
   },
   methods: {
-    openDropdown() {
+    toggleDropdown() {
       this.active = !this.active;
     },
-    editIngredient() {
+    editElement() {
       this.$emit('edit');
-      this.active = !this.active;
+      this.toggleDropdown();
     },
-    deleteIngredient() {
+    deleteElement() {
       this.$emit('del');
-      this.active = !this.active;
+      this.toggleDropdown();
     },
   },
 };

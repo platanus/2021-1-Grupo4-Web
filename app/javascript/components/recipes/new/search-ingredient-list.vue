@@ -4,7 +4,8 @@
       <input
         :placeholder="$t(`msg.ingredients.search`)"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
-      />
+        v-model="query"
+      >
     </div>
     <table class="min-w-full divide-y divide-gray-200 border-2">
       <thead class="justify-between">
@@ -21,7 +22,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(ingredient, idx) in ingredients"
+          v-for="(ingredient, idx) in filteredIngredients"
           :key="idx"
           class="bg-white border-2"
         >
@@ -60,11 +61,24 @@ export default {
   data() {
     return {
       header: ['name', 'price', 'quantity', 'measure'],
+      query: '',
     };
   },
   methods: {
     addIngredient(object) {
       this.$emit('add-ingredient', object);
+    },
+  },
+  computed: {
+    filteredIngredients() {
+      if (this.query) {
+        return this.ingredients.filter(item => this.query
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
     },
   },
 };
