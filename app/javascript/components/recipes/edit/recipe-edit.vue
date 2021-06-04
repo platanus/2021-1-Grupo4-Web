@@ -71,7 +71,10 @@
       />
       <!--  botones -->
       <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
-        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8">
+        <button 
+          class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8"
+          @click="cancelEdit"
+        >
           {{ $t('msg.recipes.cancel') }}
         </button>
         <button
@@ -124,11 +127,14 @@ export default {
     }
   },
   methods: {
+    cancelEdit() {
+      window.location = `/recipes/${this.recipeId}`;
+    },
     async editRecipe() {
       try {
         const updatedRecipe = this.getUpdatedRecipe();
         await updateRecipe(this.recipe.id, updatedRecipe);
-        window.location = '/recipes';
+        window.location = `/recipes/${this.recipeId}`;
         this.error = '';
       } catch (error) {
         this.error = error;

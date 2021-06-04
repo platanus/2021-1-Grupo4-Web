@@ -20,7 +20,7 @@
 
     <div v-if="input">
       <div
-        class="bg-gray-100 flex p-4 px-8 justify-between"
+        class="bg-gray-100 flex p-4 px-8 justify-between mt-4"
       >
         <div>
           {{ $t('msg.recipes.cost') }}

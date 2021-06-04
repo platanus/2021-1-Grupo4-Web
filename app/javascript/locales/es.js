@@ -88,7 +88,7 @@ export default {
       },
       alertExistingStep: 'Ese paso ya existe',
       alertEmptyStep: 'Ingresa información al paso',
-      alertEmptyBasicInformation: 'Falta completar información básica'
+      alertEmptyBasicInformation: 'Falta completar información básica',
     },
 
     menus: {
