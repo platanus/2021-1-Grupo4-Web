@@ -2,6 +2,7 @@ MENU_SCHEMA = {
   type: :object,
   properties: {
     name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
+    portions: { type: :integer, example: 5, 'x-nullable': false },
     menu_recipes_attributes: {
       type: "array",
       items: {
@@ -22,6 +23,7 @@ MENU_UPDATE_SCHEMA = {
   type: :object,
   properties: {
     name: { type: :string, example: 'Menú de almuerzo', 'x-nullable': true },
+    portions: { type: :integer, example: 5, 'x-nullable': false },
     menu_recipes_attributes: {
       type: "array",
       items: {
