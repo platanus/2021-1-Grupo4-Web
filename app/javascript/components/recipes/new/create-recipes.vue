@@ -53,6 +53,7 @@
           :input="true"
           :drag="false"
           @search="toggleAddIngredientModal"
+          @del-ingredients="deleteRecipeIngredients"
         />
       </div>
       <div
@@ -199,6 +200,9 @@ export default {
     },
     deleteIngredient(index) {
       this.selectedIngredients.splice(index, 1);
+    },
+    deleteRecipeIngredients(ingredient) {
+      this.ingredients = this.ingredients.filter((originalIngredient) => originalIngredient.id !== ingredient.id);
     },
     async successResponse(status) {
       this.status = status;

@@ -24,7 +24,9 @@
           <span>{{ element.name }}</span>
         </div>
         <div class="text-right">
-          <button>
+          <button
+            @click="deleteIngredient"
+          >
             <img
               class="w-4 h-4"
               v-if="svg.cancel"
@@ -135,6 +137,9 @@ export default {
     },
     delStep() {
       this.$emit('del', this.text);
+    },
+    deleteIngredient() {
+      this.$emit('del-ingredient');
     },
     acceptEdit() {
       const text = document.getElementById('newTextBox').value;
