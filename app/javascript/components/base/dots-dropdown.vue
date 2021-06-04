@@ -52,7 +52,7 @@ export default {
       this.toggleDropdown();
     },
     deleteElement() {
-      this.$emit('del');
+      this.$emit('delete');
       this.toggleDropdown();
     },
   },

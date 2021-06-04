@@ -71,13 +71,13 @@ export default {
   },
   methods: {
     deleteIngredient() {
-      this.$emit('delIngredient', this.recipeIngredientIdx);
+      this.$emit('delete-ingredient', this.recipeIngredientIdx);
     },
     increaseQuantity() {
-      this.$emit('incrQty', this.recipeIngredientIdx);
+      this.$emit('increase-quantity', this.recipeIngredientIdx);
     },
     decreaseQuantity() {
-      this.$emit('decrQty', this.recipeIngredientIdx);
+      this.$emit('decrease-quantity', this.recipeIngredientIdx);
     },
   },
   computed: {

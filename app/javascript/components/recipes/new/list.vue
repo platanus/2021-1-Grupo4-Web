@@ -13,7 +13,7 @@
           :svg="svg"
           :input="input"
           :color="color('elements', element)"
-          @delIngredient="deleteIngredient"
+          @delete-ingredient="deleteIngredient"
         />
       </div>
     </div>
@@ -138,7 +138,7 @@ export default {
       this.$forceUpdate();
     },
     deleteIngredient(element) {
-      this.$emit('delIngredient', element);
+      this.$emit('delete-ingredient', element);
     },
     getPriceOfSelectedIngredient(ingredient) {
       if (!ingredient.ingredientQuantity) return 0;

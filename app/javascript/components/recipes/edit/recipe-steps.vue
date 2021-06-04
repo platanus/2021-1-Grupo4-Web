@@ -28,7 +28,7 @@
               :elements="{
                 del: true
               }"
-              @del="deleteStep(idx)"
+              @delete="deleteStep(idx)"
             />
           </div>
         </div>
@@ -72,11 +72,11 @@ export default {
     addStep() {
       if (!this.newStepDescription) return;
 
-      this.$emit('newStep', this.newStepDescription);
+      this.$emit('new-step', this.newStepDescription);
       this.newStepDescription = null;
     },
     deleteStep(idx) {
-      this.$emit('delStep', idx);
+      this.$emit('delete-step', idx);
     },
   },
 };

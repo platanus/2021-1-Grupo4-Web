@@ -41,9 +41,9 @@
             <selected-ingredient-card
               :recipe-ingredient-idx="idx"
               :recipe-ingredient-attrs="recipeIngredient.attributes"
-              @delIngredient="deleteIngredient"
-              @incrQty="increaseQuantity"
-              @decrQty="decreaseQuantity"
+              @delete-ingredient="deleteIngredient"
+              @increase-quantity="increaseQuantity"
+              @decrease-quantity="decreaseQuantity"
             >
               {{ recipeIngredient.attributes.ingredient.name }}
             </selected-ingredient-card>
@@ -115,16 +115,16 @@ export default {
   },
   methods: {
     addIngredient(ingredient) {
-      this.$emit('addIngredient', ingredient);
+      this.$emit('add-ingredient', ingredient);
     },
     deleteIngredient(recipeIngredientIdx) {
-      this.$emit('delIngredient', recipeIngredientIdx);
+      this.$emit('delete-ingredient', recipeIngredientIdx);
     },
     increaseQuantity(recipeIngredientIdx) {
-      this.$emit('incrQty', recipeIngredientIdx);
+      this.$emit('increase-quantity', recipeIngredientIdx);
     },
     decreaseQuantity(recipeIngredientIdx) {
-      this.$emit('decrQty', recipeIngredientIdx);
+      this.$emit('decrease-quantity', recipeIngredientIdx);
     },
     getPriceOfSelectedIngredient(recipeIngredient) {
       if (!recipeIngredient.ingredientQuantity) return 0;

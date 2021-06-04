@@ -53,7 +53,7 @@
           :input="true"
           :drag="false"
           @search="toggleAddIngredientModal"
-          @delIngredient="deleteIngredient"
+          @delete-ingredient="deleteIngredient"
         />
       </div>
       <div
@@ -154,7 +154,7 @@ export default {
   methods: {
     async create() {
       if (this.recipe.name === '' || this.recipe.portions === '' || this.recipe.preparation === '') {
-        alert(this.$t('msg.recipes.alertEmptyStep')); // eslint-disable-line no-alert
+        alert(this.$t('msg.recipes.alertEmptyBasicInformation')); // eslint-disable-line no-alert
 
         return false;
       }

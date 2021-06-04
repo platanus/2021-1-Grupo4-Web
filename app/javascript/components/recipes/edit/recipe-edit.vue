@@ -58,16 +58,16 @@
       </div>
       <recipe-ingredients
         :recipe-ingredients="recipe.recipeIngredients.data"
-        @addIngredient="addIngredient"
-        @delIngredient="deleteIngredient"
-        @incrQty="increaseQuantity"
-        @decrQty="decreaseQuantity"
+        @add-ingredient="addIngredient"
+        @delete-ingredient="deleteIngredient"
+        @increase-quantity="increaseQuantity"
+        @decrease-quantity="decreaseQuantity"
       />
       <!-- pasos -->
       <recipe-steps
         :recipe-steps="recipe.steps.data"
-        @newStep="addStep"
-        @delStep="deleteStep"
+        @new-step="addStep"
+        @delete-step="deleteStep"
       />
       <!--  botones -->
       <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">

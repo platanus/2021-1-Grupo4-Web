@@ -136,9 +136,6 @@ export default {
     delStep() {
       this.$emit('del', this.text);
     },
-    deleteIngredient() {
-      this.$emit('del-ingredient');
-    },
     acceptEdit() {
       const text = document.getElementById('newTextBox').value;
       this.$emit('edit', this.text, text);
@@ -148,7 +145,7 @@ export default {
       this.edit = !this.edit;
     },
     deleteIngredient() {
-      this.$emit('delIngredient', this.element);
+      this.$emit('delete-ingredient', this.element);
     },
   },
 };
