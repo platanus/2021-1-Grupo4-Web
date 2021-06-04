@@ -23,7 +23,7 @@
         </div>
         <div class="text-right">
           <button
-            @click="deleteIngredient()"
+            @click="deleteIngredient"
           >
             <img
               class="w-4 h-4"
@@ -135,6 +135,9 @@ export default {
     },
     delStep() {
       this.$emit('del', this.text);
+    },
+    deleteIngredient() {
+      this.$emit('del-ingredient');
     },
     acceptEdit() {
       const text = document.getElementById('newTextBox').value;

@@ -111,5 +111,22 @@ export default {
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
     },
+    providers: {
+      title: 'Proveedores',
+      search: 'Buscar proveedores...',
+      name: 'Nombre',
+      address: 'Dirección',
+      country: 'Pais',
+      email: 'Correo',
+      webpageUrl: 'Página Web',
+      minimumPurchase: 'Mínimo de Compra',
+      deliveryDays: 'Tiempo de Entrega',
+      phone: 'Teléfono',
+      add: 'Agregar Proveedor',
+      delete: 'Eliminar proveedor',
+      edit: 'Editar Proveedor',
+      deleteMsg: 'Estás seguro de que deseas eliminar este proveedor?',
+
+    },
   },
 };
