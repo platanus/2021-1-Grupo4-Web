@@ -71,7 +71,7 @@
       />
       <!--  botones -->
       <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
-        <button 
+        <button
           class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8"
           @click="cancelEdit"
         >
