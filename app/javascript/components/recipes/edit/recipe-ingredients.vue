@@ -8,11 +8,12 @@
         <input
           class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded self-stretch mb-8"
           :placeholder="$t('msg.recipes.searchIngredient')"
+          v-model="query"
         >
         <!-- ingredientes disponibles -->
         <div class="flex flex-col bg-gray-200 overflow-scroll">
           <add-ingredient-card
-            v-for="ingredient in ingredients"
+            v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price / ingredient.quantity"
@@ -74,6 +75,7 @@ export default {
     return {
       ingredients: [],
       error: '',
+      query: '',
     };
   },
   components: {
@@ -99,6 +101,16 @@ export default {
     recipePrice() {
       return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+    },
+    filteredIngredients() {
+      if (this.query) {
+        return this.ingredients.filter(item => this.query
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
     },
   },
   methods: {

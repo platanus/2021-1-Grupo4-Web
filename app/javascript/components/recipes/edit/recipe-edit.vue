@@ -64,7 +64,11 @@
         @decrQty="decreaseQuantity"
       />
       <!-- pasos -->
-      <recipe-steps :recipe="recipe" />
+      <recipe-steps
+        :recipe-steps="recipe.steps.data"
+        @newStep="addStep"
+        @delStep="deleteStep"
+      />
       <!--  botones -->
       <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
         <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8">
@@ -107,6 +111,7 @@ export default {
         steps: { data: [] },
       },
       deletedRecipes: [],
+      deletedSteps: [],
     };
   },
   async created() {
@@ -159,7 +164,19 @@ export default {
       const updatedRecipe = { name: this.recipe.name,
         cookMinutes: this.recipe.cookMinutes, portions: this.recipe.portions };
 
+      this.addUpdatedRecipeIngredients(updatedRecipe);
+      this.addUpdatedSteps(updatedRecipe);
+
+      return updatedRecipe;
+    },
+    addUpdatedRecipeIngredients(updatedRecipe) {
       const recipeIngredientsAttributes = [];
+
+      this.addNewAndUpdatedRecipes(recipeIngredientsAttributes);
+      this.addDeletedRecipeIngredients(recipeIngredientsAttributes);
+      updatedRecipe.recipeIngredientsAttributes = recipeIngredientsAttributes;
+    },
+    addNewAndUpdatedRecipes(recipeIngredientsAttributes) {
       for (const recipeIngredient of this.recipe.recipeIngredients.data) {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
@@ -170,19 +187,51 @@ export default {
         }
         recipeIngredientsAttributes.push(hash);
       }
-      this.addDeletedRecipeIngredients(recipeIngredientsAttributes);
-      updatedRecipe.recipeIngredientsAttributes = recipeIngredientsAttributes;
-
-      return updatedRecipe;
     },
-
     addDeletedRecipeIngredients(recipeIngredientsAttributes) {
       for (const recipeIngredient of this.deletedRecipes) {
         recipeIngredientsAttributes.push(
           {
             id: recipeIngredient.id,
-            ingredientId: recipeIngredient.attributes.ingredient.id,
-            ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+            _destroy: true,
+          },
+        );
+      }
+    },
+    addStep(stepDescription) {
+      const newStep = { attributes: { description: stepDescription } };
+      this.recipe.steps.data.push(newStep);
+    },
+    deleteStep(stepIdx) {
+      if (!!this.recipe.steps.data[stepIdx].id) {
+        this.deletedSteps.push(this.recipe.steps.data[stepIdx]);
+      }
+      this.recipe.steps.data.splice(stepIdx, 1);
+    },
+    addUpdatedSteps(updatedRecipe) {
+      const stepsAttributes = [];
+
+      this.addNewAndUpdatedSteps(stepsAttributes);
+      this.addDeletedSteps(stepsAttributes);
+
+      updatedRecipe.stepsAttributes = stepsAttributes;
+    },
+    addNewAndUpdatedSteps(stepsAttributes) {
+      for (const step of this.recipe.steps.data) {
+        const hash = {
+          description: step.attributes.description,
+        };
+        if (!!step.id) {
+          hash.id = step.id;
+        }
+        stepsAttributes.push(hash);
+      }
+    },
+    addDeletedSteps(stepsAttributes) {
+      for (const step of this.deletedSteps) {
+        stepsAttributes.push(
+          {
+            id: step.id,
             _destroy: true,
           },
         );
