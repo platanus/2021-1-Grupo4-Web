@@ -13,18 +13,20 @@
           :svg="svg"
           :input="input"
           :color="color('elements', element)"
+          @delIngredient="deleteIngredient"
         />
       </div>
     </div>
 
     <div v-if="input">
-      <container
-        :text="$t('msg.recipes.cost')"
-        :svg="{}"
-        :input="false"
-        :color="false"
-        class="my-4"
-      />
+      <div
+        class="bg-gray-100 flex p-4 px-8 justify-between"
+      >
+        <div>
+          {{ $t('msg.recipes.cost') }}
+        </div>
+        <div>{{ recipePrice }}</div>
+      </div>
 
       <base-button
         :elements="{
@@ -134,6 +136,20 @@ export default {
       const index = this.steps.indexOf(originalText);
       this.steps[index] = newText;
       this.$forceUpdate();
+    },
+    deleteIngredient(element) {
+      this.$emit('delIngredient', element);
+    },
+    getPriceOfSelectedIngredient(ingredient) {
+      if (!ingredient.ingredientQuantity) return 0;
+
+      return ingredient.ingredientQuantity * ingredient.price / ingredient.quantity;
+    },
+  },
+  computed: {
+    recipePrice() {
+      return this.elements.reduce((recipePrice, ingredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(ingredient), 0);
     },
   },
 };

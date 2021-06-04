@@ -1,21 +1,21 @@
 /* eslint-disable vue/max-len */
 <template>
-  <div class="flex items-start justify-between w-auto h-auto flex-none self-stretch flex-grow-0 mb-8">
+  <div class="flex justify-between mb-8">
     <!-- igredientes para agregar -->
-    <div class="">
-      <div class="flex flex-col items-start w-full h-auto flex-none flex-grow-0">
+    <div class="w-1/2 p-4">
+      <div class="flex flex-col">
         <!-- buscador -->
         <input
-          class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded flex-none self-stretch flex-grow-0 mb-8"
+          class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded self-stretch mb-8"
           :placeholder="$t('msg.recipes.searchIngredient')"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
+        <div class="flex flex-col bg-gray-200 overflow-scroll">
           <add-ingredient-card
             v-for="ingredient in ingredients"
             :key="ingredient.id"
             :name="ingredient.name"
-            :price="ingredient.price"
+            :price="ingredient.price / ingredient.quantity"
             @add="addIngredient(ingredient)"
           >
             {{ ingredient.name }}
@@ -24,37 +24,39 @@
       </div>
     </div>
     <!-- ingredientes seleccionados -->
-    <div class="">
-      <div class="flex flex-col items-start w-96 h-full flex-none self-stretch flex-grow bg-gray-50">
-        <div class="flex items-start h-6 bg-gray-50 font-sans font-medium text-base text-black flex-none self-stretch flex-grow-0 mb-3">
+    <div class="w-1/2 p-4">
+      <div class="flex flex-col self-stretch flex-grow bg-gray-50">
+        <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
         <div
-          class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
-          v-if="selectedIngredients.length > 0"
+          class="flex flex-col bg-gray-200 overflow-scroll"
+          v-if="recipeIngredients.length > 0"
         >
           <div
-            v-for="ingredient in selectedIngredients"
-            :key="ingredient.id"
+            v-for="(recipeIngredient, idx) in recipeIngredients"
+            :key="recipeIngredient.id"
           >
             <selected-ingredient-card
-              :name="ingredient.name"
-              :price="ingredient.price"
-              @delete="deleteIngredient(ingredient)"
+              :recipe-ingredient-idx="idx"
+              :recipe-ingredient-attrs="recipeIngredient.attributes"
+              @delIngredient="deleteIngredient"
+              @incrQty="increaseQuantity"
+              @decrQty="decreaseQuantity"
             >
-              {{ ingredient.name }}
+              {{ recipeIngredient.attributes.ingredient.name }}
             </selected-ingredient-card>
           </div>
         </div>
         <div
-          class="flex items-start h-6 bg-gray-50 font-sans font-light text-base text-black flex-none self-stretch flex-grow-0 mb-3"
+          class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
           v-else
         >
           {{ $t('msg.recipes.noIngredients') }}
         </div>
-        <div class="flex w-96 h-auto items-start justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border flex-none self-stretch flex-grow-0">
-          <div class="w-auto h-6 font-bold text-base text-black flex-none flex-grow-0 mx-2">
-            {{ $t('msg.recipes.recipePrice') }} ${{ recipePrice }}
+        <div class="flex justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border self-stretch">
+          <div class="w-auto h-6 font-bold text-base text-black mx-2">
+            {{ $t('msg.recipes.recipePrice') }} $ {{ recipePrice }}
           </div>
         </div>
       </div>
@@ -72,9 +74,6 @@ export default {
     return {
       ingredients: [],
       error: '',
-      selectedIngredients: [],
-      // eslint-disable-next-line camelcase
-      selectedIngredients2: [],
     };
   },
   components: {
@@ -83,18 +82,14 @@ export default {
   },
   props: {
     recipeIngredients: { type: Array, required: true },
-    recipeIngredientId: { type: String, required: true },
   },
   async created() {
     try {
       const response = await getIngredients();
-      console.log('AA', response);
       this.ingredients = response.data.data.map((element) => ({
-        // RecipeIngredientId: element.id,
-        IngredientId: element.id,
+        id: element.id,
         ...element.attributes,
       }));
-      console.log('ingredientes', this.ingredients);
       this.error = '';
     } catch (error) {
       this.error = error;
@@ -102,34 +97,28 @@ export default {
   },
   computed: {
     recipePrice() {
-      return this.recipeIngredients.map(ingredient =>
-        ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
-    },
-  },
-  watch: {
-    recipeIngredients() {
-      this.selectedIngredients2.push({ id: this.recipeIngredients.id,
-        ingredientId: this.recipeIngredients.attributes.ingredient.id,
-        ingredientQuantity: this.recipeIngredients.attributes.ingredient.quantity,
-        _destroy: false });
-
-      this.selectedIngredients = this.recipeIngredients.map(element => element.attributes.ingredient);
+      return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
     },
   },
   methods: {
-    addIngredient(element) {
-      console.log('elemento', element);
-      this.selectedIngredients2.push({ ingredientId: element.IngredientId,
-        ingredientQuantity: element.quantity, _destroy: false });
-      this.selectedIngredients.push(element);
-      console.log(this.selectedIngredients2);
+    addIngredient(ingredient) {
+      this.$emit('addIngredient', ingredient);
     },
-    deleteIngredient(element) {
-      console.log(this.selectedIngredients);
-      const index = this.selectedIngredients.indexOf(element);
-      if (index > -1) {
-        this.selectedIngredients.splice(index, 1);
-      }
+    deleteIngredient(recipeIngredientIdx) {
+      this.$emit('delIngredient', recipeIngredientIdx);
+    },
+    increaseQuantity(recipeIngredientIdx) {
+      this.$emit('incrQty', recipeIngredientIdx);
+    },
+    decreaseQuantity(recipeIngredientIdx) {
+      this.$emit('decrQty', recipeIngredientIdx);
+    },
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
     },
   },
 };

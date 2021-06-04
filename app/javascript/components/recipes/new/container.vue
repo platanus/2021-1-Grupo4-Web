@@ -13,10 +13,8 @@
             class="w-16 h-12 self-center bg-white text-gray-700
             border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             v-if="input"
-            id="grams"
             type="text"
             placeholder="XXX"
-            value=""
           >
           <span v-if="input">{{ element.measure }} </span>
         </div>
@@ -24,7 +22,9 @@
           <span>{{ element.name }}</span>
         </div>
         <div class="text-right">
-          <button>
+          <button
+            @click="deleteIngredient()"
+          >
             <img
               class="w-4 h-4"
               v-if="svg.cancel"
@@ -143,6 +143,9 @@ export default {
     },
     cancel() {
       this.edit = !this.edit;
+    },
+    deleteIngredient() {
+      this.$emit('delIngredient', this.element);
     },
   },
 };

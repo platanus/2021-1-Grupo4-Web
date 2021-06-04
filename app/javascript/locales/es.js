@@ -65,7 +65,7 @@ export default {
       create: 'Crear receta',
       basic: 'Datos básicos',
       name: 'Nombre',
-      preparation: 'Tiempo de preparación',
+      preparation: 'Tiempo de preparación (min.)',
       step: 'Paso de la receta...',
       ingredients: 'Ingredientes',
       cost: 'Costo total',

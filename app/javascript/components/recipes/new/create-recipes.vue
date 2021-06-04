@@ -53,6 +53,7 @@
           :input="true"
           :drag="false"
           @search="toggleAddIngredientModal"
+          @delIngredient="deleteIngredient"
         />
       </div>
       <div
@@ -160,7 +161,7 @@ export default {
       this.ingredients.forEach(ingredient => {
         this.recipe.recipe_ingredients_attributes.push({
           'ingredient_id': ingredient.id,
-          'ingredient_quantity': ingredient.ingredientQuantity,
+          'ingredient_quantity': ingredient.ingredientQuantity || 1,
         });
       });
       try {
@@ -197,8 +198,9 @@ export default {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
       this.$forceUpdate();
     },
-    deleteIngredient(index) {
-      this.selectedIngredients.splice(index, 1);
+    deleteIngredient(element) {
+      const index = this.ingredients.indexOf(element);
+      this.ingredients.splice(index, 1);
     },
     async successResponse(status) {
       this.status = status;

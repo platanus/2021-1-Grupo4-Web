@@ -121,13 +121,18 @@ export default {
         this.error = error;
       }
     },
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
+    },
   },
 
   computed: {
     recipePrice() {
-      return this.recipe.recipeIngredients.data.map(element =>
-        this.ingredientFinalPrice(element.attributes.ingredient.quantity,
-          element.attributes.ingredient.price)).reduce((acc, curVal) => acc + curVal, 0);
+      return this.recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
     },
   },
 };

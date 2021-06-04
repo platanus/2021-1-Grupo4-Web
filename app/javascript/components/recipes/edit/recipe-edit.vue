@@ -21,18 +21,47 @@
       >
         1. {{ $t('msg.recipes.basic') }}
       </div>
-      <recipe-basic-info
-        :name="recipe.name"
-        :portions="recipe.portions"
-        :cook-minutes="recipe.cookMinutes"
-      />
+      <div class="flex flex-col">
+        <div class="flex items-start justify-between h-16 flex-none self-stretch flex-grow-0 mb-8">
+          <div class="relative w-2/5">
+            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+              {{ $t('msg.recipes.name') }}
+            </div>
+            <input
+              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+              v-model="recipe.name"
+            >
+          </div>
+          <div class="relative w-1/4">
+            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+              {{ $t('msg.recipes.portions') }}
+            </div>
+            <input
+              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+              v-model="recipe.portions"
+            >
+          </div>
+          <div class="relative w-1/4">
+            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+              {{ $t('msg.recipes.preparation') }}
+            </div>
+            <input
+              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+              v-model="recipe.cookMinutes"
+            >
+          </div>
+        </div>
+      </div>
       <!-- ingredients -->
       <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
       <recipe-ingredients
         :recipe-ingredients="recipe.recipeIngredients.data"
-        :recipe-ingredient-id="recipeIngredientId"
+        @addIngredient="addIngredient"
+        @delIngredient="deleteIngredient"
+        @incrQty="increaseQuantity"
+        @decrQty="decreaseQuantity"
       />
       <!-- pasos -->
       <recipe-steps :recipe="recipe" />
@@ -41,8 +70,10 @@
         <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8">
           {{ $t('msg.recipes.cancel') }}
         </button>
-        <button class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
-          @click="UpdateRecipe">
+        <button
+          class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
+          @click="editRecipe"
+        >
           {{ $t('msg.recipes.saveChanges') }}
         </button>
       </div>
@@ -51,8 +82,7 @@
 </template>
 
 <script>
-import { getRecipe } from '../../../api/recipes.js';
-import recipeBasicInfo from './recipe-basic-info.vue';
+import { getRecipe, updateRecipe } from '../../../api/recipes.js';
 import recipeIngredients from './recipe-ingredients.vue';
 import recipeSteps from './recipe-steps.vue';
 
@@ -61,7 +91,6 @@ export default {
     recipeId: { type: Number, required: true },
   },
   components: {
-    recipeBasicInfo,
     recipeIngredients,
     recipeSteps,
   },
@@ -69,20 +98,20 @@ export default {
     return {
       status: '',
       error: '',
-      recipeIngredientId: '',
       recipe: {
+        id: null,
         name: '',
         portions: 0,
         cookMinutes: 0,
         recipeIngredients: { data: [] },
         steps: { data: [] },
       },
+      deletedRecipes: [],
     };
   },
   async created() {
     try {
       const response = await getRecipe(this.recipeId);
-      this.recipeIngredientId = response.data.data.id;
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
@@ -90,8 +119,74 @@ export default {
     }
   },
   methods: {
-    UpdateRecipe() {
-      // Hacer Post
+    async editRecipe() {
+      try {
+        const updatedRecipe = this.getUpdatedRecipe();
+        await updateRecipe(this.recipe.id, updatedRecipe);
+        window.location = '/recipes';
+        this.error = '';
+      } catch (error) {
+        this.error = error;
+      }
+    },
+    addIngredient(ingredient) {
+      if (this.recipe.recipeIngredients.data.map(
+        (recipeIngredient) => recipeIngredient.attributes.ingredient.id).includes(parseInt(ingredient.id, 10))) {
+        return;
+      }
+      const newRecipeIngredient = { attributes: { ingredientQuantity: 1, ingredient: {} } };
+      newRecipeIngredient.attributes.ingredient = ingredient;
+      this.recipe.recipeIngredients.data.push(newRecipeIngredient);
+    },
+    deleteIngredient(recipeIngredientIdx) {
+      if (!!this.recipe.recipeIngredients.data[recipeIngredientIdx].id) {
+        this.deletedRecipes.push(this.recipe.recipeIngredients.data[recipeIngredientIdx]);
+      }
+      this.recipe.recipeIngredients.data.splice(recipeIngredientIdx, 1);
+    },
+    increaseQuantity(recipeIngredientIdx) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity += 1;
+    },
+    decreaseQuantity(recipeIngredientIdx) {
+      if (this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity === 1) {
+        this.deleteIngredient(recipeIngredientIdx);
+
+        return;
+      }
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
+    },
+    getUpdatedRecipe() {
+      const updatedRecipe = { name: this.recipe.name,
+        cookMinutes: this.recipe.cookMinutes, portions: this.recipe.portions };
+
+      const recipeIngredientsAttributes = [];
+      for (const recipeIngredient of this.recipe.recipeIngredients.data) {
+        const hash = {
+          ingredientId: recipeIngredient.attributes.ingredient.id,
+          ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+        };
+        if (!!recipeIngredient.id) {
+          hash.id = recipeIngredient.id;
+        }
+        recipeIngredientsAttributes.push(hash);
+      }
+      this.addDeletedRecipeIngredients(recipeIngredientsAttributes);
+      updatedRecipe.recipeIngredientsAttributes = recipeIngredientsAttributes;
+
+      return updatedRecipe;
+    },
+
+    addDeletedRecipeIngredients(recipeIngredientsAttributes) {
+      for (const recipeIngredient of this.deletedRecipes) {
+        recipeIngredientsAttributes.push(
+          {
+            id: recipeIngredient.id,
+            ingredientId: recipeIngredient.attributes.ingredient.id,
+            ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+            _destroy: true,
+          },
+        );
+      }
     },
   },
 };

@@ -16,13 +16,13 @@
         <thead class="justify-between bg-gray-600 border-4 border-gray-600">
           <tr class="text-left">
             <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
+              <span class="text-white text-center font-bold">{{ $t('msg.ingredients.name') }}</span>
             </th>
             <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.quantity') }}</span>
+              <span class="text-white text-center font-bold">{{ $t('msg.ingredients.quantity') }}</span>
             </th>
             <th class="px-8 py-3">
-              <span class="text-white font-bold">{{ $t('msg.ingredients.measure') }}</span>
+              <span class="text-white text-center font-bold">{{ $t('msg.ingredients.measure') }}</span>
             </th>
           </tr>
         </thead>
@@ -34,19 +34,19 @@
           >
             <!-- ingredient name -->
             <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
+              <p class="ml-2 font-medium text-center">
                 {{ ingredient.attributes.ingredient.name }}
               </p>
             </td>
             <!-- quantity in recipe -->
             <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
+              <p class="ml-2 font-medium text-center">
                 {{ ingredient.attributes.ingredientQuantity }}
               </p>
             </td>
             <!-- ingredient unit -->
             <td class="py-2 px-8">
-              <p class="ml-2 font-medium">
+              <p class="ml-2 font-medium text-center">
                 {{ ingredient.attributes.ingredient.measure }}
               </p>
             </td>

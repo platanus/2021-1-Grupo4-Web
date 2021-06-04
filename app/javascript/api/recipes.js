@@ -25,10 +25,17 @@ function postRecipe(recipe) {
     ));
 }
 
+function updateRecipe(recipeId, recipe) {
+  return (client
+    .put(`/recipes/${recipeId}`,
+      { recipe },
+    ));
+}
+
 function getRecipeIngredients(recipeId) {
   return (client
     .get(`/recipes/${recipeId}/recipe_ingredients`, {
     }));
 }
 
-export { getRecipes, getRecipe, deleteRecipe, postRecipe, getRecipeIngredients };
+export { getRecipes, getRecipe, deleteRecipe, postRecipe, updateRecipe, getRecipeIngredients };
