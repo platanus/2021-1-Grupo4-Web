@@ -177,15 +177,6 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       let(:recipes_quantities) { 3 }
       let(:first_recipe_ingredients_quantities) { 1 }
       let(:second_recipe_ingredients_quantities) { 2 }
-      let(:expected_inventory_first_ingredient) do
-        first_ingredient.inventory - first_recipe_ingredients_quantities * recipes_quantities
-      end
-      let(:expected_inventory_second_ingredient) do
-        second_ingredient.inventory - first_recipe_ingredients_quantities * recipes_quantities
-      end
-      let(:expected_inventory_thirdingredient) do
-        third_ingredient.inventory - second_recipe_ingredients_quantities * recipes_quantities
-      end
 
       before do
         set_recipes_quantities(recipes_quantities)
