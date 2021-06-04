@@ -37,7 +37,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       :portions,
       :cook_minutes,
       recipe_ingredients_attributes: [:id, :ingredient_id, :ingredient_quantity, :_destroy],
-      steps_attributes: [:description, :media_url]
+      steps_attributes: [:id, :step_order_position, :description, :media_url, :_destroy]
     )
   end
 end

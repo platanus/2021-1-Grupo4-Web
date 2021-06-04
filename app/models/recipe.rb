@@ -5,7 +5,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients, dependent: nil
   has_many :steps, dependent: :destroy, class_name: "RecipeStep"
-  accepts_nested_attributes_for :steps
+  accepts_nested_attributes_for :steps, allow_destroy: true
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
 end
 

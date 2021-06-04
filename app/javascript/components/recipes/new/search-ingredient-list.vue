@@ -4,15 +4,16 @@
       <input
         :placeholder="$t(`msg.ingredients.search`)"
         class="w-full mx-1 my-4 p-2 border-2 rounded border-gray-300"
-      />
+        v-model="query"
+      >
     </div>
     <table class="min-w-full divide-y divide-gray-200 border-2">
       <thead class="justify-between">
         <tr class="bg-gray-100  py-1">
           <th
-            class="border-solid border-2 border-color-gray-300"
-            v-for="attribute in header"
-            :key="attribute"
+            class="border-solid border-2 border-color-gray-300 text-center"
+            v-for="(attribute, idx) in header"
+            :key="idx"
           >
             <span class="text-black font-bold">{{ $t(`msg.ingredients.${attribute}`) }}</span>
           </th>
@@ -21,8 +22,8 @@
       </thead>
       <tbody>
         <tr
-          v-for="ingredient in ingredients"
-          :key="ingredient.name"
+          v-for="(ingredient, idx) in filteredIngredients"
+          :key="idx"
           class="bg-white border-2"
         >
           <td
@@ -35,11 +36,14 @@
             </p>
           </td>
           <td class="content-center py-2">
-            <p class="content-center text-center ml-2 font-semibold">
+            <p class="content-center text-center mx-4 font-semibold">
               <button
+                class="focus:outline-none hover:bg-gray-100"
                 @click="addIngredient(ingredient)"
               >
-                +
+                <div class="text-xl">
+                  +
+                </div>
               </button>
             </p>
           </td>
@@ -56,12 +60,25 @@ export default {
   },
   data() {
     return {
-      header: ['name', 'price', 'quantity'],
+      header: ['name', 'price', 'quantity', 'measure'],
+      query: '',
     };
   },
   methods: {
     addIngredient(object) {
       this.$emit('add-ingredient', object);
+    },
+  },
+  computed: {
+    filteredIngredients() {
+      if (this.query) {
+        return this.ingredients.filter(item => this.query
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
     },
   },
 };

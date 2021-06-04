@@ -13,10 +13,8 @@
             class="w-16 h-12 self-center bg-white text-gray-700
             border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             v-if="input"
-            id="grams"
             type="text"
             placeholder="XXX"
-            value=""
           >
           <span v-if="input">{{ element.measure }} </span>
         </div>
@@ -138,9 +136,6 @@ export default {
     delStep() {
       this.$emit('del', this.text);
     },
-    deleteIngredient() {
-      this.$emit('del-ingredient');
-    },
     acceptEdit() {
       const text = document.getElementById('newTextBox').value;
       this.$emit('edit', this.text, text);
@@ -148,6 +143,9 @@ export default {
     },
     cancel() {
       this.edit = !this.edit;
+    },
+    deleteIngredient() {
+      this.$emit('delete-ingredient', this.element);
     },
   },
 };
