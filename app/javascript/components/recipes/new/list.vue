@@ -5,7 +5,7 @@
     </h2>
     <div v-if="!drag">
       <div
-        v-for="(element, index) in ingredients"
+        v-for="(element, index) in elements"
         :key="index"
       >
         <container
@@ -89,7 +89,6 @@ export default {
   data() {
     return {
       steps: [],
-      ingredients: this.elements,
       forceupdate: false,
     };
   },
@@ -138,9 +137,7 @@ export default {
       this.$forceUpdate();
     },
     delIngredient(ingredient) {
-      const index = this.ingredients.indexOf(ingredient);
-      this.ingredients.splice(index, 1);
-      this.$forceUpdate();
+      this.$emit('del-ingredients', ingredient);
     },
   },
 };
