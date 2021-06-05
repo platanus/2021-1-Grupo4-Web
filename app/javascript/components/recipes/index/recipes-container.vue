@@ -41,13 +41,13 @@
       <!-- Content -->
       <p
         class="my-4"
-        v-if="recipesShow.length === 0"
+        v-if="recipes.length === 0"
       >
         {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
       </p>
       <div v-else>
         <recipes-list
-          :allrecipes="recipesShow"
+          :allrecipes="filterRecipes"
         />
       </div>
 
@@ -58,7 +58,7 @@
     <!-- Filters Modal-->
     <base-modal
       @ok="updateFilters"
-      @cancel="toggleFiltersModal"
+      @cancel="toggleDeleteFilters"
       v-if="showingFiltersModal"
       :title="$t('msg.filters')"
       :ok-button-label="$t('msg.apply')"
@@ -93,9 +93,6 @@ export default {
       recipes: [],
       recipesToDisplay: [],
       searchQuery: '',
-      recipesShow: [],
-      recipesAll: [],
-      recipesFiltered: [],
       filters: { price: { min: '', max: '' }, portions: { min: '', max: '' } },
       filterOptions: ['price', 'portions'],
       error: '',
@@ -105,11 +102,7 @@ export default {
   async created() {
     try {
       const response = await getRecipes();
-      this.recipesShow = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-      this.recipesAll = response.data.data.map((element) => ({
+      this.recipes = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
@@ -126,35 +119,47 @@ export default {
           .split(' ')
           .every(text => item.name.toLowerCase().includes(text)));
       }
+      if (this.filters.portions.min !== '' || this.filters.portions.max !== '') {
+        return this.recipes.filter(recipe => recipe.portions >= this.filters.portions.min &&
+          recipe.portions <= this.filters.portions.max);
+      }
+      if (this.filters.price.min !== '' || this.filters.price.max !== '') {
+        return this.recipes.filter(recipe => recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) >= this.filters.price.min &&
+          recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+            recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) <= this.filters.price.max);
+      }
 
       return this.recipes;
     },
+
   },
+
   methods: {
-    updateRecipesFiltered() {
-      this.recipesFiltered = [];
-      for (let i = 0; i < this.recipesAll.length; i ++) {
-        if (this.recipesAll[i].portions >= this.filters.portions.min) {
-          if (this.recipesAll[i].portions <= this.filters.portions.max) {
-            this.recipesFiltered.push(this.recipesAll[i]);
-          }
-        }
-      }
-      this.recipesShow = this.recipesFiltered;
-    },
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
-      this.recipesShow = this.recipesAll;
+    },
+    toggleDeleteFilters() {
+      this.filters.portions.min = '';
+      this.filters.portions.max = '';
+      this.filters.price.min = '';
+      this.filters.price.max = '';
+      this.showingFiltersModal = !this.showingFiltersModal;
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
       this.filters = this.$refs.filtersInfo.filters;
-      this.updateRecipesFiltered();
     },
-    updateRecipes(data) {
-      this.recipesToDisplay = data;
-      // this.updateRecipes();
-      this.updateRecipesFiltered();
+    // updateRecipes(data) {
+    //   this.recipesToDisplay = data;
+    //   // this.updateRecipes();
+    //   console.log('ENTRE A ESTO');
+    // },
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
     },
   },
 };
