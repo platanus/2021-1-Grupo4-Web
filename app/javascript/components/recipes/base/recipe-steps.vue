@@ -10,26 +10,60 @@
       v-if="recipeSteps.length > 0"
     >
       <div
-        v-for="(step, idx) in recipeSteps"
+        v-for="(step, idx) in modifiedRecipeSteps"
         :key="idx"
         :index="idx"
       >
-        <div class="flex justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0">
+        <div
+          class="flex justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
+          v-if="!step.isEditing"
+        >
           <div class="flex flex-col justify-center w-6 h-6 bg-yellow-500 shadow-sm rounded-full flex-none flex-grow-0 items-center mr-4 ">
             <div class="font-sans font-normal text-lg text-white my-auto">
               {{ idx + 1 }}
             </div>
           </div>
           <div class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4">
-            {{ step.attributes.description }}
+            {{ step.step.attributes.description }}
           </div>
           <div class="flex items-center w-6 h-6 mx-4">
             <dots-dropdown
               :elements="{
-                del: true
+                del: true,
+                edit: true
               }"
               @delete="deleteStep(idx)"
+              @edit="editStep(idx)"
             />
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
+          v-else
+        >
+          <text-box
+            tid="newTextBox"
+            class="flex-1 w-full"
+            :value="step.step.attributes.description"
+          />
+          <div
+            class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0"
+          >
+            <button
+              class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 bg-green-500 shadow
+              rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
+              @click="acceptEdit(idx)"
+            >
+              {{ $t('msg.recipes.saveChanges') }}
+            </button>
+            <button
+              class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 border border-gray-800 box-border
+                drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0"
+              @click="editStep(idx)"
+            >
+              {{ $t('msg.recipes.cancel') }}
+            </button>
           </div>
         </div>
       </div>
@@ -68,7 +102,22 @@ export default {
     return {
       newStepDescription: null,
       error: '',
+      modifiedRecipeSteps: [],
+      recipeStepsSet: new Set(),
     };
+  },
+  watch: {
+    recipeSteps() {
+      for (let idx = 0; idx < this.recipeSteps.length; idx++) {
+        if (!this.recipeStepsSet.has(this.recipeSteps[idx])) {
+          this.modifiedRecipeSteps.push({
+            step: this.recipeSteps[idx],
+            isEditing: false,
+          });
+          this.recipeStepsSet.add(this.recipeSteps[idx]);
+        }
+      }
+    },
   },
   methods: {
     addStep() {
@@ -78,7 +127,15 @@ export default {
       this.newStepDescription = null;
     },
     deleteStep(idx) {
+      this.modifiedRecipeSteps.splice(idx, 1);
       this.$emit('delete-step', idx);
+    },
+    editStep(idx) {
+      this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
+    },
+    acceptEdit(idx) {
+      this.modifiedRecipeSteps[idx].step.attributes.description = document.getElementById('newTextBox').value;
+      this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
     },
   },
 };
