@@ -53,7 +53,7 @@
           :input="true"
           :drag="false"
           @search="toggleAddIngredientModal"
-          @del-ingredients="deleteRecipeIngredients"
+          @delete-ingredient="deleteIngredient"
         />
       </div>
       <div
@@ -154,14 +154,14 @@ export default {
   methods: {
     async create() {
       if (this.recipe.name === '' || this.recipe.portions === '' || this.recipe.preparation === '') {
-        alert(this.$t('msg.recipes.alertEmptyStep')); // eslint-disable-line no-alert
+        alert(this.$t('msg.recipes.alertEmptyBasicInformation')); // eslint-disable-line no-alert
 
         return false;
       }
       this.ingredients.forEach(ingredient => {
         this.recipe.recipe_ingredients_attributes.push({
           'ingredient_id': ingredient.id,
-          'ingredient_quantity': ingredient.ingredientQuantity,
+          'ingredient_quantity': ingredient.ingredientQuantity || 1,
         });
       });
       try {
@@ -198,8 +198,9 @@ export default {
       this.showingAddIngredientModal = !this.showingAddIngredientModal;
       this.$forceUpdate();
     },
-    deleteIngredient(index) {
-      this.selectedIngredients.splice(index, 1);
+    deleteIngredient(element) {
+      const index = this.ingredients.indexOf(element);
+      this.ingredients.splice(index, 1);
     },
     deleteRecipeIngredients(ingredient) {
       this.ingredients = this.ingredients.filter((originalIngredient) => originalIngredient.id !== ingredient.id);

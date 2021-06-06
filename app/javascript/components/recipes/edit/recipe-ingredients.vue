@@ -1,20 +1,23 @@
+/* eslint-disable vue/max-len */
 <template>
-  <div class="flex items-start justify-between w-auto h-auto flex-none self-stretch flex-grow-0 mb-8">
+  <div class="flex justify-between mb-8">
     <!-- igredientes para agregar -->
-    <div class="">
-      <div class="flex flex-col items-start w-full h-auto flex-none flex-grow-0">
+    <div class="w-1/2 p-4">
+      <div class="flex flex-col">
         <!-- buscador -->
         <input
-          class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded flex-none self-stretch flex-grow-0 mb-8"
+          class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded self-stretch mb-8"
           :placeholder="$t('msg.recipes.searchIngredient')"
+          v-model="query"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
+        <div class="flex flex-col bg-gray-200 overflow-scroll">
           <add-ingredient-card
-            v-for="ingredient in this.ingredients"
+            v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
             :name="ingredient.name"
-            :price="ingredient.price"
+            :price="ingredient.price / ingredient.quantity"
+            @add="addIngredient(ingredient)"
           >
             {{ ingredient.name }}
           </add-ingredient-card>
@@ -22,35 +25,39 @@
       </div>
     </div>
     <!-- ingredientes seleccionados -->
-    <div class="">
-      <div class="flex flex-col items-start w-96 h-full flex-none self-stretch flex-grow bg-gray-50">
-        <div class="flex items-start h-6 bg-gray-50 font-sans font-medium text-base text-black flex-none self-stretch flex-grow-0 mb-3">
+    <div class="w-1/2 p-4">
+      <div class="flex flex-col self-stretch flex-grow bg-gray-50">
+        <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
-        <!-- {{ recipeIngredients.length }}
-        {{ recipeIngredients }} -->
         <div
-          class="flex flex-col items-start w-96 h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
+          class="flex flex-col bg-gray-200 overflow-scroll"
           v-if="recipeIngredients.length > 0"
         >
-          <selected-ingredient-card
-            v-for="ingredient in recipeIngredients"
-            :key="ingredient.id"
-            :name="ingredient.attributes.ingredient.name"
-            :price="ingredient.attributes.ingredient.price"
+          <div
+            v-for="(recipeIngredient, idx) in recipeIngredients"
+            :key="recipeIngredient.id"
           >
-            {{ ingredient.name }}
-          </selected-ingredient-card>
+            <selected-ingredient-card
+              :recipe-ingredient-idx="idx"
+              :recipe-ingredient-attrs="recipeIngredient.attributes"
+              @delete-ingredient="deleteIngredient"
+              @increase-quantity="increaseQuantity"
+              @decrease-quantity="decreaseQuantity"
+            >
+              {{ recipeIngredient.attributes.ingredient.name }}
+            </selected-ingredient-card>
+          </div>
         </div>
         <div
-          class="flex items-start h-6 bg-gray-50 font-sans font-light text-base text-black flex-none self-stretch flex-grow-0 mb-3"
+          class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
           v-else
         >
           {{ $t('msg.recipes.noIngredients') }}
         </div>
-        <div class="flex w-96 h-auto items-start justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border flex-none self-stretch flex-grow-0">
-          <div class="w-auto h-6 font-bold text-base text-black flex-none flex-grow-0 mx-2">
-            {{ $t('msg.recipes.recipePrice') }} ${{ recipePrice }}
+        <div class="flex justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border self-stretch">
+          <div class="w-auto h-6 font-bold text-base text-black mx-2">
+            {{ $t('msg.recipes.recipePrice') }} $ {{ recipePrice }}
           </div>
         </div>
       </div>
@@ -68,6 +75,7 @@ export default {
     return {
       ingredients: [],
       error: '',
+      query: '',
     };
   },
   components: {
@@ -91,8 +99,38 @@ export default {
   },
   computed: {
     recipePrice() {
-      // eslint-disable-next-line max-len
-      return this.recipeIngredients.map(ingredient => ingredient.attributes.ingredient.price).reduce((acc, curVal) => acc + curVal, 0);
+      return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+    },
+    filteredIngredients() {
+      if (this.query) {
+        return this.ingredients.filter(item => this.query
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
+    },
+  },
+  methods: {
+    addIngredient(ingredient) {
+      this.$emit('add-ingredient', ingredient);
+    },
+    deleteIngredient(recipeIngredientIdx) {
+      this.$emit('delete-ingredient', recipeIngredientIdx);
+    },
+    increaseQuantity(recipeIngredientIdx) {
+      this.$emit('increase-quantity', recipeIngredientIdx);
+    },
+    decreaseQuantity(recipeIngredientIdx) {
+      this.$emit('decrease-quantity', recipeIngredientIdx);
+    },
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
     },
   },
 };
