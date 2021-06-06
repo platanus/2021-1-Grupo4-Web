@@ -97,6 +97,7 @@ export default {
       filterOptions: ['price', 'portions'],
       error: '',
       showingFiltersModal: false,
+      filtersToCompare: { price: { min: '', max: '' }, portions: { min: '', max: '' } },
     };
   },
   async created() {
@@ -112,22 +113,32 @@ export default {
     }
   },
   computed: {
+    // eslint-disable-next-line complexity
     filterRecipes() {
+      this.updateFiltersToCompare();
       if (this.searchQuery) {
-        return this.recipes.filter(item => this.searchQuery
+        // Los 4 filtros con busqueda
+
+        return this.recipes.filter(recipe => this.searchQuery
           .toLowerCase()
           .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-      if (this.filters.portions.min !== '' || this.filters.portions.max !== '') {
-        return this.recipes.filter(recipe => recipe.portions >= this.filters.portions.min &&
-          recipe.portions <= this.filters.portions.max);
-      }
-      if (this.filters.price.min !== '' || this.filters.price.max !== '') {
-        return this.recipes.filter(recipe => recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
-          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) >= this.filters.price.min &&
+          .every(text => recipe.name.toLowerCase().includes(text)) &&
           recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
-            recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) <= this.filters.price.max);
+            recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) >=
+          this.filtersToCompare.price.min && recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) <=
+            this.filtersToCompare.price.max && recipe.portions >= this.filtersToCompare.portions.min &&
+          recipe.portions <= this.filtersToCompare.portions.max);
+      }
+      // Los 4 filtros sin busqueda
+      if (this.filtersToCompare.price.min !== '' && this.filtersToCompare.price.max !== '' &&
+      this.filtersToCompare.portions.max !== '' && this.filtersToCompare.portions.min !== '') {
+        return this.recipes.filter(recipe => recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) >=
+          this.filtersToCompare.price.min && recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0) <=
+            this.filtersToCompare.price.max && recipe.portions >= this.filtersToCompare.portions.min &&
+          recipe.portions <= this.filtersToCompare.portions.max);
       }
 
       return this.recipes;
@@ -138,6 +149,29 @@ export default {
   methods: {
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
+    },
+    // eslint-disable-next-line max-statements
+    updateFiltersToCompare() {
+      if (this.filters.price.min === '') {
+        this.filtersToCompare.price.min = 0;
+      } else {
+        this.filtersToCompare.price.min = this.filters.price.min;
+      }
+      if (this.filters.price.max === '') {
+        this.filtersToCompare.price.max = 9999999999999;
+      } else {
+        this.filtersToCompare.price.max = this.filters.price.max;
+      }
+      if (this.filters.portions.min === '') {
+        this.filtersToCompare.portions.min = 0;
+      } else {
+        this.filtersToCompare.portions.min = this.filters.portions.min;
+      }
+      if (this.filters.portions.max === '') {
+        this.filtersToCompare.portions.max = 99999999999999;
+      } else {
+        this.filtersToCompare.portions.max = this.filters.portions.max;
+      }
     },
     toggleDeleteFilters() {
       this.filters.portions.min = '';
