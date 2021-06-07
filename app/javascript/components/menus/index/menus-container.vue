@@ -206,14 +206,15 @@ export default {
     async editMenu() {
       const recipesInfo = this.prepareRecipesInfo(this.$refs.editMenuInfo.selectedRecipes);
       const menuToPut = { name: this.$refs.editMenuInfo.menuName, menuRecipesAttributes: recipesInfo };
-      try {
-        const res = await editMenu(this.menuToEdit.id, menuToPut);
-        console.log(res);
-        this.getAllMenus();
-        this.error = '';
-      } catch (error) {
-        this.error = error;
-      }
+      // console.log(menuToPut);
+      // try {
+      //   const res = await editMenu(this.menuToEdit.id, menuToPut);
+      //   console.log(res);
+      //   this.getAllMenus();
+      //   this.error = '';
+      // } catch (error) {
+      //   this.error = error;
+      // }
       this.closeEditModal();
     },
   },

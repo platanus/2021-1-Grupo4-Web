@@ -68,15 +68,18 @@ export default {
   },
 
   methods: {
+
     pushRecipe(menuRecipe) {
       this.selectedRecipes.push(menuRecipe);
     },
+
     removeRecipe(recipe) {
       const parsedId = parseInt(recipe.id, 10);
       const indexToRemove = this.selectedRecipes.findIndex((element) =>
         parseInt(element.attributes.recipe.id, 10) === parsedId);
       this.selectedRecipes.splice(indexToRemove, 1);
     },
+
     changeQuantity(recipeQuantityObjetc) {
       const newValue = recipeQuantityObjetc.quantity;
       const recipeToUpdate = recipeQuantityObjetc.recipe;

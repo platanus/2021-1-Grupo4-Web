@@ -62,7 +62,7 @@ export default {
 
   watch: {
     quantity() {
-      const recipeQuantityObjetc = { quantity: this.quantity, recipe: this.recipe }; 
+      const recipeQuantityObjetc = { quantity: this.quantity, recipe: this.recipe };
       this.$emit('changeQuantity', recipeQuantityObjetc);
     },
   },
