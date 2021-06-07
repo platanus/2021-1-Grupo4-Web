@@ -11,14 +11,6 @@
       <div class="h-6 font-hind font-bold text-lg text-black mb-0.5">
         {{ recipeSelected.name }}
       </div>
-      <div class="flex items-center  h-5 mb-0.5">
-        <div class="h-5 font-hind font-light text-sm text-gray-600 mr-0.5">
-          {{ $t('msg.recipes.price') }}
-        </div>
-        <div class="h-5 font-hind font-normal text-sm text-black">
-          {{ recipePrice | currency }}
-        </div>
-      </div>
       <div class="flex items-center h-4">
         <div class=" h-4 font-hind font-normal text-xs text-gray-600 mr-2">
           {{ $t('msg.quantity') }}
@@ -63,7 +55,7 @@
         >
       </button>
       <div class=" h-6 font-sans font-medium text-base text-right text-black flex-none flex-grow-0">
-        price
+        {{ recipePrice | currency }}
       </div>
     </div>
   </div>

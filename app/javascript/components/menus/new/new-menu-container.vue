@@ -85,7 +85,7 @@
             </div>
             <div class="flex justify-end py-4 px-2 bg-gray-200 border border-gray-300 box-border self-stretch">
               <div class="w-auto h-6 font-bold text-base text-black mx-2">
-                {{ $t('msg.menus.menuPrice') }} $ XXXXXXX
+                {{ $t('msg.menus.menuPrice') }} {{ totalMenuPrice | currency }}
               </div>
             </div>
           </div>
@@ -124,6 +124,15 @@ export default {
   },
 
   computed: {
+    totalMenuPrice() {
+      const recipesPrices = this.selectedRecipes.map(element => (
+        element.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
+      ));
+
+      return recipesPrices.reduce((menuPrice, recipePrice) =>
+        menuPrice + recipePrice, 0);
+    },
   },
 
   async created() {
@@ -140,6 +149,13 @@ export default {
   },
 
   methods: {
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
+    },
+
     addRecipe(recipe) {
       const defaultQuantity = 1;
       this.selectedRecipes.push({ ...recipe, quantity: defaultQuantity });
