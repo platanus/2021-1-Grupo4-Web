@@ -6,10 +6,17 @@ function getMenus() {
     }));
 }
 
+function postMenu(menu) {
+  return (client
+    .post('/menus',
+      { menu },
+    ));
+}
+
 function deleteMenu(menuId) {
   return (client
     .delete(`/menus/${menuId}`, {
     }));
 }
 
-export { getMenus, deleteMenu };
+export { getMenus, postMenu, deleteMenu };

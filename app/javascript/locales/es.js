@@ -14,6 +14,7 @@ export default {
     deleteFilters: 'Borrar filtros',
     min: 'Mínimo',
     max: 'Máximo',
+    quantity: 'Cantidad',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -111,6 +112,7 @@ export default {
       totalPrice: 'Precio Total ($)',
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
+      noRecipes: 'Este menú aún no tiene recetas',
     },
     providers: {
       title: 'Proveedores',

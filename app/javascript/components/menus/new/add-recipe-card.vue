@@ -7,7 +7,7 @@
       class="w-20 h-20 text-yellow-700"
     >
     <!-- Name and info -->
-    <div>
+    <div class="flex flex-col items-start w-full h-16 mx-3 my-auto">
       <p class="py-2 px-3 font-medium">
         {{ name }}
       </p>
