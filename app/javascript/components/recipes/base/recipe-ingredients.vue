@@ -83,7 +83,9 @@ export default {
     selectedIngredientCard,
   },
   props: {
-    recipeIngredients: { type: Array, required: true },
+    recipeIngredients: { type: Array, required: false, default() {
+      return [];
+    } },
   },
   async created() {
     try {

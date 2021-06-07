@@ -60,7 +60,9 @@
 <script>
 export default {
   props: {
-    recipeSteps: { type: Array, required: true },
+    recipeSteps: { type: Array, required: false, default() {
+      return [];
+    } },
   },
   data() {
     return {
