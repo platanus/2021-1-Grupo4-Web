@@ -58,7 +58,7 @@
     <!-- Filters Modal-->
     <base-modal
       @ok="updateFilters"
-      @cancel="toggleFiltersModal"
+      @cancel="toggleDeleteFilters"
       v-if="showingFiltersModal"
       :title="$t('msg.filters')"
       :ok-button-label="$t('msg.apply')"
@@ -66,6 +66,7 @@
     >
       <filter-popup-content
         ref="filtersInfo"
+        :actualfilters="filters"
       />
     </base-modal>
   </div>
@@ -111,27 +112,84 @@ export default {
     }
   },
   computed: {
+    // eslint-disable-next-line max-statements
+    makeFiltersToCompare() {
+      const filtersToCompare = { price: { min: '', max: '' }, portions: { min: '', max: '' } };
+      if (this.filters.price.min === '') {
+        filtersToCompare.price.min = 0;
+      } else {
+        filtersToCompare.price.min = this.filters.price.min;
+      }
+      if (this.filters.price.max === '') {
+        filtersToCompare.price.max = 9999999999999;
+      } else {
+        filtersToCompare.price.max = this.filters.price.max;
+      }
+      if (this.filters.portions.min === '') {
+        filtersToCompare.portions.min = 0;
+      } else {
+        filtersToCompare.portions.min = this.filters.portions.min;
+      }
+      if (this.filters.portions.max === '') {
+        filtersToCompare.portions.max = 99999999999999;
+      } else {
+        filtersToCompare.portions.max = this.filters.portions.max;
+      }
+
+      return filtersToCompare;
+    },
     filterRecipes() {
       if (this.searchQuery) {
-        return this.recipes.filter(item => this.searchQuery
+        // Los 4 filtros con busqueda
+        return this.recipes.filter(recipe => this.searchQuery
           .toLowerCase()
           .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
+          .every(text => recipe.name.toLowerCase().includes(text)) &&
+          this.calculateRecipePrice(recipe) >= this.makeFiltersToCompare.price.min &&
+           this.calculateRecipePrice(recipe) <= this.makeFiltersToCompare.price.max &&
+            recipe.portions >= this.makeFiltersToCompare.portions.min &&
+          recipe.portions <= this.makeFiltersToCompare.portions.max);
+      }
+      // Los 4 filtros sin busqueda
+      if (this.makeFiltersToCompare.price.min !== '' && this.makeFiltersToCompare.price.max !== '' &&
+      this.makeFiltersToCompare.portions.max !== '' && this.makeFiltersToCompare.portions.min !== '') {
+        return this.recipes.filter(recipe => this.calculateRecipePrice(recipe) >=
+          this.makeFiltersToCompare.price.min && this.calculateRecipePrice(recipe) <=
+          this.makeFiltersToCompare.price.max && recipe.portions >= this.makeFiltersToCompare.portions.min &&
+          recipe.portions <= this.makeFiltersToCompare.portions.max);
       }
 
       return this.recipes;
     },
+
   },
+
   methods: {
+    calculateRecipePrice(recipe) {
+      return recipe.recipeIngredients.data
+        .reduce((recipePrice, recipeIngredient) => recipePrice +
+          this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+    },
     toggleFiltersModal() {
+      this.showingFiltersModal = !this.showingFiltersModal;
+    },
+    toggleDeleteFilters() {
+      this.filters.portions.min = '';
+      this.filters.portions.max = '';
+      this.filters.price.min = '';
+      this.filters.price.max = '';
       this.showingFiltersModal = !this.showingFiltersModal;
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
       this.filters = this.$refs.filtersInfo.filters;
     },
-    updateRecipes(data) {
-      this.recipesToDisplay = data;
+
+    getPriceOfSelectedIngredient(recipeIngredient) {
+      if (!recipeIngredient.ingredientQuantity) return 0;
+
+      return recipeIngredient.ingredientQuantity *
+      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
     },
   },
 };
