@@ -43,6 +43,7 @@ class Api::V1::MenusController < Api::V1::BaseController
   def menu_params
     params.require(:menu).permit(
       :name,
+      :portions,
       menu_recipes_attributes: [:id, :recipe_id, :recipe_quantity, :_destroy]
     )
   end

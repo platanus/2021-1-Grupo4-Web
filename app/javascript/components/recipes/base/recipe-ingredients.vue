@@ -66,9 +66,9 @@
 </template>
 
 <script>
-import { getIngredients } from '../../../api/ingredients.js';
+import { getIngredients } from './../../../api/ingredients.js';
 import addIngredientCard from './add-ingredient-card.vue';
-import selectedIngredientCard from '../edit/selected-ingredient-card.vue';
+import selectedIngredientCard from './selected-ingredient-card.vue';
 
 export default {
   data() {
