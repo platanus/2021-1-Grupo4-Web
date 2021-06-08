@@ -63,6 +63,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      recipeQuantity: 0,
+    };
+  },
   props: {
     recipeSelected: { type: Object, required: true },
   },
@@ -85,9 +90,18 @@ export default {
   },
   computed: {
     recipePrice() {
-      return this.recipeSelected.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+      console.log(this.recipeSelected);
+      const priceOfRecipe = this.recipeSelected.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+
+      return priceOfRecipe * this.recipeSelected.quantity;
     },
   },
+  // watch: {
+  //   recipeSelected() {
+  //     this.recipeQuantity = this.recipeSelected.quantity;
+  //     console.log(this.recipeQuantity);
+  //   },
+  // },
 };
 </script>

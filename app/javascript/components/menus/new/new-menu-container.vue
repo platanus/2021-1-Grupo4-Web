@@ -125,10 +125,11 @@ export default {
 
   computed: {
     totalMenuPrice() {
-      const recipesPrices = this.selectedRecipes.map(element => (
+      const recipesPrices = this.selectedRecipes.map(element => ((
         element.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
           recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
-      ));
+      ) * element.quantity),
+      );
 
       return recipesPrices.reduce((menuPrice, recipePrice) =>
         menuPrice + recipePrice, 0);
@@ -166,12 +167,14 @@ export default {
       this.selectedRecipes.splice(indexToRemove, 1);
     },
     increaseQuantity(recipe) {
+      console.log("increasing q of ", recipe);
       const newValue = recipe.quantity += 1;
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
     decreaseQuantity(recipe) {
+      console.log("deacresing q of ", recipe);
       const newValue = recipe.quantity -= 1;
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
