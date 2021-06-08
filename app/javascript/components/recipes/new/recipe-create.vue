@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <!-- nombre -->
     <div class="flex items-center">
-      <a :href="`/recipes/${recipeId}`">
+      <a :href="`/recipes`">
         <img
           class="h-6 w-6 text-white mr-2"
           svg-inline
@@ -10,7 +10,7 @@
         >
       </a>
       <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
-        {{ recipe.name }}
+        {{ $t('msg.recipes.create') }}
       </div>
     </div>
     <!-- cuadro blanco edición -->
@@ -73,15 +73,15 @@
       <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
         <button
           class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8"
-          @click="cancelEdit"
+          @click="cancelCreate"
         >
           {{ $t('msg.recipes.cancel') }}
         </button>
         <button
           class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
-          @click="editRecipe"
+          @click="createRecipe"
         >
-          {{ $t('msg.recipes.saveChanges') }}
+          {{ $t('msg.recipes.add') }}
         </button>
       </div>
     </div>
@@ -89,14 +89,11 @@
 </template>
 
 <script>
-import { getRecipe, updateRecipe } from '../../../api/recipes.js';
+import { postRecipe } from '../../../api/recipes.js';
 import recipeIngredients from '../base/recipe-ingredients.vue';
 import recipeSteps from '../base/recipe-steps.vue';
 
 export default {
-  props: {
-    recipeId: { type: Number, required: true },
-  },
   components: {
     recipeIngredients,
     recipeSteps,
@@ -117,25 +114,16 @@ export default {
       deletedSteps: [],
     };
   },
-  async created() {
-    try {
-      const response = await getRecipe(this.recipeId);
-      this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
-      this.status = status;
-    } catch (error) {
-      this.error = error;
-    }
-  },
   methods: {
-    cancelEdit() {
-      window.location = `/recipes/${this.recipeId}`;
+    cancelCreate() {
+      window.location = '/recipes';
     },
-    async editRecipe() {
+    // por editar
+    async createRecipe() {
       try {
-        const updatedRecipe = this.getUpdatedRecipe();
-        await updateRecipe(this.recipe.id, updatedRecipe);
-        window.location = `/recipes/${this.recipeId}`;
-        this.error = '';
+        const recipeToCreate = this.getUpdatedRecipe();
+        await postRecipe(recipeToCreate);
+        window.location = '/recipes';
       } catch (error) {
         this.error = error;
       }
@@ -186,7 +174,7 @@ export default {
       for (const recipeIngredient of this.recipe.recipeIngredients.data) {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
-          ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+          ingredientQuantity: recipeIngredient.attributes.ingredientQuantity || 1,
         };
         if (!!recipeIngredient.id) {
           hash.id = recipeIngredient.id;
@@ -226,6 +214,7 @@ export default {
       for (const step of this.recipe.steps.data) {
         const hash = {
           description: step.attributes.description,
+          mediaUrl: 'https://media_url',
         };
         if (!!step.id) {
           hash.id = step.id;
