@@ -4,6 +4,7 @@ class Api::V1::MenuSerializer < ActiveModel::Serializer
   attributes(
     :name,
     :menu_recipes,
+    :portions,
     :created_at,
     :updated_at
   )
