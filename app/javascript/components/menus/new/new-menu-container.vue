@@ -106,6 +106,7 @@ import { getRecipes } from '../../../api/recipes.js';
 import { postMenu } from '../../../api/menus.js';
 import SelectedRecipesCard from './selected-recipes-card.vue';
 import AddRecipeCard from './add-recipe-card';
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
 
 export default {
   components: {
@@ -150,13 +151,7 @@ export default {
   },
 
   methods: {
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity *
-      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
-    },
-
+    getPriceOfSelectedIngredient,
     addRecipe(recipe) {
       const defaultQuantity = 1;
       this.selectedRecipes.push({ ...recipe, quantity: defaultQuantity });
@@ -167,14 +162,12 @@ export default {
       this.selectedRecipes.splice(indexToRemove, 1);
     },
     increaseQuantity(recipe) {
-      console.log("increasing q of ", recipe);
       const newValue = recipe.quantity += 1;
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
     decreaseQuantity(recipe) {
-      console.log("deacresing q of ", recipe);
       const newValue = recipe.quantity -= 1;
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));

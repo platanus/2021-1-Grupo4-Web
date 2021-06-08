@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
+
 export default {
   data() {
     return {
@@ -81,27 +83,15 @@ export default {
     decreaseQuantity() {
       this.$emit('decrease-quantity', this.recipeSelected);
     },
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity *
-      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
-    },
+    getPriceOfSelectedIngredient,
   },
   computed: {
     recipePrice() {
-      console.log(this.recipeSelected);
       const priceOfRecipe = this.recipeSelected.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
 
       return priceOfRecipe * this.recipeSelected.quantity;
     },
   },
-  // watch: {
-  //   recipeSelected() {
-  //     this.recipeQuantity = this.recipeSelected.quantity;
-  //     console.log(this.recipeQuantity);
-  //   },
-  // },
 };
 </script>
