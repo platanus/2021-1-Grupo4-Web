@@ -8,17 +8,17 @@
     >
     <!-- Name and info -->
     <div class="flex flex-col items-start w-full h-16 mx-3 my-auto">
-      <p class="py-2 px-3 font-medium">
+      <p class="py-2 pr-3 font-medium">
         {{ name }}
       </p>
       <div>
-        <p class="py-2 px-3 text-xs inline-block">
+        <p class="py-2 pr-3 text-xs inline-block">
           {{ portions }} {{ $t('msg.recipes.portions') }}
         </p>
-        <p class="py-2 px-3 text-xs inline-block">
+        <p class="py-2 pr-3 text-xs inline-block">
           {{ recipePrice | currency }}
         </p>
-        <p class="py-2 px-3 text-xs inline-block">
+        <p class="py-2 pr-3 text-xs inline-block">
           {{ minutes }} {{ $t('msg.recipes.minutes') }}
         </p>
       </div>
