@@ -45,7 +45,7 @@
     <!-- button -->
     <div class="flex flex-col justify-center items-end h-20 flex-none self-stretch mr-2">
       <button
-        class="w-3 h-3 bg-red-500 shadow-sm rounded-md flex-none flex-grow-0 mb-1.5 focus:outline-none"
+        class="w-3 h-3 bg-red-500 shadow-sm rounded-md flex-none mb-1.5 focus:outline-none"
         @click="deleteRecipe"
       >
         <img
@@ -54,7 +54,7 @@
           src="../../../../assets/images/cross-svg.svg"
         >
       </button>
-      <div class=" h-6 font-sans font-medium text-base text-right text-black flex-none flex-grow-0">
+      <div class=" h-6 font-sans font-medium text-base text-right text-black flex-none">
         {{ recipePrice | currency }}
       </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50 flex-none flex-grow-0">
+  <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50 flex-none">
     <!-- Image -->
     <img
       svg-inline
@@ -25,10 +25,10 @@
     </div>
     <!-- button -->
     <button
-      class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none flex-grow-0 my-auto mx-3"
+      class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none my-auto mx-3"
       @click="addRecipe()"
     >
-      <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none flex-grow-0">
+      <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none">
         {{ $t('msg.add') }}
       </div>
     </button>
