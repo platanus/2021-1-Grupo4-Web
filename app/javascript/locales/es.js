@@ -47,6 +47,8 @@ export default {
       measure: 'Unidad',
       selected: 'Ingredientes seleccionados',
       providerName: 'Nombre del proveedor',
+      default_unit: 'Unidad por defecto',
+      alternative_unit: 'Unidades alternativas',
     },
 
     recipes: {
