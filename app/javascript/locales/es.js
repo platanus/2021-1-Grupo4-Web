@@ -114,6 +114,7 @@ export default {
       recipes: 'Recetas',
       noRecipes: 'Este menú aún no tiene recetas',
       noNameAlert: 'Ingresa el nombre del menú por favor',
+      saveChanges: 'Guardar cambios',
     },
     providers: {
       title: 'Proveedores',

@@ -2,8 +2,6 @@
 <template>
   <div class="flex flex-col">
     <!-- Title -->
-    {{ hola }}
-    
     <div class="flex items-center">
       <a :href="`/menus`">
         <img
@@ -100,9 +98,9 @@
           </div>
           <button
             class="bg-green-500 hover:bg-green-700 text-white mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 focus:outline-none"
-            @click="createMenu"
+            @click="updateMenu"
           >
-            {{ $t('msg.menus.create') }}
+            {{ $t('msg.menus.saveChanges') }}
           </button>
         </div>
       </div>
@@ -128,20 +126,14 @@ export default {
 
   data() {
     return {
+      initialRecipes: [],
       recipes: [],
       error: '',
       query: '',
       menuName: '',
       selectedRecipes: [],
-      hola: [],
-    //   menu: {
-    //     id: null,
-    //     name: '',
-    //     menuRecipes: { data: [] },
-    //   },
     };
   },
-
   computed: {
     totalMenuPrice() {
       const recipesPrices = this.selectedRecipes.map(element => ((
@@ -154,20 +146,15 @@ export default {
         menuPrice + recipePrice, 0);
     },
   },
-
   async created() {
     try {
       const menuResponse = await getMenu(this.menuId);
-    //   this.menu.id = menuResponse.data.data.id;
-    //   this.menu.name = menuResponse.data.data.attributes.name;
-      this.menuName = menuResponse.data.data.attributes.name;
-      console.log(menuResponse.data.data.attributes.menuRecipes);
-      this.hola = menuResponse.data.data.attributes.menuRecipes;
       const response = await getRecipes();
       this.recipes = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
+      this.useMenuInfo(menuResponse.data.data);
       this.error = '';
     } catch (error) {
       this.error = error;
@@ -175,6 +162,22 @@ export default {
   },
 
   methods: {
+    useMenuInfo(menu) {
+      this.menuName = menu.attributes.name;
+      this.initialRecipes = menu.attributes.menuRecipes.data.map(element => ({
+        'quantity': element.attributes.recipeQuantity,
+        'id': element.attributes.recipe.id,
+      }));
+      this.addInitialRecipes();
+    },
+    addInitialRecipes() {
+      const ids = this.initialRecipes.map(recipe => recipe.id);
+      this.selectedRecipes = this.recipes.filter(recipe => ids.includes(parseInt(recipe.id, 10)));
+      this.selectedRecipes.forEach(element => {
+        const index = ids.indexOf(parseInt(element.id, 10));
+        element.quantity = this.initialRecipes[index].quantity;
+      });
+    },
     getPriceOfSelectedIngredient,
     addRecipe(recipe) {
       const defaultQuantity = 1;
@@ -198,7 +201,7 @@ export default {
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
 
-    async createMenu() {
+    async updateMenu() {
       const menuRecipesToPost = this.selectedRecipes.map(element => (
         {
           recipeId: parseInt(element.id, 10),
