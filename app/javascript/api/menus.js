@@ -19,10 +19,17 @@ function postMenu(menu) {
     ));
 }
 
+function updateMenu(menuId, menu) {
+  return (client
+    .put(`/menus/${menuId}`,
+      { menu },
+    ));
+}
+
 function deleteMenu(menuId) {
   return (client
     .delete(`/menus/${menuId}`, {
     }));
 }
 
-export { getMenus, getMenu, postMenu, deleteMenu };
+export { getMenus, getMenu, postMenu, updateMenu, deleteMenu };

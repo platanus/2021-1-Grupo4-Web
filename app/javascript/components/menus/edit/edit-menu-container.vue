@@ -98,7 +98,7 @@
           </div>
           <button
             class="bg-green-500 hover:bg-green-700 text-white mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 focus:outline-none"
-            @click="updateMenu"
+            @click="editMenu"
           >
             {{ $t('msg.menus.saveChanges') }}
           </button>
@@ -131,7 +131,9 @@ export default {
       error: '',
       query: '',
       menuName: '',
+      menuPortions: 0,
       selectedRecipes: [],
+      deletedRecipes: [],
     };
   },
   computed: {
@@ -160,13 +162,24 @@ export default {
       this.error = error;
     }
   },
-
   methods: {
+    async editMenu() {
+      try {
+        const updatedMenu = this.getUpdatedMenu();
+        await updateMenu(this.menuId, updatedMenu);
+        window.location = '/menus';
+      } catch (error) {
+        this.error = error;
+      }
+    },
     useMenuInfo(menu) {
       this.menuName = menu.attributes.name;
+      this.portions = menu.attributes.portions;
+      this.portions = menu.id;
       this.initialRecipes = menu.attributes.menuRecipes.data.map(element => ({
         'quantity': element.attributes.recipeQuantity,
         'id': element.attributes.recipe.id,
+        'idMenuRecipe': parseInt(element.id, 10),
       }));
       this.addInitialRecipes();
     },
@@ -176,6 +189,7 @@ export default {
       this.selectedRecipes.forEach(element => {
         const index = ids.indexOf(parseInt(element.id, 10));
         element.quantity = this.initialRecipes[index].quantity;
+        element.idMenuRecipe = this.initialRecipes[index].idMenuRecipe;
       });
     },
     getPriceOfSelectedIngredient,
@@ -187,6 +201,7 @@ export default {
       const indexToRemove = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
       this.selectedRecipes.splice(indexToRemove, 1);
+      this.deletedRecipes.push(recipe);
     },
     increaseQuantity(recipe) {
       const newValue = recipe.quantity += 1;
@@ -200,22 +215,44 @@ export default {
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
+    getUpdatedMenu() {
+      const updatedMenu = { name: this.menuName,
+        portions: this.portions };
+      this.addMenuRecipeAttributes(updatedMenu);
 
-    async updateMenu() {
-      const menuRecipesToPost = this.selectedRecipes.map(element => (
-        {
-          recipeId: parseInt(element.id, 10),
-          recipeQuantity: element.quantity,
+      return updatedMenu;
+    },
+    addMenuRecipeAttributes(updatedMenu) {
+      const menuRecipesAttributes = [];
+      this.addNewAndUpdatedRecipes(menuRecipesAttributes);
+      this.addDeletedMenuRecipes(menuRecipesAttributes);
+      updatedMenu.menuRecipesAttributes = menuRecipesAttributes;
+    },
+    addNewAndUpdatedRecipes(menuRecipeAttributes) {
+      for (const menuRecipe of this.selectedRecipes) {
+        const hash = {
+          recipeId: parseInt(menuRecipe.id, 10),
+          recipeQuantity: menuRecipe.quantity,
+        };
+        if (!!menuRecipe.idMenuRecipe) {
+        // id relacion
+          hash.id = menuRecipe.idMenuRecipe;
+          hash._destroy = false;
         }
-      ));
-      const menuToPost = { name: this.menuName, menuRecipesAttributes: menuRecipesToPost };
-      try {
-        await postMenu(menuToPost);
-        this.error = '';
-        window.location.href = '/menus';
-      } catch (error) {
-        this.error = error;
+        menuRecipeAttributes.push(hash);
       }
+    },
+    addDeletedMenuRecipes(menuRecipeAttributes) {
+      this.deletedRecipes.forEach(element => {
+        menuRecipeAttributes.push(
+          {
+            id: element.idMenuRecipe,
+            recipeId: parseInt(element.id, 10),
+            recipeQuantity: element.quantity,
+            _destroy: true,
+          },
+        );
+      });
     },
   },
 };
