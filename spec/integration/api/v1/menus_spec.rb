@@ -157,30 +157,18 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
 
-    # rubocop:disable Rails/SkipsModelValidations
-    def set_recipes_quantities(quantity_for_each)
-      existent_menu.menu_recipes.update_all(recipe_quantity: quantity_for_each)
-    end
-
-    def set_ingredients_quantities(recipe, quantity_for_each)
-      recipe.recipe_ingredients.update_all(ingredient_quantity: quantity_for_each)
-    end
-    # rubocop:enable Rails/SkipsModelValidations
-
     post 'Reduces inventory' do
       description 'Reduces inventory of ingredients of menu through recipes'
       consumes 'application/json'
       produces 'application/json'
 
-      let(:recipes_quantities) { 3 }
-      let(:first_recipe_ingredients_quantities) { 1 }
-      let(:second_recipe_ingredients_quantities) { 2 }
-
+      # rubocop:disable Rails/SkipsModelValidations
       before do
-        set_recipes_quantities(recipes_quantities)
-        set_ingredients_quantities(first_recipe, first_recipe_ingredients_quantities)
-        set_ingredients_quantities(second_recipe, second_recipe_ingredients_quantities)
+        existent_menu.menu_recipes.update_all(recipe_quantity: 3)
+        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1)
+        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2)
       end
+      # rubocop:enable Rails/SkipsModelValidations
 
       response '200', 'reduced inventory of menu' do
         run_test! do
