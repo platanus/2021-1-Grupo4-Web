@@ -23,7 +23,16 @@
               {{ idx + 1 }}
             </div>
           </div>
-          <div class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4">
+          <div
+            class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
+            v-if="!step.step.attributes.description"
+          >
+            {{ $t('msg.recipes.noSteps') }}
+          </div>
+          <div
+            class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
+            v-else
+          >
             {{ step.step.attributes.description }}
           </div>
           <div class="flex items-center w-6 h-6 mx-4">
@@ -42,10 +51,9 @@
           class="flex flex-col justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
           v-else
         >
-          <text-box
-            tid="newTextBox"
-            class="flex-1 w-full"
-            :value="step.step.attributes.description"
+          <textarea
+            class="flex-1 w-full resize-y border-2 rounded-md border-gray-300 w-full my-4 p-4"
+            v-model="modifiedRecipeSteps[idx].editingStepDescription"
           />
           <div
             class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0"
@@ -60,7 +68,7 @@
             <button
               class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 border border-gray-800 box-border
                 drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0"
-              @click="editStep(idx)"
+              @click="closeEditStep(idx)"
             >
               {{ $t('msg.recipes.cancel') }}
             </button>
@@ -113,6 +121,7 @@ export default {
           this.modifiedRecipeSteps.push({
             step: this.recipeSteps[idx],
             isEditing: false,
+            editingStepDescription: '',
           });
           this.recipeStepsSet.add(this.recipeSteps[idx]);
         }
@@ -131,10 +140,14 @@ export default {
       this.$emit('delete-step', idx);
     },
     editStep(idx) {
+      this.modifiedRecipeSteps[idx].editingStepDescription = this.modifiedRecipeSteps[idx].step.attributes.description;
       this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
     },
     acceptEdit(idx) {
-      this.modifiedRecipeSteps[idx].step.attributes.description = document.getElementById('newTextBox').value;
+      this.modifiedRecipeSteps[idx].step.attributes.description = this.modifiedRecipeSteps[idx].editingStepDescription;
+      this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
+    },
+    closeEditStep(idx) {
       this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
     },
   },
