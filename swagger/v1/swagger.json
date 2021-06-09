@@ -25,13 +25,13 @@
               "example": 1,
               "x-nullable": false
             },
-            "recipe": {
-              "$ref": "#/definitions/recipe_response"
-            },
             "recipe_quantity": {
               "type": "integer",
               "example": 3,
               "x-nullable": true
+            },
+            "recipe": {
+              "$ref": "#/definitions/recipe_response"
             },
             "created_at": {
               "type": "string",

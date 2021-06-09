@@ -15,8 +15,8 @@ MENU_RECIPE_RESPONSE = {
       type: :object,
       properties: {
         menu_id: { type: :integer, example: 1, 'x-nullable': false },
-        recipe: { "$ref" => "#/definitions/recipe_response" },
         recipe_quantity: { type: :integer, example: 3, 'x-nullable': true },
+        recipe: { "$ref" => "#/definitions/recipe_response" },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },
