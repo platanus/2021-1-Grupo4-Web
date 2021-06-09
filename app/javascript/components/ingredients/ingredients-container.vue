@@ -193,11 +193,14 @@ export default {
       this.showingAdd = !this.showingAdd;
 
       try {
+        var ingredientsInfo = this.$refs.addIngredientInfo.form
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
+          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
             { data: { id, attributes },
             },
-        } = await postIngredient(this.$refs.addIngredientInfo.form);
+        } = await postIngredient(ingredientsInfo);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
         this.error = '';
