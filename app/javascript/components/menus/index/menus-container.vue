@@ -43,7 +43,6 @@
       <menus-table
         v-else
         :menus="filterMenus"
-        @edit="toggleEditModal"
         @del="toggleDelModal"
       />
     </div>
@@ -104,9 +103,6 @@ export default {
     },
   },
   methods: {
-    toggleEditModal() {
-      this.showingEdit = !this.showingEdit;
-    },
     toggleDelModal(menu) {
       this.showingDel = !this.showingDel;
       this.menuToDelete = menu;

@@ -6,6 +6,12 @@ function getMenus() {
     }));
 }
 
+function getMenu(menuId) {
+  return (client
+    .get(`/menus/${menuId}`, {
+    }));
+}
+
 function postMenu(menu) {
   return (client
     .post('/menus',
@@ -19,4 +25,4 @@ function deleteMenu(menuId) {
     }));
 }
 
-export { getMenus, postMenu, deleteMenu };
+export { getMenus, getMenu, postMenu, deleteMenu };

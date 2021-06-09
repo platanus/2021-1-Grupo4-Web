@@ -2,9 +2,18 @@
 <template>
   <div class="flex flex-col">
     <!-- Title -->
-    <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
-      <div class="text-4xl order-0 flex-grow-0">
-        {{ $t('msg.menus.create') }}
+    {{ hola }}
+    
+    <div class="flex items-center">
+      <a :href="`/menus`">
+        <img
+          class="h-6 w-6 text-white mr-2"
+          svg-inline
+          src="../../../../assets/images/arrow-left-svg.svg"
+        >
+      </a>
+      <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
+        {{ menuName }}
       </div>
     </div>
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
@@ -21,7 +30,7 @@
       <!-- Recipes -->
       <div class="flex justify-between mb-8">
         <div class="w-1/2 p-4">
-          <div class="flex flex-col w-auto">
+          <div class="flex flex-col">
             <!-- search bar -->
             <div class="relative text-yellow-700 my-4">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -32,17 +41,15 @@
                 >
               </span>
               <input
-                class="flex py-2 px-12 w-full h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
+                class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
-                @keyup="filterRecipes"
-                v-model="searchQuery"
               >
             </div>
             <!-- available recipes -->
-            <div class="flex flex-col h-96 bg-gray-200 overflow-scroll">
+            <div class="flex flex-col bg-gray-200 overflow-scroll">
               <add-recipe-card
-                v-for="recipe in filterRecipes"
+                v-for="recipe in recipes"
                 :key="recipe.id"
                 :name="recipe.name"
                 :portions="recipe.portions"
@@ -62,7 +69,7 @@
               {{ $t('msg.menus.selectedRecipes') }}
             </div>
             <div
-              class="flex flex-col h-96 bg-gray-200 overflow-scroll"
+              class="flex flex-col bg-gray-200 overflow-scroll"
               v-if="selectedRecipes.length > 0"
             >
               <div
@@ -105,12 +112,15 @@
 
 <script>
 import { getRecipes } from '../../../api/recipes.js';
-import { postMenu } from '../../../api/menus.js';
+import { getMenu, updateMenu } from '../../../api/menus.js';
 import SelectedRecipesCard from '../base/selected-recipes-card.vue';
 import AddRecipeCard from '../base/add-recipe-card';
 import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
 
 export default {
+  props: {
+    menuId: { type: Number, required: true },
+  },
   components: {
     SelectedRecipesCard,
     AddRecipeCard,
@@ -123,7 +133,12 @@ export default {
       query: '',
       menuName: '',
       selectedRecipes: [],
-      searchQuery: '',
+      hola: [],
+    //   menu: {
+    //     id: null,
+    //     name: '',
+    //     menuRecipes: { data: [] },
+    //   },
     };
   },
 
@@ -138,20 +153,16 @@ export default {
       return recipesPrices.reduce((menuPrice, recipePrice) =>
         menuPrice + recipePrice, 0);
     },
-    filterRecipes() {
-      if (this.searchQuery) {
-        return this.recipes.filter(item => this.searchQuery
-          .toLowerCase()
-          .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-
-      return this.recipes;
-    },
   },
 
   async created() {
     try {
+      const menuResponse = await getMenu(this.menuId);
+    //   this.menu.id = menuResponse.data.data.id;
+    //   this.menu.name = menuResponse.data.data.attributes.name;
+      this.menuName = menuResponse.data.data.attributes.name;
+      console.log(menuResponse.data.data.attributes.menuRecipes);
+      this.hola = menuResponse.data.data.attributes.menuRecipes;
       const response = await getRecipes();
       this.recipes = response.data.data.map((element) => ({
         id: element.id,
@@ -188,11 +199,6 @@ export default {
     },
 
     async createMenu() {
-      if (!this.menuName) {
-        alert(this.$t('msg.menus.noNameAlert')); // eslint-disable-line no-alert
-
-        return;
-      }
       const menuRecipesToPost = this.selectedRecipes.map(element => (
         {
           recipeId: parseInt(element.id, 10),
