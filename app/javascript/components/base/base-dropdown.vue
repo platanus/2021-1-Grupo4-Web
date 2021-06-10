@@ -53,6 +53,7 @@ export default {
     selectElement(element) {
       this.selectedElement = element;
       this.active = !this.active;
+      this.$emit("select", this.selectedElement);
     },
   },
 };
