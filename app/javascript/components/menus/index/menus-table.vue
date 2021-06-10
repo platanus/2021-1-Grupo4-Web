@@ -52,7 +52,7 @@
           <p
             class="ml-2 font-medium"
           >
-            {{ 20000 | currency }}
+            {{ totalMenuPrice(menu.menuRecipes.data) | currency }}
           </p>
         </td>
         <!-- recipesQuantity -->
@@ -82,8 +82,8 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient(menu)"
-            @del="deleteIngredient(menu)"
+            @edit="editMenu(menu)"
+            @del="deleteMenu(menu)"
           />
         </td>
       </tr>
@@ -103,12 +103,46 @@ export default {
   props: {
     menus: { type: Array, required: true },
   },
+  // computed: {
+  //   totalMenuPrice() {
+  //     const recipesPrices = this.selectedRecipes.map(element => ((
+  //       element.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
+  //         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
+  //     ) * element.quantity),
+  //     );
+
+  //     return recipesPrices.reduce((menuPrice, recipePrice) =>
+  //       menuPrice + recipePrice, 0);
+  //   },
+  // },
   methods: {
-    editIngredient(element) {
+    editMenu(element) {
       this.$emit('edit', element);
     },
-    deleteIngredient(element) {
+    deleteMenu(element) {
       this.$emit('del', element);
+    },
+    totalMenuPrice(data) {
+      let finalPrice = 0;
+      data.forEach(element => {
+        const recipeQuantity = element.attributes.recipeQuantity;
+        const ingredients = this.calculateIngredients(element.attributes.recipe.recipeIngredients.data);
+        ingredients.forEach(ingredientPriced => {
+          finalPrice += recipeQuantity * ingredientPriced;
+        });
+      });
+
+      return finalPrice;
+    },
+    calculateIngredients(data) {
+      const returnArray = [];
+      data.forEach(element => {
+        const ingredientQuantity = element.attributes.ingredientQuantity;
+        const ingredientUnitaryPrice = element.attributes.ingredient.price / element.attributes.ingredient.quantity;
+        returnArray.push(ingredientQuantity * ingredientUnitaryPrice);
+      });
+
+      return returnArray;
     },
   },
 };

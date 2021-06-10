@@ -35,12 +35,14 @@
                 class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
+                @keyup="filterRecipes"
+                v-model="searchQuery"
               >
             </div>
             <!-- available recipes -->
             <div class="flex flex-col bg-gray-200 overflow-scroll">
               <add-recipe-card
-                v-for="recipe in recipes"
+                v-for="recipe in filterRecipes"
                 :key="recipe.id"
                 :name="recipe.name"
                 :portions="recipe.portions"
@@ -121,6 +123,7 @@ export default {
       query: '',
       menuName: '',
       selectedRecipes: [],
+      searchQuery: '',
     };
   },
 
@@ -134,6 +137,16 @@ export default {
 
       return recipesPrices.reduce((menuPrice, recipePrice) =>
         menuPrice + recipePrice, 0);
+    },
+    filterRecipes() {
+      if (this.searchQuery) {
+        return this.recipes.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.recipes;
     },
   },
 
@@ -175,6 +188,11 @@ export default {
     },
 
     async createMenu() {
+      if (!this.menuName) {
+        alert(this.$t('msg.menus.noNameAlert')); // eslint-disable-line no-alert
+
+        return;
+      }
       const menuRecipesToPost = this.selectedRecipes.map(element => (
         {
           recipeId: parseInt(element.id, 10),
