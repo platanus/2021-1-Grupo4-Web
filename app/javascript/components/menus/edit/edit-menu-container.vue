@@ -39,7 +39,7 @@
                 >
               </span>
               <input
-                class="flex py-2 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded focus:outline-none"
+                class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
               >
