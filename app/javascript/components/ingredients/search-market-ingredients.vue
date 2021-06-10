@@ -123,7 +123,7 @@ export default {
     addMarketIngredient(productIdx) {
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
-        providerId: this.productsByMarket[this.market].provider.id,
+        providerName: this.productsByMarket[this.market].provider.name,
         name: productInfo.name,
         sku: null,
         price: productInfo.price,

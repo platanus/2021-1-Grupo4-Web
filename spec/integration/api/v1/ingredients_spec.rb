@@ -106,7 +106,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     let(:cornershop_client) do
       instance_double('CornershopClient', products_by_query: products)
     end
-    let!(:provider) { create(:provider, name: 'Jumbo') }
+    let!(:provider) { create(:provider, name: 'Jumbo', user: user) }
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string

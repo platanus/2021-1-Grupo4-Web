@@ -1,7 +1,7 @@
 INGREDIENT_SCHEMA = {
   type: :object,
   properties: {
-    provider_id: { type: :integer, example: 1, 'x-nullable': true },
+    provider_name: { type: :string, example: 'Jumbo', 'x-nullable': true },
     name: { type: :string, example: 'Harina', 'x-nullable': true },
     sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
     price: { type: :integer, example: 2990, 'x-nullable': true },

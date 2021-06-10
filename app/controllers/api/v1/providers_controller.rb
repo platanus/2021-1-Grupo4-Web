@@ -2,7 +2,7 @@ class Api::V1::ProvidersController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   def index
-    respond_with Provider.all
+    respond_with providers
   end
 
   def show
@@ -10,7 +10,7 @@ class Api::V1::ProvidersController < Api::V1::BaseController
   end
 
   def create
-    respond_with Provider.create!(provider_params)
+    respond_with providers.create!(provider_params)
   end
 
   def update
@@ -24,7 +24,11 @@ class Api::V1::ProvidersController < Api::V1::BaseController
   private
 
   def provider
-    @provider ||= Provider.find_by!(id: params[:id])
+    @provider ||= providers.find_by!(id: params[:id])
+  end
+
+  def providers
+    @providers ||= current_user.providers
   end
 
   def provider_params

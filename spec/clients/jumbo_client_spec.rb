@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe JumboClient do
   let(:query) { 'pan' }
   let(:client_instance) { described_class.new }
+  let(:user) { create(:user) }
 
   let(:measure_result) { instance_double('Measure div', text: '1 Un.') }
   let(:name_result) { [instance_double('Title div', text: 'Pan del oso.'), double] }
@@ -16,7 +17,7 @@ RSpec.describe JumboClient do
   let(:product) { instance_double('Product') }
   let(:products) { [product] }
 
-  let!(:provider) { create(:provider, name: 'Jumbo') }
+  let!(:provider) { create(:provider, name: 'Jumbo', user: user) }
 
   def call_products_by_query
     described_class.new.products_by_query(query: query)

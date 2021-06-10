@@ -6,7 +6,8 @@ Provider.create(
   phone: '+56 9 62288121',
   delivery_days: 2,
   minimum_purchase: 8_000,
-  webpage_url: 'https://jumbo.cl'
+  webpage_url: 'https://jumbo.cl',
+  user: User.first
 )
 
 Provider.create(
@@ -17,5 +18,6 @@ Provider.create(
   phone: '+56 9 62288141',
   delivery_days: 1,
   minimum_purchase: 15_000,
-  webpage_url: 'https://lider.cl'
+  webpage_url: 'https://lider.cl',
+  user: User.second
 )

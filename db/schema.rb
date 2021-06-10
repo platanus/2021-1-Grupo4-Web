@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_04_152534) do
-
+ActiveRecord::Schema.define(version: 2021_06_10_220621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,9 +23,11 @@ ActiveRecord::Schema.define(version: 2021_06_04_152534) do
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["author_type", "author_id"],
+            name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"],
+            name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -38,7 +39,8 @@ ActiveRecord::Schema.define(version: 2021_06_04_152534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token",
+                                      unique: true
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -87,6 +89,8 @@ ActiveRecord::Schema.define(version: 2021_06_04_152534) do
     t.integer "delivery_days"
     t.integer "minimum_purchase"
     t.string "phone"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_providers_on_user_id"
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
@@ -138,6 +142,7 @@ ActiveRecord::Schema.define(version: 2021_06_04_152534) do
   add_foreign_key "menu_recipes", "menus"
   add_foreign_key "menu_recipes", "recipes"
   add_foreign_key "menus", "users"
+  add_foreign_key "providers", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_steps", "recipes"
