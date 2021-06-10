@@ -175,7 +175,6 @@ export default {
     useMenuInfo(menu) {
       this.menuName = menu.attributes.name;
       this.portions = menu.attributes.portions;
-      this.portions = menu.id;
       this.initialRecipes = menu.attributes.menuRecipes.data.map(element => ({
         'quantity': element.attributes.recipeQuantity,
         'id': element.attributes.recipe.id,
@@ -235,8 +234,8 @@ export default {
           recipeQuantity: menuRecipe.quantity,
         };
         if (!!menuRecipe.idMenuRecipe) {
-        // id relacion
           hash.id = menuRecipe.idMenuRecipe;
+          // eslint-disable-next-line no-underscore-dangle
           hash._destroy = false;
         }
         menuRecipeAttributes.push(hash);
