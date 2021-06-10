@@ -190,11 +190,12 @@ export default {
     },
 
     async addIngredient() {
+      var ingredientsInfo;
       this.showingAdd = !this.showingAdd;
 
       try {
-        var ingredientsInfo = this.$refs.addIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
+        ingredientsInfo = this.$refs.addIngredientInfo.form;
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo  /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
@@ -230,10 +231,10 @@ export default {
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
       try {
-        var ingredientsInfo = this.$refs.editIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
+        const ingredientsInfo = this.$refs.editIngredientInfo.form;
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo  /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
-        const res = await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
+        await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
         this.updateIngredient(ingredientsInfo);
         this.error = '';
       } catch (error) {
@@ -258,7 +259,8 @@ export default {
       ingredientEdited.id = this.ingredientToEdit.id;
       ingredientEdited.otherMeasures = { data: [] };
       ingredientEdited.ingredient_measures_attributes.forEach(element => {
-        ingredientEdited.otherMeasures.data.push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } })
+        ingredientEdited.otherMeasures.data
+          .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
       });
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
       Vue.set(this.ingredients, objectIndex, ingredientEdited);

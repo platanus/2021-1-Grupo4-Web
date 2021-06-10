@@ -70,6 +70,7 @@
 
 <script>
 import baseDropdown from '../../base/base-dropdown.vue';
+
 export default {
   components: { baseDropdown },
   props: {
@@ -101,7 +102,3 @@ export default {
   },
 };
 </script>
-(element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
