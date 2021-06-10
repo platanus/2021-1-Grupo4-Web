@@ -181,6 +181,7 @@ export default {
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
     decreaseQuantity(recipe) {
+      if (recipe.quantity <= 1) return;
       const newValue = recipe.quantity -= 1;
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));

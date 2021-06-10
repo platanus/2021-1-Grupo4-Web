@@ -28,9 +28,9 @@
       <!-- Recipes -->
       <div class="flex justify-between mb-8">
         <div class="w-1/2 p-4">
-          <div class="flex flex-col">
+          <div class="flex flex-col w-full">
             <!-- search bar -->
-            <div class="relative text-yellow-700 my-4">
+            <div class="flex w-full relative text-yellow-700 my-4">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <img
                   svg-inline
@@ -39,7 +39,7 @@
                 >
               </span>
               <input
-                class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
+                class="flex py-2 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
               >
@@ -209,7 +209,9 @@ export default {
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
     decreaseQuantity(recipe) {
+      if (recipe.quantity <= 1) return;
       const newValue = recipe.quantity -= 1;
+
       const indexToUpdate = this.selectedRecipes.findIndex((element) =>
         parseInt(element.id, 10) === parseInt(recipe.id, 10));
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
