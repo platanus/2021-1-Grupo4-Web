@@ -65,7 +65,7 @@
       >
         <ingredients-form
           ref="addIngredientInfo"
-          :units="['Kg','Litro']"
+          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="false"
         />
       </base-modal>
