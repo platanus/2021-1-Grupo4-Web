@@ -2,8 +2,15 @@
 <template>
   <div class="flex flex-col">
     <!-- Title -->
-    <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
-      <div class="text-4xl order-0 flex-grow-0">
+    <div class="flex items-center">
+      <a :href="`/menus`">
+        <img
+          class="h-6 w-6 text-white mr-2"
+          svg-inline
+          src="../../../../assets/images/arrow-left-svg.svg"
+        >
+      </a>
+      <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
         {{ $t('msg.menus.create') }}
       </div>
     </div>
