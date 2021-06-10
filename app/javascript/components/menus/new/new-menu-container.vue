@@ -44,6 +44,8 @@
               <add-recipe-card
                 v-for="recipe in filterRecipes"
                 :key="recipe.id"
+                :selected-recipes="selectedRecipes"
+                :id="recipe.id"
                 :name="recipe.name"
                 :portions="recipe.portions"
                 :minutes="recipe.cookMinutes"
