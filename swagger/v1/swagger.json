@@ -406,6 +406,11 @@
           "type": "string",
           "example": "unidad",
           "x-nullable": true
+        },
+        "inventory": {
+          "type": "integer",
+          "example": 10,
+          "x-nullable": true
         }
       },
       "required": [
@@ -468,6 +473,11 @@
             "measure": {
               "type": "string",
               "example": "unidad",
+              "x-nullable": true
+            },
+            "inventory": {
+              "type": "integer",
+              "example": 10,
               "x-nullable": true
             },
             "created_at": {
@@ -1660,6 +1670,41 @@
           },
           "404": {
             "description": "menu not found"
+          }
+        }
+      }
+    },
+    "/menus/{id}/reduce-inventory": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Reduces inventory",
+        "description": "Reduces inventory of ingredients of menu through recipes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "reduced inventory of menu"
           }
         }
       }

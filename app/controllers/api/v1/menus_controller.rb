@@ -22,10 +22,25 @@ class Api::V1::MenusController < Api::V1::BaseController
     respond_with menu.destroy!
   end
 
+  def reduce_inventory
+    ingredient_quantities_to_decrement = Hash.new(0)
+    menu_recipes_ingredients_to_reduce_inventory.each do |record|
+      quantity_to_decrement = record.recipe_quantity.to_i * record.ingredient_quantity.to_i
+      ingredient_quantities_to_decrement[record.ingredient_id] += quantity_to_decrement
+    end
+    ingredients = Ingredient.where(id: ingredient_quantities_to_decrement.keys)
+    ingredients.each do |ingredient|
+      quantity = ingredient_quantities_to_decrement[ingredient.id]
+      ingredient.decrement_inventory!(quantity)
+    end
+
+    render json: {}, status: :ok
+  end
+
   private
 
   def menu
-    @menu ||= Menu.find_by!(id: params[:id])
+    @menu ||= menus.find_by!(id: params[:id])
   end
 
   def menus
@@ -38,6 +53,16 @@ class Api::V1::MenusController < Api::V1::BaseController
 
     recipe_ids = menu_recipes_attributes.map { |menu_recipe| menu_recipe['recipe_id'] }
     current_user.recipes.find(recipe_ids)
+  end
+
+  def menu_recipes_ingredients_to_reduce_inventory
+    menu.menu_recipes.joins(
+      recipe: { recipe_ingredients: :ingredient }
+    ).select(
+      'ingredients.id as ingredient_id,
+      menu_recipes.recipe_quantity as recipe_quantity,
+      recipe_ingredients.ingredient_quantity as ingredient_quantity'
+    )
   end
 
   def menu_params

@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+# rubocop:disable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup
 describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
   let!(:user) { create(:user) }
   let(:user_email) { user.email }
@@ -143,5 +143,41 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       end
     end
   end
+
+  path '/menus/{id}/reduce-inventory' do
+    parameter name: :id, in: :path, type: :integer
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    let!(:first_ingredient) { create(:ingredient, inventory: 12) }
+    let!(:second_ingredient) { create(:ingredient, inventory: 10) }
+    let!(:third_ingredient) { create(:ingredient, inventory: 2) }
+    let!(:first_recipe) { create(:recipe, ingredients: [first_ingredient, second_ingredient]) }
+    let!(:second_recipe) { create(:recipe, ingredients: [third_ingredient]) }
+    let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
+    let(:id) { existent_menu.id }
+
+    post 'Reduces inventory' do
+      description 'Reduces inventory of ingredients of menu through recipes'
+      consumes 'application/json'
+      produces 'application/json'
+
+      # rubocop:disable Rails/SkipsModelValidations
+      before do
+        existent_menu.menu_recipes.update_all(recipe_quantity: 3)
+        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1)
+        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2)
+      end
+      # rubocop:enable Rails/SkipsModelValidations
+
+      response '200', 'reduced inventory of menu' do
+        run_test! do
+          expect(first_ingredient.reload.inventory).to eq(9)
+          expect(second_ingredient.reload.inventory).to eq(7)
+          expect(third_ingredient.reload.inventory).to eq(0)
+        end
+      end
+    end
+  end
 end
-# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers
+# rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup

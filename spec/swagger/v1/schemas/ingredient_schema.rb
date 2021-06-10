@@ -7,7 +7,8 @@ INGREDIENT_SCHEMA = {
     price: { type: :integer, example: 2990, 'x-nullable': true },
     currency: { type: :string, example: 'CLP', 'x-nullable': true },
     quantity: { type: :integer, example: 2, 'x-nullable': true },
-    measure: { type: :string, example: 'unidad', 'x-nullable': true }
+    measure: { type: :string, example: 'unidad', 'x-nullable': true },
+    inventory: { type: :integer, example: 10, 'x-nullable': true }
   },
   required: [
     :name,
@@ -17,7 +18,6 @@ INGREDIENT_SCHEMA = {
     :measure
   ]
 }
-
 
 INGREDIENT_RESPONSE_SCHEMA = {
   type: :object,
@@ -35,6 +35,7 @@ INGREDIENT_RESPONSE_SCHEMA = {
         currency: { type: :string, example: 'CLP', 'x-nullable': true },
         quantity: { type: :integer, example: 2, 'x-nullable': true },
         measure: { type: :string, example: 'unidad', 'x-nullable': true },
+        inventory: { type: :integer, example: 10, 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },

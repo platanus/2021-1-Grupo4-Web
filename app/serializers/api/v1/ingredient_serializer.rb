@@ -10,6 +10,7 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
     :currency,
     :quantity,
     :measure,
+    :inventory,
     :created_at,
     :updated_at
   )
