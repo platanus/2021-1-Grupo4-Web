@@ -26,6 +26,8 @@
     <!-- button -->
     <button
       class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none my-auto mx-3"
+      :disabled="selected"
+      :class="selected ? 'opacity-25' : 'opacity-100'"
       @click="addRecipe()"
     >
       <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none">
@@ -42,6 +44,8 @@ export default {
     name: { type: String, required: true },
     portions: { type: Number, required: true },
     minutes: { type: Number, required: true },
+    id: { type: String, required: true },
+    selectedRecipes: { type: Array, required: true },
     recipeIngredients: { type: Array, required: true },
   },
   methods: {
@@ -59,6 +63,14 @@ export default {
     recipePrice() {
       return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+    },
+    selected() {
+      const selectedRecipesIds = this.selectedRecipes.map(element => (
+        parseInt(element.id, 10)
+      ));
+      const isSelected = selectedRecipesIds.includes(parseInt(this.id, 10));
+
+      return isSelected;
     },
   },
 };

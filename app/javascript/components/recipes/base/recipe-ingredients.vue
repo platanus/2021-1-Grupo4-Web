@@ -15,6 +15,8 @@
           <add-ingredient-card
             v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
+            :recipe-ingredients="recipeIngredients"
+            :id="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price / ingredient.quantity"
             @add="addIngredient(ingredient)"
