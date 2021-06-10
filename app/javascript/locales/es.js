@@ -48,8 +48,8 @@ export default {
       selected: 'Ingredientes seleccionados',
       providerName: 'Nombre del proveedor',
       default_unit: 'Unidad por defecto',
-      alternative_unit: 'Unidades alternativas',
-      add_unit: 'Agregar Unidad',
+      alternativeUnit: 'Unidades alternativas',
+      addUnit: 'Agregar Unidad',
     },
 
     recipes: {
