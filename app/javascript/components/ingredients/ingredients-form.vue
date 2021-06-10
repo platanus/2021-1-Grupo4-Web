@@ -224,7 +224,7 @@ export default {
     AddMeasure() {
       const last_item = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length -1];
       if(last_item.name && last_item.quantity){
-        this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined });
+        this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
       }
     },
     deleteUnit(unit) {
@@ -238,10 +238,15 @@ export default {
       sku,
       price,
       currency,
-      ingredient_measures_attributes,
+      otherMeasures,
     } = this.ingredient;
-    if(!ingredient_measures_attributes){
-      ingredient_measures_attributes = [{ name: undefined, quantity: undefined }];
+    var ingredient_measures_attributes;
+    if(!otherMeasures){
+      ingredient_measures_attributes = [{ name: undefined, quantity: undefined, id: undefined }];
+    }else{
+      ingredient_measures_attributes = otherMeasures.data.map(function(unit) {
+        return Object.assign({}, {id: unit.id}, unit.attributes);
+      });
     }
     this.form = {
       providerId,
