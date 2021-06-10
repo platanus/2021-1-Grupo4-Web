@@ -98,7 +98,7 @@ export default {
       add: 'Agregar menú',
       edit: 'Editar menú',
       delete: 'Eliminar menú',
-      deleteMsg: 'Estás seguro de que deseas eliminar este menú?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar este menú?',
       create: 'Crear Menú',
       menuName: 'Nombre menú',
       portions: 'Porciones',
@@ -113,6 +113,7 @@ export default {
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
       noRecipes: 'Este menú aún no tiene recetas',
+      noNameAlert: 'Ingresa el nombre del menú por favor',
     },
     providers: {
       title: 'Proveedores',
