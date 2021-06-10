@@ -17,6 +17,8 @@
     <!-- button -->
     <button
       class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none flex-grow-0 my-auto mx-3"
+      :disabled="selected"
+      :class="selected ? 'opacity-25' : 'opacity-100'"
       @click="addIngredient()"
     >
       <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none flex-grow-0">
@@ -31,11 +33,23 @@
 export default {
   props: {
     name: { type: String, required: true },
+    id: { type: String, required: true },
     price: { type: Number, required: true },
+    recipeIngredients: { type: Array, required: true },
   },
   methods: {
     addIngredient() {
       this.$emit('add');
+    },
+  },
+  computed: {
+    selected() {
+      const recipeIngredientsIds = this.recipeIngredients.map(element => (
+        parseInt(element.attributes.ingredient.id, 10)
+      ));
+      const isSelected = recipeIngredientsIds.includes(parseInt(this.id, 10));
+
+      return isSelected;
     },
   },
 };
