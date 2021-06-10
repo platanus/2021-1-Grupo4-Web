@@ -195,7 +195,7 @@ export default {
 
       try {
         ingredientsInfo = this.$refs.addIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo  /* eslint-disable-line camelcase */
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
@@ -232,7 +232,7 @@ export default {
       this.showingEdit = !this.showingEdit;
       try {
         const ingredientsInfo = this.$refs.editIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo  /* eslint-disable-line camelcase */
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
         this.updateIngredient(ingredientsInfo);

@@ -78,7 +78,7 @@
         <div
           v-if="index == 1"
         >
-          {{ $t('msg.ingredients.alternative_unit') }}
+          {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
         <div class="flex flex-wrap -mx-3">
           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -162,7 +162,7 @@
             @click="AddMeasure"
             class="mb-6 bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded text-sm font-medium"
           >
-            {{ $t('msg.ingredients.add_unit') }}
+            {{ $t('msg.ingredients.addUnit') }}
           </button>
         </div>
       </div>
@@ -190,7 +190,6 @@
 </template>
 
 <script>
-import baseModal from '../base/base-modal.vue';
 
 import { getProviders } from './../../api/providers.js';
 
@@ -222,13 +221,14 @@ export default {
   methods: {
     AddMeasure() {
       const lastItem = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length - 1];
-      if(lastItem.name && lastItem.quantity) {
+      if (lastItem.name && lastItem.quantity) {
         this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
       }
     },
     deleteUnit(unit) {
-      this.form.ingredient_measures_attributes = this.form.ingredient_measures_attributes /* eslint-disable-line camelcase */
-        .filter((originalUnit) => originalUnit !== unit);
+      this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
+        .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit); 
+        
     },
   },
   async created() {
@@ -241,12 +241,14 @@ export default {
       otherMeasures,
     } = this.ingredient;
     var ingredient_measures_attributes; /* eslint-disable-line camelcase */
-    if(otherMeasures) {
-      ingredient_measures_attributes = otherMeasures.data.map(function(unit) { /* eslint-disable-line camelcase */
+    if (otherMeasures) {
+      ingredient_measures_attributes = otherMeasures.data.map(unit => { /* eslint-disable-line camelcase */
         return Object.assign({}, { id: unit.id }, unit.attributes);
       });
     } else {
-      ingredient_measures_attributes = [{ name: undefined, quantity: undefined, id: undefined }]; /* eslint-disable-line camelcase */
+      ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
+        name: undefined, quantity: undefined, id: undefined
+      }];
     }
     this.form = {
       providerId,

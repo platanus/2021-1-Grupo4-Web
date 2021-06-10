@@ -129,7 +129,7 @@ export default {
       edit: false,
       ingredient: this.element,
       units: ['Litros', 'Kg', 'Cucharadas'],
-      selectedUnit: "Litros",
+      selectedUnit: 'Litros',
     };
   },
   methods: {
