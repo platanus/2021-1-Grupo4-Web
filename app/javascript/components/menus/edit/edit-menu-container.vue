@@ -52,6 +52,8 @@
                 :name="recipe.name"
                 :portions="recipe.portions"
                 :minutes="recipe.cookMinutes"
+                :selected-recipes="selectedRecipes"
+                :id="recipe.id"
                 :recipe-ingredients="recipe.recipeIngredients.data"
                 @add="addRecipe(recipe)"
               >
