@@ -103,18 +103,6 @@ export default {
   props: {
     menus: { type: Array, required: true },
   },
-  // computed: {
-  //   totalMenuPrice() {
-  //     const recipesPrices = this.selectedRecipes.map(element => ((
-  //       element.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
-  //         recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
-  //     ) * element.quantity),
-  //     );
-
-  //     return recipesPrices.reduce((menuPrice, recipePrice) =>
-  //       menuPrice + recipePrice, 0);
-  //   },
-  // },
   methods: {
     editMenu(element) {
       this.$emit('edit', element);

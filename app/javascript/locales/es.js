@@ -113,7 +113,7 @@ export default {
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
       noRecipes: 'Este menú aún no tiene recetas',
-      noNameAlert: 'Ingresa el nombre del menú por favor'
+      noNameAlert: 'Ingresa el nombre del menú por favor',
     },
     providers: {
       title: 'Proveedores',
