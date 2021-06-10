@@ -121,7 +121,7 @@ import { getIngredients, postIngredient, deleteIngredient, editIngredient } from
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
-
+import Vue from 'vue';
 export default {
 
   data() {
@@ -193,7 +193,7 @@ export default {
       this.showingAdd = !this.showingAdd;
 
       try {
-        var ingredientsInfo = this.$refs.addIngredientInfo.form
+        var ingredientsInfo = this.$refs.addIngredientInfo.form;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
@@ -230,8 +230,12 @@ export default {
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
       try {
-        const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
-        this.updateIngredient(res);
+        var ingredientsInfo = this.$refs.editIngredientInfo.form;
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
+          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        const res = await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
+        console.log(res);
+        this.updateIngredient(ingredientsInfo);
         this.error = '';
       } catch (error) {
         this.error = error;
@@ -249,11 +253,16 @@ export default {
       }
     },
 
-    async updateIngredient(res) {
-      const ingredientEdited = { id: this.ingredientToEdit.id, ...JSON.parse(res.config.data).ingredient };
+    async updateIngredient(ingredientEdited) {
+      ingredientEdited.quantity = ingredientEdited.ingredient_measures_attributes[0].quantity;
+      ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
+      ingredientEdited.id = this.ingredientToEdit.id;
+      ingredientEdited.otherMeasures = { data: [] };
+      ingredientEdited.ingredient_measures_attributes.forEach(element => {
+        ingredientEdited.otherMeasures.data.push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } })
+      });
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
-      this.ingredients.splice(objectIndex, 1);
-      this.ingredients.splice(objectIndex, 0, ingredientEdited);
+      Vue.set(this.ingredients, objectIndex, ingredientEdited);
     },
   },
 };
