@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <div>
     <div class="flex flex-col">
@@ -94,7 +93,7 @@
       >
         <ingredients-form
           ref="editIngredientInfo"
-          :units="['Kg','Litro']"
+          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="true"
           :ingredient="this.ingredientToEdit"
         />
@@ -117,11 +116,12 @@
 
 <script>
 
+import Vue from 'vue';
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
-import Vue from 'vue';
+
 export default {
 
   data() {
@@ -234,7 +234,6 @@ export default {
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const res = await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
-        console.log(res);
         this.updateIngredient(ingredientsInfo);
         this.error = '';
       } catch (error) {

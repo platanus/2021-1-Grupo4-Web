@@ -110,7 +110,6 @@
               <select
                 class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
                 rounded leading-tight focus:outline-none"
-                id="ingredient-unit"
                 v-model="unit.name"
               >
                 <!--Add Mode unit Unselected -->
@@ -229,11 +228,12 @@ export default {
       }
     },
     deleteUnit(unit) {
-      this.form.ingredient_measures_attributes = this.form.ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
+      this.form.ingredient_measures_attributes = this.form.ingredient_measures_attributes
+      .filter((originalUnit) => originalUnit !== unit);
     },
   },
   async created() {
-    var {
+    const {
       providerId,
       name,
       sku,
@@ -241,7 +241,7 @@ export default {
       currency,
       otherMeasures,
     } = this.ingredient;
-    var ingredient_measures_attributes;
+    var ingredient_measures_attributes; /* eslint-disable-line camelcase */
     if(!otherMeasures){
       ingredient_measures_attributes = [{ name: undefined, quantity: undefined, id: undefined }];
     }else{

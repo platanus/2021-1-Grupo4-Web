@@ -6,12 +6,12 @@
     >
       <div class="flex justify-between items-center min-w-max w-16">
         <div> {{ selectedElement }} </div>
-        <div> 
+        <div>
           <img
             class="w-4 h-4"
             src="../../../assets/images/chevron-down-svg.svg"
           >
-        </div> 
+        </div>
       </div>
     </button>
     <div v-if="active">
@@ -53,7 +53,7 @@ export default {
     selectElement(element) {
       this.selectedElement = element;
       this.active = !this.active;
-      this.$emit("select", this.selectedElement);
+      this.$emit('select', this.selectedElement);
     },
   },
 };
