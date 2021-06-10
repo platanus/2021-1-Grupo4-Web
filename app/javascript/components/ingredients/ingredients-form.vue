@@ -131,11 +131,11 @@
                 </option>
                 <!--Other units -->
                 <option
-                  v-for="unit in formUnits"
-                  :key="unit"
-                  :value="unit"
+                  v-for="form_unit in formUnits"
+                  :key="form_unit"
+                  :value="form_unit"
                 >
-                  {{ unit }}
+                  {{ form_unit }}
                 </option>
               </select>
 
@@ -195,7 +195,6 @@ import baseModal from '../base/base-modal.vue';
 import { getProviders } from './../../api/providers.js';
 
 export default {
-  components: { baseModal },
   props: {
     editMode: { type: Boolean, required: true },
     ingredient: { type: Object, default() {
@@ -213,7 +212,7 @@ export default {
         sku: null,
         price: '',
         currency: 'CLP',
-        ingredient_measures_attributes: [],
+        ingredient_measures_attributes: [], /* eslint-disable-line camelcase */
       },
       showingMeasureModal: false,
       providersNames: [],
@@ -222,14 +221,14 @@ export default {
   },
   methods: {
     AddMeasure() {
-      const last_item = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length -1];
-      if(last_item.name && last_item.quantity){
+      const lastItem = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length - 1];
+      if(lastItem.name && lastItem.quantity) {
         this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
       }
     },
     deleteUnit(unit) {
-      this.form.ingredient_measures_attributes = this.form.ingredient_measures_attributes
-      .filter((originalUnit) => originalUnit !== unit);
+      this.form.ingredient_measures_attributes = this.form.ingredient_measures_attributes /* eslint-disable-line camelcase */
+        .filter((originalUnit) => originalUnit !== unit);
     },
   },
   async created() {
@@ -242,12 +241,12 @@ export default {
       otherMeasures,
     } = this.ingredient;
     var ingredient_measures_attributes; /* eslint-disable-line camelcase */
-    if(!otherMeasures){
-      ingredient_measures_attributes = [{ name: undefined, quantity: undefined, id: undefined }];
-    }else{
-      ingredient_measures_attributes = otherMeasures.data.map(function(unit) {
-        return Object.assign({}, {id: unit.id}, unit.attributes);
+    if(otherMeasures) {
+      ingredient_measures_attributes = otherMeasures.data.map(function(unit) { /* eslint-disable-line camelcase */
+        return Object.assign({}, { id: unit.id }, unit.attributes);
       });
+    } else {
+      ingredient_measures_attributes = [{ name: undefined, quantity: undefined, id: undefined }]; /* eslint-disable-line camelcase */
     }
     this.form = {
       providerId,
@@ -255,7 +254,7 @@ export default {
       sku,
       price,
       currency,
-      ingredient_measures_attributes,
+      ingredient_measures_attributes, /* eslint-disable-line camelcase */
     };
 
     const providers = await getProviders();
