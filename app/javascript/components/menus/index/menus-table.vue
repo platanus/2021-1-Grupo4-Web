@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     editMenu(element) {
-      this.$emit('edit', element);
+      window.location = `/menus/${element.id}/edit`;
     },
     deleteMenu(element) {
       this.$emit('del', element);

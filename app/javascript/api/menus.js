@@ -6,9 +6,22 @@ function getMenus() {
     }));
 }
 
+function getMenu(menuId) {
+  return (client
+    .get(`/menus/${menuId}`, {
+    }));
+}
+
 function postMenu(menu) {
   return (client
     .post('/menus',
+      { menu },
+    ));
+}
+
+function updateMenu(menuId, menu) {
+  return (client
+    .put(`/menus/${menuId}`,
       { menu },
     ));
 }
@@ -19,4 +32,4 @@ function deleteMenu(menuId) {
     }));
 }
 
-export { getMenus, postMenu, deleteMenu };
+export { getMenus, getMenu, postMenu, updateMenu, deleteMenu };
