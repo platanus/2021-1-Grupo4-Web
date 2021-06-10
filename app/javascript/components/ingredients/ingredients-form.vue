@@ -93,7 +93,6 @@
             <input
               class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
               v-model="unit.quantity"
-              id="ingredient-amount"
               type="number"
               :placeholder="$t('msg.ingredients.quantity')"
             >
@@ -107,52 +106,53 @@
             >
               {{ $t('msg.ingredients.measure') }}
             </label>
-            <select
-              class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
-              rounded leading-tight focus:outline-none"
-              id="ingredient-unit"
-              v-model="unit.name"
-            >
-              <!--Add Mode unit Unselected -->
-              <option
-                v-if="!editMode"
-                hidden
-                selected
+            <div class="flex">
+              <select
+                class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
+                rounded leading-tight focus:outline-none"
+                id="ingredient-unit"
+                v-model="unit.name"
               >
-                {{ $t('msg.ingredients.measure') }}
-              </option>
-              <!--Edit Mode unit ingredient -->
-              <option
-                v-if="editMode"
-                selected
-                :key="ingredient.measure"
-                :value="ingredient.measure"
+                <!--Add Mode unit Unselected -->
+                <option
+                  v-if="!editMode"
+                  hidden
+                  selected
+                >
+                  {{ $t('msg.ingredients.measure') }}
+                </option>
+                <!--Edit Mode unit ingredient -->
+                <option
+                  v-if="editMode"
+                  selected
+                  :key="ingredient.measure"
+                  :value="ingredient.measure"
+                >
+                  {{ ingredient.measure }}
+                </option>
+                <!--Other units -->
+                <option
+                  v-for="unit in formUnits"
+                  :key="unit"
+                  :value="unit"
+                >
+                  {{ unit }}
+                </option>
+              </select>
+
+              <button
+                type="button"
+                class="px-3"
+                v-if="index > 0"
+                @click="deleteUnit(unit)"
               >
-                {{ ingredient.measure }}
-              </option>
-              <!--Other units -->
-              <option
-                v-for="unit in formUnits"
-                :key="unit"
-                :value="unit"
-              >
-                {{ unit }}
-              </option>
-            </select>
-            <button
-              type="button"
-              v-if="index > 0"
-              @click="deleteUnit(unit)"
-            >
-              x
-            </button>
-          </div>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg
-              class="fill-current h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            ><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                <img
+                  class="h-9 w-9 text-white m-auto"
+                  svg-inline
+                  src="../../../assets/images/cross-svg.svg"
+                >
+              </button>
+            </div>
           </div>
         </div>
         <div
@@ -161,8 +161,9 @@
           <button
             type="button"
             @click="AddMeasure"
+            class="mb-6 bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded text-sm font-medium"
           >
-            Agregatee
+            {{ $t('msg.ingredients.add_unit') }}
           </button>
         </div>
       </div>
