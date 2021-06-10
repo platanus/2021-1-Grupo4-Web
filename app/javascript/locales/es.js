@@ -49,6 +49,7 @@ export default {
       providerName: 'Nombre del proveedor',
       default_unit: 'Unidad por defecto',
       alternative_unit: 'Unidades alternativas',
+      add_unit: 'Agregar Unidad',
     },
 
     recipes: {
