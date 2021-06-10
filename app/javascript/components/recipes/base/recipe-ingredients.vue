@@ -11,7 +11,7 @@
           v-model="query"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col bg-gray-200 overflow-scroll">
+        <div class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
           <add-ingredient-card
             v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
@@ -31,7 +31,7 @@
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
         <div
-          class="flex flex-col bg-gray-200 overflow-scroll"
+          class="flex flex-col h-96 bg-gray-200 overflow-scroll"
           v-if="recipeIngredients.length > 0"
         >
           <div

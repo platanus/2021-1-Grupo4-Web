@@ -21,7 +21,7 @@
       <!-- Recipes -->
       <div class="flex justify-between mb-8">
         <div class="w-1/2 p-4">
-          <div class="flex flex-col">
+          <div class="flex flex-col w-auto">
             <!-- search bar -->
             <div class="relative text-yellow-700 my-4">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -32,7 +32,7 @@
                 >
               </span>
               <input
-                class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
+                class="flex py-2 px-12 w-full h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
                 @keyup="filterRecipes"
@@ -40,7 +40,7 @@
               >
             </div>
             <!-- available recipes -->
-            <div class="flex flex-col bg-gray-200 overflow-scroll">
+            <div class="flex flex-col h-96 bg-gray-200 overflow-scroll">
               <add-recipe-card
                 v-for="recipe in filterRecipes"
                 :key="recipe.id"
@@ -62,7 +62,7 @@
               {{ $t('msg.menus.selectedRecipes') }}
             </div>
             <div
-              class="flex flex-col bg-gray-200 overflow-scroll"
+              class="flex flex-col h-96 bg-gray-200 overflow-scroll"
               v-if="selectedRecipes.length > 0"
             >
               <div
