@@ -15,7 +15,6 @@ export default {
     min: 'Mínimo',
     max: 'Máximo',
     quantity: 'Cantidad',
-    space: ' ',
 
     users: {
       registerTitle: 'Crear Cuenta',
