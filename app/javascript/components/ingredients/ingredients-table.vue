@@ -63,7 +63,7 @@
               del:true
             }"
             @edit="editIngredient(ingredient)"
-            @del="deleteIngredient(ingredient)"
+            @delete="deleteIngredient(ingredient)"
           />
         </td>
       </tr>

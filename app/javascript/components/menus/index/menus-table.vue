@@ -83,7 +83,7 @@
               del:true
             }"
             @edit="editMenu(menu)"
-            @del="deleteMenu(menu)"
+            @delete="deleteMenu(menu)"
           />
         </td>
       </tr>
