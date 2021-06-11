@@ -105,8 +105,8 @@ export default {
       recipe: {
         id: null,
         name: '',
-        portions: 0,
-        cookMinutes: 0,
+        portions: '',
+        cookMinutes: '',
         recipeIngredients: { data: [] },
         steps: { data: [] },
       },
@@ -120,6 +120,11 @@ export default {
     },
     // por editar
     async createRecipe() {
+      if (!this.recipe.name || !this.recipe.portions || !this.recipe.cookMinutes) {
+        alert(this.$t('msg.recipes.noMainInfoAlert')); // eslint-disable-line no-alert
+
+        return;
+      }
       try {
         const recipeToCreate = this.getUpdatedRecipe();
         await postRecipe(recipeToCreate);

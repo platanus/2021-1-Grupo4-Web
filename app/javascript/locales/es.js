@@ -88,6 +88,7 @@ export default {
         aply: 'Aplicar',
         delete: 'Borrar filtro',
       },
+      noMainInfoAlert: 'Recuerda ingresar nombre, porciones y tiempo de preparación',
       alertExistingStep: 'Ese paso ya existe',
       alertEmptyStep: 'Ingresa información al paso',
       alertEmptyBasicInformation: 'Falta completar información básica',

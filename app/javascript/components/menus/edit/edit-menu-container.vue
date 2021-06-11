@@ -42,12 +42,14 @@
                 class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded focus:outline-none"
                 :placeholder="$t('msg.recipes.search')"
                 autocomplete="off"
+                @keyup="filterRecipes"
+                v-model="searchQuery"
               >
             </div>
             <!-- available recipes -->
             <div class="flex flex-col bg-gray-200 overflow-scroll">
               <add-recipe-card
-                v-for="recipe in recipes"
+                v-for="recipe in filterRecipes"
                 :key="recipe.id"
                 :name="recipe.name"
                 :portions="recipe.portions"
@@ -136,6 +138,7 @@ export default {
       menuPortions: 0,
       selectedRecipes: [],
       deletedRecipes: [],
+      searchQuery: '',
     };
   },
   computed: {
@@ -148,6 +151,16 @@ export default {
 
       return recipesPrices.reduce((menuPrice, recipePrice) =>
         menuPrice + recipePrice, 0);
+    },
+    filterRecipes() {
+      if (this.searchQuery) {
+        return this.recipes.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.recipes;
     },
   },
   async created() {
