@@ -227,7 +227,7 @@ export default {
     },
     deleteUnit(unit) {
       this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
-      .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
+        .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
     },
   },
   async created() {
@@ -242,7 +242,7 @@ export default {
     var ingredient_measures_attributes; /* eslint-disable-line camelcase */
     if (otherMeasures) {
       ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
-        Object.assign({}, { id: unit.id }, unit.attributes)
+        Object.assign({}, { id: unit.id, }, unit.attributes)
       );
     } else {
       ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
