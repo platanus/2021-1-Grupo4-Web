@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe LiderClient do
   let(:query) { 'carne' }
   let(:lider_client) { described_class.new }
+  let(:user) { create(:user) }
 
   let(:brand_result) { instance_double('Brand div', text: 'El Buen Corte') }
   let(:measure_result) { instance_double('Measure div', text: '500 g') }
@@ -49,7 +50,7 @@ RSpec.describe LiderClient do
     let(:expected_offer_price) { '$4.690' }
     let(:expected_normal_price) { nil }
 
-    let!(:provider) { create(:provider, name: 'Lider') }
+    let!(:provider) { create(:provider, name: 'Lider', user: user) }
 
     let(:expected_result) do
       [

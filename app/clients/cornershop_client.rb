@@ -19,10 +19,9 @@ class CornershopClient
       store_search_result = store_result['search_result']['aisles'].first
 
       provider_name = get_store_name(store)
-      provider = Provider.find_or_create_by(name: provider_name)
 
       products << {
-        provider: provider.as_json.with_indifferent_access,
+        provider: { name: provider_name },
         products: products_found_by_store(store_search_result)
       }
     end

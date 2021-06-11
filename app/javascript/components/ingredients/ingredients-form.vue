@@ -20,6 +20,34 @@
         </div>
       </div>
 
+      <div
+        class="flex flex-wrap -mx-3 mb-6"
+        v-if="!editMode"
+      >
+        <div class="w-full px-3">
+          <!--Name -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="provider-name"
+          >
+            {{ $t('msg.ingredients.providerName') }}
+          </label>
+          <select
+            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            v-model="form.providerName"
+            id="ingredient-provider"
+          >
+            <option
+              v-for="(name, idx) in providersNames"
+              :key="idx"
+              :value="name"
+            >
+              {{ name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <!--Quantity -->
@@ -112,6 +140,8 @@
 
 <script>
 
+import { getProviders } from './../../api/providers.js';
+
 export default {
   props: {
     editMode: { type: Boolean, required: true },
@@ -125,6 +155,7 @@ export default {
     return {
       form: {
         providerId: null,
+        providerName: null,
         name: '',
         sku: null,
         price: '',
@@ -132,10 +163,11 @@ export default {
         quantity: '',
         measure: '',
       },
+      providersNames: [],
     };
   },
 
-  created() {
+  async created() {
     const {
       providerId,
       name,
@@ -155,6 +187,9 @@ export default {
       quantity,
       measure,
     };
+
+    const providers = await getProviders();
+    this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
   },
 
   computed: {

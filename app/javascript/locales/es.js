@@ -46,6 +46,7 @@ export default {
       quantity: 'Cantidad',
       measure: 'Unidad',
       selected: 'Ingredientes seleccionados',
+      providerName: 'Nombre del proveedor',
     },
 
     recipes: {
