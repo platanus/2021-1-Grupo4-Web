@@ -2,8 +2,11 @@
   <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50 flex-none flex-grow-0">
     <!-- data -->
     <div class="flex flex-col items-start w-auto h-14 flex-none flex-grow-0 mx-3 my-auto">
-      <div class="w-auto h-7 font-hind font-bold text-lg text-black flex-none flex-grow-0 mb-0.5">
+      <div class="w-auto h-7 font-hind font-bold text-lg text-black flex-none flex-grow-0">
         {{ name }}
+      </div>
+      <div class="w-auto h-4 font-hind font-normal text-sm text-black flex-none flex-grow-0">
+        {{ quantity }} {{ measure }}
       </div>
       <div class="flex items-center w-auto h-5 flex-none flex-grow-0">
         <div class="w-auto h-5 font-hind font-light text-sm text-gray-600 flex-none flex-grow-0 mr-0.5">
@@ -35,6 +38,8 @@ export default {
     name: { type: String, required: true },
     id: { type: String, required: true },
     price: { type: Number, required: true },
+    quantity: { type: Number, required: true },
+    measure: { type: String, required: true },
     recipeIngredients: { type: Array, required: true },
   },
   methods: {

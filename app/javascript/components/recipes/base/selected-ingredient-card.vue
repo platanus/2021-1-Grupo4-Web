@@ -10,7 +10,8 @@
           {{ $t('msg.recipes.price') }} {{ $t('msg.recipes.unitary') }}
         </div>
         <div class="h-5 font-hind font-normal text-sm text-black">
-          $ {{ recipeIngredientAttrs.ingredient.price }} CLP
+          $ {{ recipeIngredientAttrs.ingredient.price / recipeIngredientAttrs.ingredient.quantity }} CLP por
+          {{ recipeIngredientAttrs.ingredient.measure }}
         </div>
       </div>
       <div class="flex items-center h-4">

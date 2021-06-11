@@ -19,6 +19,8 @@
             :id="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price / ingredient.quantity"
+            :quantity="ingredient.quantity"
+            :measure="ingredient.measure"
             @add="addIngredient(ingredient)"
           >
             {{ ingredient.name }}
