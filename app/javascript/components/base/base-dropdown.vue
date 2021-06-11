@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <button
       class="focus:outline-none"
       @click="openDropdown"
@@ -15,7 +15,7 @@
       </div>
     </button>
     <div v-if="active">
-      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer">
+      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-visible rounded-lg shadow-md cursor-pointer z-10">
         <ul>
           <li
             v-for="element in elements"
