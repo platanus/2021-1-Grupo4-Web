@@ -190,7 +190,7 @@ export default {
     },
 
     async addIngredient() {
-      var ingredientsInfo;
+      let ingredientsInfo;
       this.showingAdd = !this.showingAdd;
 
       try {
