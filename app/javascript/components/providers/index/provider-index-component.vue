@@ -5,7 +5,7 @@
         {{ $t('msg.providers.title') }}
       </div>
       <button
-        class="flex justify-center items-center align-center px-3 w-auto h-8 text-white rounded flex-none flex-grow-0 bg-blue-700"
+        class="flex justify-center items-center align-center px-3 w-auto h-8 text-white rounded flex-none flex-grow-0 bg-green-500 hover:bg-green-700 text-white"
         @click="toggleAddModal"
       >
         Agregar Proveedor
