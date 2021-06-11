@@ -242,7 +242,7 @@ export default {
     let ingredient_measures_attributes; /* eslint-disable-line camelcase */
     if (otherMeasures) {
       ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
-        Object.assign({}, { id: unit.id }, unit.attributes)
+        Object.assign({}, { id: unit.id }, unit.attributes),
       );
     } else {
       ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
