@@ -47,7 +47,7 @@ export default {
       measure: 'Unidad',
       selected: 'Ingredientes seleccionados',
       providerName: 'Nombre del proveedor',
-      default_unit: 'Unidad por defecto',
+      defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
     },

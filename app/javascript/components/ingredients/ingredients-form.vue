@@ -73,7 +73,7 @@
         <div
           v-if="index == 0"
         >
-          {{ $t('msg.ingredients.default_unit') }}
+          {{ $t('msg.ingredients.defaultUnit') }}
         </div>
         <div
           v-if="index == 1"
@@ -227,8 +227,7 @@ export default {
     },
     deleteUnit(unit) {
       this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
-        .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit); 
-        
+      .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
     },
   },
   async created() {
@@ -242,12 +241,12 @@ export default {
     } = this.ingredient;
     var ingredient_measures_attributes; /* eslint-disable-line camelcase */
     if (otherMeasures) {
-      ingredient_measures_attributes = otherMeasures.data.map(unit => { /* eslint-disable-line camelcase */
-        return Object.assign({}, { id: unit.id }, unit.attributes);
-      });
+      ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+        Object.assign({}, { id: unit.id }, unit.attributes)
+      );
     } else {
       ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
-        name: undefined, quantity: undefined, id: undefined
+        name: undefined, quantity: undefined, id: undefined,
       }];
     }
     this.form = {
