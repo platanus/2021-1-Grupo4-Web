@@ -4,12 +4,11 @@
       <div class="w-auto h-7 font-sans font-normal text-2xl text-black flex-none flex-grow-0">
         {{ $t('msg.providers.title') }}
       </div>
-      <button
-        class="flex justify-center items-center align-center px-3 w-auto h-8 text-white rounded flex-none flex-grow-0 bg-green-500 hover:bg-green-700 text-white"
+      <base-button
+        :elements="{ placeholder: $t('msg.providers.add'),
+                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
         @click="toggleAddModal"
-      >
-        Agregar Proveedor
-      </button>
+      />
     </div>
 
     <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full">

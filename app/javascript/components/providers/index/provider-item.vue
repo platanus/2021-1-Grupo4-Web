@@ -5,7 +5,7 @@
       <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none mr-2 order-none">
         <img
           svg-inline
-          src="../../../../assets/images/jumbo.png"
+          src="../../../../assets/images/recipe.jpg"
           class="w-24 h-24"
         >
       </div>
