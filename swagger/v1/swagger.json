@@ -443,9 +443,9 @@
         "attributes": {
           "type": "object",
           "properties": {
-            "provider_id": {
-              "type": "integer",
-              "example": 1,
+            "provider_name": {
+              "type": "string",
+              "example": "Jumbo",
               "x-nullable": true
             },
             "user_id": {

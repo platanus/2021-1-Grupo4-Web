@@ -1,11 +1,14 @@
 <template>
   <table
-    class="min-w-full divide-y divide-gray-200"
+    class="divide-y divide-gray-200"
   >
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">
-      <tr class="text-left">
+      <tr class="text-left items-center w-full">
         <th class="px-8 py-3">
           <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
+        </th>
+        <th class="px-8 py-3">
+          <span class="text-white font-bold">{{ $t('msg.ingredients.provider') }}</span>
         </th>
         <th class="px-8 py-3">
           <span class="text-white font-bold">{{ $t('msg.ingredients.price') }}($)</span>
@@ -32,6 +35,11 @@
         <td class="py-2 px-8">
           <p class="ml-2 font-medium">
             {{ ingredient.name }}
+          </p>
+        </td>
+        <td class="py-2 px-8">
+          <p class="ml-2 font-medium">
+            {{ ingredient.providerName }}
           </p>
         </td>
         <!-- price -->

@@ -4,11 +4,13 @@
       <div class="w-auto h-7 font-sans font-normal text-2xl text-black flex-none flex-grow-0">
         {{ $t('msg.providers.title') }}
       </div>
-      <base-button
-        :elements="{ placeholder: $t('msg.providers.add'),
-                     color: 'bg-green-500 hover:bg-green-700 text-white' }"
-        @click="toggleAddModal"
-      />
+      <div class="px-2">
+        <base-button
+          :elements="{ placeholder: $t('msg.providers.add'),
+                       color: 'bg-green-500 hover:bg-green-700 text-white' }"
+          @click="toggleAddModal"
+        />
+      </div>
     </div>
 
     <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full">
