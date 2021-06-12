@@ -14,7 +14,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
       { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: provider },
       { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: provider },
       { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: provider },
-      { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: providgit brancher }
+      { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: provider }
     ]
   end
 
