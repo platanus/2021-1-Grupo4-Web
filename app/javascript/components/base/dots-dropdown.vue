@@ -46,6 +46,9 @@ export default {
   mounted() {
     document.addEventListener('click', this.closeDropdown);
   },
+  unmounted() {
+    document.removeEventListener('click');
+  },
   methods: {
     closeDropdown(event) {
       if (event.target === this.$el || this.$el.contains(event.target)) return;
