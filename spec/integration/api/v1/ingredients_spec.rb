@@ -224,12 +224,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             sku: 'Some sku',
             price: 666,
             currency: 'Some currency',
-<<<<<<< HEAD
-            quantity: 666,
-            measure: 'Some measure',
             inventory: 25,
-=======
->>>>>>> feat(api): add measures model
             ingredient_measures_attributes: [
               {
                 name: 'Kg',
