@@ -38,19 +38,13 @@ class Api::V1::MenusController < Api::V1::BaseController
   end
 
   def shopping_list
-    shopping_list_ingredients = Hash.new(0)
-    menu_ingredients_with_providers_and_quantities.each do |record|
-      shopping_list_ingredients[record] += menu_ingredient_quantity(record)
-    end
+    respond_with shopping_list_as_json
+  end
 
-    providers_with_ingredients = Hash.new { |h, k| h[k] = [] }
-    shopping_list_ingredients.each do |ingredient, accumulated_quantity|
-      providers_with_ingredients[ingredient.provider.name] << menu_ingredient_to_json(
-        ingredient: ingredient, accumulated_quantity: accumulated_quantity
-      )
-    end
+  def download_shopping_list
+    file_stream = ::GenerateShoppingListFile.for(shopping_list_json: shopping_list_as_json)
 
-    respond_with format_providers_with_ingredients(providers_with_ingredients)
+    send_data file_stream, filename: 'shopping-list.xlsx'
   end
 
   private
@@ -69,6 +63,22 @@ class Api::V1::MenusController < Api::V1::BaseController
 
     recipe_ids = menu_recipes_attributes.map { |menu_recipe| menu_recipe['recipe_id'] }
     current_user.recipes.find(recipe_ids)
+  end
+
+  def shopping_list_as_json
+    shopping_list_ingredients = Hash.new(0)
+    menu_ingredients_with_providers_and_quantities.each do |record|
+      shopping_list_ingredients[record] += menu_ingredient_quantity(record)
+    end
+
+    providers_with_ingredients = Hash.new { |h, k| h[k] = [] }
+    shopping_list_ingredients.each do |ingredient, accumulated_quantity|
+      providers_with_ingredients[ingredient.provider.name] << menu_ingredient_to_json(
+        ingredient: ingredient, accumulated_quantity: accumulated_quantity
+      )
+    end
+
+    format_providers_with_ingredients(providers_with_ingredients)
   end
 
   def menu_recipes_ingredients_to_reduce_inventory

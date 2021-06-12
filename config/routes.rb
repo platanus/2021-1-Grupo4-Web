@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         member do
           post '/reduce-inventory', to: 'menus#reduce_inventory'
           get '/shopping-list', to: 'menus#shopping_list'
+          get '/download-shopping-list', to: 'menus#download_shopping_list'
         end
       end
       resources :recipes do
