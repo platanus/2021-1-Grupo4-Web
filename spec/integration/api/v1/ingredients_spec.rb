@@ -14,7 +14,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
       { price: "$ 770", measure: "500 g", name: "Pan hallulla delgada", provider: provider },
       { price: "$ 770", measure: "500 g", name: "Pan hallulla", provider: provider },
       { price: "$ 920", measure: "500 g", name: "Pan de hot dog", provider: provider },
-      { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: provider }
+      { price: "$ 995", measure: "500 g", name: "Pan doblada", provider: providgit brancher }
     ]
   end
 
@@ -225,6 +225,8 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             price: 666,
             currency: 'Some currency',
             inventory: 25,
+            quantity: 666,
+            measure: 'Some measure',
             ingredient_measures_attributes: [
               {
                 name: 'Kg',
