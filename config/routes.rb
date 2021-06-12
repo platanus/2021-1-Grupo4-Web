@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resources :menu_recipes, only: [:create, :update, :destroy]
         member do
           post '/reduce-inventory', to: 'menus#reduce_inventory'
+          get '/shopping-list', to: 'menus#shopping_list'
         end
       end
       resources :recipes do

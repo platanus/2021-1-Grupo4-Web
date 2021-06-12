@@ -1,5 +1,5 @@
 class Api::V1::MenusController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User
+  acts_as_token_authentication_handler_for User, fallback: :exception
   before_action :verify_owned_recipes, only: [:create, :update]
 
   def index
@@ -37,6 +37,22 @@ class Api::V1::MenusController < Api::V1::BaseController
     render json: {}, status: :ok
   end
 
+  def shopping_list
+    shopping_list_ingredients = Hash.new(0)
+    menu_ingredients_with_providers_and_quantities.each do |record|
+      shopping_list_ingredients[record] += menu_ingredient_quantity(record)
+    end
+
+    providers_with_ingredients = Hash.new { |h, k| h[k] = [] }
+    shopping_list_ingredients.each do |ingredient, accumulated_quantity|
+      providers_with_ingredients[ingredient.provider.name] << menu_ingredient_to_json(
+        ingredient: ingredient, accumulated_quantity: accumulated_quantity
+      )
+    end
+
+    respond_with format_providers_with_ingredients(providers_with_ingredients)
+  end
+
   private
 
   def menu
@@ -60,9 +76,41 @@ class Api::V1::MenusController < Api::V1::BaseController
       recipe: { recipe_ingredients: :ingredient }
     ).select(
       'ingredients.id as ingredient_id,
-      menu_recipes.recipe_quantity as recipe_quantity,
-      recipe_ingredients.ingredient_quantity as ingredient_quantity'
+       menu_recipes.recipe_quantity as recipe_quantity,
+       recipe_ingredients.ingredient_quantity as ingredient_quantity'
     )
+  end
+
+  def menu_ingredients_with_providers_and_quantities
+    Ingredient.joins(
+      recipe_ingredients: { recipe: { menu_recipes: :menu } }
+    ).where('menus.id = ?', menu.id).select(
+      'menu_recipes.recipe_quantity as recipe_quantity,
+       recipe_ingredients.ingredient_quantity as ingredient_quantity,
+       ingredients.*'
+    ).includes(:provider)
+  end
+
+  def menu_ingredient_to_json(ingredient:, accumulated_quantity:)
+    {
+      name: ingredient.name,
+      measure: ingredient.measure,
+      quantity: accumulated_quantity,
+      total_price: ingredient.price * accumulated_quantity
+    }
+  end
+
+  def format_providers_with_ingredients(providers_with_ingredients)
+    providers_with_ingredients.map do |provider, ingredients|
+      {
+        provider: provider,
+        ingredients: ingredients
+      }
+    end
+  end
+
+  def menu_ingredient_quantity(record)
+    record.recipe_quantity.to_i * record.ingredient_quantity.to_i * record.quantity.to_i
   end
 
   def menu_params

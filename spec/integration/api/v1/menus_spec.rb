@@ -179,5 +179,66 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       end
     end
   end
+
+  path '/menus/{id}/shopping-list' do
+    parameter name: :id, in: :path, type: :integer
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    let!(:provider) { create(:provider, name: 'Jumbo', user: user) }
+    let!(:first_ingredient) { create(:ingredient, name: "First", provider: provider, user: user) }
+    let!(:second_ingredient) { create(:ingredient, name: "Second", provider: provider, user: user) }
+    let!(:third_ingredient) { create(:ingredient, name: "Third", provider: provider, user: user) }
+    let!(:first_recipe) do
+      create(:recipe, ingredients: [first_ingredient, second_ingredient], user: user)
+    end
+    let!(:second_recipe) do
+      create(:recipe, ingredients: [second_ingredient, third_ingredient], user: user)
+    end
+    let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
+    let(:id) { existent_menu.id }
+
+    def ingredient_hash(name, quantity)
+      hash_including(
+        measure: kind_of(String), name: name,
+        quantity: quantity, total_price: kind_of(Integer)
+      )
+    end
+
+    let(:expected_response) do
+      {
+        provider: "Jumbo",
+        ingredients: match_array([
+                                   ingredient_hash("First", first_ingredient.quantity * 3),
+                                   ingredient_hash("Second", second_ingredient.quantity * 9),
+                                   ingredient_hash("Third", third_ingredient.quantity * 6)
+                                 ])
+      }
+    end
+
+    get 'Returns Menu Ingredients, same as shopping list' do
+      description 'Get ingredients of a menu with quantities, prices, measures grouped by provider'
+      consumes 'application/json'
+      produces 'application/json'
+
+      # rubocop:disable Rails/SkipsModelValidations
+      before do
+        existent_menu.menu_recipes.update_all(recipe_quantity: 3)
+        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1)
+        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2)
+
+        IngredientMeasure.create!(name: 'Kg', quantity: 3, ingredient_id: first_ingredient.id)
+        IngredientMeasure.create!(name: 'L', quantity: 5, ingredient_id: second_ingredient.id)
+        IngredientMeasure.create!(name: 'Unidades', quantity: 2, ingredient_id: third_ingredient.id)
+      end
+      # rubocop:enable Rails/SkipsModelValidations
+
+      response '200', 'shopping list grouped by provider' do
+        run_test! do |response|
+          expect(JSON.parse(response.body).first.deep_symbolize_keys).to match(expected_response)
+        end
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup

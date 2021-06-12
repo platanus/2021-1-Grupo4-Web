@@ -1,9 +1,9 @@
 <template>
   <div
-    class="p-1 focus:outline-none focus:shadow-outline"
+    class="focus:outline-none focus:shadow-outline text-center"
   >
     <svg
-      class="animate-spin -ml-1 mr-3 w-5 h-5 text-black"
+      class="animate-spin w-full h-full text-black"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

@@ -32,4 +32,10 @@ function deleteMenu(menuId) {
     }));
 }
 
-export { getMenus, getMenu, postMenu, updateMenu, deleteMenu };
+function getShoppingList(menuId) {
+  return (client
+    .get(`/menus/${menuId}/shopping-list`, {
+    }));
+}
+
+export { getMenus, getMenu, postMenu, updateMenu, deleteMenu, getShoppingList };
