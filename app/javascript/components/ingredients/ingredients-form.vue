@@ -47,25 +47,6 @@
           </select>
         </div>
       </div>
-
-      <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <!--Quantity -->
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="ingredient-quantity"
-          >
-            {{ $t('msg.ingredients.quantity') }}
-          </label>
-          <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            v-model="form.quantity"
-            id="ingredient-amount"
-            type="number"
-            :placeholder="$t('msg.ingredients.quantity')"
-          >
-        </div>
-      </div>
       <div
         v-for="(unit, index) in form.ingredient_measures_attributes"
         :key="index"
