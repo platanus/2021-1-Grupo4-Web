@@ -24,4 +24,10 @@ RSpec.describe IngredientMeasure, type: :model do
       expect { ingredient_measure.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
+
+  describe "factory" do
+    it "has a valid factory" do
+      expect(build(:ingredient_measure)).to be_valid
+    end
+  end
 end

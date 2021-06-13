@@ -46,6 +46,7 @@
               @delete-ingredient="deleteIngredient"
               @increase-quantity="increaseQuantity"
               @decrease-quantity="decreaseQuantity"
+              @change-measure="changeMeasure"
             >
               {{ recipeIngredient.attributes.ingredient.name }}
             </selected-ingredient-card>
@@ -129,6 +130,9 @@ export default {
     },
     decreaseQuantity(recipeIngredientIdx) {
       this.$emit('decrease-quantity', recipeIngredientIdx);
+    },
+    changeMeasure(measure, recipeIngredientIdx) {
+      this.$emit('change-measure', measure, recipeIngredientIdx);
     },
     getPriceOfSelectedIngredient(recipeIngredient) {
       if (!recipeIngredient.ingredientQuantity) return 0;

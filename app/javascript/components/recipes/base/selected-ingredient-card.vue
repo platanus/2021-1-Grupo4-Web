@@ -42,6 +42,11 @@
             src="../../../../assets/images/plus-svg.svg"
           >
         </button>
+        <base-dropdown
+          class="mx-2"
+          :elements="units"
+          @select="changeMeasure"
+        />
       </div>
     </div>
     <!-- button -->
@@ -64,7 +69,10 @@
 </template>
 
 <script>
+import baseDropdown from '../../base/base-dropdown.vue';
+
 export default {
+  components: { baseDropdown },
   props: {
     recipeIngredientIdx: { type: Number, required: true },
     recipeIngredientAttrs: { type: Object, required: true },
@@ -79,11 +87,17 @@ export default {
     decreaseQuantity() {
       this.$emit('decrease-quantity', this.recipeIngredientIdx);
     },
+    changeMeasure(measure) {
+      this.$emit('change-measure', measure, this.recipeIngredientIdx);
+    },
   },
   computed: {
     price() {
       return this.recipeIngredientAttrs.ingredientQuantity *
       this.recipeIngredientAttrs.ingredient.price / this.recipeIngredientAttrs.ingredient.quantity;
+    },
+    units() {
+      return this.recipeIngredientAttrs.ingredient.otherMeasures.data.map(element => element.attributes.name);
     },
   },
 };

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <div>
     <div class="flex flex-col">
@@ -65,7 +64,7 @@
       >
         <ingredients-form
           ref="addIngredientInfo"
-          :units="['Kg','Litro']"
+          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="false"
         />
       </base-modal>
@@ -94,7 +93,7 @@
       >
         <ingredients-form
           ref="editIngredientInfo"
-          :units="['Kg','Litro']"
+          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="true"
           :ingredient="this.ingredientToEdit"
         />
@@ -117,6 +116,7 @@
 
 <script>
 
+import Vue from 'vue';
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
@@ -190,14 +190,18 @@ export default {
     },
 
     async addIngredient() {
+      let ingredientsInfo;
       this.showingAdd = !this.showingAdd;
 
       try {
+        ingredientsInfo = this.$refs.addIngredientInfo.form;
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
+          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
             { data: { id, attributes },
             },
-        } = await postIngredient(this.$refs.addIngredientInfo.form);
+        } = await postIngredient(ingredientsInfo);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
         this.error = '';
@@ -227,8 +231,11 @@ export default {
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
       try {
-        const res = await editIngredient(this.ingredientToEdit.id, this.$refs.editIngredientInfo.form);
-        this.updateIngredient(res);
+        const ingredientsInfo = this.$refs.editIngredientInfo.form;
+        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
+          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
+        this.updateIngredient(ingredientsInfo);
         this.error = '';
       } catch (error) {
         this.error = error;
@@ -246,11 +253,17 @@ export default {
       }
     },
 
-    async updateIngredient(res) {
-      const ingredientEdited = { id: this.ingredientToEdit.id, ...JSON.parse(res.config.data).ingredient };
+    async updateIngredient(ingredientEdited) {
+      ingredientEdited.quantity = ingredientEdited.ingredient_measures_attributes[0].quantity;
+      ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
+      ingredientEdited.id = this.ingredientToEdit.id;
+      ingredientEdited.otherMeasures = { data: [] };
+      ingredientEdited.ingredient_measures_attributes.forEach(element => {
+        ingredientEdited.otherMeasures.data
+          .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
+      });
       const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
-      this.ingredients.splice(objectIndex, 1);
-      this.ingredients.splice(objectIndex, 0, ingredientEdited);
+      Vue.set(this.ingredients, objectIndex, ingredientEdited);
     },
   },
 };
