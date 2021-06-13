@@ -13,7 +13,7 @@ end
 #  ingredient_quantity :float
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  recipe_measure      :string
+#  ingredient_measure  :string
 #
 # Indexes
 #
