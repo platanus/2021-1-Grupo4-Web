@@ -10,7 +10,8 @@ RECIPE_SCHEMA = {
         type: :object,
         properties: {
           ingredient_id: { type: :integer, example: 2, 'x-nullable': false },
-          ingredient_quantity: { type: :integer, example: 5, 'x-nullable': false }
+          ingredient_quantity: { type: :integer, example: 5, 'x-nullable': false },
+          ingredient_measure: { type: :string, example: 'Kg', 'x-nullable': false }
         }
       }
     },
@@ -59,6 +60,7 @@ RECIPE_UPDATE_SCHEMA = {
           step_order_position: { type: :integer, example: 1, 'x-nullable': true },
           description: { type: :string, example: 'Horneamos la masa', 'x-nullable': false },
           media_url: { type: :string, example: 'https://media-url', 'x-nullable': true },
+          ingredient_measure: { type: :string, example: 'Kg', 'x-nullable': false },
           _destroy: { type: :boolean, example: false, 'x-nullable': true }
         }
       }

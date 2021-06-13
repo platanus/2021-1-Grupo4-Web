@@ -4,6 +4,7 @@ class Api::V1::RecipeIngredientSerializer < ActiveModel::Serializer
   attributes(
     :ingredient,
     :ingredient_quantity,
+    :ingredient_measure,
     :created_at,
     :updated_at
   )
