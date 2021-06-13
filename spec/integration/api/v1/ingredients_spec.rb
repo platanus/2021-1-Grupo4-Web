@@ -311,6 +311,28 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
         run_test!
       end
 
+      response '200', 'ingredient updated with measure by default' do
+        let(:ingredient) do
+          {
+            user_id: user.id,
+            name: 'Some name',
+            sku: 'Some sku',
+            price: 666,
+            currency: 'Some currency',
+            inventory: 15,
+            ingredient_measures_attributes: [
+              { name: 'Kg', quantity: 5 },
+              { name: 'Tazas', quantity: 25 }
+            ]
+          }
+        end
+
+        run_test! do
+          expect(existent_ingredient.reload.measure).to eq('Kg')
+          expect(existent_ingredient.reload.quantity).to eq(5)
+        end
+      end
+
       response '401', 'user unauthorized' do
         let(:ingredient) { {} }
         let(:user_token) { 'invalid' }

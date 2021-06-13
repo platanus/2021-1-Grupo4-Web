@@ -67,7 +67,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :currency,
       :inventory,
       :provider_name,
-      ingredient_measures_attributes: [:name, :quantity]
+      ingredient_measures_attributes: [:id, :name, :quantity, :_destroy]
     )
   end
 end
