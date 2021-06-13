@@ -39,7 +39,7 @@
         </td>
         <td class="py-2 px-8">
           <p class="ml-2 font-medium">
-            {{ ingredient.providerName }}
+            {{ ingredient.providerName === null ? "-" : ingredient.providerName }}
           </p>
         </td>
         <!-- price -->

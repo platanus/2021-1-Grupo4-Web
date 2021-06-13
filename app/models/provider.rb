@@ -2,7 +2,8 @@ class Provider < ApplicationRecord
   has_many :ingredients, dependent: :destroy
   belongs_to :user
 
-  validates :name, presence: true, uniqueness: { scope: :user_id,  case_sensitive: false }
+  validates :name, presence: true,
+                   uniqueness: { scope: :user_id,  case_sensitive: false }, allow_blank: false
 end
 
 # == Schema Information

@@ -22,7 +22,6 @@
 
       <div
         class="flex flex-wrap -mx-3 mb-6"
-        v-if="!editMode"
       >
         <div class="w-full px-3">
           <!--Name -->
@@ -34,7 +33,7 @@
           </label>
           <select
             class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            v-model="form.providerName"
+            v-model="form.provider_name"
             id="ingredient-provider"
           >
             <option
@@ -186,8 +185,7 @@ export default {
   data() {
     return {
       form: {
-        providerId: null,
-        providerName: null,
+        provider_name: null, /* eslint-disable-line camelcase */
         name: '',
         sku: null,
         price: '',
@@ -213,7 +211,7 @@ export default {
   },
   async created() {
     const {
-      providerId,
+      providerName,
       name,
       sku,
       price,
@@ -231,7 +229,7 @@ export default {
       }];
     }
     this.form = {
-      providerId,
+      provider_name: providerName, /* eslint-disable-line camelcase */
       name,
       sku,
       price,

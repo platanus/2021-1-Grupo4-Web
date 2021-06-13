@@ -264,6 +264,7 @@ export default {
       ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
       ingredientEdited.id = this.ingredientToEdit.id;
       ingredientEdited.otherMeasures = { data: [] };
+      ingredientEdited.providerName = ingredientEdited.provider_name;
       ingredientEdited.ingredient_measures_attributes.forEach(element => {
         ingredientEdited.otherMeasures.data
           .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
