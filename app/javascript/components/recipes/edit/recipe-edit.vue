@@ -62,6 +62,7 @@
         @delete-ingredient="deleteIngredient"
         @increase-quantity="increaseQuantity"
         @decrease-quantity="decreaseQuantity"
+        @change-measure="changeMeasure"
       />
       <!-- pasos -->
       <recipe-steps
@@ -165,6 +166,9 @@ export default {
         return;
       }
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
+    },
+    changeMeasure(measure, recipeIngredientIdx) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.measure = measure;
     },
     getUpdatedRecipe() {
       const updatedRecipe = { name: this.recipe.name,
