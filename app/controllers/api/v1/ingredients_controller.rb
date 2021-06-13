@@ -65,10 +65,9 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :sku,
       :price,
       :currency,
-      :quantity,
-      :measure,
       :inventory,
-      :provider_name
+      :provider_name,
+      ingredient_measures_attributes: [:name, :quantity]
     )
   end
 end

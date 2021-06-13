@@ -4,8 +4,6 @@ FactoryBot.define do
     sku { Faker::Alphanumeric.alphanumeric(number: 10) }
     price { rand(50..300) * 10 }
     currency { "CLP" }
-    quantity { rand(1..3) }
-    measure { "kg" }
     user { create(:user) }
   end
 end
