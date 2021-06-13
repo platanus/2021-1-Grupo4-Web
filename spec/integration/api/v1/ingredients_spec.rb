@@ -224,9 +224,9 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             sku: 'Some sku',
             price: 666,
             currency: 'Some currency',
+            inventory: 25,
             quantity: 666,
             measure: 'Some measure',
-            inventory: 25,
             ingredient_measures_attributes: [
               {
                 name: 'Kg',
