@@ -161,7 +161,7 @@ export default {
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
     },
     changeMeasure(measure, recipeIngredientIdx) {
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.measure = measure;
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;
     },
     getUpdatedRecipe() {
       const updatedRecipe = { name: this.recipe.name,
@@ -184,6 +184,8 @@ export default {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
           ingredientQuantity: recipeIngredient.attributes.ingredientQuantity || 1,
+          ingredientMeasure: recipeIngredient.attributes
+            .ingredientMeasure || recipeIngredient.attributes.ingredient.ingredientMeasure,
         };
         if (!!recipeIngredient.id) {
           hash.id = recipeIngredient.id;
