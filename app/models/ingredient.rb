@@ -4,7 +4,7 @@ class Ingredient < ApplicationRecord
   has_many :recipe_ingredients, dependent: :destroy
   has_many :recipes, through: :recipe_ingredients, dependent: nil
   has_many :ingredient_measures, dependent: :destroy
-  accepts_nested_attributes_for :ingredient_measures
+  accepts_nested_attributes_for :ingredient_measures, allow_destroy: true
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
 
