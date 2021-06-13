@@ -47,7 +47,7 @@
             <!-- ingredient unit -->
             <td class="py-2 px-8">
               <p class="ml-2 font-medium text-center">
-                {{ ingredient.attributes.ingredient.measure }}
+                {{ ingredient.attributes.ingredientMeasure }}
               </p>
             </td>
           </tr>

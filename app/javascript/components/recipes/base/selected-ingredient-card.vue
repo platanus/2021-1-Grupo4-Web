@@ -98,7 +98,14 @@ export default {
       this.recipeIngredientAttrs.ingredient.price / this.recipeIngredientAttrs.ingredient.quantity;
     },
     units() {
-      return this.recipeIngredientAttrs.ingredient.otherMeasures.data.map(element => element.attributes.name);
+      let ingredientUnits = this.recipeIngredientAttrs
+        .ingredient.otherMeasures.data.map(element => element.attributes.name);
+      if (this.recipeIngredientAttrs.ingredientMeasure) {
+        ingredientUnits = ingredientUnits.filter(item => item !== this.recipeIngredientAttrs.ingredientMeasure);
+        ingredientUnits.unshift(this.recipeIngredientAttrs.ingredientMeasure);
+      }
+
+      return ingredientUnits;
     },
   },
 };

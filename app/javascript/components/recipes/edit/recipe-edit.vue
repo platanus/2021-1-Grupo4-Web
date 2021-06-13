@@ -62,6 +62,7 @@
         @delete-ingredient="deleteIngredient"
         @increase-quantity="increaseQuantity"
         @decrease-quantity="decreaseQuantity"
+        @change-measure="changeMeasure"
       />
       <!-- pasos -->
       <recipe-steps
@@ -166,6 +167,9 @@ export default {
       }
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
     },
+    changeMeasure(measure, recipeIngredientIdx) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;
+    },
     getUpdatedRecipe() {
       const updatedRecipe = { name: this.recipe.name,
         cookMinutes: this.recipe.cookMinutes, portions: this.recipe.portions };
@@ -187,6 +191,8 @@ export default {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
           ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+          ingredientMeasure: recipeIngredient
+            .attributes.ingredientMeasure || recipeIngredient.attributes.ingredient.measure,
         };
         if (!!recipeIngredient.id) {
           hash.id = recipeIngredient.id;
