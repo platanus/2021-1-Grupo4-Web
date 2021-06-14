@@ -41,6 +41,7 @@ export default {
       delete: 'Eliminar ingrediente',
       deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
+      provider: 'Proveedor',
       price: 'Precio',
       unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',

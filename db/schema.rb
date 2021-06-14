@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_06_13_002438) do
     t.integer "minimum_purchase"
     t.string "phone"
     t.bigint "user_id"
+    t.index ["name", "user_id"], name: "index_providers_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_providers_on_user_id"
   end
 

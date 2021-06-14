@@ -1,6 +1,9 @@
 class Provider < ApplicationRecord
   has_many :ingredients, dependent: :destroy
   belongs_to :user
+
+  validates :name, presence: true,
+                   uniqueness: { scope: :user_id,  case_sensitive: false }, allow_blank: false
 end
 
 # == Schema Information
@@ -22,7 +25,8 @@ end
 #
 # Indexes
 #
-#  index_providers_on_user_id  (user_id)
+#  index_providers_on_name_and_user_id  (name,user_id) UNIQUE
+#  index_providers_on_user_id           (user_id)
 #
 # Foreign Keys
 #
