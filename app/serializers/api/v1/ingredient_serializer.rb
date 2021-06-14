@@ -2,6 +2,7 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
   type :ingredient
 
   attributes(
+    :id,
     :provider_id,
     :user_id,
     :name,
