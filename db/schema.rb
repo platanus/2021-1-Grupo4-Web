@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_10_220621) do
+ActiveRecord::Schema.define(version: 2021_06_13_002438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,15 +41,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_220621) do
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token",
                                       unique: true
-  end
-
-  create_table "ingredient_measures", force: :cascade do |t|
-    t.integer "quantity"
-    t.bigint "ingredient_id", null: false
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_ingredient_measures_on_ingredient_id"
   end
 
   create_table "ingredient_measures", force: :cascade do |t|
@@ -115,7 +106,7 @@ ActiveRecord::Schema.define(version: 2021_06_10_220621) do
     t.float "ingredient_quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "recipe_measure"
+    t.string "ingredient_measure"
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
