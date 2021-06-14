@@ -139,7 +139,8 @@ export default {
         (recipeIngredient) => recipeIngredient.attributes.ingredient.id).includes(parseInt(ingredient.id, 10))) {
         return;
       }
-      const newRecipeIngredient = { attributes: { ingredientQuantity: 1, ingredient: {} } };
+      const newRecipeIngredient = {
+        attributes: { ingredientQuantity: 1, ingredientMeasure: ingredient.measure, ingredient: {} } };
       newRecipeIngredient.attributes.ingredient = ingredient;
       this.recipe.recipeIngredients.data.push(newRecipeIngredient);
     },
