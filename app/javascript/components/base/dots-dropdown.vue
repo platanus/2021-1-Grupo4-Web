@@ -47,7 +47,7 @@ export default {
     document.addEventListener('click', this.closeDropdown);
   },
   unmounted() {
-    document.removeEventListener('click');
+    document.removeEventListener('click', this.closeDropdown);
   },
   methods: {
     closeDropdown(event) {
