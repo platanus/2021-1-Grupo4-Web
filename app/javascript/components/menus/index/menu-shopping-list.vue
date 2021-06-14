@@ -2,7 +2,7 @@
   <div class="w-full m-auto">
     <button
       class="focus:outline-none"
-      @click="toogleList"
+      @click="toggleList"
     >
       <img
         svg-inline
@@ -11,7 +11,7 @@
       >
     </button>
     <base-modal
-      @cancel="toogleList"
+      @cancel="toggleList"
       v-if="showingList"
       :title="$t('msg.menus.shoppingList')"
       :cancel-button-label="$t('msg.menus.closeShoppingList')"
@@ -84,7 +84,7 @@ export default {
     };
   },
   methods: {
-    async toogleList() {
+    async toggleList() {
       this.showingList = !this.showingList;
 
       if (this.menuIngredients.length > 0) return;
@@ -109,7 +109,7 @@ export default {
       link.href = URL.createObjectURL(blob);
       link.click();
       URL.revokeObjectURL(link.href);
-      this.toogleList();
+      this.toggleList();
     },
   },
 };
