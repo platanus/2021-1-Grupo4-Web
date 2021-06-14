@@ -195,6 +195,7 @@ export default {
       showingMeasureModal: false,
       providersNames: [],
       usedUnits: [],
+      measuresToDelete: [],
     };
   },
   methods: {
@@ -207,6 +208,9 @@ export default {
     deleteUnit(unit) {
       this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
         .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
+      if (unit.id !== undefined) {
+        this.measuresToDelete.push(unit.id);
+      }
     },
   },
   async created() {

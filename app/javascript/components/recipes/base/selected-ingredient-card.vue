@@ -10,8 +10,8 @@
           {{ $t('msg.recipes.price') }} {{ $t('msg.recipes.unitary') }}
         </div>
         <div class="h-5 font-hind font-normal text-sm text-black">
-          $ {{ recipeIngredientAttrs.ingredient.price / recipeIngredientAttrs.ingredient.quantity }} CLP por
-          {{ recipeIngredientAttrs.ingredient.measure }}
+          $ {{ unitaryPrice }} CLP por
+          {{ recipeIngredientAttrs.ingredientMeasure }}
         </div>
       </div>
       <div class="flex items-center h-4">
@@ -91,14 +91,35 @@ export default {
     changeMeasure(measure) {
       this.$emit('change-measure', measure, this.recipeIngredientIdx);
     },
+    isInt(n) {
+      return n % 1 === 0;
+    },
   },
   computed: {
+    unitaryPrice() {
+      const defaultQuantity = this.recipeIngredientAttrs.ingredient.otherMeasures.data.map(element =>
+        element.attributes).filter(element =>
+        element.name === this.recipeIngredientAttrs.ingredientMeasure)[0].quantity;
+      const price = this.recipeIngredientAttrs.ingredient.price / defaultQuantity;
+      if (this.isInt(price)) {
+        return price;
+      }
+
+      return (this.recipeIngredientAttrs.ingredient.price / defaultQuantity).toFixed('2');
+    },
     price() {
       return this.recipeIngredientAttrs.ingredientQuantity *
-      this.recipeIngredientAttrs.ingredient.price / this.recipeIngredientAttrs.ingredient.quantity;
+      this.unitaryPrice;
     },
     units() {
-      return this.recipeIngredientAttrs.ingredient.otherMeasures.data.map(element => element.attributes.name);
+      let ingredientUnits = this.recipeIngredientAttrs
+        .ingredient.otherMeasures.data.map(element => element.attributes.name);
+      if (this.recipeIngredientAttrs.ingredientMeasure) {
+        ingredientUnits = ingredientUnits.filter(item => item !== this.recipeIngredientAttrs.ingredientMeasure);
+        ingredientUnits.unshift(this.recipeIngredientAttrs.ingredientMeasure);
+      }
+
+      return ingredientUnits;
     },
   },
 };

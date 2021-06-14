@@ -139,7 +139,8 @@ export default {
         (recipeIngredient) => recipeIngredient.attributes.ingredient.id).includes(parseInt(ingredient.id, 10))) {
         return;
       }
-      const newRecipeIngredient = { attributes: { ingredientQuantity: 1, ingredient: {} } };
+      const newRecipeIngredient = {
+        attributes: { ingredientQuantity: 1, ingredientMeasure: ingredient.measure, ingredient: {} } };
       newRecipeIngredient.attributes.ingredient = ingredient;
       this.recipe.recipeIngredients.data.push(newRecipeIngredient);
     },
@@ -161,7 +162,7 @@ export default {
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
     },
     changeMeasure(measure, recipeIngredientIdx) {
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.measure = measure;
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;
     },
     getUpdatedRecipe() {
       const updatedRecipe = { name: this.recipe.name,
@@ -184,6 +185,8 @@ export default {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
           ingredientQuantity: recipeIngredient.attributes.ingredientQuantity || 1,
+          ingredientMeasure: recipeIngredient
+            .attributes.ingredientMeasure || recipeIngredient.attributes.ingredient.measure,
         };
         if (!!recipeIngredient.id) {
           hash.id = recipeIngredient.id;

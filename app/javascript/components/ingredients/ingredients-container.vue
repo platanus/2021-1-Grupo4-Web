@@ -240,12 +240,17 @@ export default {
         const ingredientsInfo = this.$refs.editIngredientInfo.form;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        this.addMeasuresToDelete(ingredientsInfo);
         await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
         this.updateIngredient(ingredientsInfo);
         this.error = '';
       } catch (error) {
         this.error = error;
       }
+    },
+    addMeasuresToDelete(ingredientsInfo) {
+      this.$refs.editIngredientInfo.measuresToDelete
+        .forEach(elem => ingredientsInfo.ingredient_measures_attributes.push({ id: elem, _destroy: true }));
     },
 
     async deleteIngredient() {
