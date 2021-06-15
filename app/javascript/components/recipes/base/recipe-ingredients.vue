@@ -106,8 +106,8 @@ export default {
   },
   computed: {
     recipePrice() {
-      return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
-        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+      return Math.round(this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0));
     },
     filteredIngredients() {
       if (this.query) {

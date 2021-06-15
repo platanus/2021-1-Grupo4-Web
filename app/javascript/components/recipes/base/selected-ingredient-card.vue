@@ -105,7 +105,7 @@ export default {
         return price;
       }
 
-      return (this.recipeIngredientAttrs.ingredient.price / defaultQuantity).toFixed('2');
+      return Math.round(this.recipeIngredientAttrs.ingredient.price / defaultQuantity);
     },
     price() {
       return this.recipeIngredientAttrs.ingredientQuantity *
