@@ -11,6 +11,7 @@
       <div
         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
         aria-hidden="true"
+        @click="cancel"
       />
       <span
         class="hidden sm:inline-block sm:align-middle sm:h-screen"

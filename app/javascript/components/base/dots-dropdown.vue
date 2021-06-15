@@ -43,7 +43,17 @@ export default {
       active: false,
     };
   },
+  mounted() {
+    document.addEventListener('click', this.closeDropdown);
+  },
+  unmounted() {
+    document.removeEventListener('click', this.closeDropdown);
+  },
   methods: {
+    closeDropdown(event) {
+      if (event.target === this.$el || this.$el.contains(event.target)) return;
+      this.active = false;
+    },
     toggleDropdown() {
       this.active = !this.active;
     },
