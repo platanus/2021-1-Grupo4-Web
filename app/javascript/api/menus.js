@@ -32,4 +32,16 @@ function deleteMenu(menuId) {
     }));
 }
 
-export { getMenus, getMenu, postMenu, updateMenu, deleteMenu };
+function getShoppingList(menuId) {
+  return (client
+    .get(`/menus/${menuId}/shopping-list`, {
+    }));
+}
+
+function downloadShoppingList(menuId) {
+  const url = `${client.defaults.baseURL}/menus/${menuId}/download-shopping-list`;
+  window.open(url, '_blank');
+}
+
+export { getMenus, getMenu, postMenu, updateMenu, deleteMenu,
+  getShoppingList, downloadShoppingList };

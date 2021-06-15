@@ -15,6 +15,7 @@ export default {
     min: 'Mínimo',
     max: 'Máximo',
     quantity: 'Cantidad',
+    download: 'Descargar',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -121,6 +122,8 @@ export default {
       noRecipes: 'Este menú aún no tiene recetas',
       noNameAlert: 'Ingresa el nombre del menú por favor',
       saveChanges: 'Guardar cambios',
+      shoppingList: 'Lista de compras',
+      closeShoppingList: 'Cerrar',
     },
     providers: {
       title: 'Proveedores',

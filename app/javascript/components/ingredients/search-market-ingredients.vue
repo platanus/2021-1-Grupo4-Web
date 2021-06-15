@@ -33,12 +33,16 @@
                 >
               </button>
             </span>
-            <span
+            <div
+              class="p-1"
               v-else
-              class="flex pl-3 my-auto"
             >
-              <base-spinner />
-            </span>
+              <span
+                class="flex my-auto w-8 h-8 pl-2"
+              >
+                <base-spinner />
+              </span>
+            </div>
           </div>
         </div>
       </div>
