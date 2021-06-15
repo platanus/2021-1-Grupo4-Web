@@ -38,4 +38,12 @@ function getShoppingList(menuId) {
     }));
 }
 
-export { getMenus, getMenu, postMenu, updateMenu, deleteMenu, getShoppingList };
+function downloadShoppingList(menuId) {
+  return (client
+    .get(`/menus/${menuId}/download-shopping-list`, {
+      responseType: 'blob',
+    }));
+}
+
+export { getMenus, getMenu, postMenu, updateMenu, deleteMenu,
+  getShoppingList, downloadShoppingList };

@@ -15,6 +15,7 @@ export default {
     min: 'Mínimo',
     max: 'Máximo',
     quantity: 'Cantidad',
+    download: 'Descargar',
 
     users: {
       registerTitle: 'Crear Cuenta',
