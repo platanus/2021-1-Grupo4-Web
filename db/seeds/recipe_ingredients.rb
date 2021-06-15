@@ -12,14 +12,14 @@ sal = Ingredient.find_by(name: 'Sal')
 RecipeIngredient.create(
   recipe_id: recipe1.id,
   ingredient_id: harina.id,
-  ingredient_quantity: 5,
+  ingredient_quantity: 1,
   ingredient_measure: 'Kg'
 )
 
 RecipeIngredient.create(
   recipe_id: recipe1.id,
   ingredient_id: huevos.id,
-  ingredient_quantity: 3,
+  ingredient_quantity: 1,
   ingredient_measure: 'Kg'
 )
 
@@ -27,14 +27,14 @@ RecipeIngredient.create(
   recipe_id: recipe1.id,
   ingredient_id: manjar.id,
   ingredient_quantity: 1,
-  ingredient_measure: 'Kg'
+  ingredient_measure: 'Unidades'
 )
 
 RecipeIngredient.create(
   recipe_id: recipe2.id,
   ingredient_id: limon.id,
-  ingredient_quantity: 5,
-  ingredient_measure: 'Unidades'
+  ingredient_quantity: 2,
+  ingredient_measure: 'Mallas'
 )
 
 RecipeIngredient.create(
