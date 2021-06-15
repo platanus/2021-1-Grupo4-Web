@@ -127,6 +127,11 @@ GEM
     byebug (11.1.3)
     case_transform (0.2)
       activesupport
+    caxlsx (3.0.4)
+      htmlentities (~> 4.3, >= 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (~> 1.10, >= 1.10.4)
+      rubyzip (>= 1.3.0, < 3)
     childprocess (3.0.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.8)
@@ -204,6 +209,7 @@ GEM
       activesupport (>= 5.2)
     heroku-stage (0.4.0)
       rails
+    htmlentities (4.3.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -538,6 +544,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap
+  caxlsx
   data_migrate
   devise
   devise-i18n

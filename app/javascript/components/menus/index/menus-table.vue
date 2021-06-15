@@ -1,5 +1,5 @@
 <template>
-  <table class="min-w-full divide-y divide-gray-200">
+  <table class="w-full divide-y divide-gray-200">
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">
       <tr class="text-left">
         <th
@@ -22,6 +22,9 @@
         >
           <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
         </th>
+        <th
+          class="px-8 py-3"
+        />
         <th
           class="px-8 py-3"
         />
@@ -52,7 +55,7 @@
           <p
             class="ml-2 font-medium"
           >
-            {{ 20000 | currency }}
+            {{ totalMenuPrice(menu.menuRecipes.data) | currency }}
           </p>
         </td>
         <!-- recipesQuantity -->
@@ -73,7 +76,13 @@
             :menu="menu"
           />
         </td>
-        <!-- dots -->
+        <td
+          class="content-center"
+        >
+          <menu-shopping-list
+            :menu-id="menu.id"
+          />
+        </td>
         <td
           class="content-center"
         >
@@ -82,8 +91,8 @@
               edit:true,
               del:true
             }"
-            @edit="editIngredient(menu)"
-            @del="deleteIngredient(menu)"
+            @edit="editMenu(menu)"
+            @delete="deleteMenu(menu)"
           />
         </td>
       </tr>
@@ -94,21 +103,45 @@
 <script>
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
+import MenuShoppingList from './menu-shopping-list';
 
 export default {
   components: {
     MenusTableRecipesQuantity,
     MenusTableRecipes,
+    MenuShoppingList,
   },
   props: {
     menus: { type: Array, required: true },
   },
   methods: {
-    editIngredient(element) {
-      this.$emit('edit', element);
+    editMenu(element) {
+      window.location = `/menus/${element.id}/edit`;
     },
-    deleteIngredient(element) {
+    deleteMenu(element) {
       this.$emit('del', element);
+    },
+    totalMenuPrice(data) {
+      let finalPrice = 0;
+      data.forEach(element => {
+        const recipeQuantity = element.attributes.recipeQuantity;
+        const ingredients = this.calculateIngredients(element.attributes.recipe.recipeIngredients.data);
+        ingredients.forEach(ingredientPriced => {
+          finalPrice += recipeQuantity * ingredientPriced;
+        });
+      });
+
+      return finalPrice;
+    },
+    calculateIngredients(data) {
+      const returnArray = [];
+      data.forEach(element => {
+        const ingredientQuantity = element.attributes.ingredientQuantity;
+        const ingredientUnitaryPrice = element.attributes.ingredient.price / element.attributes.ingredient.quantity;
+        returnArray.push(ingredientQuantity * ingredientUnitaryPrice);
+      });
+
+      return returnArray;
     },
   },
 };

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Provider, type: :model do
-  let(:provider) { create(:provider) }
+  let!(:user) { create(:user) }
+  let(:provider) { create(:provider, user: user) }
 
   it { is_expected.to have_many(:ingredients) }
 

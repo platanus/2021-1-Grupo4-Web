@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_031702) do
+ActiveRecord::Schema.define(version: 2021_06_13_002438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2021_05_26_031702) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "ingredient_measures", force: :cascade do |t|
+    t.integer "quantity"
+    t.bigint "ingredient_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "index_ingredient_measures_on_ingredient_id"
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.bigint "provider_id"
     t.bigint "user_id", null: false
@@ -48,10 +57,9 @@ ActiveRecord::Schema.define(version: 2021_05_26_031702) do
     t.string "sku"
     t.integer "price"
     t.string "currency"
-    t.integer "quantity"
-    t.string "measure"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "inventory", default: 0
     t.index ["provider_id"], name: "index_ingredients_on_provider_id"
     t.index ["user_id"], name: "index_ingredients_on_user_id"
   end
@@ -71,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_031702) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "portions", default: 0
     t.index ["user_id"], name: "index_menus_on_user_id"
   end
 
@@ -85,14 +94,18 @@ ActiveRecord::Schema.define(version: 2021_05_26_031702) do
     t.integer "delivery_days"
     t.integer "minimum_purchase"
     t.string "phone"
+    t.bigint "user_id"
+    t.index ["name", "user_id"], name: "index_providers_on_name_and_user_id", unique: true
+    t.index ["user_id"], name: "index_providers_on_user_id"
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
     t.bigint "recipe_id", null: false
     t.bigint "ingredient_id", null: false
-    t.integer "ingredient_quantity"
+    t.float "ingredient_quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ingredient_measure"
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
   end
@@ -131,11 +144,13 @@ ActiveRecord::Schema.define(version: 2021_05_26_031702) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ingredient_measures", "ingredients"
   add_foreign_key "ingredients", "providers"
   add_foreign_key "ingredients", "users"
   add_foreign_key "menu_recipes", "menus"
   add_foreign_key "menu_recipes", "recipes"
   add_foreign_key "menus", "users"
+  add_foreign_key "providers", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_steps", "recipes"

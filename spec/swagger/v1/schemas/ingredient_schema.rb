@@ -1,13 +1,22 @@
 INGREDIENT_SCHEMA = {
   type: :object,
   properties: {
-    provider_id: { type: :integer, example: 1, 'x-nullable': true },
+    provider_name: { type: :string, example: 'Jumbo', 'x-nullable': true },
     name: { type: :string, example: 'Harina', 'x-nullable': true },
     sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
     price: { type: :integer, example: 2990, 'x-nullable': true },
     currency: { type: :string, example: 'CLP', 'x-nullable': true },
-    quantity: { type: :integer, example: 2, 'x-nullable': true },
-    measure: { type: :string, example: 'unidad', 'x-nullable': true }
+    inventory: { type: :integer, example: 10, 'x-nullable': true },
+    ingredient_measures_attributes: {
+      type: "array",
+      items: {
+        type: :object,
+        properties: {
+          name: { type: :string, example: 'Kg', 'x-nullable': false },
+          quantity: { type: :integer, example: 1, 'x-nullable': true }
+        }
+      }
+    }
   },
   required: [
     :name,
@@ -18,7 +27,6 @@ INGREDIENT_SCHEMA = {
   ]
 }
 
-
 INGREDIENT_RESPONSE_SCHEMA = {
   type: :object,
   properties: {
@@ -27,7 +35,7 @@ INGREDIENT_RESPONSE_SCHEMA = {
     attributes: {
       type: :object,
       properties: {
-        provider_id: { type: :integer, example: 1, 'x-nullable': true },
+        provider_name: { type: :string, example: 'Jumbo', 'x-nullable': true },
         user_id: { type: :integer, example: 1, 'x-nullable': true },
         name: { type: :string, example: 'Harina', 'x-nullable': true },
         sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
@@ -35,6 +43,16 @@ INGREDIENT_RESPONSE_SCHEMA = {
         currency: { type: :string, example: 'CLP', 'x-nullable': true },
         quantity: { type: :integer, example: 2, 'x-nullable': true },
         measure: { type: :string, example: 'unidad', 'x-nullable': true },
+        inventory: { type: :integer, example: 10, 'x-nullable': true },
+        measures: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/ingredient_measure_response" }
+            }
+          }
+        },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },

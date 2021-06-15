@@ -62,6 +62,7 @@
         @delete-ingredient="deleteIngredient"
         @increase-quantity="increaseQuantity"
         @decrease-quantity="decreaseQuantity"
+        @change-measure="changeMeasure"
       />
       <!-- pasos -->
       <recipe-steps
@@ -90,8 +91,8 @@
 
 <script>
 import { getRecipe, updateRecipe } from '../../../api/recipes.js';
-import recipeIngredients from './recipe-ingredients.vue';
-import recipeSteps from './recipe-steps.vue';
+import recipeIngredients from '../base/recipe-ingredients.vue';
+import recipeSteps from '../base/recipe-steps.vue';
 
 export default {
   props: {
@@ -145,7 +146,8 @@ export default {
         (recipeIngredient) => recipeIngredient.attributes.ingredient.id).includes(parseInt(ingredient.id, 10))) {
         return;
       }
-      const newRecipeIngredient = { attributes: { ingredientQuantity: 1, ingredient: {} } };
+      const newRecipeIngredient = { attributes: {
+        ingredientQuantity: 1, ingredientMeasure: ingredient.measure, ingredient: {} } };
       newRecipeIngredient.attributes.ingredient = ingredient;
       this.recipe.recipeIngredients.data.push(newRecipeIngredient);
     },
@@ -165,6 +167,9 @@ export default {
         return;
       }
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
+    },
+    changeMeasure(measure, recipeIngredientIdx) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;
     },
     getUpdatedRecipe() {
       const updatedRecipe = { name: this.recipe.name,
@@ -187,6 +192,8 @@ export default {
         const hash = {
           ingredientId: recipeIngredient.attributes.ingredient.id,
           ingredientQuantity: recipeIngredient.attributes.ingredientQuantity,
+          ingredientMeasure: recipeIngredient
+            .attributes.ingredientMeasure || recipeIngredient.attributes.ingredient.measure,
         };
         if (!!recipeIngredient.id) {
           hash.id = recipeIngredient.id;

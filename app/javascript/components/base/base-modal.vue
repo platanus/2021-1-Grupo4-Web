@@ -11,6 +11,7 @@
       <div
         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
         aria-hidden="true"
+        @click="cancel"
       />
       <span
         class="hidden sm:inline-block sm:align-middle sm:h-screen"
@@ -43,21 +44,25 @@
 
         <!--Buttons-->
         <div class="bg-white px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <base-button
-            v-if="okButtonPresent"
-            :elements="{
-              placeholder: okButtonLabel,
-              color: 'bg-green-500 hover:bg-green-700 text-white'
-            }"
-            @click="ok"
-          />
-          <base-button
-            :elements="{
-              placeholder: cancelButtonLabel,
-              color: 'bg-white hover:bg-gray-300 text-black'
-            }"
-            @click="cancel"
-          />
+          <div class="px-2 pb-2">
+            <base-button
+              v-if="okButtonPresent"
+              :elements="{
+                placeholder: okButtonLabel,
+                color: 'bg-green-500 hover:bg-green-700 text-white'
+              }"
+              @click="ok"
+            />
+          </div>
+          <div class="px-2 pb-2">
+            <base-button
+              :elements="{
+                placeholder: cancelButtonLabel,
+                color: 'bg-white hover:bg-gray-300 text-black'
+              }"
+              @click="cancel"
+            />
+          </div>
         </div>
       </div>
     </div>

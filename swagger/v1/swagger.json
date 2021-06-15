@@ -25,13 +25,13 @@
               "example": 1,
               "x-nullable": false
             },
-            "recipe": {
-              "$ref": "#/definitions/recipe_response"
-            },
             "recipe_quantity": {
               "type": "integer",
               "example": 3,
               "x-nullable": true
+            },
+            "recipe": {
+              "$ref": "#/definitions/recipe_response"
             },
             "created_at": {
               "type": "string",
@@ -372,9 +372,9 @@
     "ingredient": {
       "type": "object",
       "properties": {
-        "provider_id": {
-          "type": "integer",
-          "example": 1,
+        "provider_name": {
+          "type": "string",
+          "example": "Jumbo",
           "x-nullable": true
         },
         "name": {
@@ -397,15 +397,28 @@
           "example": "CLP",
           "x-nullable": true
         },
-        "quantity": {
+        "inventory": {
           "type": "integer",
-          "example": 2,
+          "example": 10,
           "x-nullable": true
         },
-        "measure": {
-          "type": "string",
-          "example": "unidad",
-          "x-nullable": true
+        "ingredient_measures_attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Kg",
+                "x-nullable": false
+              },
+              "quantity": {
+                "type": "integer",
+                "example": 1,
+                "x-nullable": true
+              }
+            }
+          }
         }
       },
       "required": [
@@ -430,9 +443,9 @@
         "attributes": {
           "type": "object",
           "properties": {
-            "provider_id": {
-              "type": "integer",
-              "example": 1,
+            "provider_name": {
+              "type": "string",
+              "example": "Jumbo",
               "x-nullable": true
             },
             "user_id": {
@@ -469,6 +482,22 @@
               "type": "string",
               "example": "unidad",
               "x-nullable": true
+            },
+            "inventory": {
+              "type": "integer",
+              "example": 10,
+              "x-nullable": true
+            },
+            "measures": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ingredient_measure_response"
+                  }
+                }
+              }
             },
             "created_at": {
               "type": "string",
@@ -670,6 +699,11 @@
           "example": "Menú de almuerzo",
           "x-nullable": true
         },
+        "portions": {
+          "type": "integer",
+          "example": 5,
+          "x-nullable": false
+        },
         "menu_recipes_attributes": {
           "type": "array",
           "items": {
@@ -700,6 +734,11 @@
           "type": "string",
           "example": "Menú de almuerzo",
           "x-nullable": true
+        },
+        "portions": {
+          "type": "integer",
+          "example": 5,
+          "x-nullable": false
         },
         "menu_recipes_attributes": {
           "type": "array",
@@ -841,6 +880,11 @@
                 "type": "integer",
                 "example": 5,
                 "x-nullable": false
+              },
+              "ingredient_measure": {
+                "type": "string",
+                "example": "Kg",
+                "x-nullable": false
               }
             }
           }
@@ -940,6 +984,11 @@
                 "type": "string",
                 "example": "https://media-url",
                 "x-nullable": true
+              },
+              "ingredient_measure": {
+                "type": "string",
+                "example": "Kg",
+                "x-nullable": false
               },
               "_destroy": {
                 "type": "boolean",
@@ -1056,6 +1105,19 @@
         "type",
         "attributes"
       ]
+    },
+    "ingredient_measure_response": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "unidad"
+        },
+        "quantity": {
+          "type": "integer",
+          "example": 2
+        }
+      }
     }
   },
   "paths": {
@@ -1650,6 +1712,41 @@
           },
           "404": {
             "description": "menu not found"
+          }
+        }
+      }
+    },
+    "/menus/{id}/reduce-inventory": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Reduces inventory",
+        "description": "Reduces inventory of ingredients of menu through recipes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "reduced inventory of menu"
           }
         }
       }

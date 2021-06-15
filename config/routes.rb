@@ -6,6 +6,11 @@ Rails.application.routes.draw do
       resources :providers
       resources :menus do
         resources :menu_recipes, only: [:create, :update, :destroy]
+        member do
+          post '/reduce-inventory', to: 'menus#reduce_inventory'
+          get '/shopping-list', to: 'menus#shopping_list'
+          get '/download-shopping-list', to: 'menus#download_shopping_list'
+        end
       end
       resources :recipes do
         resources :recipe_ingredients, only: [:create, :update, :destroy]
@@ -39,6 +44,6 @@ Rails.application.routes.draw do
 
   resources :ingredients, only: [:index]
   resources :recipes, only: [:index, :show, :new, :edit]
-  resources :menus, only: [:index, :new]
+  resources :menus, only: [:index, :show, :new, :edit]
   resources :providers, only: [:index, :new]
 end

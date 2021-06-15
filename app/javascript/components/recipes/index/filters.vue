@@ -38,5 +38,11 @@ export default {
       this.$emit('filters');
     },
   },
+  data() {
+    return {
+      showPriceFilter: false,
+      showPortionsFilter: false,
+    };
+  },
 };
 </script>

@@ -28,11 +28,23 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def create
-    respond_with ingredients.create!(ingredient_params)
+    provider = Provider.find_or_create_by(
+      name: ingredient_params[:provider_name], user: current_user
+    )
+
+    respond_with ingredients.create!(
+      ingredient_params.except(:provider_name).merge(provider_id: provider.id)
+    )
   end
 
   def update
-    respond_with ingredient.update!(ingredient_params)
+    provider = Provider.find_or_create_by(
+      name: ingredient_params[:provider_name], user: current_user
+    )
+
+    respond_with ingredient.update!(
+      ingredient_params.except(:provider_name).merge(provider_id: provider.id)
+    )
   end
 
   def destroy
@@ -59,9 +71,9 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :sku,
       :price,
       :currency,
-      :quantity,
-      :measure,
-      :provider_id
+      :inventory,
+      :provider_name,
+      ingredient_measures_attributes: [:id, :name, :quantity, :_destroy]
     )
   end
 end

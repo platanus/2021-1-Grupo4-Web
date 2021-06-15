@@ -39,18 +39,12 @@
 <script>
 
 export default {
+  props: {
+    actualfilters: { type: Object, required: true },
+  },
   data() {
     return {
-      filters: {
-        price: {
-          min: '',
-          max: '',
-        },
-        portions: {
-          min: '',
-          max: '',
-        },
-      },
+      filters: this.actualfilters,
     };
   },
 };

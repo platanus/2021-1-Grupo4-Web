@@ -11,7 +11,7 @@
       >
     </button>
     <div v-if="active">
-      <div class="origin-top-right absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10">
+      <div class="-left-20 absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10">
         <ul>
           <li class="hover:bg-gray-100">
             <a
@@ -43,7 +43,17 @@ export default {
       active: false,
     };
   },
+  mounted() {
+    document.addEventListener('click', this.closeDropdown);
+  },
+  unmounted() {
+    document.removeEventListener('click', this.closeDropdown);
+  },
   methods: {
+    closeDropdown(event) {
+      if (event.target === this.$el || this.$el.contains(event.target)) return;
+      this.active = false;
+    },
     toggleDropdown() {
       this.active = !this.active;
     },

@@ -1,11 +1,14 @@
 <template>
   <div class="flex flex-col">
+    <!-- Title -->
     <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.menus.title') }}
       </div>
     </div>
+
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <!-- Search Bar and Add Button -->
       <div class="flex items-center pb-6">
         <div class="relative text-yellow-700">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -23,26 +26,27 @@
             v-model="searchQuery"
           >
         </div>
-        <base-button
-          :elements="{ placeholder: $t('msg.menus.add'),
-                       color: 'bg-green-500 hover:bg-green-700 text-white' }"
-          @click="redirectAddMenu"
-        />
-      </div>
-      <div class="flex items-center">
-        <p
-          v-if="this.menus.length===0"
+        <a
+          class="mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white"
+          href="/menus/new"
         >
-          {{ $t('msg.noElements') }} {{ $t('msg.menus.title') }}
-        </p>
-        <menus-table
-          v-else
-          :menus="filterMenus"
-          @edit="toggleEditModal"
-          @del="toggleDelModal"
-        />
+          {{ $t('msg.menus.add') }}
+        </a>
       </div>
+      <!-- Content -->
+      <p
+        class="my-4"
+        v-if="this.menus.length===0"
+      >
+        {{ $t('msg.noElements') }} {{ $t('msg.menus.title').toLowerCase() }}
+      </p>
+      <menus-table
+        v-else
+        :menus="filterMenus"
+        @del="toggleDelModal"
+      />
     </div>
+
     <!--DeleteModal-->
     <base-modal
       @ok="deleteMenu"
@@ -99,12 +103,6 @@ export default {
     },
   },
   methods: {
-    redirectAddMenu() {
-      window.location.href = '/menus/new';
-    },
-    toggleEditModal() {
-      this.showingEdit = !this.showingEdit;
-    },
     toggleDelModal(menu) {
       this.showingDel = !this.showingDel;
       this.menuToDelete = menu;

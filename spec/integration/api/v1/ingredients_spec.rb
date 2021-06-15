@@ -106,7 +106,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     let(:cornershop_client) do
       instance_double('CornershopClient', products_by_query: products)
     end
-    let!(:provider) { create(:provider, name: 'Jumbo') }
+    let!(:provider) { create(:provider, name: 'Jumbo', user: user) }
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
@@ -224,8 +224,15 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             sku: 'Some sku',
             price: 666,
             currency: 'Some currency',
+            inventory: 25,
             quantity: 666,
-            measure: 'Some measure'
+            measure: 'Some measure',
+            ingredient_measures_attributes: [
+              {
+                name: 'Kg',
+                quantity: 1
+              }
+            ]
           }
         end
 
@@ -297,12 +304,33 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             sku: 'Some sku',
             price: 666,
             currency: 'Some currency',
-            quantity: 666,
-            measure: 'Some measure'
+            inventory: 15
           }
         end
 
         run_test!
+      end
+
+      response '200', 'ingredient updated with measure by default' do
+        let(:ingredient) do
+          {
+            user_id: user.id,
+            name: 'Some name',
+            sku: 'Some sku',
+            price: 666,
+            currency: 'Some currency',
+            inventory: 15,
+            ingredient_measures_attributes: [
+              { name: 'Kg', quantity: 5 },
+              { name: 'Tazas', quantity: 25 }
+            ]
+          }
+        end
+
+        run_test! do
+          expect(existent_ingredient.reload.measure).to eq('Kg')
+          expect(existent_ingredient.reload.quantity).to eq(5)
+        end
       end
 
       response '401', 'user unauthorized' do

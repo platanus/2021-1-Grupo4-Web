@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CornershopClient do
   let(:query) { 'pan' }
+  let(:user) { create(:user) }
   let(:mocked_response) do
     {
       "results":
@@ -102,22 +103,6 @@ RSpec.describe CornershopClient do
 
     it 'returns correct response' do
       expect(call_products_by_query).to match(expected_response)
-    end
-
-    context 'when provider is in database' do
-      before do
-        create(:provider, name: 'Jumbo')
-      end
-
-      it 'does not create another provider record' do
-        expect { call_products_by_query }.to change { Provider.count }.by(0)
-      end
-    end
-
-    context 'when provider is not in database' do
-      it 'does not create another provider record' do
-        expect { call_products_by_query }.to change { Provider.count }.by(1)
-      end
     end
   end
 end

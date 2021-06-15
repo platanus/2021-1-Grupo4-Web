@@ -1,6 +1,5 @@
-
-recipe_1 = Recipe.first
-recipe_2 = Recipe.second
+recipe1 = Recipe.first
+recipe2 = Recipe.second
 
 harina = Ingredient.find_by(name: 'Harina')
 huevos = Ingredient.find_by(name: 'Huevos')
@@ -11,31 +10,43 @@ mantequilla = Ingredient.find_by(name: 'Mantequilla')
 sal = Ingredient.find_by(name: 'Sal')
 
 RecipeIngredient.create(
-  recipe_id: recipe_1.id,
-  ingredient_id: harina.id
+  recipe_id: recipe1.id,
+  ingredient_id: harina.id,
+  ingredient_quantity: 1,
+  ingredient_measure: 'Kg'
 )
 
 RecipeIngredient.create(
-  recipe_id: recipe_1.id,
-  ingredient_id: huevos.id
+  recipe_id: recipe1.id,
+  ingredient_id: huevos.id,
+  ingredient_quantity: 1,
+  ingredient_measure: 'Kg'
 )
 
 RecipeIngredient.create(
-  recipe_id: recipe_1.id,
-  ingredient_id: manjar.id
+  recipe_id: recipe1.id,
+  ingredient_id: manjar.id,
+  ingredient_quantity: 1,
+  ingredient_measure: 'Unidades'
 )
 
 RecipeIngredient.create(
-  recipe_id: recipe_2.id,
-  ingredient_id: limon.id
+  recipe_id: recipe2.id,
+  ingredient_id: limon.id,
+  ingredient_quantity: 2,
+  ingredient_measure: 'Mallas'
 )
 
 RecipeIngredient.create(
-  recipe_id: recipe_2.id,
-  ingredient_id: mantequilla.id
+  recipe_id: recipe2.id,
+  ingredient_id: mantequilla.id,
+  ingredient_quantity: 300,
+  ingredient_measure: 'Gr'
 )
 
 RecipeIngredient.create(
-  recipe_id: recipe_2.id,
-  ingredient_id: sal.id
+  recipe_id: recipe2.id,
+  ingredient_id: sal.id,
+  ingredient_quantity: 300,
+  ingredient_measure: 'Gr'
 )

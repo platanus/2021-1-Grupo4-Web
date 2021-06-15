@@ -11,12 +11,16 @@
           v-model="query"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col bg-gray-200 overflow-scroll">
+        <div class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
           <add-ingredient-card
             v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
+            :recipe-ingredients="recipeIngredients"
+            :id="ingredient.id"
             :name="ingredient.name"
             :price="ingredient.price / ingredient.quantity"
+            :quantity="ingredient.quantity"
+            :measure="ingredient.measure"
             @add="addIngredient(ingredient)"
           >
             {{ ingredient.name }}
@@ -31,7 +35,7 @@
           {{ $t('msg.recipes.selectedIngredients') }}
         </div>
         <div
-          class="flex flex-col bg-gray-200 overflow-scroll"
+          class="flex flex-col h-96 bg-gray-200 overflow-scroll"
           v-if="recipeIngredients.length > 0"
         >
           <div
@@ -44,6 +48,7 @@
               @delete-ingredient="deleteIngredient"
               @increase-quantity="increaseQuantity"
               @decrease-quantity="decreaseQuantity"
+              @change-measure="changeMeasure"
             >
               {{ recipeIngredient.attributes.ingredient.name }}
             </selected-ingredient-card>
@@ -83,7 +88,9 @@ export default {
     selectedIngredientCard,
   },
   props: {
-    recipeIngredients: { type: Array, required: true },
+    recipeIngredients: { type: Array, required: false, default() {
+      return [];
+    } },
   },
   async created() {
     try {
@@ -99,8 +106,8 @@ export default {
   },
   computed: {
     recipePrice() {
-      return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
-        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+      return Math.round(this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
+        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0));
     },
     filteredIngredients() {
       if (this.query) {
@@ -126,11 +133,28 @@ export default {
     decreaseQuantity(recipeIngredientIdx) {
       this.$emit('decrease-quantity', recipeIngredientIdx);
     },
+    changeMeasure(measure, recipeIngredientIdx) {
+      this.$emit('change-measure', measure, recipeIngredientIdx);
+    },
     getPriceOfSelectedIngredient(recipeIngredient) {
       if (!recipeIngredient.ingredientQuantity) return 0;
 
-      return recipeIngredient.ingredientQuantity *
-      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
+      return recipeIngredient.ingredientQuantity * this.unitaryPrice(recipeIngredient);
+    },
+
+    unitaryPrice(recipeIngredient) {
+      const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
+        element.attributes).filter(element =>
+        element.name === recipeIngredient.ingredientMeasure)[0].quantity;
+      const price = recipeIngredient.ingredient.price / defaultQuantity;
+      if (this.isInt(price)) {
+        return price;
+      }
+
+      return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
+    },
+    isInt(n) {
+      return n % 1 === 0;
     },
   },
 };

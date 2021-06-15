@@ -33,12 +33,16 @@
                 >
               </button>
             </span>
-            <span
+            <div
+              class="p-1"
               v-else
-              class="flex pl-3 my-auto"
             >
-              <base-spinner />
-            </span>
+              <span
+                class="flex my-auto w-8 h-8 pl-2"
+              >
+                <base-spinner />
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -123,13 +127,13 @@ export default {
     addMarketIngredient(productIdx) {
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
-        providerId: this.productsByMarket[this.market].provider.id,
+        providerName: this.productsByMarket[this.market].provider.name,
         name: productInfo.name,
         sku: null,
         price: productInfo.price,
         currency: 'CLP',
-        quantity: 1,
-        measure: productInfo.measure,
+        ingredient_measures_attributes: [ /* eslint-disable-line camelcase */
+          { name: productInfo.measure, quantity: 1 }],
       };
       this.$emit('submit', productForm);
     },

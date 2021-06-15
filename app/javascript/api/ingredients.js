@@ -19,20 +19,11 @@ function deleteIngredient(ingredientId) {
     }));
 }
 
-function editIngredient(ingredientId, ingredientInfo) {
+function editIngredient(ingredientId, ingredient) {
   return (client
-    .put(`/ingredients/${ingredientId}`, {
-      ingredient: {
-        'provider_id': ingredientInfo.providerId,
-        'name': ingredientInfo.name,
-        'sku': ingredientInfo.sku,
-        'price': ingredientInfo.price,
-        'currency': ingredientInfo.currency,
-        'quantity': ingredientInfo.quantity,
-        'measure': ingredientInfo.measure,
-      },
-    }, {
-    }));
+    .put(`/ingredients/${ingredientId}`,
+      { ingredient },
+    ));
 }
 
 async function searchCornershopIngredients(query) {

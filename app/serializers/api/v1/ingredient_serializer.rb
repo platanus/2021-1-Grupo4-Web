@@ -2,7 +2,8 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
   type :ingredient
 
   attributes(
-    :provider_id,
+    :id,
+    :provider_name,
     :user_id,
     :name,
     :sku,
@@ -10,7 +11,19 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
     :currency,
     :quantity,
     :measure,
+    :inventory,
+    :other_measures,
     :created_at,
     :updated_at
   )
+
+  def other_measures
+    ActiveModelSerializers::SerializableResource.new(
+      object.ingredient_measures, each_serializer: Api::V1::IngredientMeasureSerializer
+    )
+  end
+
+  def provider_name
+    object.provider&.name
+  end
 end

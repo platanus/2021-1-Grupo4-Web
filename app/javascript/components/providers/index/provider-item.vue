@@ -2,7 +2,13 @@
   <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none mb-6 w-96 order-none">
     <div class="flex flex-row items-center w-auto h-auto flex-none self-stretch my-4 px-3">
       <!-- Imagen -->
-      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none mr-2 order-none" />
+      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none mr-2 order-none">
+        <img
+          svg-inline
+          src="../../../../assets/images/recipe.jpg"
+          class="w-24 h-24"
+        >
+      </div>
       <!-- Info -->
       <div class="flex flex-col items-start w-auto h-auto flex-none self-stretch flex-grow mr-2">
         <!-- nombre Proveedor -->
@@ -76,7 +82,7 @@
           </div>
           <!-- Link -->
           <div
-            class="flex items-center underline text-blue-700 overflow-scroll order-1 text-right justify-items-end max-w-full"
+            class="flex items-center underline text-gray-600 overflow-scroll order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
             {{ provider.webpageUrl }}
@@ -128,7 +134,7 @@
       <div class="flex flex-row items-start flex-none order-2 self-stretch w-full justify-between mx-2">
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-blue-700 text-white rounded flex-none order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded flex-none order-1 flex-grow-1 px-2"
             @click="toggleDelModal"
           >
             Eliminar Proveedor
@@ -136,7 +142,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center text-blue-700 bg-white rounded flex-none order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-white hover:bg-gray-300 text-black rounded flex-none order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             Editar Proveedor

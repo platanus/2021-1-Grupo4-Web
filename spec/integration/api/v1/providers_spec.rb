@@ -17,7 +17,7 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
       let(:collection_count) { 5 }
       let(:expected_collection_count) { collection_count }
 
-      before { create_list(:provider, collection_count) }
+      before { create_list(:provider, collection_count, user: user) }
 
       response '200', 'Providers retrieved' do
         schema('$ref' => '#/definitions/providers_collection')
@@ -84,7 +84,7 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
 
     parameter name: :id, in: :path, type: :integer
 
-    let(:existent_provider) { create(:provider) }
+    let(:existent_provider) { create(:provider, user: user) }
     let(:id) { existent_provider.id }
 
     get 'Retrieves Provider' do
