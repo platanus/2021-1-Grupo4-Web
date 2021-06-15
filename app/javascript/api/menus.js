@@ -39,10 +39,8 @@ function getShoppingList(menuId) {
 }
 
 function downloadShoppingList(menuId) {
-  return (client
-    .get(`/menus/${menuId}/download-shopping-list`, {
-      responseType: 'blob',
-    }));
+  const url = `${client.defaults.baseURL}/menus/${menuId}/download-shopping-list`;
+  window.open(url, '_blank');
 }
 
 export { getMenus, getMenu, postMenu, updateMenu, deleteMenu,

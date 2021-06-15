@@ -98,18 +98,7 @@ export default {
       return `${ingredient.name}, ${ingredient.quantity} ${ingredient.measure}, $ ${ingredient.totalPrice}`;
     },
     async downloadShoppingList() {
-      const response = await downloadShoppingList(this.menuId);
-      const blob = new Blob(
-        [response.data], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        },
-      );
-      const link = document.createElement('a');
-      link.download = 'shopping-list.xlsx';
-      link.href = URL.createObjectURL(blob);
-      link.click();
-      URL.revokeObjectURL(link.href);
-      this.toggleList();
+      downloadShoppingList(this.menuId);
     },
   },
 };
