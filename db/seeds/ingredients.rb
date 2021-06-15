@@ -72,30 +72,30 @@ IngredientMeasure.create(
 
 IngredientMeasure.create(
   ingredient_id: ingredient3.id,
-  name: 'Unidad',
+  name: 'Unidades',
   quantity: 1
 )
 
 IngredientMeasure.create(
   ingredient_id: ingredient4.id,
-  name: 'Malla',
-  quantity: 1
-)
-
-IngredientMeasure.create(
-  ingredient_id: ingredient4.id,
-  name: 'Kg',
+  name: 'Mallas',
   quantity: 2
 )
 
 IngredientMeasure.create(
+  ingredient_id: ingredient4.id,
+  name: 'Kg',
+  quantity: 1
+)
+
+IngredientMeasure.create(
   ingredient_id: ingredient5.id,
-  name: 'Gramos',
-  quantity: 500
+  name: 'Gr',
+  quantity: 300
 )
 
 IngredientMeasure.create(
   ingredient_id: ingredient6.id,
-  name: 'Kg',
-  quantity: 1
+  name: 'Gr',
+  quantity: 300
 )
