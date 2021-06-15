@@ -13,7 +13,7 @@
           {{ $t('msg.recipes.price') }} {{ $t('msg.recipes.unitary') }}
         </div>
         <div class="w-auto h-5 font-hind font-normal text-sm text-black flex-none flex-grow-0">
-          $ {{ price }} CLP
+          $ {{ intPrice }} CLP
         </div>
       </div>
     </div>
@@ -55,6 +55,9 @@ export default {
       const isSelected = recipeIngredientsIds.includes(parseInt(this.id, 10));
 
       return isSelected;
+    },
+    intPrice() {
+      return Math.round(this.price);
     },
   },
 };
