@@ -190,10 +190,10 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     let!(:second_ingredient) { create(:ingredient, name: "Second", provider: provider, user: user) }
     let!(:third_ingredient) { create(:ingredient, name: "Third", provider: provider, user: user) }
     let!(:first_recipe) do
-      create(:recipe, ingredients: [first_ingredient, second_ingredient], user: user)
+      create(:recipe, user: user)
     end
     let!(:second_recipe) do
-      create(:recipe, ingredients: [second_ingredient, third_ingredient], user: user)
+      create(:recipe, user: user)
     end
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
@@ -209,9 +209,9 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       {
         provider: "Jumbo",
         ingredients: match_array([
-                                   ingredient_hash("First", first_ingredient.quantity * 3),
-                                   ingredient_hash("Second", second_ingredient.quantity * 9),
-                                   ingredient_hash("Third", third_ingredient.quantity * 6)
+                                   ingredient_hash("First", 9),
+                                   ingredient_hash("Second", 30),
+                                   ingredient_hash("Third", 6)
                                  ])
       }
     end
@@ -224,8 +224,20 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       # rubocop:disable Rails/SkipsModelValidations
       before do
         existent_menu.menu_recipes.update_all(recipe_quantity: 3)
-        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1)
-        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2)
+
+        first_recipe.recipe_ingredients.create(
+          ingredient: first_ingredient, ingredient_quantity: 3, ingredient_measure: 'Kg'
+        )
+        first_recipe.recipe_ingredients.create(
+          ingredient: second_ingredient, ingredient_quantity: 5, ingredient_measure: 'L'
+        )
+
+        second_recipe.recipe_ingredients.create(
+          ingredient: second_ingredient, ingredient_quantity: 5, ingredient_measure: 'L'
+        )
+        second_recipe.recipe_ingredients.create(
+          ingredient: third_ingredient, ingredient_quantity: 2, ingredient_measure: 'Unidades'
+        )
 
         IngredientMeasure.create!(name: 'Kg', quantity: 3, ingredient_id: first_ingredient.id)
         IngredientMeasure.create!(name: 'L', quantity: 5, ingredient_id: second_ingredient.id)

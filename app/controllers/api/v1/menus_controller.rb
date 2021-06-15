@@ -97,6 +97,7 @@ class Api::V1::MenusController < Api::V1::BaseController
     ).where('menus.id = ?', menu.id).select(
       'menu_recipes.recipe_quantity as recipe_quantity,
        recipe_ingredients.ingredient_quantity as ingredient_quantity,
+       recipe_ingredients.ingredient_measure as ingredient_measure,
        ingredients.*'
     ).includes(:provider)
   end
@@ -104,10 +105,18 @@ class Api::V1::MenusController < Api::V1::BaseController
   def menu_ingredient_to_json(ingredient:, accumulated_quantity:)
     {
       name: ingredient.name,
-      measure: ingredient.measure,
+      measure: ingredient.ingredient_measure,
       quantity: accumulated_quantity,
-      total_price: ingredient.price * accumulated_quantity
+      total_price: get_price_of_ingredient(ingredient) * accumulated_quantity
     }
+  end
+
+  def get_price_of_ingredient(ingredient)
+    ingredient.ingredient_measures.each do |ingredient_measure|
+      next unless ingredient_measure.name == ingredient.ingredient_measure
+
+      return ingredient.price / ingredient_measure.quantity
+    end
   end
 
   def format_providers_with_ingredients(providers_with_ingredients)
@@ -120,7 +129,7 @@ class Api::V1::MenusController < Api::V1::BaseController
   end
 
   def menu_ingredient_quantity(record)
-    record.recipe_quantity.to_i * record.ingredient_quantity.to_i * record.quantity.to_i
+    record.recipe_quantity.to_i * record.ingredient_quantity.to_i
   end
 
   def menu_params
