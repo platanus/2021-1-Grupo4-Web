@@ -15,6 +15,11 @@
         <th
           class="px-8 py-3"
         >
+          <span class="text-white font-bold">{{ $t('msg.menus.portions') }}</span>
+        </th>
+        <th
+          class="px-8 py-3"
+        >
           <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
         </th>
         <th
@@ -56,6 +61,16 @@
             class="ml-2 font-medium"
           >
             {{ totalMenuPrice(menu.menuRecipes.data) | currency }}
+          </p>
+        </td>
+        <td
+          key="portions"
+          class="py-2 px-8"
+        >
+          <p
+            class="ml-2 font-medium"
+          >
+            {{ menu.portions }}
           </p>
         </td>
         <!-- recipesQuantity -->
@@ -137,11 +152,25 @@ export default {
       const returnArray = [];
       data.forEach(element => {
         const ingredientQuantity = element.attributes.ingredientQuantity;
-        const ingredientUnitaryPrice = element.attributes.ingredient.price / element.attributes.ingredient.quantity;
+        const ingredientUnitaryPrice = this.unitaryPrice(element.attributes);
         returnArray.push(ingredientQuantity * ingredientUnitaryPrice);
       });
 
       return returnArray;
+    },
+    unitaryPrice(recipeIngredient) {
+      const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
+        element.attributes).filter(element =>
+        element.name === recipeIngredient.ingredientMeasure)[0].quantity;
+      const price = recipeIngredient.ingredient.price / defaultQuantity;
+      if (this.isInt(price)) {
+        return price;
+      }
+
+      return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
+    },
+    isInt(n) {
+      return n % 1 === 0;
     },
   },
 };

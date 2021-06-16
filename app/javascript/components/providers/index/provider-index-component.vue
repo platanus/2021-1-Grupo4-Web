@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex justify-between items-center h-8 mb-5">
-      <div class="w-auto h-7 font-sans font-normal text-2xl text-black flex-none flex-grow-0">
+      <div class="w-auto font-sans font-normal text-4xl text-black flex-none flex-grow-0">
         {{ $t('msg.providers.title') }}
       </div>
       <div class="px-2">
@@ -13,13 +13,13 @@
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full">
+    <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full bg-gray-50 my-10 p-10">
       <div
-        class="flex items-start w-6/12"
+        class="flex justify-center w-6/12 bg-gray-50"
         v-for="element in this.providers"
         :key="element.id"
       >
-        <div class="flex flex-row items-start flex-none flex-grow-0 order-none w-full">
+        <div class="flex flex-row my-auto items-center justify-center flex-none flex-grow-0 order-none w-full bg-gray-50">
           <provider-item
             :provider="element"
             @update="updateProvider"

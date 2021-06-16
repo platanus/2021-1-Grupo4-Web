@@ -25,17 +25,17 @@
           </div>
           <div
             class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
-            v-if="!step.step.attributes.description"
+            v-if="step.step.attributes.description === null"
           >
             {{ $t('msg.recipes.noSteps') }}
           </div>
-          <div
-            class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
+          <textarea
+            rows="1"
+            class="flex font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4 w-8/12 overflow-x-scroll bg-gray-50"
+            v-model="step.step.attributes.description"
             v-else
-          >
-            {{ step.step.attributes.description }}
-          </div>
-          <div class="flex items-center w-6 h-6 mx-4">
+          />
+          <div class="flex m-auto items-center w-6 h-6 mx-4">
             <dots-dropdown
               :elements="{
                 del: true,

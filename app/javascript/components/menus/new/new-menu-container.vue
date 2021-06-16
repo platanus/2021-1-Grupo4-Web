@@ -16,14 +16,25 @@
     </div>
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
       <!-- Menu Name -->
-      <div class="relative w-2/5 ml-4">
-        <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-          {{ $t('msg.recipes.name') }}
+      <div class="flex flex-row justify-between">
+        <div class="relative w-3/5 ml-4">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+            {{ $t('msg.recipes.name') }}
+          </div>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="menuName"
+          >
         </div>
-        <input
-          class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-          v-model="menuName"
-        >
+        <div class="relative w-2/5 ml-4">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+            {{ $t('msg.recipes.portions') }}
+          </div>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="menuPortions"
+          >
+        </div>
       </div>
       <!-- Recipes -->
       <div class="flex justify-between mb-8">
@@ -131,6 +142,7 @@ export default {
       error: '',
       query: '',
       menuName: '',
+      menuPortions: '',
       selectedRecipes: [],
       searchQuery: '',
     };
@@ -209,7 +221,11 @@ export default {
           recipeQuantity: element.quantity,
         }
       ));
-      const menuToPost = { name: this.menuName, menuRecipesAttributes: menuRecipesToPost };
+      const menuToPost = {
+        name: this.menuName,
+        menuRecipesAttributes: menuRecipesToPost,
+        portions: this.menuPortions,
+      };
       try {
         await postMenu(menuToPost);
         this.error = '';
