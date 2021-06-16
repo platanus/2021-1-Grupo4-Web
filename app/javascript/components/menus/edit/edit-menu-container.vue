@@ -15,15 +15,26 @@
       </div>
     </div>
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
-      <!-- Menu Name -->
-      <div class="relative w-2/5 ml-4">
-        <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-          {{ $t('msg.recipes.name') }}
+      <div class="flex flex-row">
+        <!-- Menu Name -->
+        <div class="relative w-3/5 ml-4">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+            {{ $t('msg.recipes.name') }}
+          </div>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="menuName"
+          >
         </div>
-        <input
-          class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-          v-model="menuName"
-        >
+        <div class="relative w-2/5 ml-4">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
+            {{ $t('msg.recipes.portions') }}
+          </div>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="menuPortions"
+          >
+        </div>
       </div>
       <!-- Recipes -->
       <div class="flex justify-between mb-8">
@@ -135,7 +146,7 @@ export default {
       error: '',
       query: '',
       menuName: '',
-      menuPortions: 0,
+      menuPortions: '',
       selectedRecipes: [],
       deletedRecipes: [],
       searchQuery: '',
@@ -145,7 +156,7 @@ export default {
     totalMenuPrice() {
       const recipesPrices = this.selectedRecipes.map(element => ((
         element.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
-          recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
+          recipePrice + getPriceOfSelectedIngredient(recipeIngredient.attributes), 0)
       ) * element.quantity),
       );
 
@@ -189,7 +200,7 @@ export default {
     },
     useMenuInfo(menu) {
       this.menuName = menu.attributes.name;
-      this.portions = menu.attributes.portions;
+      this.menuPortions = menu.attributes.portions;
       this.initialRecipes = menu.attributes.menuRecipes.data.map(element => ({
         'quantity': element.attributes.recipeQuantity,
         'id': element.attributes.recipe.id,
@@ -206,7 +217,6 @@ export default {
         element.idMenuRecipe = this.initialRecipes[index].idMenuRecipe;
       });
     },
-    getPriceOfSelectedIngredient,
     addRecipe(recipe) {
       const defaultQuantity = 1;
       this.selectedRecipes.push({ ...recipe, quantity: defaultQuantity });
@@ -233,7 +243,7 @@ export default {
     },
     getUpdatedMenu() {
       const updatedMenu = { name: this.menuName,
-        portions: this.portions };
+        portions: this.menuPortions };
       this.addMenuRecipeAttributes(updatedMenu);
 
       return updatedMenu;

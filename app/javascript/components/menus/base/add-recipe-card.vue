@@ -39,6 +39,8 @@
 
 <script>
 
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
+
 export default {
   props: {
     name: { type: String, required: true },
@@ -52,17 +54,11 @@ export default {
     addRecipe() {
       this.$emit('add');
     },
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity *
-      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
-    },
   },
   computed: {
     recipePrice() {
       return this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
-        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+        recipePrice + getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
     },
     selected() {
       const selectedRecipesIds = this.selectedRecipes.map(element => (
