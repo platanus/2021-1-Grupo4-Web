@@ -73,7 +73,8 @@ class Api::V1::MenusController < Api::V1::BaseController
 
     providers_with_ingredients = Hash.new { |h, k| h[k] = [] }
     shopping_list_ingredients.each do |ingredient, accumulated_quantity|
-      providers_with_ingredients[ingredient.provider.name] << menu_ingredient_to_json(
+      provider_name = ingredient.provider.blank? ? 'Sin proveedor' : ingredient.provider.name
+      providers_with_ingredients[provider_name] << menu_ingredient_to_json(
         ingredient: ingredient, accumulated_quantity: accumulated_quantity
       )
     end

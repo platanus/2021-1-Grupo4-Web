@@ -79,6 +79,7 @@ import Filters from './filters';
 import FilterPopupContent from './filter-popup-content';
 import RecipesPagination from './pagination/recipes-pagination';
 import RecipesList from './recipes-list/recipes-list';
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
 
 export default {
   components: {
@@ -168,7 +169,7 @@ export default {
     calculateRecipePrice(recipe) {
       return recipe.recipeIngredients.data
         .reduce((recipePrice, recipeIngredient) => recipePrice +
-          this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+          getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
     },
     toggleFiltersModal() {
       this.showingFiltersModal = !this.showingFiltersModal;
@@ -183,13 +184,6 @@ export default {
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
       this.filters = this.$refs.filtersInfo.filters;
-    },
-
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity *
-      recipeIngredient.ingredient.price / recipeIngredient.ingredient.quantity;
     },
   },
 };

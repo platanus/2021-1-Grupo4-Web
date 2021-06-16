@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-start p-4 border-2 border-solid border-gray-400 box-border flex-none mb-6 w-96 order-none">
+  <div class="flex flex-col m-auto p-4 border-2 border-solid border-gray-400 box-border flex-none mb-6 w-96 order-none">
     <div class="flex flex-row items-center w-auto h-auto flex-none self-stretch my-4 px-3">
       <!-- Imagen -->
       <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border flex-none mr-2 order-none">
@@ -10,7 +10,7 @@
         >
       </div>
       <!-- Info -->
-      <div class="flex flex-col items-start w-auto h-auto flex-none self-stretch flex-grow mr-2">
+      <div class="flex flex-col w-auto h-auto flex-none self-stretch flex-grow mr-2">
         <!-- nombre Proveedor -->
         <div class="flex items-center w-auto h-5 flex-none">
           {{ provider.name }}
