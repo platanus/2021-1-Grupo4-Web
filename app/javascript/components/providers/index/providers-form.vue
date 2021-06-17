@@ -123,8 +123,8 @@
       @ok="$emit('edit-provider', form)"
       @cancel="$emit('toggle-edit-modal')"
       v-if="showingEdit"
-      :title="$t('msg.providers.add')"
-      :ok-button-label="$t('msg.add')"
+      :title="$t('msg.providers.edit')"
+      :ok-button-label="$t('msg.save')"
       :cancel-button-label="$t('msg.cancel')"
     >
       <div class="pt-3">
