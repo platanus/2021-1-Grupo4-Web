@@ -82,7 +82,6 @@
       >
         <ingredients-form
           ref="addIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="false"
           :market-ingredient="marketIngredient"
         />
@@ -112,7 +111,6 @@
       >
         <ingredients-form
           ref="editIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="true"
           :ingredient="this.ingredientToEdit"
         />
