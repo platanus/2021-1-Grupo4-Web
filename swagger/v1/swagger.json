@@ -1116,6 +1116,10 @@
         "quantity": {
           "type": "integer",
           "example": 2
+        },
+        "primary": {
+          "type": "boolean",
+          "example": true
         }
       }
     }
@@ -1405,7 +1409,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ingredient updated"
+            "description": "ingredient updated with measure by default"
           },
           "401": {
             "description": "user unauthorized"
@@ -1747,6 +1751,41 @@
         "responses": {
           "200": {
             "description": "reduced inventory of menu"
+          }
+        }
+      }
+    },
+    "/menus/{id}/shopping-list": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Returns Menu Ingredients, same as shopping list",
+        "description": "Get ingredients of a menu with quantities, prices, measures grouped by provider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "shopping list grouped by provider"
           }
         }
       }

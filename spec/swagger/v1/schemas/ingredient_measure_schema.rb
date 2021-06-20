@@ -4,6 +4,7 @@ INGREDIENT_MEASURE_SCHEMA = {
   type: :object,
   properties: {
     name: { type: :string, example: 'unidad' },
-    quantity: { type: :integer, example: 2 }
+    quantity: { type: :integer, example: 2 },
+    primary: { type: :boolean, example: true }
   }
 }
