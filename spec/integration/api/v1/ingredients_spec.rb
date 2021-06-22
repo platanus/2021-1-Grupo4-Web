@@ -248,6 +248,56 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 
+  path '/ingredients/update-inventories' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    post 'Updates ingredients inventories' do
+      description 'Updates each ingredient with new inventory'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter(
+        name: :ingredients,
+        in: :body,
+        schema: {
+          type: :object,
+          properties: {
+            ingredients: { "$ref" => "#/definitions/update_inventories_ingredients" }
+          },
+          required: [
+            :ingredients
+          ]
+
+        }
+      )
+
+      response '201', 'ingredients updated' do
+        let!(:ingredient1) { create(:ingredient, user: user) }
+        let!(:ingredient2) { create(:ingredient, user: user) }
+        let(:ingredients) do
+          {
+            ingredients: [
+              { ingredient_id: ingredient1.id, inventory: 3 },
+              { ingredient_id: ingredient2.id, inventory: 1.3 }
+            ]
+          }
+        end
+
+        run_test! do
+          expect(ingredient1.reload).to have_attributes(inventory: 3)
+          expect(ingredient2.reload).to have_attributes(inventory: 1.3)
+        end
+      end
+
+      response '401', 'user unauthorized' do
+        let(:ingredients) { [] }
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
   path '/ingredients/{id}' do
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string

@@ -50,7 +50,7 @@ end
 #  currency    :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  inventory   :integer          default(0)
+#  inventory   :float            default(0.0)
 #
 # Indexes
 #
