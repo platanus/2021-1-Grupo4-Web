@@ -16,7 +16,7 @@
     </button>
     <!-- Filters -->
     <div
-      v-if="filters.price.min !== '' || filters.price.max !== ''"
+      v-if="filters.price.min || filters.price.max"
     >
       <div
         class="flex flex-row inline-block items-center justify-center px-3 py-3 static w-auto h-8
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div
-      v-if="filters.portions.min !== '' || filters.portions.max !== ''"
+      v-if="filters.portions.min || filters.portions.max"
     >
       <div
         class="flex flex-row inline-block items-center justify-center px-3 py-3 static w-auto h-8
