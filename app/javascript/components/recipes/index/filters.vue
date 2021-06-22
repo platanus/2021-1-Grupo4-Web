@@ -16,12 +16,36 @@
     </button>
     <!-- Filters -->
     <div
-      v-for="filter in filterOptions"
-      :key="filter"
-      class="flex flex-row inline-block items-center justify-center px-3 py-3 static w-auto h-8
-      rounded-full flex-none flex-grow-0 mx-2.5 bg-yellow-500 text-white"
+      v-if="filters.price.min !== '' || filters.price.max !== ''"
     >
-      {{ filters[filter].min }} &lt; {{ $t(`msg.recipes.${filter}`) }} &lt; {{ filters[filter].max }}
+      <div
+        class="flex flex-row inline-block items-center justify-center px-3 py-3 static w-auto h-8
+      rounded-full flex-none flex-grow-0 mx-3.5 bg-yellow-500 text-white"
+      >
+        {{ filters.price.min }} &lt; {{ $t(`msg.recipes.price`) }} &lt; {{ filters.price.max }}
+        <img
+          svg-inline
+          src="../../../../assets/images/cross-svg.svg"
+          class="h-4 w-4 inline-block ml-3"
+          @click="toggleDeletePrice"
+        >
+      </div>
+    </div>
+    <div
+      v-if="filters.portions.min !== '' || filters.portions.max !== ''"
+    >
+      <div
+        class="flex flex-row inline-block items-center justify-center px-3 py-3 static w-auto h-8
+      rounded-full flex-none flex-grow-0 mx-3.5 bg-yellow-500 text-white"
+      >
+        {{ filters.portions.min }} &lt; {{ $t(`msg.recipes.filter.portions`) }} &lt; {{ filters.portions.max }}
+        <img
+          svg-inline
+          src="../../../../assets/images/cross-svg.svg"
+          class="h-4 w-4 inline-block ml-3"
+          @click="toggleDeletePortions"
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +60,12 @@ export default {
   methods: {
     filtersButtonClick() {
       this.$emit('filters');
+    },
+    toggleDeletePrice() {
+      this.$emit('deletePrice');
+    },
+    toggleDeletePortions() {
+      this.$emit('deletePortions');
     },
   },
   data() {
