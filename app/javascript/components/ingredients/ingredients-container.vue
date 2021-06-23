@@ -65,6 +65,7 @@
               :ingredients="filterIngredients"
               @edit="toggleEditModal"
               @del="toggleDelModal"
+              @updateInventory="UpdateInventory"
             />
           </div>
         </div>
@@ -253,6 +254,15 @@ export default {
         this.loading = false;
       }
     },
+    addInventoryToIngredient(ingredientsInfo, id) {
+      this.ingredients.forEach(elem => {
+        if (elem.id === id) {
+          ingredientsInfo.inventory = elem.inventory;
+        }
+      });
+
+      return ingredientsInfo;
+    },
 
     // eslint-disable-next-line max-statements
     async editIngredient() {
@@ -263,8 +273,10 @@ export default {
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         this.addMeasuresToDelete(ingredientsInfo);
-        await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
-        this.updateIngredient(ingredientsInfo);
+        const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
+        await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
+        this.updateIngredient(ingredientsInfoFinal);
+        this.error = '';
       } catch (error) {
         this.error = error;
       } finally {
@@ -286,6 +298,13 @@ export default {
         this.error = error;
       } finally {
         this.loading = false;
+      }
+    },
+    async UpdateInventory(ingredient) {
+      try {
+        await editIngredient(ingredient.id, ingredient);
+      } catch (error) {
+        this.error = error;
       }
     },
 

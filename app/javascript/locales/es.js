@@ -46,6 +46,7 @@ export default {
       price: 'Precio',
       unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',
+      inventory: 'Inventario Actual',
       measure: 'Unidad',
       selected: 'Ingredientes seleccionados',
       providerName: 'Nombre del proveedor',

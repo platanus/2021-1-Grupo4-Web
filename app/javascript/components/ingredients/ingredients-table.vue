@@ -22,6 +22,9 @@
         <th class="px-8 py-3">
           <span class="text-white font-bold">{{ $t('msg.ingredients.unitPrice') }}($)</span>
         </th>
+        <th class="px-8 py-3">
+          <span class="text-white font-bold">{{ $t('msg.ingredients.inventory') }}</span>
+        </th>
         <th class="px-8 py-3" />
       </tr>
     </thead>
@@ -64,6 +67,49 @@
             :ingredient="ingredient"
           />
         </td>
+        <td class="py-2 px-8">
+          <div
+            class="flex justify-between"
+            v-if="!editInventory"
+          >
+            <p class="ml-2 font-medium">
+              {{ ingredient.inventory }} {{ ingredient.measure }}
+            </p>
+            <img
+              svg-inline
+              src="../../../assets/images/pencil-svg.svg"
+              class="w-4 h-4"
+              @click="toggleEditInventory"
+            >
+          </div>
+          <div
+            class="flex justify-between flex items-start items-center"
+            v-else
+          >
+            <!-- <img
+              svg-inline
+              src="../../../assets/images/less-svg.svg"
+              class="w-5 h-5"
+              @click="subtractInventory(ingredient)"
+            > -->
+
+            <input
+              type="number"
+              ref="inventory"
+              class="w-10 border-2 border-solid border-gray-400 box-border"
+              v-model="ingredient.inventory"
+              @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
+            >
+            {{ ingredient.measure }}
+
+            <!-- <img
+              svg-inline
+              src="../../../assets/images/add-svg.svg"
+              class="w-5 h-5 flex items-start items-center"
+              @click="addInventory(ingredient)"
+            > -->
+          </div>
+        </td>
         <td class="content-center">
           <dots-dropdown
             :elements="{
@@ -86,6 +132,11 @@ export default {
   components: {
     IngredientsTableUnitPrice,
   },
+  data() {
+    return {
+      editInventory: false,
+    };
+  },
 
   props: {
     ingredients: { type: Array, required: true },
@@ -96,6 +147,24 @@ export default {
     },
     deleteIngredient(element) {
       this.$emit('del', element);
+    },
+    toggleEditInventory() {
+      this.editInventory = !this.editInventory;
+    },
+    // addInventory(ingredient) {
+    //   // eslint-disable-next-line radix
+    //   ingredient.inventory = parseInt(ingredient.inventory);
+    //   ingredient.inventory += 1;
+    // },
+    // subtractInventory(ingredient) {
+    //   if (ingredient.inventory >= 1) {
+    //     ingredient.inventory -= 1;
+    //   }
+    // },
+    changeInventory(ingredient, inventory) {
+      ingredient.inventory = inventory;
+      this.editInventory = !this.editInventory;
+      this.$emit('updateInventory', ingredient);
     },
   },
 };
