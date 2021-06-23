@@ -129,8 +129,10 @@ export default {
       title: 'Proveedores',
       search: 'Buscar proveedores...',
       name: 'Nombre',
+      rut: 'Rut',
       address: 'Dirección',
       country: 'Pais',
+      days: 'días',
       email: 'Correo',
       webpageUrl: 'Página Web',
       minimumPurchase: 'Mínimo de Compra',
@@ -140,7 +142,16 @@ export default {
       delete: 'Eliminar proveedor',
       edit: 'Editar Proveedor',
       deleteMsg: 'Estás seguro de que deseas eliminar este proveedor?',
-
+      see: 'Ver datos',
+      copy: 'Copiar',
+      bank: 'Cuenta Bancaria',
+      bankAccount: {
+        name: 'Nombre',
+        rut: 'Rut',
+        bank: 'Banco',
+        type: 'Tipo de cuenta',
+        number: 'Número de cuenta',
+      },
     },
   },
 };
