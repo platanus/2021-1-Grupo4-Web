@@ -60,8 +60,7 @@
         :recipe-ingredients="recipe.recipeIngredients.data"
         @add-ingredient="addIngredient"
         @delete-ingredient="deleteIngredient"
-        @increase-quantity="increaseQuantity"
-        @decrease-quantity="decreaseQuantity"
+        @change-quantity="changeQuantity"
         @change-measure="changeMeasure"
       />
       <!-- pasos -->
@@ -150,16 +149,8 @@ export default {
       }
       this.recipe.recipeIngredients.data.splice(recipeIngredientIdx, 1);
     },
-    increaseQuantity(recipeIngredientIdx) {
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity += 1;
-    },
-    decreaseQuantity(recipeIngredientIdx) {
-      if (this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity === 1) {
-        this.deleteIngredient(recipeIngredientIdx);
-
-        return;
-      }
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
+    changeQuantity(recipeIngredientIdx, ingredientQuantityData) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity = ingredientQuantityData;
     },
     changeMeasure(measure, recipeIngredientIdx) {
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;

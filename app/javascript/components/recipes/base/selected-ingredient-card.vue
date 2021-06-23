@@ -10,7 +10,7 @@
           {{ $t('msg.recipes.price') }} {{ $t('msg.recipes.unitary') }}
         </div>
         <div class="h-5 font-hind font-normal text-sm text-black">
-          $ {{ unitaryPrice }} CLP por
+          {{ unitaryPrice | currency }}  por
           {{ recipeIngredientAttrs.ingredientMeasure }}
         </div>
       </div>
@@ -28,11 +28,10 @@
             src="../../../../assets/images/minus-svg.svg"
           >
         </button>
-        <div
-          class="w-5 h-5 bg-gray-20 text-xs text-center my-auto"
+        <input
+          class="w-8 h-5 bg-gray-20 text-xs text-center my-auto"
+          v-model="ingredientQuantityData"
         >
-          {{ recipeIngredientAttrs.ingredientQuantity }}
-        </div>
         <button
           class="w-3 h-3 rounded-sm bg-gray-200 shadow-sm ml-0.5 focus:outline-none"
           @click="increaseQuantity"
@@ -78,15 +77,22 @@ export default {
     recipeIngredientIdx: { type: Number, required: true },
     recipeIngredientAttrs: { type: Object, required: true },
   },
+
+  data() {
+    return {
+      ingredientQuantityData: this.recipeIngredientAttrs.ingredientQuantity,
+    };
+  },
+
   methods: {
     deleteIngredient() {
       this.$emit('delete-ingredient', this.recipeIngredientIdx);
     },
     increaseQuantity() {
-      this.$emit('increase-quantity', this.recipeIngredientIdx);
+      this.ingredientQuantityData = parseFloat(this.ingredientQuantityData) + 1;
     },
     decreaseQuantity() {
-      this.$emit('decrease-quantity', this.recipeIngredientIdx);
+      this.ingredientQuantityData = parseFloat(this.ingredientQuantityData) - 1;
     },
     changeMeasure(measure) {
       this.$emit('change-measure', measure, this.recipeIngredientIdx);
@@ -120,6 +126,12 @@ export default {
       }
 
       return ingredientUnits;
+    },
+  },
+
+  watch: {
+    ingredientQuantityData() {
+      this.$emit('change-quantity', this.recipeIngredientIdx, this.ingredientQuantityData);
     },
   },
 };
