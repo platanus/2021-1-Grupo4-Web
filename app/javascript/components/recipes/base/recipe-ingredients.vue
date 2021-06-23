@@ -11,7 +11,10 @@
           v-model="query"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
+        <div
+          v-if="!loading"
+          class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
+        >
           <add-ingredient-card
             v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
@@ -26,6 +29,12 @@
             {{ ingredient.name }}
           </add-ingredient-card>
         </div>
+        <span
+          v-if="loading"
+          class="flex my-auto w-8 h-8 pl-2 ml-2"
+        >
+          <base-spinner />
+        </span>
       </div>
     </div>
     <!-- ingredientes seleccionados -->
@@ -33,10 +42,16 @@
       <div class="flex flex-col self-stretch flex-grow bg-gray-50">
         <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
+          <span
+            v-if="loading"
+            class="flex my-auto w-8 h-8 pl-2 ml-2"
+          >
+            <base-spinner />
+          </span>
         </div>
         <div
           class="flex flex-col h-96 bg-gray-200 overflow-scroll"
-          v-if="recipeIngredients.length > 0"
+          v-if="recipeIngredients.length > 0 && !loading"
         >
           <div
             v-for="(recipeIngredient, idx) in recipeIngredients"
@@ -56,7 +71,7 @@
         </div>
         <div
           class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
-          v-else
+          v-if="!recipeIngredients.length > 0 && !loading"
         >
           {{ $t('msg.recipes.noIngredients') }}
         </div>
@@ -78,6 +93,7 @@ import selectedIngredientCard from './selected-ingredient-card.vue';
 export default {
   data() {
     return {
+      loading: false,
       ingredients: [],
       error: '',
       query: '',
@@ -93,6 +109,7 @@ export default {
     } },
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
@@ -102,6 +119,8 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   computed: {

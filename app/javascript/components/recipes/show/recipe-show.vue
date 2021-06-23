@@ -12,9 +12,18 @@
       <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow mx-2">
         {{ this.recipe.name }}
       </div>
+      <span
+        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        v-if="loading"
+      >
+        <base-spinner />
+      </span>
     </div>
 
-    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+    <div
+      v-if="!loading"
+      class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10"
+    >
       <div class="flex justify-between items-center w-auto h-8 self-stretch flex-grow-0 my-1">
         <!--Info-->
         <recipe-info
@@ -82,6 +91,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       showingDel: false,
       status: '',
       error: '',
@@ -96,12 +106,15 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
 
@@ -113,12 +126,15 @@ export default {
       return (quantity * price);
     },
     async deleteRecipe() {
+      this.loading = true;
       try {
         await deleteRecipe(this.recipe.id);
         window.location.href = '/recipes';
         this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     getPriceOfSelectedIngredient(recipeIngredient) {

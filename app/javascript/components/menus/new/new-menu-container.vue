@@ -58,7 +58,10 @@
               >
             </div>
             <!-- available recipes -->
-            <div class="flex flex-col h-96 bg-gray-200 overflow-scroll">
+            <div
+              v-if="!loading"
+              class="flex flex-col h-96 bg-gray-200 overflow-scroll"
+            >
               <add-recipe-card
                 v-for="recipe in filterRecipes"
                 :key="recipe.id"
@@ -73,6 +76,12 @@
                 {{ recipe.name }}
               </add-recipe-card>
             </div>
+            <span
+              v-if="loading"
+              class="flex my-auto w-8 h-8 pl-2 ml-2"
+            >
+              <base-spinner />
+            </span>
           </div>
         </div>
         <!-- selected recipes -->
@@ -80,10 +89,16 @@
           <div class="flex flex-col self-stretch flex-grow bg-gray-50">
             <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
               {{ $t('msg.menus.selectedRecipes') }}
+              <span
+                v-if="loading"
+                class="flex my-auto w-8 h-8 pl-2 ml-2"
+              >
+                <base-spinner />
+              </span>
             </div>
             <div
               class="flex flex-col h-96 bg-gray-200 overflow-scroll"
-              v-if="selectedRecipes.length > 0"
+              v-if="selectedRecipes.length > 0 && !loading"
             >
               <div
                 v-for="recipeSelected in selectedRecipes"
@@ -101,7 +116,7 @@
             </div>
             <div
               class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
-              v-else
+              v-if="!selectedRecipes.length > 0 && !loading"
             >
               {{ $t('msg.menus.noRecipes') }}
             </div>
@@ -138,6 +153,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       recipes: [],
       error: '',
       query: '',
@@ -172,6 +188,7 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     try {
       const response = await getRecipes();
       this.recipes = response.data.data.map((element) => ({
@@ -181,6 +198,8 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
 
