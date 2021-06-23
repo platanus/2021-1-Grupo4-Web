@@ -398,8 +398,8 @@
           "x-nullable": true
         },
         "inventory": {
-          "type": "integer",
-          "example": 10,
+          "type": "float",
+          "example": 10.3,
           "x-nullable": true
         },
         "ingredient_measures_attributes": {
@@ -484,8 +484,8 @@
               "x-nullable": true
             },
             "inventory": {
-              "type": "integer",
-              "example": 10,
+              "type": "float",
+              "example": 10.3,
               "x-nullable": true
             },
             "measures": {
@@ -554,8 +554,8 @@
             "example": 5
           },
           "inventory": {
-            "type": "integer",
-            "example": 3
+            "type": "float",
+            "example": 2.8
           }
         }
       }
@@ -591,6 +591,31 @@
         "webpage_url": {
           "type": "string",
           "example": "https://jumbo.cl",
+          "x-nullable": true
+        },
+        "contact_name": {
+          "type": "string",
+          "example": "Marisol Pérez",
+          "x-nullable": true
+        },
+        "contact_rut": {
+          "type": "string",
+          "example": "11.353.222-3",
+          "x-nullable": true
+        },
+        "bank_name": {
+          "type": "string",
+          "example": "Banchile",
+          "x-nullable": true
+        },
+        "account_type": {
+          "type": "string",
+          "example": "Cuenta Corriente",
+          "x-nullable": true
+        },
+        "account_number": {
+          "type": "string",
+          "example": "0-00-11233322",
           "x-nullable": true
         },
         "delivery_days": {
@@ -650,6 +675,31 @@
             "webpage_url": {
               "type": "string",
               "example": "https://jumbo.cl",
+              "x-nullable": true
+            },
+            "contact_name": {
+              "type": "string",
+              "example": "Marisol Pérez",
+              "x-nullable": true
+            },
+            "contact_rut": {
+              "type": "string",
+              "example": "11.353.222-3",
+              "x-nullable": true
+            },
+            "bank_name": {
+              "type": "string",
+              "example": "Banchile",
+              "x-nullable": true
+            },
+            "account_type": {
+              "type": "string",
+              "example": "Cuenta Corriente",
+              "x-nullable": true
+            },
+            "account_number": {
+              "type": "string",
+              "example": "0-00-11233322",
               "x-nullable": true
             },
             "delivery_days": {

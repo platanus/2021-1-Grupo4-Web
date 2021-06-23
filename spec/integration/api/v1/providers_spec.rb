@@ -60,6 +60,11 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
             country: 'Some country',
             phone: '+56 2 912912',
             email: 'email@platan.us',
+            contact_name: 'Marisol Pérez',
+            contact_rut: '11.353.222-3',
+            bank_name: 'Banchile',
+            account_type: 'Cuenta Corriente',
+            account_number: '0-00-11233322',
             delivery_days: 2,
             minimum_purchase: 13_000,
             webpage_url: 'someurl.com'
@@ -134,8 +139,13 @@ describe 'API::V1::Providers', swagger_doc: 'v1/swagger.json' do
             country: 'Some country',
             phone: '+56 2 912912',
             email: 'email@platan.us',
+            contact_name: 'Marisol Pérez',
+            contact_rut: '11.353.222-3',
+            bank_name: 'Banchile',
+            account_type: 'Cuenta Corriente',
+            account_number: '0-00-11233322',
             delivery_days: 2,
-            minimum_purchase: 13_000,
+            minimum_purchase: 17_000,
             webpage_url: 'someurl.com'
           }
         end
