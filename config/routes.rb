@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root to: 'home#index'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :ingredients
+      resources :ingredients do
+        collection do
+          post '/update-inventories', to: 'ingredients#update_inventories'
+        end
+      end
       resources :providers
       resources :menus do
         resources :menu_recipes, only: [:create, :update, :destroy]

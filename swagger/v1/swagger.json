@@ -544,6 +544,22 @@
         "data"
       ]
     },
+    "update_inventories_ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ingredient_id": {
+            "type": "integer",
+            "example": 5
+          },
+          "inventory": {
+            "type": "integer",
+            "example": 3
+          }
+        }
+      }
+    },
     "provider": {
       "type": "object",
       "properties": {
@@ -1335,6 +1351,55 @@
         "responses": {
           "201": {
             "description": "ingredient created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/ingredients/update-inventories": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Updates ingredients inventories",
+        "description": "Updates each ingredient with new inventory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ingredients": {
+                  "$ref": "#/definitions/update_inventories_ingredients"
+                }
+              },
+              "required": [
+                "ingredients"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ingredients updated"
           },
           "401": {
             "description": "user unauthorized"

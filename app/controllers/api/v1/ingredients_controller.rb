@@ -37,6 +37,14 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     )
   end
 
+  def update_inventories
+    respond_with begin
+      update_inventories_params.each do |info|
+        ingredients.find(info[:ingredient_id]).update!(inventory: info[:inventory])
+      end
+    end
+  end
+
   def update
     provider = Provider.find_or_create_by(
       name: ingredient_params[:provider_name], user: current_user
@@ -75,5 +83,9 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :provider_name,
       ingredient_measures_attributes: [:id, :name, :quantity, :primary, :_destroy]
     )
+  end
+
+  def update_inventories_params
+    params.require(:ingredients)
   end
 end
