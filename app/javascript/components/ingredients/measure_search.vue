@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input
-      class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
+      class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 pr-4 pr-8
       rounded leading-tight focus:outline-none"
       v-model="query"
       @focus="toggleFocusInput"
@@ -15,7 +15,7 @@
       <div class="flex flex-col max-h-64 overflow-y-auto">
         <div
           v-if="!sameQueryInOptions && query.length > 0"
-          class="p-1 py-2 hover:underline cursor-pointer w-full text-yellow-600 font-light"
+          class="px-1 py-2 hover:underline cursor-pointer w-full text-yellow-600 font-light"
           @mousedown="emitSelectedMeasure(query)"
         >
           {{ `${$t('msg.ingredients.newMeasure')} '${query}'` }}

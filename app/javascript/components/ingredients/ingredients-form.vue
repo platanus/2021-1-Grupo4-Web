@@ -69,8 +69,8 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex flex-row -mx-3">
-          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6 md:mb-0">
+        <div class="flex -mx-3">
+          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
               v-if="index == 0 || index == 1"
