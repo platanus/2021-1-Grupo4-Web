@@ -10,7 +10,7 @@
         <th
           class="px-8 py-3"
         >
-          <span class="text-white font-bold">{{ $t('msg.menus.totalPrice') }}</span>
+          <span class="text-white font-bold">{{ $t('msg.menus.totalCost') }}</span>
         </th>
         <th
           class="px-8 py-3"
