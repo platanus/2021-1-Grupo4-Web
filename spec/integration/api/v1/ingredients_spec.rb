@@ -321,7 +321,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             currency: 'Some currency',
             inventory: 15,
             ingredient_measures_attributes: [
-              { name: 'Kg', quantity: 5 },
+              { name: 'Kg', quantity: 5, primary: true },
               { name: 'Tazas', quantity: 25 }
             ]
           }
