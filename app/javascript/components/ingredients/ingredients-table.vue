@@ -86,13 +86,6 @@
             class="flex justify-between flex items-start items-center"
             v-else
           >
-            <!-- <img
-              svg-inline
-              src="../../../assets/images/less-svg.svg"
-              class="w-5 h-5"
-              @click="subtractInventory(ingredient)"
-            > -->
-
             <input
               type="number"
               ref="inventory"
@@ -101,13 +94,6 @@
               @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
             >
             {{ ingredient.measure }}
-
-            <!-- <img
-              svg-inline
-              src="../../../assets/images/add-svg.svg"
-              class="w-5 h-5 flex items-start items-center"
-              @click="addInventory(ingredient)"
-            > -->
           </div>
         </td>
         <td class="content-center">
@@ -151,16 +137,6 @@ export default {
     toggleEditInventory() {
       this.editInventory = !this.editInventory;
     },
-    // addInventory(ingredient) {
-    //   // eslint-disable-next-line radix
-    //   ingredient.inventory = parseInt(ingredient.inventory);
-    //   ingredient.inventory += 1;
-    // },
-    // subtractInventory(ingredient) {
-    //   if (ingredient.inventory >= 1) {
-    //     ingredient.inventory -= 1;
-    //   }
-    // },
     changeInventory(ingredient, inventory) {
       ingredient.inventory = inventory;
       this.editInventory = !this.editInventory;
