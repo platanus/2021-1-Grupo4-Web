@@ -44,14 +44,14 @@
         </div>
 
         <!--Table-->
-        <div class="flex w-full 2xl:justify-center items-center overflow-auto">
-          <p
-            v-if="this.ingredients.length===0"
-          >
-            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
-          </p>
+        <p
+          v-if="this.ingredients.length===0"
+          class="p-2"
+        >
+          {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title').toLowerCase() }}
+        </p>
+        <div v-else  class="flex w-full 2xl:justify-center items-center overflow-auto">
           <ingredients-table
-            v-else
             :ingredients="filterIngredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"

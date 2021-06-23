@@ -14,7 +14,14 @@
     </div>
 
     <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full bg-gray-50 my-10 p-10">
+      <p
+        v-if="this.providers.length===0"
+        class="p-2"
+      >
+        {{ $t('msg.noElements') }} {{ $t('msg.providers.title').toLowerCase() }}
+      </p>
       <div
+        v-else
         class="flex justify-center w-6/12 bg-gray-50"
         v-for="element in this.providers"
         :key="element.id"
