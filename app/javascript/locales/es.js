@@ -85,7 +85,7 @@ export default {
       saveChanges: 'Guardar cambios',
       filter: {
         price: 'Precio',
-        portions: 'Porciones',
+        portions: 'Nº de Porciones',
         minPortions: 'Mínimas',
         maxPortions: 'Máximas',
         minPrice: 'Mínimo',

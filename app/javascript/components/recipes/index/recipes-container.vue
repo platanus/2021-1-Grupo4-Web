@@ -37,6 +37,8 @@
         :filters="filters"
         :filter-options="filterOptions"
         @filters="toggleFiltersModal"
+        @deletePrice="toggleDeletePriceByCross"
+        @deletePortions="toggleDeletePortionsByCross"
       />
       <!-- Content -->
       <p
@@ -180,6 +182,14 @@ export default {
       this.filters.price.min = '';
       this.filters.price.max = '';
       this.showingFiltersModal = !this.showingFiltersModal;
+    },
+    toggleDeletePriceByCross() {
+      this.filters.price.min = '';
+      this.filters.price.max = '';
+    },
+    toggleDeletePortionsByCross() {
+      this.filters.portions.min = '';
+      this.filters.portions.max = '';
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;
