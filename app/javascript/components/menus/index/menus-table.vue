@@ -96,25 +96,27 @@
         <td
           class="content-center py-2 px-8 items-center"
         >
-          <div class="flex">
-            <menu-shopping-list
-              :menu-id="menu.id"
-              @reduceInventory="toggleReduce"
-            />
-            <p class="ml-1">
-              Lista
-            </p>
-          </div>
-          <div class="flex">
-            <img
-              svg-inline
-              src="../../../../assets/images/reduce-inventory-svg.svg"
-              class="w-6 h-6"
-              @click="toggleReduce(menu.id)"
-            >
-            <p class="ml-1">
-              Inventario
-            </p>
+          <div class="flex flex-col">
+            <div class="flex justify-between">
+              <menu-shopping-list
+                :menu-id="menu.id"
+                @reduceInventory="toggleReduce"
+              />
+              <p>
+                Lista
+              </p>
+            </div>
+            <div class="flex w-full m-auto justify-between">
+              <img
+                svg-inline
+                src="../../../../assets/images/reduce-inventory-svg.svg"
+                class="w-6 h-6 cursor-pointer"
+                @click="toggleReduce(menu.id)"
+              >
+              <p>
+                Inventario
+              </p>
+            </div>
           </div>
         </td>
         <td

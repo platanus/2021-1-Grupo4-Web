@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full m-auto">
+  <div class="flex w-full m-auto">
     <button
       class="focus:outline-none"
       @click="toggleList"
@@ -107,6 +107,7 @@ export default {
       downloadShoppingList(this.menuId);
     },
     reduceInventory() {
+      this.toggleList();
       this.$emit('reduceInventory', this.menuId);
     },
   },
