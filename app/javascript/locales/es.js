@@ -127,6 +127,8 @@ export default {
       closeShoppingList: 'Cerrar',
       actions: 'Acciones',
       reduceInventory: 'Reducir Inventario',
+      reduceMsg: '¿Estás seguro que quieres reducir el inventario?',
+      yesReduce: 'Reducir',
     },
     providers: {
       title: 'Proveedores',

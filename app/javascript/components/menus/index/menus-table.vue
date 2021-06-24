@@ -94,18 +94,26 @@
           />
         </td>
         <td
-          class="content-center py-2 px-8 flex"
+          class="content-center py-2 px-8 items-center"
         >
-          <menu-shopping-list
-            :menu-id="menu.id"
-            @reduceInventory="reduceInventory"
-          />
-          <img
-            svg-inline
-            src="../../../../assets/images/reduce-inventory-svg.svg"
-            class="w-6 h-6"
-            @click="reduceInventory(menu.id)"
-          >
+          <div class="flex">
+            <menu-shopping-list
+              :menu-id="menu.id"
+              @reduceInventory="toggleReduce"
+            />
+            <p class="ml-1">Lista</p>
+          </div>
+          <div class="flex">
+            <img
+              svg-inline
+              src="../../../../assets/images/reduce-inventory-svg.svg"
+              class="w-6 h-6"
+              @click="toggleReduce(menu.id)"
+            >
+            <p class="ml-1">
+              Inventario
+            </p>
+          </div>
         </td>
         <td
           class="content-center"
@@ -121,6 +129,16 @@
         </td>
       </tr>
     </tbody>
+    <base-modal
+      @ok="reduceInventory"
+      @cancel="toggleReduce"
+      v-if="showingReduceMsg"
+      :title="$t('msg.menus.reduceInventory')"
+      :ok-button-label="$t('msg.menus.yesReduce')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <p>{{ $t('msg.menus.reduceMsg') }}</p>
+    </base-modal>
   </table>
 </template>
 
@@ -139,18 +157,24 @@ export default {
   data() {
     return {
       error: '',
+      showingReduceMsg: false,
     };
   },
   props: {
     menus: { type: Array, required: true },
   },
   methods: {
-    async reduceInventory(menuId) {
+    async reduceInventory() {
       try {
-        await reduceInventory(menuId);
+        await reduceInventory(this.idMenuToReduce);
+        this.showingReduceMsg = !this.showingReduceMsg;
       } catch (error) {
         this.error = error;
       }
+    },
+    toggleReduce(menuId) {
+      this.showingReduceMsg = !this.showingReduceMsg;
+      this.idMenuToReduce = menuId;
     },
     editMenu(element) {
       window.location = `/menus/${element.id}/edit`;
