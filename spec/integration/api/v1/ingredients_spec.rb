@@ -169,8 +169,6 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
   end
 
   path '/alert-ingredients' do
-    let(:jumbo_client) { instance_double('JumboClient', products_by_query: products) }
-
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
 
