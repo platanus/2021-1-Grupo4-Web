@@ -27,7 +27,7 @@ class Api::V1::MenusController < Api::V1::BaseController
       ingredient = Ingredient.find(record.ingredient_id)
       ingredient_quantity = ingredient.factor_of_default_quantity_by_measure(
         record.ingredient_measure
-      ) * record.ingredient_quantity.to_i
+      ) * record.ingredient_quantity.to_f
       quantity_to_decrement = record.recipe_quantity.to_i * ingredient_quantity
 
       ingredient.decrement_inventory!(quantity_to_decrement)

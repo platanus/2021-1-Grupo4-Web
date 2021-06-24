@@ -175,7 +175,7 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       before do
         existent_menu.menu_recipes.update_all(recipe_quantity: 3)
         first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1, ingredient_measure: 'Kg')
-        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2,
+        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 0.2,
                                                     ingredient_measure: 'Kg')
 
         create_measure(first_ingredient, measure: 'Kg', quantity: 2, primary: true)
@@ -191,7 +191,7 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
         run_test! do
           expect(first_ingredient.reload.inventory).to eq(9)
           expect(second_ingredient.reload.inventory).to eq(7000)
-          expect(third_ingredient.reload.inventory).to eq(0)
+          expect(third_ingredient.reload.inventory).to eq(1.4)
         end
       end
     end
