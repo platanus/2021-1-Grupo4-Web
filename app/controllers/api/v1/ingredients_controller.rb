@@ -19,6 +19,10 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     respond_with({ data: result })
   end
 
+  def minimum_alert_index
+    respond_with ingredients.below_minimum
+  end
+
   def index
     respond_with ingredients
   end

@@ -402,6 +402,11 @@
           "example": 10.3,
           "x-nullable": true
         },
+        "minimum_quantity": {
+          "type": "float",
+          "example": 10.3,
+          "x-nullable": true
+        },
         "ingredient_measures_attributes": {
           "type": "array",
           "items": {
@@ -484,6 +489,11 @@
               "x-nullable": true
             },
             "inventory": {
+              "type": "float",
+              "example": 10.3,
+              "x-nullable": true
+            },
+            "minimum_quantity": {
               "type": "float",
               "example": 10.3,
               "x-nullable": true
@@ -1333,6 +1343,57 @@
                   }
                 }
               }
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/alert-ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Show alerted ingredients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves ingredients with its quantity below minimum",
+        "responses": {
+          "200": {
+            "description": "ingredients retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/provider_ingredient"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
             }
           },
           "401": {
