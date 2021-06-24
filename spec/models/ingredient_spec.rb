@@ -28,7 +28,7 @@ RSpec.describe Ingredient, type: :model do
     end
   end
 
-  context 'many ingredients' do
+  context 'with many ingredients' do
     let(:ingredients_good) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 10) }
     let(:ingredients_bad) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 30) }
     let(:ingredients_nil) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: nil) }
