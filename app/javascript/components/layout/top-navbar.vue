@@ -12,7 +12,7 @@
     <!--Right buttons -->
     <div class="w-full flex-grow lg:flex lg:items-end lg:w-auto justify-end pr-5">
       <!--Logged -->
-      <template v-if="logged">
+      <template v-if="isCurrentUser">
         <button
           class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
           @click="logout"
@@ -45,10 +45,8 @@ import { logoutUser } from './../../api/users.js';
 
 export default {
 
-  computed: {
-    logged() {
-      return localStorage.getItem('token');
-    },
+  props: {
+    isCurrentUser: { type: Boolean, required: true },
   },
 
   methods: {
