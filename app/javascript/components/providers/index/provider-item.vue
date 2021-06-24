@@ -203,13 +203,13 @@
       :ok-button-label="$t('msg.providers.copy')"
       :cancel-button-label="$t('msg.cancel')"
     >
-      <p id="copyy">
-        {{ provider.name }}
+      <p>
+        {{ provider.contactName }}
       </p>
-      <p>78.234.241-3</p>
-      <p>Banco de Chile</p>
-      <p>Cuenta corriente</p>
-      <p>7800023546</p>
+      <p>{{ provider.contactRut }}</p>
+      <p>{{ provider.bankName }}</p>
+      <p>{{ provider.accountType }}</p>
+      <p>{{ provider.accountNumber }}</p>
       <p>{{ provider.email }}</p>
     </base-modal>
   </div>

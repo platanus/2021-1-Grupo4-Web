@@ -128,42 +128,42 @@
               <!-- contact name -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                id="provider-bankAccount-name"
+                id="provider-contactName"
                 type="text"
                 :placeholder="$t('msg.providers.bankAccount.name')"
-                v-model="form.bankAccountName"
+                v-model="form.contactName"
               >
               <!-- account rut -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                id="provider-bankAccount-rut"
+                id="provider-contactRut"
                 type="text"
                 :placeholder="$t('msg.providers.bankAccount.rut')"
-                v-model="form.bankAccountRut"
+                v-model="form.contactRut"
               >
               <!-- bank name -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                id="provider-bankAccount-bank"
+                id="provider-bankName"
                 type="text"
                 :placeholder="$t('msg.providers.bankAccount.bank')"
-                v-model="form.bankAccountBank"
+                v-model="form.bankName"
               >
               <!-- account type -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                id="provider-bankAccount-type"
+                id="provider-accountType"
                 type="text"
                 :placeholder="$t('msg.providers.bankAccount.type')"
-                v-model="form.bankAccountType"
+                v-model="form.accountType"
               >
               <!-- account number -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                id="provider-bankAccount-number"
+                id="provider-accountNumber"
                 type="text"
                 :placeholder="$t('msg.providers.bankAccount.number')"
-                v-model="form.bankAccountNumber"
+                v-model="form.accountNumber"
               >
             </div>
           </div>
@@ -233,7 +233,6 @@
               >
             </div>
           </div>
-
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <!--WebpageUrl -->
@@ -252,7 +251,7 @@
               >
             </div>
             <div class="relative">
-              <!--DeliberyDays -->
+              <!--DeliveryDays -->
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="provider-deliveryDays"
@@ -286,6 +285,57 @@
               >
             </div>
           </div>
+          <!-- Datos bancarios -->
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="provider-bankAccount"
+              >
+                {{ $t('msg.providers.bank') }}
+              </label>
+              <!-- contact name -->
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                id="provider-contactName"
+                type="text"
+                :placeholder="$t('msg.providers.bankAccount.name')"
+                v-model="form.contactName"
+              >
+              <!-- account rut -->
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                id="provider-contactRut"
+                type="text"
+                :placeholder="$t('msg.providers.bankAccount.rut')"
+                v-model="form.contactRut"
+              >
+              <!-- bank name -->
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                id="provider-bankName"
+                type="text"
+                :placeholder="$t('msg.providers.bankAccount.bank')"
+                v-model="form.bankName"
+              >
+              <!-- account type -->
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                id="provider-accountType"
+                type="text"
+                :placeholder="$t('msg.providers.bankAccount.type')"
+                v-model="form.accountType"
+              >
+              <!-- account number -->
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                id="provider-accountNumber"
+                type="text"
+                :placeholder="$t('msg.providers.bankAccount.number')"
+                v-model="form.accountNumber"
+              >
+            </div>
+          </div>
         </form>
       </div>
     </base-modal>
@@ -312,6 +362,11 @@ export default {
         minimumPurchase: '',
         deliveryDays: '',
         phone: '',
+        contactName: '',
+        contactRut: '',
+        bankName: '',
+        accountType: '',
+        accountNumber: '',
       },
     };
   },
@@ -324,6 +379,11 @@ export default {
       minimumPurchase,
       deliveryDays,
       phone,
+      contactName,
+      contactRut,
+      bankName,
+      accountType,
+      accountNumber,
     } = this.provider;
 
     this.form = {
@@ -333,6 +393,11 @@ export default {
       minimumPurchase,
       deliveryDays,
       phone,
+      contactName,
+      contactRut,
+      bankName,
+      accountType,
+      accountNumber,
     };
   },
 };
