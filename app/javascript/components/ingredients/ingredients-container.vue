@@ -302,7 +302,7 @@ export default {
     },
     async UpdateInventory(ingredient) {
       try {
-        await editIngredient(ingredient.id, ingredient);
+        await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
       } catch (error) {
         this.error = error;
       }
