@@ -29,7 +29,9 @@
         </th>
         <th
           class="px-8 py-3"
-        />
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.actions') }}</span>
+        </th>
         <th
           class="px-8 py-3"
         />
@@ -92,11 +94,18 @@
           />
         </td>
         <td
-          class="content-center"
+          class="content-center py-2 px-8 flex"
         >
           <menu-shopping-list
             :menu-id="menu.id"
+            @reduceInventory="reduceInventory"
           />
+          <img
+            svg-inline
+            src="../../../../assets/images/reduce-inventory-svg.svg"
+            class="w-6 h-6"
+            @click="reduceInventory(menu.id)"
+          >
         </td>
         <td
           class="content-center"
@@ -119,6 +128,7 @@
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
 import MenuShoppingList from './menu-shopping-list';
+import { reduceInventory } from '../../../api/menus';
 
 export default {
   components: {
@@ -126,10 +136,22 @@ export default {
     MenusTableRecipes,
     MenuShoppingList,
   },
+  data() {
+    return {
+      error: '',
+    };
+  },
   props: {
     menus: { type: Array, required: true },
   },
   methods: {
+    async reduceInventory(menuId) {
+      try {
+        await reduceInventory(menuId);
+      } catch (error) {
+        this.error = error;
+      }
+    },
     editMenu(element) {
       window.location = `/menus/${element.id}/edit`;
     },
