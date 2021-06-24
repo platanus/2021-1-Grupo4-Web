@@ -101,7 +101,9 @@
               :menu-id="menu.id"
               @reduceInventory="toggleReduce"
             />
-            <p class="ml-1">Lista</p>
+            <p class="ml-1">
+              Lista
+            </p>
           </div>
           <div class="flex">
             <img
