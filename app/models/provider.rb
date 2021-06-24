@@ -22,6 +22,11 @@ end
 #  minimum_purchase :integer
 #  phone            :string
 #  user_id          :bigint(8)
+#  contact_name     :string
+#  contact_rut      :string
+#  bank_name        :string
+#  account_type     :string
+#  account_number   :string
 #
 # Indexes
 #
