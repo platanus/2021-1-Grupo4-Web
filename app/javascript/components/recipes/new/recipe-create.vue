@@ -12,9 +12,18 @@
       <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
         {{ $t('msg.recipes.create') }}
       </div>
+      <span
+        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        v-if="loading"
+      >
+        <base-spinner />
+      </span>
     </div>
     <!-- cuadro blanco edición -->
-    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
+    <div
+      v-if="!loading"
+      class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4"
+    >
       <!-- datos básicos -->
       <div
         class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
@@ -100,6 +109,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       status: '',
       error: '',
       recipe: {
@@ -125,12 +135,15 @@ export default {
 
         return;
       }
+      this.loading = true;
       try {
         const recipeToCreate = this.getUpdatedRecipe();
         await postRecipe(recipeToCreate);
         window.location = '/recipes';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     addIngredient(ingredient) {

@@ -14,7 +14,10 @@
       </div>
     </div>
     <!-- cuadro blanco edición -->
-    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
+    <div
+      v-if="!loading"
+      class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4"
+    >
       <!-- datos básicos -->
       <div
         class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
@@ -103,6 +106,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       status: '',
       error: '',
       recipe: {
@@ -118,12 +122,15 @@ export default {
     };
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
@@ -131,6 +138,7 @@ export default {
       window.location = `/recipes/${this.recipeId}`;
     },
     async editRecipe() {
+      this.loading = true;
       try {
         const updatedRecipe = this.getUpdatedRecipe();
         await updateRecipe(this.recipe.id, updatedRecipe);
@@ -138,6 +146,8 @@ export default {
         this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     addIngredient(ingredient) {

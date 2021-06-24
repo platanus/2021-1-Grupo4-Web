@@ -6,6 +6,12 @@
         <div class="text-4xl">
           {{ $t('msg.ingredients.title') }}
         </div>
+        <span
+          class="flex my-auto w-8 h-8 pl-2 ml-2"
+          v-if="loading"
+        >
+          <base-spinner />
+        </span>
       </div>
       <div class="flex flex-col p-10 w-full bg-gray-50 my-10">
         <!--SearchBar y Button-->
@@ -44,18 +50,23 @@
         </div>
 
         <!--Table-->
-        <div class="flex w-full 2xl:justify-center items-center overflow-auto">
+        <div v-if="!loading">
           <p
             v-if="this.ingredients.length===0"
+            class="p-2"
           >
-            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title').toLowerCase() }}
           </p>
-          <ingredients-table
+          <div
             v-else
-            :ingredients="filterIngredients"
-            @edit="toggleEditModal"
-            @del="toggleDelModal"
-          />
+            class="flex w-full 2xl:justify-center items-center overflow-auto"
+          >
+            <ingredients-table
+              :ingredients="filterIngredients"
+              @edit="toggleEditModal"
+              @del="toggleDelModal"
+            />
+          </div>
         </div>
       </div>
 
@@ -133,6 +144,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       showingAdd: false,
       showingSearchIngredients: false,
       showingEdit: false,
@@ -153,15 +165,17 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
-      this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
 
@@ -198,10 +212,11 @@ export default {
       this.ingredientToDelete = ingredient;
     },
 
+    // eslint-disable-next-line max-statements
     async addIngredient() {
       let ingredientsInfo;
       this.showingAdd = !this.showingAdd;
-
+      this.loading = true;
       try {
         ingredientsInfo = this.$refs.addIngredientInfo.form;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
@@ -213,20 +228,36 @@ export default {
         } = await postIngredient(ingredientsInfo);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
-        this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
 
     async addMarketIngredient(productForm) {
       this.toggleSearchIngredientsModal();
-      this.toggleAddModal();
-      this.marketIngredient = productForm;
+      this.loading = true;
+      try {
+        const {
+          data:
+            {
+              data: { id, attributes },
+            },
+        } = await postIngredient(productForm);
+        const ingredientToAdd = { id, ...attributes };
+        this.ingredients.push(ingredientToAdd);
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
     },
 
+    // eslint-disable-next-line max-statements
     async editIngredient() {
       this.showingEdit = !this.showingEdit;
+      this.loading = true;
       try {
         const ingredientsInfo = this.$refs.editIngredientInfo.form;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
@@ -234,9 +265,10 @@ export default {
         this.addMeasuresToDelete(ingredientsInfo);
         await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
         this.updateIngredient(ingredientsInfo);
-        this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     addMeasuresToDelete(ingredientsInfo) {
@@ -246,12 +278,14 @@ export default {
 
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
+      this.loading = true;
       try {
         await deleteIngredient(this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
-        this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
 
