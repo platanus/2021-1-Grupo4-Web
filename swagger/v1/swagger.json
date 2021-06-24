@@ -44,7 +44,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -131,7 +133,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -240,7 +244,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -520,7 +526,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -733,7 +741,9 @@
               "x-nullable": true
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -890,7 +900,9 @@
               }
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -1173,7 +1185,9 @@
               }
             }
           },
-          "required": []
+          "required": [
+
+          ]
         }
       },
       "required": [
@@ -1312,11 +1326,6 @@
         },
         {
           "name": "user_token",
-          "in": "query",
-          "type": "string"
-        },
-        {
-          "name": "query",
           "in": "query",
           "type": "string"
         }
