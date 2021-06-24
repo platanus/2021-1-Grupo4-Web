@@ -173,7 +173,6 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
 
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
-    parameter name: :query, in: :query, type: :string
 
     get 'Show alerted ingredients' do
       consumes 'application/json'
