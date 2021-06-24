@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       class="focus:outline-none"
-      @click="openDropdown"
+      @click="toggleDropdown"
     >
       <div class="flex justify-between items-center min-w-max w-16">
         <div> {{ selectedElement }} </div>
@@ -46,9 +46,19 @@ export default {
       selectedElement: this.elements[0],
     };
   },
+  mounted() {
+    document.addEventListener('click', this.closeDropdown);
+  },
+  unmounted() {
+    document.removeEventListener('click', this.closeDropdown);
+  },
   methods: {
-    openDropdown() {
+    toggleDropdown() {
       this.active = !this.active;
+    },
+    closeDropdown(event) {
+      if (event.target === this.$el || this.$el.contains(event.target)) return;
+      this.active = false;
     },
     selectElement(element) {
       this.selectedElement = element;

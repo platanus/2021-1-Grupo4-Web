@@ -36,6 +36,15 @@
             v-model="form.provider_name"
             id="ingredient-provider"
           >
+            <!--Add Mode unit from market -->
+            <option
+              v-if="!editMode && marketIngredient !== undefined"
+              selected
+              :key="form.provider_name"
+              :value="form.provider_name"
+            >
+              {{ form.provider_name }}
+            </option>
             <option
               v-for="(name, idx) in providersNames"
               :key="idx"
@@ -92,13 +101,15 @@
                 rounded leading-tight focus:outline-none"
                 v-model="unit.name"
               >
-                <!--Add Mode unit Unselected -->
+                <!--Add Mode unit from market -->
                 <option
-                  v-if="!editMode"
+                  v-if="!editMode && marketIngredient !== undefined"
                   hidden
                   selected
+                  :key="form.ingredient_measures_attributes[0].name"
+                  :value="form.ingredient_measures_attributes[0].name"
                 >
-                  {{ $t('msg.ingredients.measure') }}
+                  {{ form.ingredient_measures_attributes[0].name }}
                 </option>
                 <!--Edit Mode unit ingredient -->
                 <option
@@ -180,6 +191,7 @@ export default {
       return {};
     } },
     units: { type: Array, required: true },
+    marketIngredient: { type: Object, default: undefined },
   },
 
   data() {
@@ -214,32 +226,36 @@ export default {
     },
   },
   async created() {
-    const {
-      providerName,
-      name,
-      sku,
-      price,
-      currency,
-      otherMeasures,
-    } = this.ingredient;
-    let ingredient_measures_attributes; /* eslint-disable-line camelcase */
-    if (otherMeasures) {
-      ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
-        Object.assign({}, { id: unit.id }, unit.attributes),
-      );
+    if (this.marketIngredient === undefined) {
+      const {
+        providerName,
+        name,
+        sku,
+        price,
+        currency,
+        otherMeasures,
+      } = this.ingredient;
+      let ingredient_measures_attributes; /* eslint-disable-line camelcase */
+      if (otherMeasures) {
+        ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+          Object.assign({}, { id: unit.id }, unit.attributes),
+        );
+      } else {
+        ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
+          name: undefined, quantity: undefined, id: undefined,
+        }];
+      }
+      this.form = {
+        provider_name: providerName, /* eslint-disable-line camelcase */
+        name,
+        sku,
+        price,
+        currency,
+        ingredient_measures_attributes, /* eslint-disable-line camelcase */
+      };
     } else {
-      ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
-        name: undefined, quantity: undefined, id: undefined,
-      }];
+      this.form = this.marketIngredient;
     }
-    this.form = {
-      provider_name: providerName, /* eslint-disable-line camelcase */
-      name,
-      sku,
-      price,
-      currency,
-      ingredient_measures_attributes, /* eslint-disable-line camelcase */
-    };
 
     const providers = await getProviders();
     this.providersNames = providers.data.data.map((provider) => provider.attributes.name);

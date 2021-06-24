@@ -544,6 +544,22 @@
         "data"
       ]
     },
+    "update_inventories_ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ingredient_id": {
+            "type": "integer",
+            "example": 5
+          },
+          "inventory": {
+            "type": "integer",
+            "example": 3
+          }
+        }
+      }
+    },
     "provider": {
       "type": "object",
       "properties": {
@@ -1116,6 +1132,10 @@
         "quantity": {
           "type": "integer",
           "example": 2
+        },
+        "primary": {
+          "type": "boolean",
+          "example": true
         }
       }
     }
@@ -1338,6 +1358,55 @@
         }
       }
     },
+    "/ingredients/update-inventories": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Updates ingredients inventories",
+        "description": "Updates each ingredient with new inventory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ingredients": {
+                  "$ref": "#/definitions/update_inventories_ingredients"
+                }
+              },
+              "required": [
+                "ingredients"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ingredients updated"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
     "/ingredients/{id}": {
       "parameters": [
         {
@@ -1405,7 +1474,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ingredient updated"
+            "description": "ingredient updated with measure by default"
           },
           "401": {
             "description": "user unauthorized"
@@ -1747,6 +1816,41 @@
         "responses": {
           "200": {
             "description": "reduced inventory of menu"
+          }
+        }
+      }
+    },
+    "/menus/{id}/shopping-list": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Returns Menu Ingredients, same as shopping list",
+        "description": "Get ingredients of a menu with quantities, prices, measures grouped by provider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "shopping list grouped by provider"
           }
         }
       }

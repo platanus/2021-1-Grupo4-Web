@@ -85,7 +85,7 @@ export default {
       saveChanges: 'Guardar cambios',
       filter: {
         price: 'Precio',
-        portions: 'Porciones',
+        portions: 'Nº de Porciones',
         minPortions: 'Mínimas',
         maxPortions: 'Máximas',
         minPrice: 'Mínimo',
@@ -116,7 +116,7 @@ export default {
       searchRecipes: 'Buscar recetas',
       menuPrice: 'Total del menú',
       name: 'Nombre',
-      totalPrice: 'Precio Total ($)',
+      totalCost: 'Costo Total ($)',
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
       noRecipes: 'Este menú aún no tiene recetas',

@@ -21,7 +21,18 @@ class Ingredient < ApplicationRecord
     default_measure&.quantity
   end
 
+  def factor_of_default_quantity_by_measure(measure_name)
+    default_quantity = default_measure&.quantity
+    return if default_quantity.blank?
+
+    default_quantity / ingredient_measures.find_by(name: measure_name).quantity
+  end
+
   def default_measure
+    default = ingredient_measures.find_by(primary: true)
+
+    return default if default.present?
+
     ingredient_measures.first
   end
 end
@@ -39,7 +50,7 @@ end
 #  currency    :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  inventory   :integer          default(0)
+#  inventory   :float            default(0.0)
 #
 # Indexes
 #

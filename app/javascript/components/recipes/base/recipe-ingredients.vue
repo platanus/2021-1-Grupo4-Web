@@ -61,8 +61,7 @@
               :recipe-ingredient-idx="idx"
               :recipe-ingredient-attrs="recipeIngredient.attributes"
               @delete-ingredient="deleteIngredient"
-              @increase-quantity="increaseQuantity"
-              @decrease-quantity="decreaseQuantity"
+              @change-quantity="changeQuantity"
               @change-measure="changeMeasure"
             >
               {{ recipeIngredient.attributes.ingredient.name }}
@@ -146,12 +145,10 @@ export default {
     deleteIngredient(recipeIngredientIdx) {
       this.$emit('delete-ingredient', recipeIngredientIdx);
     },
-    increaseQuantity(recipeIngredientIdx) {
-      this.$emit('increase-quantity', recipeIngredientIdx);
+    changeQuantity(recipeIngredientIdx, ingredientQuantityData) {
+      this.$emit('change-quantity', recipeIngredientIdx, ingredientQuantityData);
     },
-    decreaseQuantity(recipeIngredientIdx) {
-      this.$emit('decrease-quantity', recipeIngredientIdx);
-    },
+
     changeMeasure(measure, recipeIngredientIdx) {
       this.$emit('change-measure', measure, recipeIngredientIdx);
     },
@@ -160,7 +157,6 @@ export default {
 
       return recipeIngredient.ingredientQuantity * this.unitaryPrice(recipeIngredient);
     },
-
     unitaryPrice(recipeIngredient) {
       const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
         element.attributes).filter(element =>
