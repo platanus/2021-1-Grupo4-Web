@@ -78,7 +78,7 @@
             <img
               svg-inline
               src="../../../assets/images/pencil-svg.svg"
-              class="w-4 h-4"
+              class="w-4 h-4 cursor-pointer"
               @click="toggleEditInventory"
             >
           </div>
