@@ -29,12 +29,12 @@ RSpec.describe Ingredient, type: :model do
   end
 
   context 'with many ingredients' do
-    let(:ingredients_good) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 10) }
-    let(:ingredients_bad) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 30) }
-    let(:ingredients_nil) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: nil) }
+    let!(:ingredients_good) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 10) }
+    let!(:ingredients_bad) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 30) }
+    let!(:ingredients_nil) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: nil) }
 
     it 'scope get the correct amount of alerted ingredients' do
-      expect(Ingredients.below_minimum.count).to eq(ingredients_bad.count)
+      expect(Ingredient.below_minimum.count).to eq(ingredients_bad.count)
     end
   end
 end
