@@ -88,6 +88,7 @@
           >
             <input
               type="number"
+              min="0"
               ref="inventory"
               class="w-10 border-2 border-solid border-gray-400 box-border"
               v-model="ingredient.inventory"
