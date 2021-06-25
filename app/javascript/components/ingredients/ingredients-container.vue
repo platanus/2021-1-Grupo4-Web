@@ -178,6 +178,7 @@ export default {
     } finally {
       this.loading = false;
     }
+    this.roundInventory();
   },
 
   computed: {
@@ -194,6 +195,12 @@ export default {
   },
 
   methods: {
+    roundInventory() {
+      this.ingredients.forEach(ingredient => {
+        // eslint-disable-next-line no-magic-numbers
+        ingredient.inventory = Math.round(ingredient.inventory * 100) / 100;
+      });
+    },
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
       this.marketIngredient = undefined;
