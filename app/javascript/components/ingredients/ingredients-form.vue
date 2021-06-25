@@ -155,6 +155,20 @@
             type="number"
             :placeholder="$t('msg.ingredients.price')"
           >
+          <!--Minimum Quantity -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-minimumQuantity"
+          >
+            {{ $t('msg.ingredients.minimumQuantity') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="ingredient-minimumQuantity"
+            v-model="form.minimumQuantity"
+            type="number"
+            :placeholder="$t('msg.ingredients.quantity')"
+          >
         </div>
       </div>
     </form>
@@ -218,6 +232,7 @@ export default {
         sku,
         price,
         currency,
+        minimumQuantity,
         otherMeasures,
       } = this.ingredient;
       let ingredient_measures_attributes; /* eslint-disable-line camelcase */
@@ -236,6 +251,7 @@ export default {
         sku,
         price,
         currency,
+        minimumQuantity,
         ingredient_measures_attributes, /* eslint-disable-line camelcase */
       };
     } else {

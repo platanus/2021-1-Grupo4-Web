@@ -6,6 +6,12 @@ function getIngredients() {
     }));
 }
 
+function getAlertedIngredients() {
+  return (client
+    .get('/alert-ingredients', {
+    }));
+}
+
 function postIngredient(ingredient) {
   return (client
     .post('/ingredients',
@@ -49,4 +55,5 @@ export {
   editIngredient,
   searchCornershopIngredients,
   getCriticalAssociations,
+  getAlertedIngredients,
 };
