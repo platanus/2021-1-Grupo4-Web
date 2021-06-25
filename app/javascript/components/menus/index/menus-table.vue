@@ -87,7 +87,7 @@
         <!-- recipes -->
         <td
           key="recipes"
-          class="py-2 px-8"
+          class="py-2 px-4"
         >
           <menus-table-recipes
             :menu="menu"
@@ -97,24 +97,26 @@
           class="content-center py-2 px-8 items-center"
         >
           <div class="flex flex-col">
-            <div class="flex justify-between">
+            <div class="flex justify-between w-full">
               <menu-shopping-list
                 :menu-id="menu.id"
                 @reduceInventory="toggleReduce"
               />
               <p>
-                Lista
+                Lista de Compras
               </p>
             </div>
-            <div class="flex w-full m-auto justify-between">
-              <img
-                svg-inline
-                src="../../../../assets/images/reduce-inventory-svg.svg"
-                class="w-6 h-6 cursor-pointer"
-                @click="toggleReduce(menu.id)"
-              >
+            <div class="flex w-full justify-between">
+              <div class="flex w-full m-auto">
+                <img
+                  svg-inline
+                  src="../../../../assets/images/reduce-inventory-svg.svg"
+                  class="w-6 h-6 cursor-pointer"
+                  @click="toggleReduce(menu.id)"
+                >
+              </div>
               <p>
-                Inventario
+                Restar Inventario
               </p>
             </div>
           </div>
