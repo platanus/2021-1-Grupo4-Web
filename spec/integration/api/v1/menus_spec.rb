@@ -215,10 +215,10 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
 
-    def ingredient_hash(name, quantity)
+    def ingredient_hash(name, quantity, measure)
       hash_including(
-        measure: kind_of(String), name: name,
-        quantity: quantity, total_price: kind_of(Integer)
+        measure: measure, name: name,
+        quantity: quantity, total_price: kind_of(Float)
       )
     end
 
@@ -226,9 +226,9 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       {
         provider: "Jumbo",
         ingredients: match_array([
-                                   ingredient_hash("First", 9),
-                                   ingredient_hash("Second", 30),
-                                   ingredient_hash("Third", 6)
+                                   ingredient_hash("First", 18, 'Unidades'),
+                                   ingredient_hash("Second", 30, 'L'),
+                                   ingredient_hash("Third", 6, 'Unidades')
                                  ])
       }
     end
@@ -257,12 +257,16 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
         )
 
         IngredientMeasure.create!(name: 'Kg', quantity: 3, ingredient_id: first_ingredient.id)
+        IngredientMeasure.create!(
+          name: 'Unidades', quantity: 6,
+          ingredient_id: first_ingredient.id, primary: true
+        )
         IngredientMeasure.create!(name: 'L', quantity: 5, ingredient_id: second_ingredient.id)
         IngredientMeasure.create!(name: 'Unidades', quantity: 2, ingredient_id: third_ingredient.id)
       end
       # rubocop:enable Rails/SkipsModelValidations
 
-      response '200', 'shopping list grouped by provider' do
+      response '200', 'shopping list grouped by provider with default measure' do
         run_test! do |response|
           expect(JSON.parse(response.body).first.deep_symbolize_keys).to match(expected_response)
         end

@@ -25,7 +25,7 @@ class Ingredient < ApplicationRecord
     default_quantity = default_measure&.quantity
     return if default_quantity.blank?
 
-    default_quantity / ingredient_measures.find_by(name: measure_name).quantity
+    default_quantity.to_f / ingredient_measures.find_by(name: measure_name).quantity
   end
 
   def default_measure
