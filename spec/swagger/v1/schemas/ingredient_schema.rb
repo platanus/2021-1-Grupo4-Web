@@ -99,3 +99,21 @@ UPDATE_INVENTORY_INGREDIENTS_SCHEMA = {
     }
   }
 }
+
+INGREDIENT_CRITICAL_ASSOCIATIONS = {
+  type: "object",
+  properties: {
+    recipes: {
+      type: :array,
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1 },
+          name: { type: :string, example: 'Pastel de choclo' },
+          portions: { type: :integer, example: 4 },
+          cook_minutes: { type: :integer, example: 25 }
+        }
+      }
+    }
+  }
+}

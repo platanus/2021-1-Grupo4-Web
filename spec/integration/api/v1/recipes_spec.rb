@@ -162,5 +162,49 @@ describe 'Api::V1::Recipes', swagger_doc: 'v1/swagger.json' do
       end
     end
   end
+
+  path '/recipes/{id}/critical-associations' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    parameter name: :id, in: :path, type: :integer
+
+    let!(:existent_recipe) { create(:recipe, user_id: user.id) }
+    let!(:existent_menu) { create(:menu, user_id: user.id) }
+    let!(:menu_recipe) do
+      create(:menu_recipe, recipe: existent_recipe, menu: existent_menu)
+    end
+    let(:id) { existent_recipe.id }
+
+    get 'Retrieves recipe critical associations for confirming delete' do
+      produces 'application/json'
+
+      let(:expected_response) do
+        {
+          menus: [hash_including(name: existent_menu.name)]
+        }
+      end
+
+      response '200', 'recipe associations retrieved' do
+        schema('$ref' => '#/definitions/recipe_critical_associations')
+
+        run_test! do |response|
+          body = JSON.parse(response.body)
+          expect(body.deep_symbolize_keys).to match(expected_response)
+        end
+      end
+
+      response '404', 'invalid recipe id' do
+        let(:id) { 'invalid' }
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/EmptyExampleGroup, RSpec/MultipleMemoizedHelpers

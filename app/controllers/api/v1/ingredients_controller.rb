@@ -27,6 +27,10 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     respond_with ingredient
   end
 
+  def critical_associations
+    respond_with critical_ingredient_associations
+  end
+
   def create
     provider = Provider.find_or_create_by(
       name: ingredient_params[:provider_name], user: current_user
@@ -71,6 +75,12 @@ class Api::V1::IngredientsController < Api::V1::BaseController
 
   def ingredients
     @ingredients ||= current_user.ingredients
+  end
+
+  def critical_ingredient_associations
+    {
+      recipes: ingredient.recipes
+    }
   end
 
   def ingredient_params
