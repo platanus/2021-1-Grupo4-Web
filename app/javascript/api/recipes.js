@@ -38,4 +38,10 @@ function getRecipeIngredients(recipeId) {
     }));
 }
 
-export { getRecipes, getRecipe, deleteRecipe, postRecipe, updateRecipe, getRecipeIngredients };
+function getCriticalAssociations(recipeId) {
+  return (client
+    .get(`/recipes/${recipeId}/critical-associations`, {
+    }));
+}
+
+export { getRecipes, getRecipe, deleteRecipe, postRecipe, updateRecipe, getRecipeIngredients, getCriticalAssociations };

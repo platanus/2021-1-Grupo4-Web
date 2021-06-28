@@ -66,14 +66,25 @@
       :ok-button-label="$t('msg.yesDelete')"
       :cancel-button-label="$t('msg.cancel')"
     >
-      <p>{{ $t('msg.recipes.deleteMsg') }}</p>
+      <!-- Critical associations -->
+      <div v-if="criticalAssociations.length > 0">
+        <p>{{ $t('msg.recipes.associationWarning') }}</p>
+        <base-one-column-table
+          :header="$t('msg.menus.title')"
+          :rows="criticalAssociations"
+        />
+      </div>
+      <!-- Delete msg -->
+      <p class="mt-4">
+        {{ $t('msg.recipes.deleteMsg') }}
+      </p>
     </base-modal>
   </div>
 </template>
 
 <script>
 
-import { getRecipe, deleteRecipe } from '../../../api/recipes.js';
+import { getRecipe, deleteRecipe, getCriticalAssociations } from '../../../api/recipes.js';
 import RecipeIngredients from './recipe-ingredients';
 import RecipeInstructions from './recipe-instructions';
 import RecipeInfo from './recipe-info';
@@ -95,6 +106,7 @@ export default {
       showingDel: false,
       status: '',
       error: '',
+      criticalAssociations: [],
       recipe: {
         name: '',
         portions: 0,
@@ -121,6 +133,17 @@ export default {
   methods: {
     toggleDelModal() {
       this.showingDel = !this.showingDel;
+      if (this.showingDel) {
+        this.getIngredientAssociations(this.recipe.id);
+      }
+    },
+    async getIngredientAssociations(recipeId) {
+      try {
+        const response = await getCriticalAssociations(recipeId);
+        this.criticalAssociations = response.data.menus.map((element) => element.name);
+      } catch (error) {
+        this.error = error;
+      }
     },
     ingredientFinalPrice(quantity, price) {
       return (quantity * price);

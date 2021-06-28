@@ -36,5 +36,17 @@ async function searchCornershopIngredients(query) {
     )
   );
 }
+function getCriticalAssociations(ingredientId) {
+  return (client
+    .get(`/ingredients/${ingredientId}/critical-associations`, {
+    }));
+}
 
-export { getIngredients, postIngredient, deleteIngredient, editIngredient, searchCornershopIngredients };
+export {
+  getIngredients,
+  postIngredient,
+  deleteIngredient,
+  editIngredient,
+  searchCornershopIngredients,
+  getCriticalAssociations,
+};

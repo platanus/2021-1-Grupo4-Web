@@ -11,6 +11,7 @@ import DotsDropdown from '../components/base/dots-dropdown.vue';
 import BaseDropdown from '../components/base/base-dropdown.vue';
 import BaseSpinner from '../components/base/base-spinner.vue';
 import TextBox from '../components/base/base-text-box.vue';
+import BaseOneColumnTable from '../components/base/base-one-column-table';
 
 import TopNavbar from '../components/layout/top-navbar.vue';
 import SideNavbar from '../components/layout/side-navbar.vue';
@@ -42,6 +43,7 @@ Vue.component('DotsDropdown', DotsDropdown);
 Vue.component('BaseDropdown', BaseDropdown);
 Vue.component('BaseSpinner', BaseSpinner);
 Vue.component('TextBox', TextBox);
+Vue.component('BaseOneColumnTable', BaseOneColumnTable);
 
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
