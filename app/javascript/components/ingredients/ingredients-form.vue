@@ -102,12 +102,12 @@
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <measure-search
-                v-if="!editMode"
+                v-if="!editMode && marketIngredient === undefined"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <measure-search
                 v-if="editMode"
-                :selected-measure="ingredient.measure"
+                :selected-measure="unit.name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <button
@@ -171,11 +171,7 @@ export default {
     ingredient: { type: Object, default() {
       return {};
     } },
-<<<<<<< HEAD
-    units: { type: Array, required: true },
     marketIngredient: { type: Object, default: undefined },
-=======
->>>>>>> 520c096 (feat(measures): add search of other measures)
   },
   components: {
     MeasureSearch,

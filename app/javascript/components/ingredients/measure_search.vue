@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input
-      class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 pr-4 pr-8
+      class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4
       rounded leading-tight focus:outline-none"
       v-model="query"
       @focus="toggleFocusInput"
@@ -45,7 +45,6 @@ export default {
       availableMeasures: ['Kilo', 'Gramo', 'Cucharada', 'Cucharadita', 'Taza', 'Litro', 'Mililitro', 'Oz', 'Unidad'],
       query: this.selectedMeasure,
       focusedInput: false,
-
     };
   },
   methods: {
