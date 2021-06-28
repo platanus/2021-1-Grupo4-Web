@@ -238,21 +238,8 @@ export default {
 
     async addMarketIngredient(productForm) {
       this.toggleSearchIngredientsModal();
-      this.loading = true;
-      try {
-        const {
-          data:
-            {
-              data: { id, attributes },
-            },
-        } = await postIngredient(productForm);
-        const ingredientToAdd = { id, ...attributes };
-        this.ingredients.push(ingredientToAdd);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
+      this.toggleAddModal();
+      this.marketIngredient = productForm;
     },
     addInventoryToIngredient(ingredientsInfo, id) {
       this.ingredients.forEach(elem => {
