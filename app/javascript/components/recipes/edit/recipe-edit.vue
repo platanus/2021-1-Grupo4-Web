@@ -281,15 +281,16 @@ export default {
       updatedRecipe.stepsAttributes = stepsAttributes;
     },
     addNewAndUpdatedSteps(stepsAttributes) {
-      for (const step of this.recipe.steps.data) {
+      this.recipe.steps.data.forEach((step, index) => {
         const hash = {
           description: step.attributes.description,
+          stepOrderPosition: index,
         };
         if (!!step.id) {
           hash.id = step.id;
         }
         stepsAttributes.push(hash);
-      }
+      });
     },
     addDeletedSteps(stepsAttributes) {
       for (const step of this.deletedSteps) {

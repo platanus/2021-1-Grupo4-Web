@@ -114,6 +114,7 @@
         :recipe-steps="recipe.steps.data"
         @new-step="addStep"
         @delete-step="deleteStep"
+        @switch-steps="switchSteps"
       />
       <!--  Buttons -->
       <div class="flex items-start items-center">
@@ -257,6 +258,11 @@ export default {
         this.deletedSteps.push(this.recipe.steps.data[stepIdx]);
       }
       this.recipe.steps.data.splice(stepIdx, 1);
+    },
+    switchSteps(oldIndex, newIndex) {
+      const oldData = this.recipe.steps.data[oldIndex];
+      this.recipe.steps.data.splice(oldIndex, 1);
+      this.recipe.steps.data.splice(newIndex, 0, oldData);
     },
     addUpdatedSteps(updatedRecipe) {
       const stepsAttributes = [];

@@ -25,6 +25,14 @@
               class="flex justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
               v-if="!step.isEditing"
             >
+              <div class="flex flex-none self-stretch flex-grow-0 mr-2.5 flex-row items-center static w-2.5 h-auto left-3 top-3">
+                <div class="static left-0 right-0 top-1/3 bottom-1/3">
+                  <img
+                    class="flex-none flex-grow-0 mr-2.5"
+                    src="../../../../assets/images/menu-recipe-svg.svg"
+                  >
+                </div>
+              </div>
               <div class="flex flex-col justify-center w-6 h-6 bg-yellow-500 shadow-sm rounded-full flex-none flex-grow-0 items-center mr-4 ">
                 <div class="font-sans font-normal text-lg text-white my-auto">
                   {{ idx + 1 }}
