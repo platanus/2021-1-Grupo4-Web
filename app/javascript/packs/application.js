@@ -15,6 +15,8 @@ import TextBox from '../components/base/base-text-box.vue';
 import TopNavbar from '../components/layout/top-navbar.vue';
 import SideNavbar from '../components/layout/side-navbar.vue';
 
+import NavegationItem from '../components/home/navegation-item.vue';
+
 import Register from '../components/users/register.vue';
 import Login from '../components/users/login.vue';
 import LandingPage from '../components/landing-page.vue';
@@ -44,6 +46,8 @@ Vue.component('TextBox', TextBox);
 
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
+
+Vue.component('NavegationItem', NavegationItem);
 
 Vue.component('Register', Register);
 Vue.component('Login', Login);

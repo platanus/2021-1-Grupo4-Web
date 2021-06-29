@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex">
     <button
       @click="clickButton"
       class="focus:outline-none"
@@ -12,6 +12,10 @@
         </div>
       </div>
     </button>
+    <div
+      v-if="active"
+      class="bg-yellow-500 transform rotate-45 h-10 w-10 -ml-6 m-auto"
+    />
   </div>
 </template>
 

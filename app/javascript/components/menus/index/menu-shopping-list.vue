@@ -6,7 +6,7 @@
     >
       <img
         svg-inline
-        src="../../../../assets/images/shopping-bag-svg.svg"
+        src="../../../../assets/images/shopping-cart-svg.svg"
         class="w-6 h-6 text-yellow-700"
       >
     </button>

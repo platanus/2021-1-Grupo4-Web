@@ -10,11 +10,11 @@
       </a>
     </div>
     <!--Right buttons -->
-    <div class="w-full flex-grow lg:flex lg:items-end lg:w-auto justify-end pr-5">
+    <div>
       <!--Logged -->
       <template v-if="logged">
         <button
-          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
+          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 focus:outline-none"
           @click="logout"
         >
           {{ $t('msg.users.logout') }}
@@ -24,15 +24,9 @@
       <template v-else>
         <a
           href="/users/sign_in"
-          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0"
+          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900"
         >
           {{ $t('msg.users.login') }}
-        </a>
-        <a
-          href="/users/sign_up"
-          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0"
-        >
-          {{ $t('msg.users.register') }}
         </a>
       </template>
     </div>
