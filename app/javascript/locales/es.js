@@ -36,6 +36,7 @@ export default {
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',
       requiredEmail: 'El correo es obligatorio',
+      invalidEmail: 'El correo no es válido',
       requiredPassword: 'La contraseña es obligatoria',
       passwordTooShort: 'La contraseña debe tener al menos 6 caracteres',
       requiredPasswordConfirmation: 'Confirma tu contraseña',

@@ -38,7 +38,6 @@
           v-model="form.userEmail"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="email"
-          type="email"
           :placeholder="$t('msg.users.placeholderEmail')"
         >
         <p
@@ -152,6 +151,16 @@ export default {
 
       if (this.form.userPassword !== this.form.passwordConfirmation) {
         this.errors.passwordConfirmation = 'passwordConfirmationIncorrect';
+        validForm = false;
+      }
+
+      const regexEmail = new RegExp(`${
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+/.source
+      }${/(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@/.source
+      }${/(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+/.source
+      }${/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.source}`);
+      if (!regexEmail.test(this.form.userEmail)) {
+        this.errors.email = 'invalidEmail';
         validForm = false;
       }
 
