@@ -132,17 +132,25 @@
         :cancel-button-label="$t('msg.cancel')"
       >
         <!-- Critical associations -->
-        <div v-if="criticalAssociations.length > 0">
-          <p>{{ $t('msg.ingredients.associationWarning') }}</p>
-          <base-one-column-table
-            :header="$t('msg.recipes.title')"
-            :rows="criticalAssociations"
-          />
+        <span
+          class="flex my-auto w-8 h-8 pl-2"
+          v-if="loadingAssociations"
+        >
+          <base-spinner />
+        </span>
+        <div v-else>
+          <div v-if="criticalAssociations.length > 0">
+            <p>{{ $t('msg.ingredients.associationWarning') }}</p>
+            <base-one-column-table
+              :header="$t('msg.recipes.title')"
+              :rows="criticalAssociations"
+            />
+          </div>
+          <!-- Delete msg -->
+          <p class="mt-4">
+            {{ $t('msg.ingredients.deleteMsg') }}
+          </p>
         </div>
-        <!-- Delete msg -->
-        <p class="mt-4">
-          {{ $t('msg.ingredients.deleteMsg') }}
-        </p>
       </base-modal>
     </div>
   </div>
@@ -162,6 +170,7 @@ export default {
   data() {
     return {
       loading: false,
+      loadingAssociations: false,
       showingAdd: false,
       showingSearchIngredients: false,
       showingEdit: false,
@@ -241,11 +250,14 @@ export default {
     },
 
     async getIngredientAssociations(ingredientId) {
+      this.loadingAssociations = true;
       try {
         const response = await getCriticalAssociations(ingredientId);
         this.criticalAssociations = response.data.recipes.map((element) => element.name);
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loadingAssociations = false;
       }
     },
 
