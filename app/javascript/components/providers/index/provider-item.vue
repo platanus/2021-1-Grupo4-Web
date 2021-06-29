@@ -203,14 +203,22 @@
       :ok-button-label="$t('msg.providers.copy')"
       :cancel-button-label="$t('msg.cancel')"
     >
-      <p>
-        {{ provider.contactName }}
-      </p>
-      <p>{{ provider.contactRut }}</p>
-      <p>{{ provider.bankName }}</p>
-      <p>{{ provider.accountType }}</p>
-      <p>{{ provider.accountNumber }}</p>
-      <p>{{ provider.email }}</p>
+      <div
+        v-if="provider.contactName && provider.contactRut && provider.bankName &&
+          provider.accountType && provider.accountNumber && provider.email"
+      >
+        <p>
+          {{ provider.contactName }}
+        </p>
+        <p>{{ provider.contactRut }}</p>
+        <p>{{ provider.bankName }}</p>
+        <p>{{ provider.accountType }}</p>
+        <p>{{ provider.accountNumber }}</p>
+        <p>{{ provider.email }}</p>
+      </div>
+      <div v-else>
+        <p> {{ $t('msg.providers.noTransferData') }} </p>
+      </div>
     </base-modal>
   </div>
 </template>

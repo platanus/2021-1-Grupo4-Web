@@ -152,6 +152,7 @@ export default {
         type: 'Tipo de cuenta',
         number: 'Número de cuenta',
       },
+      noTransferData: 'Aún no se tiene esta información',
     },
   },
 };
