@@ -19,7 +19,7 @@
     <% end %>
 
     <div id="vue-app">
-      <top-navbar></top-navbar>
+      <top-navbar :is-current-user=<%= current_user.present? %>></top-navbar>
         <%= yield %>
     </div>
   </body>
