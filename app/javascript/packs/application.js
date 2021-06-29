@@ -20,6 +20,7 @@ import Login from '../components/users/login.vue';
 import LandingPage from '../components/landing-page.vue';
 
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
+import IngredientsEditInventory from '../components/ingredients/ingredients-edit-inventory.vue';
 import RecipesContainer from '../components/recipes/index/recipes-container.vue';
 import RecipeCreate from '../components/recipes/new/recipe-create.vue';
 import RecipeShow from '../components/recipes/show/recipe-show.vue';
@@ -50,6 +51,7 @@ Vue.component('Login', Login);
 Vue.component('LandingPage', LandingPage);
 
 Vue.component('IngredientsContainer', IngredientsContainer);
+Vue.component('IngredientsEditInventory', IngredientsEditInventory);
 Vue.component('RecipesContainer', RecipesContainer);
 Vue.component('RecipeShow', RecipeShow);
 Vue.component('RecipeEdit', RecipeEdit);

@@ -3,8 +3,15 @@
     <div class="flex flex-col">
       <div class="flex items-center h-8 mt-1">
         <!--Title-->
+        <a href="/ingredients">
+          <img
+            class="h-6 w-6 text-white mx-2"
+            svg-inline
+            src="../../../assets/images/arrow-left-svg.svg"
+          >
+        </a>
         <div class="text-4xl">
-          {{ $t('msg.ingredients.title') }}
+          {{ $t('msg.ingredients.inventory.editingInventories') }}
         </div>
         <span
           class="flex my-auto w-8 h-8 pl-2 ml-2"
@@ -33,28 +40,7 @@
               >
             </div>
           </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <a
-              class="font-bold py-2 px-6 rounded shadow-md w-full h-auto focus:outline-none bg-green-500 hover:bg-green-700 text-white"
-              href="/ingredients/show"
-            >{{ $t('msg.ingredients.inventory.editInventories') }}</a>
-          </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <base-button
-              :elements="{ placeholder: $t('msg.ingredients.add'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="toggleAddModal"
-            />
-          </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <base-button
-              :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="toggleSearchIngredientsModal"
-            />
-          </div>
         </div>
-
         <!--Table-->
         <div v-if="!loading">
           <p
@@ -65,76 +51,24 @@
           </p>
           <div
             v-else
-            class="flex w-full 2xl:justify-center items-center overflow-auto"
+            class="flex flex-col w-auto 2xl:justify-center items-center overflow-auto"
           >
-            <ingredients-table
+            <inventory-table
               :ingredients="filterIngredients"
               @edit="toggleEditModal"
               @del="toggleDelModal"
               @updateInventory="UpdateInventory"
             />
           </div>
+          <div class="flex flex-col w-auto justify-end my-4">
+            <base-button
+              :elements="{ placeholder: $t('msg.saveChanges'),
+                           color: 'bg-green-500 hover:bg-green-700 text-white ' }"
+              @click="updateInventoryy"
+            />
+          </div>
         </div>
       </div>
-
-      <!--AddModal-->
-      <base-modal
-        @ok="addIngredient"
-        @cancel="toggleAddModal"
-        v-if="showingAdd"
-        :title="$t('msg.ingredients.add')"
-        :ok-button-label="$t('msg.add')"
-        :cancel-button-label="$t('msg.cancel')"
-      >
-        <ingredients-form
-          ref="addIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
-          :edit-mode="false"
-          :market-ingredient="marketIngredient"
-        />
-      </base-modal>
-
-      <!--SearchIngredientsModal-->
-      <base-modal
-        @cancel="toggleSearchIngredientsModal"
-        v-if="showingSearchIngredients"
-        :title="$t('msg.ingredients.searchInMarket')"
-        :ok-button-present="false"
-        :cancel-button-label="$t('msg.cancel')"
-      >
-        <search-market-ingredients
-          @submit="addMarketIngredient"
-        />
-      </base-modal>
-
-      <!--EditModal-->
-      <base-modal
-        @ok="editIngredient"
-        @cancel="toggleEditModal"
-        v-if="showingEdit"
-        :title="$t('msg.ingredients.edit')"
-        :ok-button-label="$t('msg.save')"
-        :cancel-button-label="$t('msg.cancel')"
-      >
-        <ingredients-form
-          ref="editIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
-          :edit-mode="true"
-          :ingredient="this.ingredientToEdit"
-        />
-      </base-modal>
-
-      <!--DeleteModal-->
-      <base-modal
-        @ok="deleteIngredient"
-        @cancel="toggleDelModal"
-        v-if="showingDel"
-        :title="$t('msg.ingredients.delete')"
-        :ok-button-label="$t('msg.yesDelete')"
-        :cancel-button-label="$t('msg.cancel')"
-      >
-        <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
-      </base-modal>
     </div>
   </div>
 </template>
@@ -143,9 +77,7 @@
 
 import Vue from 'vue';
 import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
-import IngredientsForm from './ingredients-form';
-import IngredientsTable from './ingredients-table';
-import SearchMarketIngredients from './search-market-ingredients';
+import InventoryTable from './inventory-table';
 
 export default {
 
@@ -166,9 +98,7 @@ export default {
   },
 
   components: {
-    IngredientsForm,
-    SearchMarketIngredients,
-    IngredientsTable,
+    InventoryTable,
   },
 
   async created() {
@@ -201,17 +131,19 @@ export default {
   },
 
   methods: {
+    async UpdateInventory(ingredient) {
+      try {
+        await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
+      } catch (error) {
+        this.error = error;
+      }
+    },
     roundInventory() {
       this.ingredients.forEach(ingredient => {
         // eslint-disable-next-line no-magic-numbers
         ingredient.inventory = Math.round(ingredient.inventory * 100) / 100;
       });
     },
-    toggleAddModal() {
-      this.showingAdd = !this.showingAdd;
-      this.marketIngredient = undefined;
-    },
-
     toggleSearchIngredientsModal() {
       this.showingSearchIngredients = !this.showingSearchIngredients;
     },
@@ -311,13 +243,6 @@ export default {
         this.error = error;
       } finally {
         this.loading = false;
-      }
-    },
-    async UpdateInventory(ingredient) {
-      try {
-        await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
-      } catch (error) {
-        this.error = error;
       }
     },
 
