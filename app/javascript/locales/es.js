@@ -52,6 +52,7 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
+      newMeasure: 'Crear la medida',
       inventory: 'Inventario',
     },
 
