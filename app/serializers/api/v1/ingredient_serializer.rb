@@ -12,6 +12,7 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
     :quantity,
     :measure,
     :inventory,
+    :minimum_quantity,
     :other_measures,
     :created_at,
     :updated_at

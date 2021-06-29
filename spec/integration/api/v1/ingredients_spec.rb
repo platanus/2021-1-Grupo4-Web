@@ -168,6 +168,40 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 
+  path '/alert-ingredients' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    get 'Show alerted ingredients' do
+      consumes 'application/json'
+      produces 'application/json'
+      description 'Retrieves ingredients with its quantity below minimum'
+
+      response '200', 'ingredients retrieved' do
+        schema(
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/provider_ingredient" }
+            }
+          },
+          required: [
+            :data
+          ]
+        )
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
   path '/ingredients' do
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string

@@ -46,7 +46,6 @@ export default {
       price: 'Precio',
       unitPrice: 'Precio Unitario',
       quantity: 'Cantidad',
-      inventory: 'Inventario Actual',
       measure: 'Unidad',
       selected: 'Ingredientes seleccionados',
       providerName: 'Nombre del proveedor',
@@ -55,6 +54,7 @@ export default {
       addUnit: 'Agregar Unidad',
       msjAlert: 'Debe ingresar el nombre, la cantidad y la unidad',
       msjMinQuantity: 'La cantidad mínima debe ser mayor o igual a 1',
+      inventory: 'Inventario',
     },
 
     recipes: {
@@ -127,6 +127,10 @@ export default {
       saveChanges: 'Guardar cambios',
       shoppingList: 'Lista de compras',
       closeShoppingList: 'Cerrar',
+      actions: 'Acciones',
+      reduceInventory: 'Reducir Inventario',
+      reduceMsg: '¿Estás seguro que quieres reducir el inventario?',
+      yesReduce: 'Reducir',
     },
     providers: {
       title: 'Proveedores',

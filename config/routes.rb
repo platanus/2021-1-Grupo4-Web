@@ -32,6 +32,9 @@ Rails.application.routes.draw do
       get '/search-jumbo-products', to: 'ingredients#search_jumbo_products'
       get '/search-lider-products', to: 'ingredients#search_lider_products'
       get '/search-cornershop-products', to: 'ingredients#search_cornershop_products'
+
+      # Alerts
+      get '/alert-ingredients', to: 'ingredients#minimum_alert_index'
     end
   end
 
