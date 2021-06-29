@@ -76,8 +76,8 @@
               >
             </div>
             <!-- Texto -->
-            <p class="flex text-base items-center text-gray-400 underline">
-              Página Web
+            <p class="flex text-base items-center text-gray-400">
+              {{ $t('msg.providers.webpageUrl') }}
             </p>
           </div>
           <!-- Link -->
@@ -87,6 +87,30 @@
           >
             {{ provider.webpageUrl }}
           </div>
+        </div>
+        <!-- Datos bancarios -->
+        <div class="flex flex-row items-start flex-none order-none w-full justify-between">
+          <div class="flex flex-row flex-none items-center order-none w-48">
+            <!-- Icono -->
+            <div class="w-4 h-4 flex-none m-1.5">
+              <img
+                svg-inline
+                src="../../../../assets/images/credit-card-svg.svg"
+                class="w-4 h-4"
+              >
+            </div>
+            <!-- Texto -->
+            <p class="flex text-base items-center text-gray-400">
+              {{ $t('msg.providers.bank') }}
+            </p>
+          </div>
+          <!-- Boton ver datos -->
+          <button
+            class="flex items-center text-black text-right justify-items-end max-w-full bg-gray-100 border-2 rounded px-1"
+            @click="toggleBankAccount"
+          >
+            {{ $t('msg.providers.see') }}
+          </button>
         </div>
         <!-- Minimo Compra -->
         <div class="flex flex-row items-start flex-none order-none w-full justify-between">
@@ -101,7 +125,7 @@
             </div>
             <!-- Texto -->
             <p class="flex text-base items-center text-gray-400">
-              Mínimo de Compra
+              {{ $t('msg.providers.minimumPurchase') }}
             </p>
           </div>
           <!-- Minimo -->
@@ -122,22 +146,23 @@
             </div>
             <!-- Texto -->
             <p class="flex text-base items-center text-gray-400">
-              Tiempo de Despacho
+              {{ $t('msg.providers.deliveryDays') }}
             </p>
           </div>
           <!-- Tiempo -->
           <p class="flex items-center text-black flex-none order-1 text-right justify-items-end">
-            {{ provider.deliveryDays }} días
+            {{ provider.deliveryDays }} {{ $t('msg.providers.days') }}
           </p>
         </div>
       </div>
-      <div class="flex flex-row items-start flex-none order-2 self-stretch w-full justify-between mx-2">
+      <!-- botones -->
+      <div class="flex flex-row items-start flex-none order-2 self-stretch w-80 justify-between mx-2">
         <div>
           <button
             class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded flex-none order-1 flex-grow-1 px-2"
             @click="toggleDelModal"
           >
-            Eliminar Proveedor
+            {{ $t('msg.providers.delete') }}
           </button>
         </div>
         <div>
@@ -145,7 +170,7 @@
             class="flex flex-row items-center justify-center bg-white hover:bg-gray-300 text-black rounded flex-none order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
-            Editar Proveedor
+            {{ $t('msg.providers.edit') }}
           </button>
         </div>
       </div>
@@ -170,6 +195,31 @@
     >
       <p>{{ $t('msg.providers.deleteMsg') }}</p>
     </base-modal>
+    <base-modal
+      @ok="copyBankAccount"
+      @cancel="toggleBankAccount"
+      v-if="showBankAccount"
+      :title="$t('msg.providers.bank')"
+      :ok-button-label="$t('msg.providers.copy')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <div
+        v-if="provider.contactName && provider.contactRut && provider.bankName &&
+          provider.accountType && provider.accountNumber && provider.email"
+      >
+        <p>
+          {{ provider.contactName }}
+        </p>
+        <p>{{ provider.contactRut }}</p>
+        <p>{{ provider.bankName }}</p>
+        <p>{{ provider.accountType }}</p>
+        <p>{{ provider.accountNumber }}</p>
+        <p>{{ provider.email }}</p>
+      </div>
+      <div v-else>
+        <p> {{ $t('msg.providers.noTransferData') }} </p>
+      </div>
+    </base-modal>
   </div>
 </template>
 
@@ -189,6 +239,7 @@ export default {
       showingDetails: false,
       showingDel: false,
       showingEdit: false,
+      showBankAccount: false,
       providerToDelete: {},
       providerToEdit: {},
     };
@@ -206,6 +257,12 @@ export default {
       this.showingEdit = !this.showingEdit;
       this.providerToEdit = this.provider;
     },
+    toggleBankAccount() {
+      this.showBankAccount = !this.showBankAccount;
+    },
+    copyBankAccount() {
+      console.log('copiando los datos bancarios');
+    },
     async editProvider(provider) {
       this.toggleEditModal();
       try {
@@ -215,7 +272,6 @@ export default {
         this.errorResponse(error);
       }
     },
-
     async deleteProvider() {
       try {
         const response = await deleteProvider(this.providerToDelete.id);
