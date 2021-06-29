@@ -8,6 +8,10 @@ class Ingredient < ApplicationRecord
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :below_minimum, -> {
+                          where.not(minimum_quantity: nil).where("inventory < minimum_quantity")
+                        }
+
   def decrement_inventory!(quantity_to_decrement)
     final_inventory = [inventory - quantity_to_decrement, 0].max
     update!(inventory: final_inventory)
@@ -41,16 +45,17 @@ end
 #
 # Table name: ingredients
 #
-#  id          :bigint(8)        not null, primary key
-#  provider_id :bigint(8)
-#  user_id     :bigint(8)        not null
-#  name        :string
-#  sku         :string
-#  price       :integer
-#  currency    :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  inventory   :float            default(0.0)
+#  id               :bigint(8)        not null, primary key
+#  provider_id      :bigint(8)
+#  user_id          :bigint(8)        not null
+#  name             :string
+#  sku              :string
+#  price            :integer
+#  currency         :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  inventory        :float            default(0.0)
+#  minimum_quantity :float
 #
 # Indexes
 #

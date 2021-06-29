@@ -7,6 +7,7 @@ INGREDIENT_SCHEMA = {
     price: { type: :integer, example: 2990, 'x-nullable': true },
     currency: { type: :string, example: 'CLP', 'x-nullable': true },
     inventory: { type: :float, example: 10.3, 'x-nullable': true },
+    minimum_quantity: { type: :float, example: 10.3, 'x-nullable': true },
     ingredient_measures_attributes: {
       type: "array",
       items: {
@@ -44,6 +45,7 @@ INGREDIENT_RESPONSE_SCHEMA = {
         quantity: { type: :integer, example: 2, 'x-nullable': true },
         measure: { type: :string, example: 'unidad', 'x-nullable': true },
         inventory: { type: :float, example: 10.3, 'x-nullable': true },
+        minimum_quantity: { type: :float, example: 10.3, 'x-nullable': true },
         measures: {
           type: "object",
           properties: {

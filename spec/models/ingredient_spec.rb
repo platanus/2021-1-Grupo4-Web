@@ -27,4 +27,14 @@ RSpec.describe Ingredient, type: :model do
       expect { ingredient.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
+
+  context 'with many ingredients' do
+    let!(:ingredients_good) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 10) }
+    let!(:ingredients_bad) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: 30) }
+    let!(:ingredients_nil) { create_list(:ingredient, 5, inventory: 20, minimum_quantity: nil) }
+
+    it 'scope get the correct amount of alerted ingredients' do
+      expect(described_class.below_minimum.count).to eq(ingredients_bad.count)
+    end
+  end
 end
