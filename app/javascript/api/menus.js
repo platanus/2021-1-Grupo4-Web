@@ -37,6 +37,11 @@ function getShoppingList(menuId) {
     .get(`/menus/${menuId}/shopping-list`, {
     }));
 }
+function reduceInventoryApi(menuId) {
+  return (client
+    .post(`/menus/${menuId}/reduce-inventory`, {
+    }));
+}
 
 function downloadShoppingList(menuId) {
   const url = `${client.defaults.baseURL}/menus/${menuId}/download-shopping-list`;
@@ -44,4 +49,4 @@ function downloadShoppingList(menuId) {
 }
 
 export { getMenus, getMenu, postMenu, updateMenu, deleteMenu,
-  getShoppingList, downloadShoppingList };
+  getShoppingList, downloadShoppingList, reduceInventoryApi };

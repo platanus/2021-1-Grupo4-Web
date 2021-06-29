@@ -29,7 +29,9 @@
         </th>
         <th
           class="px-8 py-3"
-        />
+        >
+          <span class="text-white font-bold">{{ $t('msg.menus.actions') }}</span>
+        </th>
         <th
           class="px-8 py-3"
         />
@@ -85,18 +87,39 @@
         <!-- recipes -->
         <td
           key="recipes"
-          class="py-2 px-8"
+          class="py-2 px-4"
         >
           <menus-table-recipes
             :menu="menu"
           />
         </td>
         <td
-          class="content-center"
+          class="content-center py-2 px-8 items-center"
         >
-          <menu-shopping-list
-            :menu-id="menu.id"
-          />
+          <div class="flex flex-col">
+            <div class="flex justify-between w-full">
+              <menu-shopping-list
+                :menu-id="menu.id"
+                @reduceInventory="toggleReduce"
+              />
+              <p>
+                Lista de Compras
+              </p>
+            </div>
+            <div class="flex w-full justify-between">
+              <div class="flex w-full m-auto">
+                <img
+                  svg-inline
+                  src="../../../../assets/images/reduce-inventory-svg.svg"
+                  class="w-6 h-6 cursor-pointer"
+                  @click="toggleReduce(menu.id)"
+                >
+              </div>
+              <p>
+                Restar Inventario
+              </p>
+            </div>
+          </div>
         </td>
         <td
           class="content-center"
@@ -112,6 +135,16 @@
         </td>
       </tr>
     </tbody>
+    <base-modal
+      @ok="reduceInventory"
+      @cancel="toggleReduce"
+      v-if="showingReduceMsg"
+      :title="$t('msg.menus.reduceInventory')"
+      :ok-button-label="$t('msg.menus.yesReduce')"
+      :cancel-button-label="$t('msg.cancel')"
+    >
+      <p>{{ $t('msg.menus.reduceMsg') }}</p>
+    </base-modal>
   </table>
 </template>
 
@@ -119,6 +152,7 @@
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
 import MenuShoppingList from './menu-shopping-list';
+import { reduceInventoryApi } from '../../../api/menus';
 
 export default {
   components: {
@@ -126,10 +160,28 @@ export default {
     MenusTableRecipes,
     MenuShoppingList,
   },
+  data() {
+    return {
+      error: '',
+      showingReduceMsg: false,
+    };
+  },
   props: {
     menus: { type: Array, required: true },
   },
   methods: {
+    async reduceInventory() {
+      try {
+        await reduceInventoryApi(this.idMenuToReduce);
+        this.showingReduceMsg = !this.showingReduceMsg;
+      } catch (error) {
+        this.error = error;
+      }
+    },
+    toggleReduce(menuId) {
+      this.showingReduceMsg = !this.showingReduceMsg;
+      this.idMenuToReduce = menuId;
+    },
     editMenu(element) {
       window.location = `/menus/${element.id}/edit`;
     },
