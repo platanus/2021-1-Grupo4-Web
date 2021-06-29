@@ -152,7 +152,7 @@
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
 import MenuShoppingList from './menu-shopping-list';
-import { reduceInventory } from '../../../api/menus';
+import { reduceInventoryApi } from '../../../api/menus';
 
 export default {
   components: {
@@ -172,7 +172,7 @@ export default {
   methods: {
     async reduceInventory() {
       try {
-        await reduceInventory(this.idMenuToReduce);
+        await reduceInventoryApi(this.idMenuToReduce);
         this.showingReduceMsg = !this.showingReduceMsg;
       } catch (error) {
         this.error = error;
