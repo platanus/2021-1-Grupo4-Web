@@ -76,10 +76,16 @@
 </template>
 
 <script>
+
+import NavegationItem from './home/navegation-item';
+
 export default {
   props: {
     activeElement: { type: String, required: false, default: '' },
     isCurrentUser: { type: Boolean, required: true },
+  },
+  components: {
+    NavegationItem,
   },
   methods: {
     signUp() {
