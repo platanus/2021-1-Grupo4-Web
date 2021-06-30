@@ -69,8 +69,8 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex flex-wrap -mx-3">
-          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div class="flex -mx-3">
+          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
               v-if="index == 0 || index == 1"
@@ -86,7 +86,7 @@
               :placeholder="$t('msg.ingredients.quantity')"
             >
           </div>
-          <div class="relative">
+          <div class="w-full px-3 mb-6 md:mb-0">
             <!--Measure -->
             <label
               v-if="index == 0 || index == 1"
@@ -96,40 +96,20 @@
               {{ $t('msg.ingredients.measure') }}
             </label>
             <div class="flex">
-              <select
-                class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
-                rounded leading-tight focus:outline-none"
-                v-model="unit.name"
-              >
-                <!--Add Mode unit from market -->
-                <option
-                  v-if="!editMode && marketIngredient !== undefined"
-                  hidden
-                  selected
-                  :key="form.ingredient_measures_attributes[0].name"
-                  :value="form.ingredient_measures_attributes[0].name"
-                >
-                  {{ form.ingredient_measures_attributes[0].name }}
-                </option>
-                <!--Edit Mode unit ingredient -->
-                <option
-                  v-if="editMode"
-                  selected
-                  :key="ingredient.measure"
-                  :value="ingredient.measure"
-                >
-                  {{ ingredient.measure }}
-                </option>
-                <!--Other units -->
-                <option
-                  v-for="form_unit in formUnits"
-                  :key="form_unit"
-                  :value="form_unit"
-                >
-                  {{ form_unit }}
-                </option>
-              </select>
-
+              <measure-search
+                v-if="!editMode && marketIngredient !== undefined"
+                :selected-measure="form.ingredient_measures_attributes[0].name"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
+              <measure-search
+                v-if="!editMode && marketIngredient === undefined"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
+              <measure-search
+                v-if="editMode"
+                :selected-measure="unit.name"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
               <button
                 type="button"
                 class="px-3"
@@ -150,7 +130,7 @@
         >
           <button
             type="button"
-            @click="AddMeasure"
+            @click="addMeasure"
             class="mb-6 bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded text-sm font-medium"
           >
             {{ $t('msg.ingredients.addUnit') }}
@@ -183,6 +163,7 @@
 <script>
 
 import { getProviders } from './../../api/providers.js';
+import MeasureSearch from './measure_search';
 
 export default {
   props: {
@@ -190,10 +171,11 @@ export default {
     ingredient: { type: Object, default() {
       return {};
     } },
-    units: { type: Array, required: true },
     marketIngredient: { type: Object, default: undefined },
   },
-
+  components: {
+    MeasureSearch,
+  },
   data() {
     return {
       form: {
@@ -206,12 +188,11 @@ export default {
       },
       showingMeasureModal: false,
       providersNames: [],
-      usedUnits: [],
       measuresToDelete: [],
     };
   },
   methods: {
-    AddMeasure() {
+    addMeasure() {
       const lastItem = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length - 1];
       if (lastItem.name && lastItem.quantity) {
         this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
@@ -223,6 +204,9 @@ export default {
       if (unit.id !== undefined) {
         this.measuresToDelete.push(unit.id);
       }
+    },
+    changeUnitName(unit, measure) {
+      unit.name = measure;
     },
   },
   async created() {
@@ -259,16 +243,6 @@ export default {
 
     const providers = await getProviders();
     this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
-  },
-
-  computed: {
-    formUnits() {
-      if (!this.editMode) {
-        return this.units;
-      }
-
-      return this.units.filter(unit => unit !== this.ingredient.measure);
-    },
   },
 };
 

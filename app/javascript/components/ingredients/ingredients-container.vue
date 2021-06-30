@@ -88,7 +88,6 @@
       >
         <ingredients-form
           ref="addIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="false"
           :market-ingredient="marketIngredient"
         />
@@ -118,7 +117,6 @@
       >
         <ingredients-form
           ref="editIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="true"
           :ingredient="this.ingredientToEdit"
         />
@@ -251,21 +249,8 @@ export default {
 
     async addMarketIngredient(productForm) {
       this.toggleSearchIngredientsModal();
-      this.loading = true;
-      try {
-        const {
-          data:
-            {
-              data: { id, attributes },
-            },
-        } = await postIngredient(productForm);
-        const ingredientToAdd = { id, ...attributes };
-        this.ingredients.push(ingredientToAdd);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
+      this.toggleAddModal();
+      this.marketIngredient = productForm;
     },
     addInventoryToIngredient(ingredientsInfo, id) {
       this.ingredients.forEach(elem => {
