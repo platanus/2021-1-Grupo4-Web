@@ -60,7 +60,7 @@ export default {
         actualQuantity: 'Inventario Actual',
         increaseIn: 'Aumentar en',
         decreaseIn: 'Disminuir en',
-        resulting: 'Resultante',
+        resulting: 'Inventario Resultante',
       },
     },
 
