@@ -30,7 +30,7 @@
     </thead>
     <tbody class="bg-gray-200">
       <tr
-        v-for="ingredient in ingredients"
+        v-for="(ingredient, idx) in ingredients"
         :key="ingredient.id"
         class="bg-white border-4 border-gray-200 text-left"
       >
@@ -69,32 +69,27 @@
         </td>
         <td class="py-2 px-8">
           <div
-            class="flex justify-between"
-            v-if="!editInventory"
+            class="flex justify-start"
           >
-            <p class="ml-2 font-medium">
-              {{ ingredient.inventory }} {{ ingredient.measure }}
-            </p>
             <img
               svg-inline
               src="../../../assets/images/pencil-svg.svg"
               class="w-4 h-4 cursor-pointer"
-              @click="toggleEditInventory"
+              @click="openEditInventory(idx)"
             >
-          </div>
-          <div
-            class="flex justify-between items-center"
-            v-else
-          >
-            <input
-              type="number"
-              min="0"
-              ref="inventory"
-              class="w-10 border-2 border-solid border-gray-400 box-border"
-              v-model="ingredient.inventory"
-              @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
-            >
-            {{ ingredient.measure }}
+            <div class="flex">
+              <input
+                type="number"
+                min="0"
+                ref="inventory"
+                class="w-12 m-auto font-medium border-none outline-none text-center"
+                v-model="ingredient.inventory"
+                @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
+              >
+              <div class="flex m-auto font-medium">
+                {{ ingredient.measure }}
+              </div>
+            </div>
           </div>
         </td>
         <td class="content-center">
@@ -119,12 +114,6 @@ export default {
   components: {
     IngredientsTableUnitPrice,
   },
-  data() {
-    return {
-      editInventory: false,
-    };
-  },
-
   props: {
     ingredients: { type: Array, required: true },
   },
@@ -135,12 +124,13 @@ export default {
     deleteIngredient(element) {
       this.$emit('del', element);
     },
-    toggleEditInventory() {
-      this.editInventory = !this.editInventory;
+    openEditInventory(idx) {
+      this.$nextTick(() => {
+        this.$refs.inventory[idx].focus();
+      });
     },
     changeInventory(ingredient, inventory) {
       ingredient.inventory = inventory;
-      this.editInventory = !this.editInventory;
       this.$emit('updateInventory', ingredient);
     },
   },

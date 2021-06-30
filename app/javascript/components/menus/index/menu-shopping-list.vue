@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full m-auto">
+  <div>
     <button
       class="focus:outline-none"
       @click="toggleList"
