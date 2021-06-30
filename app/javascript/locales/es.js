@@ -147,6 +147,7 @@ export default {
       reduceInventory: 'Reducir Inventario',
       reduceMsg: '¿Estás seguro que quieres reducir el inventario?',
       yesReduce: 'Reducir',
+      menuRecipes: 'Este menú tiene la(s) siguiente(s) receta(s):',
     },
     providers: {
       title: 'Proveedores',
