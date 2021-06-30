@@ -263,11 +263,22 @@ export default {
 
     // eslint-disable-next-line max-statements
     async addIngredient() {
-      let ingredientsInfo;
-      this.showingAdd = !this.showingAdd;
-      this.loading = true;
+      const ingredientsInfo = this.$refs.addIngredientInfo.form;
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredient_measures_attributes[0].quantity ||
+       !ingredientsInfo.ingredient_measures_attributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
+
+        return;
+      } else if (ingredientsInfo.ingredient_measures_attributes[0].quantity < 1) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return;
+      }
       try {
-        ingredientsInfo = this.$refs.addIngredientInfo.form;
+        this.showingAdd = !this.showingAdd;
+        this.loading = true;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         const {
@@ -301,10 +312,22 @@ export default {
 
     // eslint-disable-next-line max-statements
     async editIngredient() {
-      this.showingEdit = !this.showingEdit;
-      this.loading = true;
+      const ingredientsInfo = this.$refs.editIngredientInfo.form;
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredient_measures_attributes[0].quantity ||
+      !ingredientsInfo.ingredient_measures_attributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
+
+        return;
+      } else if (ingredientsInfo.ingredient_measures_attributes[0].quantity < 1) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return;
+      }
       try {
-        const ingredientsInfo = this.$refs.editIngredientInfo.form;
+        this.showingEdit = !this.showingEdit;
+        this.loading = true;
         ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
           .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
         this.addMeasuresToDelete(ingredientsInfo);
