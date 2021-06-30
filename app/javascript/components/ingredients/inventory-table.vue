@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="w-full">
     <table
-      class="divide-y divide-gray-200"
+      class="divide-y divide-gray-200 w-full"
     >
       <thead class="justify-between bg-gray-600 border-4 border-gray-600">
         <tr class="text-left items-center w-full">
@@ -47,7 +47,7 @@
                 :min="0"
                 ref="increase-inventory"
                 class="w-10 border-2 border-solid border-gray-400 box-border"
-                v-model="increaseInventoryIn"
+                v-model="increaseInventoryIn[idx]"
                 @change="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
@@ -61,7 +61,7 @@
                 :max="maxDecrease(idx)"
                 ref="decrease-inventory"
                 class="w-10 border-2 border-solid border-gray-400 box-border"
-                v-model="decreaseInventoryIn"
+                v-model="decreaseInventoryIn[idx]"
                 @change="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
@@ -87,8 +87,8 @@
 export default {
   data() {
     return {
-      increaseInventoryIn: 0,
-      decreaseInventoryIn: 0,
+      increaseInventoryIn: [],
+      decreaseInventoryIn: [],
       actualInventories: [],
     };
   },
@@ -97,15 +97,22 @@ export default {
   },
   methods: {
     changeInventory(ingredient, idx) {
-      ingredient.inventory = this.actualInventories[idx] + parseFloat(this.increaseInventoryIn) -
-      parseFloat(this.decreaseInventoryIn);
+      ingredient.inventory = this.actualInventories[idx] + parseFloat(this.increaseInventoryIn[idx]) -
+      parseFloat(this.decreaseInventoryIn[idx]);
+      this.$emit('updateIngredientInventory', ingredient);
     },
     maxDecrease(idx) {
-      return this.actualInventories[idx] + this.increaseInventoryIn;
+      return this.actualInventories[idx] + this.increaseInventoryIn[idx];
     },
   },
   created() {
     this.actualInventories = this.ingredients.map(element => element.inventory);
+    this.ingredients.forEach(element => {
+      this.increaseInventoryIn.push(element.inventory - element.inventory);
+    });
+    this.ingredients.forEach(element => {
+      this.decreaseInventoryIn.push(element.inventory - element.inventory);
+    });
   },
 };
 </script>

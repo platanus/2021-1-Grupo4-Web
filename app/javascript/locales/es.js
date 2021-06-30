@@ -57,7 +57,7 @@ export default {
         title: 'Inventario',
         editingInventories: 'Editando varios inventarios',
         editInventories: 'Editar varios inventarios',
-        actualQuantity: 'Cantidad Actual',
+        actualQuantity: 'Inventario Actual',
         increaseIn: 'Aumentar en',
         decreaseIn: 'Disminuir en',
         resulting: 'Resultante',

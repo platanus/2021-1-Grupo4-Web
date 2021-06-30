@@ -1,6 +1,6 @@
 <template>
   <table
-    class="divide-y divide-gray-200"
+    class="divide-y divide-gray-200 w-full"
   >
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">
       <tr class="text-left items-center w-full">

@@ -20,7 +20,7 @@
           <base-spinner />
         </span>
       </div>
-      <div class="flex flex-col p-10 w-full bg-gray-50 my-10">
+      <div class="flex flex-col p-10 w-auto bg-gray-50 my-10">
         <!--SearchBar y Button-->
         <div class="flex flex-col lg:flex-row pb-4">
           <div class="flex items-center p-2 lg:w-1/3">
@@ -51,21 +51,21 @@
           </p>
           <div
             v-else
-            class="flex flex-col w-auto 2xl:justify-center items-center overflow-auto"
+            class="flex flex-col w-full 2xl:justify-center items-center overflow-auto"
           >
             <inventory-table
               :ingredients="filterIngredients"
-              @edit="toggleEditModal"
-              @del="toggleDelModal"
-              @updateInventory="UpdateInventory"
+              @updateIngredientInventory="updateIngredientInventory"
             />
           </div>
-          <div class="flex flex-col w-auto justify-end my-4">
-            <base-button
-              :elements="{ placeholder: $t('msg.saveChanges'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white ' }"
-              @click="updateInventoryy"
-            />
+          <div class="flex justify-end">
+            <div class="flex min-w-min my-4">
+              <base-button
+                :elements="{ placeholder: $t('msg.saveChanges'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white min-w-min' }"
+                @click="updateInventory"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -75,8 +75,7 @@
 
 <script>
 
-import Vue from 'vue';
-import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+import { getIngredients, editIngredient } from './../../api/ingredients.js';
 import InventoryTable from './inventory-table';
 
 export default {
@@ -84,12 +83,8 @@ export default {
   data() {
     return {
       loading: false,
-      showingAdd: false,
       showingSearchIngredients: false,
-      showingEdit: false,
-      showingDel: false,
-      ingredientToEdit: {},
-      ingredientToDelete: {},
+      ingredientsToEdit: [],
       ingredients: [],
       marketIngredient: undefined,
       searchQuery: '',
@@ -100,7 +95,6 @@ export default {
   components: {
     InventoryTable,
   },
-
   async created() {
     this.loading = true;
     try {
@@ -131,133 +125,22 @@ export default {
   },
 
   methods: {
-    async UpdateInventory(ingredient) {
+    updateIngredientInventory(ingredient) {
+      this.ingredientsToEdit.push(ingredient);
+    },
+    async updateInventory() {
       try {
-        await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
+        await this.ingredientsToEdit.forEach(
+          ing => { editIngredient(ing.id, { 'inventory': ing.inventory, 'providerName': ing.providerName }); });
+        window.location = '/ingredients';
       } catch (error) {
         this.error = error;
       }
     },
     roundInventory() {
       this.ingredients.forEach(ingredient => {
-        // eslint-disable-next-line no-magic-numbers
-        ingredient.inventory = Math.round(ingredient.inventory * 100) / 100;
+        ingredient.inventory = Math.round(ingredient.inventory * '100') / '100';
       });
-    },
-    toggleSearchIngredientsModal() {
-      this.showingSearchIngredients = !this.showingSearchIngredients;
-    },
-
-    toggleEditModal(ingredient) {
-      this.showingEdit = !this.showingEdit;
-      this.ingredientToEdit = ingredient;
-    },
-
-    toggleDelModal(ingredient) {
-      this.showingDel = !this.showingDel;
-      this.ingredientToDelete = ingredient;
-    },
-
-    // eslint-disable-next-line max-statements
-    async addIngredient() {
-      let ingredientsInfo;
-      this.showingAdd = !this.showingAdd;
-      this.loading = true;
-      try {
-        ingredientsInfo = this.$refs.addIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
-        const {
-          data:
-            { data: { id, attributes },
-            },
-        } = await postIngredient(ingredientsInfo);
-        const ingredientToAdd = { id, ...attributes };
-        this.ingredients.push(ingredientToAdd);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    async addMarketIngredient(productForm) {
-      this.toggleSearchIngredientsModal();
-      this.loading = true;
-      try {
-        const {
-          data:
-            {
-              data: { id, attributes },
-            },
-        } = await postIngredient(productForm);
-        const ingredientToAdd = { id, ...attributes };
-        this.ingredients.push(ingredientToAdd);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-    addInventoryToIngredient(ingredientsInfo, id) {
-      this.ingredients.forEach(elem => {
-        if (elem.id === id) {
-          ingredientsInfo.inventory = elem.inventory;
-        }
-      });
-
-      return ingredientsInfo;
-    },
-
-    // eslint-disable-next-line max-statements
-    async editIngredient() {
-      this.showingEdit = !this.showingEdit;
-      this.loading = true;
-      try {
-        const ingredientsInfo = this.$refs.editIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
-        this.addMeasuresToDelete(ingredientsInfo);
-        const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
-        await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
-        this.updateIngredient(ingredientsInfoFinal);
-        this.error = '';
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-    addMeasuresToDelete(ingredientsInfo) {
-      this.$refs.editIngredientInfo.measuresToDelete
-        .forEach(elem => ingredientsInfo.ingredient_measures_attributes.push({ id: elem, _destroy: true }));
-    },
-
-    async deleteIngredient() {
-      this.showingDel = !this.showingDel;
-      this.loading = true;
-      try {
-        await deleteIngredient(this.ingredientToDelete.id);
-        this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    async updateIngredient(ingredientEdited) {
-      ingredientEdited.quantity = ingredientEdited.ingredient_measures_attributes[0].quantity;
-      ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
-      ingredientEdited.id = this.ingredientToEdit.id;
-      ingredientEdited.otherMeasures = { data: [] };
-      ingredientEdited.providerName = ingredientEdited.provider_name;
-      ingredientEdited.ingredient_measures_attributes.forEach(element => {
-        ingredientEdited.otherMeasures.data
-          .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
-      });
-      const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
-      Vue.set(this.ingredients, objectIndex, ingredientEdited);
     },
   },
 };
