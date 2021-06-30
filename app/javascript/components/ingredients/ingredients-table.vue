@@ -1,6 +1,6 @@
 <template>
   <table
-    class="divide-y divide-gray-200"
+    class="divide-y divide-gray-200 w-full"
   >
     <thead class="justify-between bg-gray-600 border-4 border-gray-600">
       <tr class="text-left items-center w-full">
@@ -23,7 +23,7 @@
           <span class="text-white font-bold">{{ $t('msg.ingredients.unitPrice') }}($)</span>
         </th>
         <th class="px-8 py-3">
-          <span class="text-white font-bold">{{ $t('msg.ingredients.inventory') }}</span>
+          <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.title') }}</span>
         </th>
         <th class="px-8 py-3" />
       </tr>
@@ -83,7 +83,7 @@
             >
           </div>
           <div
-            class="flex justify-between flex items-start items-center"
+            class="flex justify-between items-center"
             v-else
           >
             <input

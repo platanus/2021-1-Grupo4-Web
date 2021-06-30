@@ -1,0 +1,147 @@
+<template>
+  <div>
+    <div class="flex flex-col">
+      <div class="flex items-center h-8 mt-1">
+        <!--Title-->
+        <a href="/ingredients">
+          <img
+            class="h-6 w-6 text-white mx-2"
+            svg-inline
+            src="../../../assets/images/arrow-left-svg.svg"
+          >
+        </a>
+        <div class="text-4xl">
+          {{ $t('msg.ingredients.inventory.editingInventories') }}
+        </div>
+        <span
+          class="flex my-auto w-8 h-8 pl-2 ml-2"
+          v-if="loading"
+        >
+          <base-spinner />
+        </span>
+      </div>
+      <div class="flex flex-col p-10 w-auto bg-gray-50 my-10">
+        <!--SearchBar y Button-->
+        <div class="flex flex-col lg:flex-row pb-4">
+          <div class="flex items-center p-2 lg:w-1/3">
+            <div class="relative text-yellow-700 w-full">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img
+                  svg-inline
+                  src="../../../assets/images/magnifyng-glass-svg.svg"
+                  class="w-6 h-6 text-yellow-700"
+                >
+              </span>
+              <input
+                class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
+                :placeholder="$t('msg.ingredients.search')"
+                @keyup="filterIngredients"
+                v-model="searchQuery"
+              >
+            </div>
+          </div>
+        </div>
+        <!--Table-->
+        <div v-if="!loading">
+          <p
+            v-if="this.ingredients.length===0"
+            class="p-2"
+          >
+            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title').toLowerCase() }}
+          </p>
+          <div
+            v-else
+            class="flex flex-col w-full 2xl:justify-center items-center overflow-auto"
+          >
+            <inventory-table
+              :ingredients="filterIngredients"
+              @updateIngredientInventory="updateIngredientInventory"
+            />
+          </div>
+          <div class="flex justify-end">
+            <div class="flex min-w-min my-4">
+              <base-button
+                :elements="{ placeholder: $t('msg.saveChanges'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white min-w-min' }"
+                @click="updateInventory"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import { getIngredients, editIngredient } from './../../api/ingredients.js';
+import InventoryTable from './inventory-table';
+
+export default {
+
+  data() {
+    return {
+      loading: false,
+      showingSearchIngredients: false,
+      ingredientsToEdit: [],
+      ingredients: [],
+      marketIngredient: undefined,
+      searchQuery: '',
+      error: '',
+    };
+  },
+
+  components: {
+    InventoryTable,
+  },
+  async created() {
+    this.loading = true;
+    try {
+      const response = await getIngredients();
+      this.ingredients = response.data.data.map((element) => ({
+        id: element.id,
+        ...element.attributes,
+      }));
+    } catch (error) {
+      this.error = error;
+    } finally {
+      this.loading = false;
+    }
+    this.roundInventory();
+  },
+
+  computed: {
+    filterIngredients() {
+      if (this.searchQuery) {
+        return this.ingredients.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
+      }
+
+      return this.ingredients;
+    },
+  },
+
+  methods: {
+    updateIngredientInventory(ingredient) {
+      this.ingredientsToEdit.push(ingredient);
+    },
+    async updateInventory() {
+      try {
+        await this.ingredientsToEdit.forEach(
+          ing => { editIngredient(ing.id, { 'inventory': ing.inventory, 'providerName': ing.providerName }); });
+        window.location = '/ingredients';
+      } catch (error) {
+        this.error = error;
+      }
+    },
+    roundInventory() {
+      this.ingredients.forEach(ingredient => {
+        ingredient.inventory = Math.round(ingredient.inventory * '100') / '100';
+      });
+    },
+  },
+};
+</script>

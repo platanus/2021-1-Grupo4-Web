@@ -18,6 +18,7 @@ export default {
     max: 'Máximo',
     quantity: 'Cantidad',
     download: 'Descargar',
+    saveChanges: 'Guardar cambios',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -56,8 +57,16 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
+      inventory: {
+        title: 'Inventario',
+        editingInventories: 'Editando varios inventarios',
+        editInventories: 'Editar varios inventarios',
+        actualQuantity: 'Inventario Actual',
+        increaseIn: 'Aumentar en',
+        decreaseIn: 'Disminuir en',
+        resulting: 'Inventario Resultante',
+      },
       newMeasure: 'Crear la medida',
-      inventory: 'Inventario',
     },
 
     recipes: {
