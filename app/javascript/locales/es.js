@@ -1,6 +1,8 @@
 export default {
   msg: {
-    welcome: 'Bienvenido a KitchenGram!',
+    welcomeTitle: '¡Bienvenido/a a KitchenGram!',
+    welcomeSubtitle: 'La nueva forma de gestionar tu cocina y negocio',
+    start: '¡Comienza ya!',
     add: 'Agregar',
     edit: 'Editar',
     delete: 'Eliminar',
@@ -29,6 +31,8 @@ export default {
       successRegister: 'Usuario creado exitosamente',
       failRegister: 'No se pudo registrar el usuario',
       failLogin: 'No se pudo iniciar sesión',
+      alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
+      notHaveAccount: '¿No tienes cuenta? Registrate',
     },
 
     ingredients: {
