@@ -131,7 +131,26 @@
         :ok-button-label="$t('msg.yesDelete')"
         :cancel-button-label="$t('msg.cancel')"
       >
-        <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
+        <!-- Critical associations -->
+        <span
+          class="flex my-auto w-8 h-8 pl-2"
+          v-if="loadingAssociations"
+        >
+          <base-spinner />
+        </span>
+        <div v-else>
+          <div v-if="criticalAssociations.length > 0">
+            <p>{{ $t('msg.ingredients.associationWarning') }}</p>
+            <base-one-column-table
+              :header="$t('msg.recipes.title')"
+              :rows="criticalAssociations"
+            />
+          </div>
+          <!-- Delete msg -->
+          <p class="mt-4">
+            {{ $t('msg.ingredients.deleteMsg') }}
+          </p>
+        </div>
       </base-modal>
     </div>
   </div>
@@ -140,7 +159,8 @@
 <script>
 
 import Vue from 'vue';
-import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+import { getIngredients, postIngredient, deleteIngredient,
+  editIngredient, getCriticalAssociations } from './../../api/ingredients.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
@@ -150,6 +170,7 @@ export default {
   data() {
     return {
       loading: false,
+      loadingAssociations: false,
       showingAdd: false,
       showingSearchIngredients: false,
       showingEdit: false,
@@ -159,6 +180,7 @@ export default {
       ingredients: [],
       marketIngredient: undefined,
       searchQuery: '',
+      criticalAssociations: [],
       error: '',
     };
   },
@@ -222,6 +244,21 @@ export default {
     toggleDelModal(ingredient) {
       this.showingDel = !this.showingDel;
       this.ingredientToDelete = ingredient;
+      if (this.showingDel) {
+        this.getIngredientAssociations(ingredient.id);
+      }
+    },
+
+    async getIngredientAssociations(ingredientId) {
+      this.loadingAssociations = true;
+      try {
+        const response = await getCriticalAssociations(ingredientId);
+        this.criticalAssociations = response.data.recipes.map((element) => element.name);
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loadingAssociations = false;
+      }
     },
 
     // eslint-disable-next-line max-statements

@@ -6,7 +6,7 @@ export default {
     add: 'Agregar',
     edit: 'Editar',
     delete: 'Eliminar',
-    yesDelete: 'Sí, Eliminar',
+    yesDelete: 'Sí, eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
     noElements: 'Aún no tienes',
@@ -45,7 +45,7 @@ export default {
       searchAdd: 'Agregar',
       edit: 'Editar ingrediente',
       delete: 'Eliminar ingrediente',
-      deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
       provider: 'Proveedor',
       price: 'Precio',
@@ -57,6 +57,8 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
+      associationWarning: 'Este ingrediente se encuentra en la(s) siguiente(s) receta(s):',
+      newMeasure: 'Crear la medida',
       inventory: {
         title: 'Inventario',
         editingInventories: 'Editando varios inventarios',
@@ -66,7 +68,6 @@ export default {
         decreaseIn: 'Disminuir en',
         resulting: 'Inventario Resultante',
       },
-      newMeasure: 'Crear la medida',
     },
 
     recipes: {
@@ -76,7 +77,7 @@ export default {
       add: 'Agregar receta',
       edit: 'Editar',
       delete: 'Eliminar',
-      deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
       unitary: 'Unitario',
       minutes: 'minutos',
@@ -112,6 +113,7 @@ export default {
       alertExistingStep: 'Ese paso ya existe',
       alertEmptyStep: 'Ingresa información al paso',
       alertEmptyBasicInformation: 'Falta completar información básica',
+      associationWarning: 'Esta receta se encuentra en el(los) siguiente(s) menú(s):',
     },
 
     menus: {
@@ -160,7 +162,7 @@ export default {
       add: 'Agregar Proveedor',
       delete: 'Eliminar proveedor',
       edit: 'Editar Proveedor',
-      deleteMsg: 'Estás seguro de que deseas eliminar este proveedor?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar este proveedor?',
       see: 'Ver datos',
       copy: 'Copiar',
       bank: 'Cuenta Bancaria',
