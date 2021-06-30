@@ -290,6 +290,31 @@
         "data"
       ]
     },
+    "recipe_critical_associations": {
+      "type": "object",
+      "properties": {
+        "menus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Menú de almuerzo"
+              },
+              "portions": {
+                "type": "integer",
+                "example": 5
+              }
+            }
+          }
+        }
+      }
+    },
     "user": {
       "type": "object",
       "properties": {
@@ -561,6 +586,35 @@
       "required": [
         "data"
       ]
+    },
+    "ingredient_critical_associations": {
+      "type": "object",
+      "properties": {
+        "recipes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Pastel de choclo"
+              },
+              "portions": {
+                "type": "integer",
+                "example": 4
+              },
+              "cook_minutes": {
+                "type": "integer",
+                "example": 25
+              }
+            }
+          }
+        }
+      }
     },
     "update_inventories_ingredients": {
       "type": "array",
@@ -1620,6 +1674,46 @@
         }
       }
     },
+    "/ingredients/{id}/critical-associations": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Ingredient critical associations for confirming delete",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ingredient associations retrieved",
+            "schema": {
+              "$ref": "#/definitions/ingredient_critical_associations"
+            }
+          },
+          "404": {
+            "description": "invalid ingredient id"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
     "/menus/{menu_id}/menu_recipes": {
       "parameters": [
         {
@@ -2562,6 +2656,46 @@
           },
           "404": {
             "description": "recipe not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/recipes/{id}/critical-associations": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves recipe critical associations for confirming delete",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "recipe associations retrieved",
+            "schema": {
+              "$ref": "#/definitions/recipe_critical_associations"
+            }
+          },
+          "404": {
+            "description": "invalid recipe id"
           },
           "401": {
             "description": "user unauthorized"

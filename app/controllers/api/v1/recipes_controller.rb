@@ -9,6 +9,10 @@ class Api::V1::RecipesController < Api::V1::BaseController
     respond_with recipe
   end
 
+  def critical_associations
+    respond_with critical_recipe_associations
+  end
+
   def create
     respond_with recipes.create!(recipe_params)
   end
@@ -29,6 +33,12 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def recipes
     @recipes ||= current_user.recipes
+  end
+
+  def critical_recipe_associations
+    {
+      menus: recipe.menus
+    }
   end
 
   def recipe_params

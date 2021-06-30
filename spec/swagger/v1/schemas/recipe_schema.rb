@@ -138,3 +138,20 @@ RECIPE_RESOURCE_SCHEMA = {
     :data
   ]
 }
+
+RECIPE_CRITICAL_ASSOCIATIONS = {
+  type: "object",
+  properties: {
+    menus: {
+      type: :array,
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1 },
+          name: { type: :string, example: 'Menú de almuerzo' },
+          portions: { type: :integer, example: 5 }
+        }
+      }
+    }
+  }
+}

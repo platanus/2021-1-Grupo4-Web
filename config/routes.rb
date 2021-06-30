@@ -6,6 +6,9 @@ Rails.application.routes.draw do
         collection do
           post '/update-inventories', to: 'ingredients#update_inventories'
         end
+        member do
+          get '/critical-associations', to: 'ingredients#critical_associations'
+        end
       end
       resources :providers
       resources :menus do
@@ -19,6 +22,9 @@ Rails.application.routes.draw do
       resources :recipes do
         resources :recipe_ingredients, only: [:create, :update, :destroy]
         resources :recipe_steps, only: [:create, :update, :destroy]
+        member do
+          get '/critical-associations', to: 'recipes#critical_associations'
+        end
       end
 
       namespace :users do
@@ -49,7 +55,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount Sidekiq::Web => '/queue'
 
-  resources :ingredients, only: [:index]
+  resources :ingredients, only: [:index, :show]
   resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :show, :new, :edit]
   resources :providers, only: [:index, :new]

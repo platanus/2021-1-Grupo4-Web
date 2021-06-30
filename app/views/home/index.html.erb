@@ -1,8 +1,5 @@
-<div class="h-screen flex">
-  <% if current_user.present? %>
-    <side-navbar active-element=""></side-navbar>
-  <% end %>
-  <div class="container ml-64 px-20 py-10 overflow-hidden">
-      <landing-page></landing-page>
-  </div>
+<div class="p-4">
+  <landing-page
+    :is-current-user=<%= current_user.present? %>
+  />
 </div>

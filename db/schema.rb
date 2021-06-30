@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_06_24_005920) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "primary", default: false
     t.index ["ingredient_id"], name: "index_ingredient_measures_on_ingredient_id"
+    t.index ["name", "ingredient_id"], name: "index_ingredient_measures_on_name_and_ingredient_id", unique: true
   end
 
   create_table "ingredients", force: :cascade do |t|

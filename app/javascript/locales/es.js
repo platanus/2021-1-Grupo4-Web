@@ -1,10 +1,12 @@
 export default {
   msg: {
-    welcome: 'Bienvenido a KitchenGram!',
+    welcomeTitle: '¡Bienvenido/a a KitchenGram!',
+    welcomeSubtitle: 'La nueva forma de gestionar tu cocina y negocio',
+    start: '¡Comienza ya!',
     add: 'Agregar',
     edit: 'Editar',
     delete: 'Eliminar',
-    yesDelete: 'Sí, Eliminar',
+    yesDelete: 'Sí, eliminar',
     save: 'Guardar',
     cancel: 'Cancelar',
     noElements: 'Aún no tienes',
@@ -16,6 +18,7 @@ export default {
     max: 'Máximo',
     quantity: 'Cantidad',
     download: 'Descargar',
+    saveChanges: 'Guardar cambios',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -29,6 +32,8 @@ export default {
       successRegister: 'Usuario creado exitosamente',
       failRegister: 'No se pudo registrar el usuario',
       failLogin: 'No se pudo iniciar sesión',
+      alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
+      notHaveAccount: '¿No tienes cuenta? Registrate',
     },
 
     ingredients: {
@@ -40,7 +45,7 @@ export default {
       searchAdd: 'Agregar',
       edit: 'Editar ingrediente',
       delete: 'Eliminar ingrediente',
-      deleteMsg: 'Estás seguro de que deseas eliminar este ingrediente?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
       provider: 'Proveedor',
       price: 'Precio',
@@ -54,8 +59,17 @@ export default {
       addUnit: 'Agregar Unidad',
       msjAlert: 'Debe ingresar el nombre, la cantidad y la unidad',
       msjMinQuantity: 'La cantidad mínima debe ser mayor o igual a 1',
+      associationWarning: 'Este ingrediente se encuentra en la(s) siguiente(s) receta(s):',
       newMeasure: 'Crear la medida',
-      inventory: 'Inventario',
+      inventory: {
+        title: 'Inventario',
+        editingInventories: 'Editando varios inventarios',
+        editInventories: 'Editar varios inventarios',
+        actualQuantity: 'Inventario Actual',
+        increaseIn: 'Aumentar en',
+        decreaseIn: 'Disminuir en',
+        resulting: 'Inventario Resultante',
+      },
     },
 
     recipes: {
@@ -65,7 +79,7 @@ export default {
       add: 'Agregar receta',
       edit: 'Editar',
       delete: 'Eliminar',
-      deleteMsg: 'Estás seguro de que deseas eliminar esta receta?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar esta receta?',
       price: 'Precio',
       unitary: 'Unitario',
       minutes: 'minutos',
@@ -101,6 +115,7 @@ export default {
       alertExistingStep: 'Ese paso ya existe',
       alertEmptyStep: 'Ingresa información al paso',
       alertEmptyBasicInformation: 'Falta completar información básica',
+      associationWarning: 'Esta receta se encuentra en el(los) siguiente(s) menú(s):',
     },
 
     menus: {
@@ -149,7 +164,7 @@ export default {
       add: 'Agregar Proveedor',
       delete: 'Eliminar proveedor',
       edit: 'Editar Proveedor',
-      deleteMsg: 'Estás seguro de que deseas eliminar este proveedor?',
+      deleteMsg: '¿Estás seguro de que deseas eliminar este proveedor?',
       see: 'Ver datos',
       copy: 'Copiar',
       bank: 'Cuenta Bancaria',
