@@ -20,6 +20,7 @@ export default {
     download: 'Descargar',
     saveChanges: 'Guardar cambios',
     close: 'Cerrar',
+    current: 'Actual',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -80,9 +81,9 @@ export default {
         resulting: 'Inventario Resultante',
       },
       noAlert: 'No tienes ingredientes bajo el límite de inventario',
-      alertIngredients: 'Ingredientes acabandose',
-      minimumQuantity: 'Cantidad minima en inventario',
-      minimumQuantityShort: 'Cantidad minima',
+      alertIngredients: 'Ingredientes acabándose',
+      minimumQuantity: 'Cantidad mínima en inventario',
+      minimumQuantityShort: 'Cantidad mínima',
     },
 
     recipes: {

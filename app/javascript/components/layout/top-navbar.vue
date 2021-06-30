@@ -49,6 +49,7 @@
       :cancel-button-label="$t('msg.close')"
     >
       <div
+        class="w-8 h-8"
         v-if="this.alertLoading"
       >
         <base-spinner />
@@ -73,8 +74,10 @@
         <div>
           {{ ingredient.name }}
         </div>
-        <div>
-          {{ ingredient.inventory }}/{{ ingredient.minimumQuantity }} {{ ingredient.measure }}
+        <div class="flex">
+          <div class="text-red-600">
+            {{ ingredient.inventory }}
+          </div>/{{ ingredient.minimumQuantity }} {{ ingredient.measure }}
         </div>
       </div>
     </base-modal>

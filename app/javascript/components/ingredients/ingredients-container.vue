@@ -279,8 +279,8 @@ export default {
       try {
         this.showingAdd = !this.showingAdd;
         this.loading = true;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+          .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
             { data: { id, attributes },
@@ -328,8 +328,8 @@ export default {
       try {
         this.showingEdit = !this.showingEdit;
         this.loading = true;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+          .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
         this.addMeasuresToDelete(ingredientsInfo);
         const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
         await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
@@ -343,7 +343,7 @@ export default {
     },
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
-        .forEach(elem => ingredientsInfo.ingredient_measures_attributes.push({ id: elem, _destroy: true }));
+        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
     },
 
     async deleteIngredient() {
@@ -367,12 +367,12 @@ export default {
     },
 
     async updateIngredient(ingredientEdited) {
-      ingredientEdited.quantity = ingredientEdited.ingredient_measures_attributes[0].quantity;
-      ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
+      ingredientEdited.quantity = ingredientEdited.ingredientMeasuresAttributes[0].quantity;
+      ingredientEdited.measure = ingredientEdited.ingredientMeasuresAttributes[0].name;
       ingredientEdited.id = this.ingredientToEdit.id;
       ingredientEdited.otherMeasures = { data: [] };
       ingredientEdited.providerName = ingredientEdited.provider_name;
-      ingredientEdited.ingredient_measures_attributes.forEach(element => {
+      ingredientEdited.ingredientMeasuresAttributes.forEach(element => {
         ingredientEdited.otherMeasures.data
           .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
       });
