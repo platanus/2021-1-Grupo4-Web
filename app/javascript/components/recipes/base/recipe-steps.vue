@@ -110,8 +110,8 @@ export default {
     return {
       newStepDescription: null,
       error: '',
-      modifiedRecipeSteps: [],
-      recipeStepsSet: new Set(),
+      modifiedRecipeSteps: this.recipeSteps.map((step) => ({ step, isEditing: false, editingStepDescription: '' })),
+      recipeStepsSet: new Set([...this.recipeSteps]),
     };
   },
   watch: {
