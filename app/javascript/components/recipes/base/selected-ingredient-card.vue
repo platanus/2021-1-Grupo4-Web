@@ -70,6 +70,7 @@
 
 <script>
 import baseDropdown from '../../base/base-dropdown.vue';
+import { unitaryPrice } from '../../../utils/recipeUtils.js';
 
 export default {
   components: { baseDropdown },
@@ -103,19 +104,11 @@ export default {
   },
   computed: {
     unitaryPrice() {
-      const defaultQuantity = this.recipeIngredientAttrs.ingredient.otherMeasures.data.map(element =>
-        element.attributes).filter(element =>
-        element.name === this.recipeIngredientAttrs.ingredientMeasure)[0].quantity;
-      const price = this.recipeIngredientAttrs.ingredient.price / defaultQuantity;
-      if (this.isInt(price)) {
-        return price;
-      }
-
-      return Math.round(this.recipeIngredientAttrs.ingredient.price / defaultQuantity);
+      return unitaryPrice(this.recipeIngredientAttrs);
     },
     price() {
-      return this.recipeIngredientAttrs.ingredientQuantity *
-      this.unitaryPrice;
+      return Math.round(this.recipeIngredientAttrs.ingredientQuantity *
+      this.unitaryPrice);
     },
     units() {
       let ingredientUnits = this.recipeIngredientAttrs
