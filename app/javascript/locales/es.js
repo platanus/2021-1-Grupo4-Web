@@ -25,6 +25,7 @@ export default {
       loginTitle: 'Iniciar Sesión',
       labelEmail: 'Correo',
       labelPassword: 'Contraseña',
+      labelPasswordConfirmation: 'Confirmar contraseña',
       placeholderEmail: 'Ingresa tu correo',
       register: 'Registrarse',
       login: 'Iniciar Sesión',
@@ -34,6 +35,12 @@ export default {
       failLogin: 'No se pudo iniciar sesión',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',
+      requiredEmail: 'El correo es obligatorio',
+      invalidEmail: 'El correo no es válido',
+      requiredPassword: 'La contraseña es obligatoria',
+      passwordTooShort: 'La contraseña debe tener al menos 6 caracteres',
+      requiredPasswordConfirmation: 'Confirma tu contraseña',
+      passwordConfirmationIncorrect: 'La contraseña no coincide',
     },
 
     ingredients: {
