@@ -107,12 +107,8 @@ export default {
   },
   created() {
     this.actualInventories = this.ingredients.map(element => element.inventory);
-    this.ingredients.forEach(element => {
-      this.increaseInventoryIn.push(element.inventory - element.inventory);
-    });
-    this.ingredients.forEach(element => {
-      this.decreaseInventoryIn.push(element.inventory - element.inventory);
-    });
+    this.increaseInventoryIn = new Array(this.ingredients.length).fill(0);
+    this.decreaseInventoryIn = new Array(this.ingredients.length).fill(0);
   },
 };
 </script>

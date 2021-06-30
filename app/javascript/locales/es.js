@@ -63,7 +63,6 @@ export default {
         resulting: 'Inventario Resultante',
       },
       newMeasure: 'Crear la medida',
-      inventory: 'Inventario',
     },
 
     recipes: {

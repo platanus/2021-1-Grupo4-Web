@@ -20,7 +20,8 @@ end
 #
 # Indexes
 #
-#  index_ingredient_measures_on_ingredient_id  (ingredient_id)
+#  index_ingredient_measures_on_ingredient_id           (ingredient_id)
+#  index_ingredient_measures_on_name_and_ingredient_id  (name,ingredient_id) UNIQUE
 #
 # Foreign Keys
 #
