@@ -153,6 +153,7 @@ import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
 import MenuShoppingList from './menu-shopping-list';
 import { reduceInventoryApi } from '../../../api/menus';
+import { unitaryPrice } from '../../../utils/recipeUtils.js';
 
 export default {
   components: {
@@ -204,25 +205,11 @@ export default {
       const returnArray = [];
       data.forEach(element => {
         const ingredientQuantity = element.attributes.ingredientQuantity;
-        const ingredientUnitaryPrice = this.unitaryPrice(element.attributes);
-        returnArray.push(ingredientQuantity * ingredientUnitaryPrice);
+        const ingredientUnitaryPrice = unitaryPrice(element.attributes);
+        returnArray.push(Math.round(ingredientQuantity * ingredientUnitaryPrice));
       });
 
       return returnArray;
-    },
-    unitaryPrice(recipeIngredient) {
-      const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
-        element.attributes).filter(element =>
-        element.name === recipeIngredient.ingredientMeasure)[0].quantity;
-      const price = recipeIngredient.ingredient.price / defaultQuantity;
-      if (this.isInt(price)) {
-        return price;
-      }
-
-      return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
-    },
-    isInt(n) {
-      return n % 1 === 0;
     },
   },
 };

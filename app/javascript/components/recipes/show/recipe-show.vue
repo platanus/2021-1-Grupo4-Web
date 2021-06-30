@@ -77,6 +77,7 @@ import { getRecipe, deleteRecipe } from '../../../api/recipes.js';
 import RecipeIngredients from './recipe-ingredients';
 import RecipeInstructions from './recipe-instructions';
 import RecipeInfo from './recipe-info';
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils.js';
 
 export default {
   components: {
@@ -137,32 +138,12 @@ export default {
         this.loading = false;
       }
     },
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity * this.unitaryPrice(recipeIngredient);
-    },
-
-    unitaryPrice(recipeIngredient) {
-      const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
-        element.attributes).filter(element =>
-        element.name === recipeIngredient.ingredientMeasure)[0].quantity;
-      const price = recipeIngredient.ingredient.price / defaultQuantity;
-      if (this.isInt(price)) {
-        return price;
-      }
-
-      return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
-    },
-    isInt(n) {
-      return n % 1 === 0;
-    },
   },
 
   computed: {
     recipePrice() {
       return this.recipe.recipeIngredients.data.reduce((recipePrice, recipeIngredient) =>
-        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
+        recipePrice + getPriceOfSelectedIngredient(recipeIngredient.attributes), 0);
     },
   },
 };
