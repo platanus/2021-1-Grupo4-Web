@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-xs">
+  <div class="m-auto max-w-xs">
     <!--Alert-->
     <div
       v-if="error"
@@ -13,16 +13,14 @@
       </p>
     </div>
 
-    <!--Title-->
-    <h2 class="pb-5 text-4xl">
-      {{ $t('msg.users.register') }}
-    </h2>
-
     <!--Form-->
     <form
       @submit.prevent="register"
       class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
     >
+      <h2 class="pb-5 text-4xl text-center">
+        {{ $t('msg.users.register') }}
+      </h2>
       <div class="mb-4">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
@@ -58,6 +56,11 @@
           :elements="{ placeholder: $t('msg.users.register'),
                        color: 'bg-green-500 hover:bg-green-700 text-white' }"
         />
+      </div>
+      <div class="text-gray-700 text-center text-sm font-bold pt-2">
+        <a href="/users/sign_in">
+          {{ $t('msg.users.alreadyHaveAccount') }}
+        </a>
       </div>
     </form>
   </div>

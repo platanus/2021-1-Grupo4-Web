@@ -46,7 +46,7 @@
         <img
           class="h-5 w-5 text-white"
           svg-inline
-          src="../../../assets/images/provider-svg.svg"
+          src="../../../assets/images/providers-svg.svg"
         >
       </side-navbar-item>
     </a>
