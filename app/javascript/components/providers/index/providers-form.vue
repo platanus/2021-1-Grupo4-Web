@@ -10,7 +10,7 @@
     >
       <div class="pt-3">
         <form class="w-full max-w-lg">
-          <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="flex flex-wrap -mx-3 mb-3">
             <div class="w-full px-3">
               <!--Name -->
               <label
@@ -28,8 +28,7 @@
               >
             </div>
           </div>
-
-          <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="flex flex-wrap -mx-3 mb-3">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <!--Correo -->
               <label
@@ -47,7 +46,7 @@
               >
               <!--Phone -->
             </div>
-            <div class="relative">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="provider-phone"
@@ -64,7 +63,7 @@
             </div>
           </div>
 
-          <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="flex flex-wrap -mx-3 mb-3">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <!--WebpageUrl -->
               <label
@@ -81,7 +80,7 @@
                 v-model="form.webpageUrl"
               >
             </div>
-            <div class="relative">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <!--DeliberyDays -->
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -117,7 +116,7 @@
             </div>
           </div>
           <!-- Datos bancarios -->
-          <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="flex flex-wrap -mx-3">
             <div class="w-full px-3">
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"

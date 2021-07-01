@@ -26,7 +26,7 @@
         <img
           svg-inline
           src="../../../../assets/images/cross-svg.svg"
-          class="h-4 w-4 inline-block ml-3"
+          class="h-4 w-4 inline-block ml-3 cursor-pointer"
           @click="toggleDeletePrice"
         >
       </div>
@@ -42,7 +42,7 @@
         <img
           svg-inline
           src="../../../../assets/images/cross-svg.svg"
-          class="h-4 w-4 inline-block ml-3"
+          class="h-4 w-4 inline-block ml-3 cursor-pointer"
           @click="toggleDeletePortions"
         >
       </div>

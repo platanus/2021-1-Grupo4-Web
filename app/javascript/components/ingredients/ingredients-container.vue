@@ -34,10 +34,11 @@
             </div>
           </div>
           <div class="flex justify-start px-2 pb-2 my-auto">
-            <a
-              class="font-bold py-2 px-6 rounded shadow-md w-full h-auto focus:outline-none bg-green-500 hover:bg-green-700 text-white"
-              href="/ingredients/show"
-            >{{ $t('msg.ingredients.inventory.editInventories') }}</a>
+            <base-button
+              :elements="{ placeholder: $t('msg.ingredients.inventory.editInventories'),
+                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
+              @click="goToEditInventories"
+            />
           </div>
           <div class="flex justify-start px-2 pb-2 my-auto">
             <base-button
@@ -247,6 +248,9 @@ export default {
       if (this.showingDel) {
         this.getIngredientAssociations(ingredient.id);
       }
+    },
+    goToEditInventories() {
+      window.location = '/ingredients/show';
     },
 
     async getIngredientAssociations(ingredientId) {
