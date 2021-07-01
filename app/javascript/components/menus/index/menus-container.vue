@@ -47,11 +47,14 @@
         >
           {{ $t('msg.noElements') }} {{ $t('msg.menus.title').toLowerCase() }}
         </p>
-        <div v-else class="flex w-full 2xl:justify-center items-center overflow-auto">
+        <div
+          v-else
+          class="flex w-full 2xl:justify-center items-center overflow-auto"
+        >
           <menus-table
-          :menus="filterMenus"
-          @del="toggleDelModal"
-        />
+            :menus="filterMenus"
+            @del="toggleDelModal"
+          />
         </div>
       </div>
     </div>
