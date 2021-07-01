@@ -340,8 +340,21 @@ export default {
     },
 
     // eslint-disable-next-line max-statements
-    async editIngredient() {
+    async editIngredient() { // eslint-disable-line complexity
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredientMeasuresAttributes[0].quantity ||
+      !ingredientsInfo.ingredientMeasuresAttributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
+
+        return;
+      } else if (ingredientsInfo.ingredientMeasuresAttributes[0].quantity < 1 ||
+      ingredientsInfo.minimumQuantity < 0) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return;
+      }
       if (this.validations(this.$refs.editIngredientInfo.form)) {
         try {
           this.showingEdit = !this.showingEdit;
