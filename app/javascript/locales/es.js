@@ -75,6 +75,9 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
+      msjAlert: 'Debe ingresar el nombre, la cantidad y la unidad',
+      msjMinQuantity: 'El inventario debe ser mayor o igual a 1',
+      msjNegativeQuantity: 'La cantidad mínima debe ser mayor o igual a 0',
       associationWarning: 'Este ingrediente se encuentra en la(s) siguiente(s) receta(s):',
       newMeasure: 'Crear la medida',
       inventory: {
