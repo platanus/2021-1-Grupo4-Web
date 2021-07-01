@@ -56,7 +56,7 @@
         </div>
       </div>
       <div
-        v-for="(unit, index) in form.ingredient_measures_attributes"
+        v-for="(unit, index) in form.ingredientMeasuresAttributes"
         :key="index"
       >
         <div
@@ -99,7 +99,7 @@
             <div class="flex">
               <measure-search
                 v-if="!editMode && marketIngredient !== undefined"
-                :selected-measure="form.ingredient_measures_attributes[0].name"
+                :selected-measure="form.ingredientMeasuresAttributes[0].name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <measure-search
@@ -127,7 +127,7 @@
           </div>
         </div>
         <div
-          v-if="index == form.ingredient_measures_attributes.length - 1"
+          v-if="index == form.ingredientMeasuresAttributes.length - 1"
         >
           <button
             type="button"
@@ -154,6 +154,20 @@
             v-model="form.price"
             type="number"
             :placeholder="$t('msg.ingredients.price')"
+          >
+          <!--Minimum Quantity -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-minimumQuantity"
+          >
+            {{ $t('msg.ingredients.minimumQuantity') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="ingredient-minimumQuantity"
+            v-model="form.minimumQuantity"
+            type="number"
+            :placeholder="$t('msg.ingredients.quantity')"
           >
         </div>
       </div>
@@ -185,7 +199,7 @@ export default {
         sku: null,
         price: '',
         currency: 'CLP',
-        ingredient_measures_attributes: [], /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [], /* eslint-disable-line camelcase */
       },
       showingMeasureModal: false,
       providersNames: [],
@@ -194,14 +208,14 @@ export default {
   },
   methods: {
     addMeasure() {
-      const lastItem = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length - 1];
+      const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
       if (lastItem.name && lastItem.quantity) {
-        this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
+        this.form.ingredientMeasuresAttributes.push({ name: undefined, quantity: undefined, id: undefined });
       }
     },
     deleteUnit(unit) {
-      this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
-        .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
+      this.form.ingredientMeasuresAttributes = this.form /* eslint-disable-line camelcase */
+        .ingredientMeasuresAttributes.filter((originalUnit) => originalUnit !== unit);
       if (unit.id !== undefined) {
         this.measuresToDelete.push(unit.id);
       }
@@ -218,15 +232,16 @@ export default {
         sku,
         price,
         currency,
+        minimumQuantity,
         otherMeasures,
       } = this.ingredient;
-      let ingredient_measures_attributes; /* eslint-disable-line camelcase */
+      let ingredientMeasuresAttributes;
       if (otherMeasures) {
-        ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
           Object.assign({}, { id: unit.id }, unit.attributes),
         );
       } else {
-        ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes = [{
           name: undefined, quantity: undefined, id: undefined,
         }];
       }
@@ -236,7 +251,8 @@ export default {
         sku,
         price,
         currency,
-        ingredient_measures_attributes, /* eslint-disable-line camelcase */
+        minimumQuantity,
+        ingredientMeasuresAttributes, /* eslint-disable-line camelcase */
       };
     } else {
       this.form = this.marketIngredient;

@@ -19,6 +19,8 @@ export default {
     quantity: 'Cantidad',
     download: 'Descargar',
     saveChanges: 'Guardar cambios',
+    close: 'Cerrar',
+    current: 'Actual',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -52,6 +54,7 @@ export default {
       searchAdd: 'Agregar',
       edit: 'Editar ingrediente',
       delete: 'Eliminar ingrediente',
+      alerts: 'Alertas',
       deleteMsg: '¿Estás seguro de que deseas eliminar este ingrediente?',
       name: 'Nombre',
       provider: 'Proveedor',
@@ -77,6 +80,10 @@ export default {
         decreaseIn: 'Disminuir en',
         resulting: 'Inventario Resultante',
       },
+      noAlert: 'No tienes ingredientes bajo el límite de inventario',
+      alertIngredients: 'Ingredientes acabándose',
+      minimumQuantity: 'Cantidad mínima en inventario',
+      minimumQuantityShort: 'Cantidad mínima',
     },
 
     recipes: {

@@ -25,6 +25,9 @@
         <th class="px-8 py-3">
           <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.title') }}</span>
         </th>
+        <th class="px-8 py-3">
+          <span class="text-white font-bold">{{ $t('msg.ingredients.minimumQuantityShort') }}</span>
+        </th>
         <th class="px-8 py-3" />
       </tr>
     </thead>
@@ -96,6 +99,21 @@
             >
             {{ ingredient.measure }}
           </div>
+        </td>
+        <!-- minimum quantity -->
+        <td class="py-2 px-8">
+          <p
+            class="ml-2 font-medium"
+            v-if="ingredient.minimumQuantity != undefined"
+          >
+            {{ ingredient.minimumQuantity }}
+          </p>
+          <p
+            class="ml-2 font-medium"
+            v-if="ingredient.minimumQuantity == undefined"
+          >
+            -
+          </p>
         </td>
         <td class="content-center">
           <dots-dropdown

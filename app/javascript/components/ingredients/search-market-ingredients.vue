@@ -132,7 +132,7 @@ export default {
         sku: null,
         price: productInfo.price,
         currency: 'CLP',
-        ingredient_measures_attributes: [ /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [ /* eslint-disable-line camelcase */
           { name: productInfo.measure, quantity: 1 }],
       };
       this.$emit('submit', productForm);
