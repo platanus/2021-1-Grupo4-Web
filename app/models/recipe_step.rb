@@ -10,6 +10,8 @@ class RecipeStep < ApplicationRecord
 end
 
 def set_initial_step_order
+  return if step_order_position.present?
+
   self.step_order_position = :last
 end
 

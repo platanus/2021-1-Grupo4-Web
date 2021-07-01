@@ -21,7 +21,8 @@ RECIPE_SCHEMA = {
         type: :object,
         properties: {
           description: { type: :string, example: 'Horneamos la masa', 'x-nullable': false },
-          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true }
+          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true },
+          step_order_position: { type: :integer, example: 0, 'x-nullable': true }
         }
       }
     }

@@ -44,9 +44,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -133,9 +131,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -244,9 +240,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -551,9 +545,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -795,9 +787,7 @@
               "x-nullable": true
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -954,9 +944,7 @@
               }
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -1044,6 +1032,11 @@
               "media_url": {
                 "type": "string",
                 "example": "https://media-url",
+                "x-nullable": true
+              },
+              "step_order_position": {
+                "type": "integer",
+                "example": 0,
                 "x-nullable": true
               }
             }
@@ -1239,9 +1232,7 @@
               }
             }
           },
-          "required": [
-
-          ]
+          "required": []
         }
       },
       "required": [
@@ -1382,6 +1373,11 @@
           "name": "user_token",
           "in": "query",
           "type": "string"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "type": "string"
         }
       ],
       "get": {
@@ -1423,11 +1419,6 @@
         },
         {
           "name": "user_token",
-          "in": "query",
-          "type": "string"
-        },
-        {
-          "name": "query",
           "in": "query",
           "type": "string"
         }
@@ -2064,7 +2055,7 @@
         ],
         "responses": {
           "200": {
-            "description": "shopping list grouped by provider"
+            "description": "shopping list grouped by provider with default measure"
           }
         }
       }
