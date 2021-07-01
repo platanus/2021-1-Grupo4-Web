@@ -204,17 +204,28 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <div
+        id="bankAccountInfo"
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
           provider.accountType && provider.accountNumber && provider.email"
       >
         <p>
           {{ provider.contactName }}
         </p>
-        <p>{{ provider.contactRut }}</p>
-        <p>{{ provider.bankName }}</p>
-        <p>{{ provider.accountType }}</p>
-        <p>{{ provider.accountNumber }}</p>
-        <p>{{ provider.email }}</p>
+        <p>
+          {{ provider.contactRut }}
+        </p>
+        <p>
+          {{ provider.bankName }}
+        </p>
+        <p>
+          {{ provider.accountType }}
+        </p>
+        <p>
+          {{ provider.accountNumber }}
+        </p>
+        <p>
+          {{ provider.email }}
+        </p>
       </div>
       <div v-else>
         <p> {{ $t('msg.providers.noTransferData') }} </p>
@@ -261,7 +272,9 @@ export default {
       this.showBankAccount = !this.showBankAccount;
     },
     copyBankAccount() {
-      console.log('copiando los datos bancarios');
+      const element = document.getElementById('bankAccountInfo');
+      const elementText = element.textContent;
+      navigator.clipboard.writeText(elementText);
     },
     async editProvider(provider) {
       this.toggleEditModal();
