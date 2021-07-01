@@ -1,8 +1,14 @@
 <template>
   <div>
     <div class="flex justify-between items-center h-8 mb-5">
-      <div class="w-auto font-sans font-normal text-4xl text-black flex-none flex-grow-0">
+      <div class="flex w-auto font-sans font-normal text-4xl text-black flex-none flex-grow-0">
         {{ $t('msg.providers.title') }}
+        <span
+          v-if="loading"
+          class="flex w-8 h-8 pl-2 ml-2"
+        >
+          <base-spinner />
+        </span>
       </div>
       <div class="px-2">
         <base-button
@@ -13,8 +19,17 @@
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row flex-wrap justify-between w-full bg-gray-50 my-10 p-10">
+    <div
+      class="flex flex-col sm:flex-row flex-wrap justify-between w-full bg-gray-50 my-10 p-10"
+    >
+      <p
+        v-if="this.providers.length===0 && !loading"
+        class="p-2"
+      >
+        {{ $t('msg.noElements') }} {{ $t('msg.providers.title').toLowerCase() }}
+      </p>
       <div
+        v-else
         class="flex justify-center w-6/12 bg-gray-50"
         v-for="element in this.providers"
         :key="element.id"
@@ -50,6 +65,7 @@ import ProvidersForm from './providers-form';
 export default {
   data() {
     return {
+      loading: false,
       showingAdd: false,
       providers: [],
     };
@@ -60,6 +76,7 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     try {
       const response = await getProviders();
       this.providers = response.data.data.map((element) => ({
@@ -69,6 +86,8 @@ export default {
       this.successResponse(response);
     } catch (error) {
       this.errorResponse(error);
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
@@ -77,6 +96,7 @@ export default {
     },
 
     async addProvider(provider) {
+      this.loading = true;
       try {
         const {
           status,
@@ -90,6 +110,8 @@ export default {
         this.successResponse(status);
       } catch (error) {
         this.errorResponse(error);
+      } finally {
+        this.loading = false;
       }
     },
 

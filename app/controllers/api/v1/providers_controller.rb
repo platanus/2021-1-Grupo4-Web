@@ -40,7 +40,12 @@ class Api::V1::ProvidersController < Api::V1::BaseController
       :webpage_url,
       :phone,
       :minimum_purchase,
-      :delivery_days
+      :delivery_days,
+      :contact_name,
+      :contact_rut,
+      :bank_name,
+      :account_type,
+      :account_number
     )
   end
 end

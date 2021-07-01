@@ -168,6 +168,40 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 
+  path '/alert-ingredients' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    get 'Show alerted ingredients' do
+      consumes 'application/json'
+      produces 'application/json'
+      description 'Retrieves ingredients with its quantity below minimum'
+
+      response '200', 'ingredients retrieved' do
+        schema(
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: { "$ref" => "#/definitions/provider_ingredient" }
+            }
+          },
+          required: [
+            :data
+          ]
+        )
+
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
   path '/ingredients' do
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
@@ -248,13 +282,64 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
     end
   end
 
+  path '/ingredients/update-inventories' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    post 'Updates ingredients inventories' do
+      description 'Updates each ingredient with new inventory'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter(
+        name: :ingredients,
+        in: :body,
+        schema: {
+          type: :object,
+          properties: {
+            ingredients: { "$ref" => "#/definitions/update_inventories_ingredients" }
+          },
+          required: [
+            :ingredients
+          ]
+
+        }
+      )
+
+      response '201', 'ingredients updated' do
+        let!(:ingredient1) { create(:ingredient, user: user) }
+        let!(:ingredient2) { create(:ingredient, user: user) }
+        let(:ingredients) do
+          {
+            ingredients: [
+              { ingredient_id: ingredient1.id, inventory: 3 },
+              { ingredient_id: ingredient2.id, inventory: 1.3 }
+            ]
+          }
+        end
+
+        run_test! do
+          expect(ingredient1.reload).to have_attributes(inventory: 3)
+          expect(ingredient2.reload).to have_attributes(inventory: 1.3)
+        end
+      end
+
+      response '401', 'user unauthorized' do
+        let(:ingredients) { [] }
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
   path '/ingredients/{id}' do
     parameter name: :user_email, in: :query, type: :string
     parameter name: :user_token, in: :query, type: :string
 
     parameter name: :id, in: :path, type: :integer
 
-    let(:existent_ingredient) { create(:ingredient, user_id: user.id) }
+    let!(:provider) { create(:provider, user: user) }
+    let(:existent_ingredient) { create(:ingredient, user_id: user.id, provider: provider) }
     let(:id) { existent_ingredient.id }
 
     get 'Retrieves Ingredient' do
@@ -308,7 +393,9 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
           }
         end
 
-        run_test!
+        run_test! do
+          expect(existent_ingredient.reload.provider).to eq(provider)
+        end
       end
 
       response '200', 'ingredient updated with measure by default' do
@@ -321,7 +408,7 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
             currency: 'Some currency',
             inventory: 15,
             ingredient_measures_attributes: [
-              { name: 'Kg', quantity: 5 },
+              { name: 'Kg', quantity: 5, primary: true },
               { name: 'Tazas', quantity: 25 }
             ]
           }
@@ -352,6 +439,50 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
       response '404', 'ingredient not found' do
         let(:id) { 'invalid' }
 
+        run_test!
+      end
+
+      response '401', 'user unauthorized' do
+        let(:user_token) { 'invalid' }
+
+        run_test!
+      end
+    end
+  end
+
+  path '/ingredients/{id}/critical-associations' do
+    parameter name: :user_email, in: :query, type: :string
+    parameter name: :user_token, in: :query, type: :string
+
+    parameter name: :id, in: :path, type: :integer
+
+    let!(:existent_ingredient) { create(:ingredient, user_id: user.id) }
+    let!(:existent_recipe) { create(:recipe, user_id: user.id) }
+    let!(:recipe_ingredient) do
+      create(:recipe_ingredient, recipe: existent_recipe, ingredient: existent_ingredient)
+    end
+    let(:id) { existent_ingredient.id }
+
+    get 'Retrieves Ingredient critical associations for confirming delete' do
+      produces 'application/json'
+
+      let(:expected_response) do
+        {
+          recipes: [hash_including(name: existent_recipe.name)]
+        }
+      end
+
+      response '200', 'ingredient associations retrieved' do
+        schema('$ref' => '#/definitions/ingredient_critical_associations')
+
+        run_test! do |response|
+          body = JSON.parse(response.body)
+          expect(body.deep_symbolize_keys).to match(expected_response)
+        end
+      end
+
+      response '404', 'invalid ingredient id' do
+        let(:id) { 'invalid' }
         run_test!
       end
 

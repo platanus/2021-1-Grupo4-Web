@@ -5,6 +5,12 @@
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.menus.title') }}
       </div>
+      <span
+        v-if="loading"
+        class="flex my-auto w-8 h-8 ml-2 pl-2 "
+      >
+        <base-spinner />
+      </span>
     </div>
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
@@ -34,17 +40,23 @@
         </a>
       </div>
       <!-- Content -->
-      <p
-        class="my-4"
-        v-if="this.menus.length===0"
-      >
-        {{ $t('msg.noElements') }} {{ $t('msg.menus.title').toLowerCase() }}
-      </p>
-      <menus-table
-        v-else
-        :menus="filterMenus"
-        @del="toggleDelModal"
-      />
+      <div v-if="!loading">
+        <p
+          class="my-4"
+          v-if="this.menus.length===0"
+        >
+          {{ $t('msg.noElements') }} {{ $t('msg.menus.title').toLowerCase() }}
+        </p>
+        <div
+          v-else
+          class="flex w-full 2xl:justify-center items-center overflow-auto"
+        >
+          <menus-table
+            :menus="filterMenus"
+            @del="toggleDelModal"
+          />
+        </div>
+      </div>
     </div>
 
     <!--DeleteModal-->
@@ -71,6 +83,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       showingEdit: false,
       showingDel: false,
       menus: [],
@@ -79,6 +92,7 @@ export default {
     };
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getMenus();
       this.menus = response.data.data.map((element) => ({
@@ -88,6 +102,8 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   computed: {
@@ -109,12 +125,15 @@ export default {
     },
     async deleteMenu() {
       this.showingDel = !this.showingDel;
+      this.loading = true;
       try {
         await deleteMenu(this.menuToDelete.id);
         this.menus = this.menus.filter(item => item.id !== this.menuToDelete.id);
         this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
   },

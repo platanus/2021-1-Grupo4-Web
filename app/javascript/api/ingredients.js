@@ -6,6 +6,12 @@ function getIngredients() {
     }));
 }
 
+function getAlertedIngredients() {
+  return (client
+    .get('/alert-ingredients', {
+    }));
+}
+
 function postIngredient(ingredient) {
   return (client
     .post('/ingredients',
@@ -36,5 +42,18 @@ async function searchCornershopIngredients(query) {
     )
   );
 }
+function getCriticalAssociations(ingredientId) {
+  return (client
+    .get(`/ingredients/${ingredientId}/critical-associations`, {
+    }));
+}
 
-export { getIngredients, postIngredient, deleteIngredient, editIngredient, searchCornershopIngredients };
+export {
+  getIngredients,
+  postIngredient,
+  deleteIngredient,
+  editIngredient,
+  searchCornershopIngredients,
+  getCriticalAssociations,
+  getAlertedIngredients,
+};

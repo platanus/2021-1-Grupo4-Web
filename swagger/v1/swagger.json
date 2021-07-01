@@ -284,6 +284,31 @@
         "data"
       ]
     },
+    "recipe_critical_associations": {
+      "type": "object",
+      "properties": {
+        "menus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Menú de almuerzo"
+              },
+              "portions": {
+                "type": "integer",
+                "example": 5
+              }
+            }
+          }
+        }
+      }
+    },
     "user": {
       "type": "object",
       "properties": {
@@ -398,8 +423,13 @@
           "x-nullable": true
         },
         "inventory": {
-          "type": "integer",
-          "example": 10,
+          "type": "float",
+          "example": 10.3,
+          "x-nullable": true
+        },
+        "minimum_quantity": {
+          "type": "float",
+          "example": 10.3,
           "x-nullable": true
         },
         "ingredient_measures_attributes": {
@@ -484,8 +514,13 @@
               "x-nullable": true
             },
             "inventory": {
-              "type": "integer",
-              "example": 10,
+              "type": "float",
+              "example": 10.3,
+              "x-nullable": true
+            },
+            "minimum_quantity": {
+              "type": "float",
+              "example": 10.3,
               "x-nullable": true
             },
             "measures": {
@@ -544,6 +579,51 @@
         "data"
       ]
     },
+    "ingredient_critical_associations": {
+      "type": "object",
+      "properties": {
+        "recipes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Pastel de choclo"
+              },
+              "portions": {
+                "type": "integer",
+                "example": 4
+              },
+              "cook_minutes": {
+                "type": "integer",
+                "example": 25
+              }
+            }
+          }
+        }
+      }
+    },
+    "update_inventories_ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ingredient_id": {
+            "type": "integer",
+            "example": 5
+          },
+          "inventory": {
+            "type": "float",
+            "example": 2.8
+          }
+        }
+      }
+    },
     "provider": {
       "type": "object",
       "properties": {
@@ -575,6 +655,31 @@
         "webpage_url": {
           "type": "string",
           "example": "https://jumbo.cl",
+          "x-nullable": true
+        },
+        "contact_name": {
+          "type": "string",
+          "example": "Marisol Pérez",
+          "x-nullable": true
+        },
+        "contact_rut": {
+          "type": "string",
+          "example": "11.353.222-3",
+          "x-nullable": true
+        },
+        "bank_name": {
+          "type": "string",
+          "example": "Banchile",
+          "x-nullable": true
+        },
+        "account_type": {
+          "type": "string",
+          "example": "Cuenta Corriente",
+          "x-nullable": true
+        },
+        "account_number": {
+          "type": "string",
+          "example": "0-00-11233322",
           "x-nullable": true
         },
         "delivery_days": {
@@ -634,6 +739,31 @@
             "webpage_url": {
               "type": "string",
               "example": "https://jumbo.cl",
+              "x-nullable": true
+            },
+            "contact_name": {
+              "type": "string",
+              "example": "Marisol Pérez",
+              "x-nullable": true
+            },
+            "contact_rut": {
+              "type": "string",
+              "example": "11.353.222-3",
+              "x-nullable": true
+            },
+            "bank_name": {
+              "type": "string",
+              "example": "Banchile",
+              "x-nullable": true
+            },
+            "account_type": {
+              "type": "string",
+              "example": "Cuenta Corriente",
+              "x-nullable": true
+            },
+            "account_number": {
+              "type": "string",
+              "example": "0-00-11233322",
               "x-nullable": true
             },
             "delivery_days": {
@@ -903,6 +1033,11 @@
                 "type": "string",
                 "example": "https://media-url",
                 "x-nullable": true
+              },
+              "step_order_position": {
+                "type": "integer",
+                "example": 0,
+                "x-nullable": true
               }
             }
           }
@@ -1116,6 +1251,10 @@
         "quantity": {
           "type": "integer",
           "example": 2
+        },
+        "primary": {
+          "type": "boolean",
+          "example": true
         }
       }
     }
@@ -1271,6 +1410,52 @@
         }
       }
     },
+    "/alert-ingredients": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Show alerted ingredients",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "description": "Retrieves ingredients with its quantity below minimum",
+        "responses": {
+          "200": {
+            "description": "ingredients retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/provider_ingredient"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
     "/ingredients": {
       "parameters": [
         {
@@ -1331,6 +1516,55 @@
         "responses": {
           "201": {
             "description": "ingredient created"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/ingredients/update-inventories": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Updates ingredients inventories",
+        "description": "Updates each ingredient with new inventory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ingredients": {
+                  "$ref": "#/definitions/update_inventories_ingredients"
+                }
+              },
+              "required": [
+                "ingredients"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ingredients updated"
           },
           "401": {
             "description": "user unauthorized"
@@ -1405,7 +1639,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ingredient updated"
+            "description": "ingredient updated with measure by default"
           },
           "401": {
             "description": "user unauthorized"
@@ -1424,6 +1658,46 @@
           },
           "404": {
             "description": "ingredient not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/ingredients/{id}/critical-associations": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves Ingredient critical associations for confirming delete",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ingredient associations retrieved",
+            "schema": {
+              "$ref": "#/definitions/ingredient_critical_associations"
+            }
+          },
+          "404": {
+            "description": "invalid ingredient id"
           },
           "401": {
             "description": "user unauthorized"
@@ -1747,6 +2021,41 @@
         "responses": {
           "200": {
             "description": "reduced inventory of menu"
+          }
+        }
+      }
+    },
+    "/menus/{id}/shopping-list": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "summary": "Returns Menu Ingredients, same as shopping list",
+        "description": "Get ingredients of a menu with quantities, prices, measures grouped by provider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "shopping list grouped by provider with default measure"
           }
         }
       }
@@ -2338,6 +2647,46 @@
           },
           "404": {
             "description": "recipe not found"
+          },
+          "401": {
+            "description": "user unauthorized"
+          }
+        }
+      }
+    },
+    "/recipes/{id}/critical-associations": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Retrieves recipe critical associations for confirming delete",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "recipe associations retrieved",
+            "schema": {
+              "$ref": "#/definitions/recipe_critical_associations"
+            }
+          },
+          "404": {
+            "description": "invalid recipe id"
           },
           "401": {
             "description": "user unauthorized"

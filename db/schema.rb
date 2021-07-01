@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_13_002438) do
+ActiveRecord::Schema.define(version: 2021_06_24_005920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,9 @@ ActiveRecord::Schema.define(version: 2021_06_13_002438) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "primary", default: false
     t.index ["ingredient_id"], name: "index_ingredient_measures_on_ingredient_id"
+    t.index ["name", "ingredient_id"], name: "index_ingredient_measures_on_name_and_ingredient_id", unique: true
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -59,7 +61,8 @@ ActiveRecord::Schema.define(version: 2021_06_13_002438) do
     t.string "currency"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "inventory", default: 0
+    t.float "inventory", default: 0.0
+    t.float "minimum_quantity"
     t.index ["provider_id"], name: "index_ingredients_on_provider_id"
     t.index ["user_id"], name: "index_ingredients_on_user_id"
   end
@@ -95,6 +98,11 @@ ActiveRecord::Schema.define(version: 2021_06_13_002438) do
     t.integer "minimum_purchase"
     t.string "phone"
     t.bigint "user_id"
+    t.string "contact_name"
+    t.string "contact_rut"
+    t.string "bank_name"
+    t.string "account_type"
+    t.string "account_number"
     t.index ["name", "user_id"], name: "index_providers_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_providers_on_user_id"
   end

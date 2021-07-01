@@ -5,6 +5,12 @@
       <div class="text-4xl order-0 flex-grow-0">
         {{ $t('msg.recipes.title') }}
       </div>
+      <span
+        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        v-if="loading"
+      >
+        <base-spinner />
+      </span>
     </div>
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
@@ -37,20 +43,23 @@
         :filters="filters"
         :filter-options="filterOptions"
         @filters="toggleFiltersModal"
+        @deletePrice="toggleDeletePriceByCross"
+        @deletePortions="toggleDeletePortionsByCross"
       />
       <!-- Content -->
-      <p
-        class="my-4"
-        v-if="recipes.length === 0"
-      >
-        {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
-      </p>
-      <div v-else>
-        <recipes-list
-          :allrecipes="filterRecipes"
-        />
+      <div v-if="!loading">
+        <p
+          class="my-4"
+          v-if="recipes.length === 0"
+        >
+          {{ $t('msg.noElements') }} {{ $t('msg.recipes.title').toLowerCase() }}
+        </p>
+        <div v-else>
+          <recipes-list
+            :allrecipes="filterRecipes"
+          />
+        </div>
       </div>
-
       <!--Pagination-->
       <recipes-pagination />
     </div>
@@ -91,6 +100,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       recipes: [],
       recipesToDisplay: [],
       searchQuery: '',
@@ -101,6 +111,7 @@ export default {
     };
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getRecipes();
       this.recipes = response.data.data.map((element) => ({
@@ -110,6 +121,8 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   computed: {
@@ -180,6 +193,14 @@ export default {
       this.filters.price.min = '';
       this.filters.price.max = '';
       this.showingFiltersModal = !this.showingFiltersModal;
+    },
+    toggleDeletePriceByCross() {
+      this.filters.price.min = '';
+      this.filters.price.max = '';
+    },
+    toggleDeletePortionsByCross() {
+      this.filters.portions.min = '';
+      this.filters.portions.max = '';
     },
     updateFilters() {
       this.showingFiltersModal = !this.showingFiltersModal;

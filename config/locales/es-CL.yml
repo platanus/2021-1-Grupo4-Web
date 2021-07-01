@@ -1,2 +1,8 @@
 es-CL:
-  hello: "Hola mundo"
+  activerecord:
+    attributes:
+      user:
+        email: "Este correo"
+    errors:
+      messages:
+        taken: "%{attribute} ya tiene cuenta"

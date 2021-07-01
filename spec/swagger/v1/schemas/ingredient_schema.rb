@@ -6,7 +6,8 @@ INGREDIENT_SCHEMA = {
     sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
     price: { type: :integer, example: 2990, 'x-nullable': true },
     currency: { type: :string, example: 'CLP', 'x-nullable': true },
-    inventory: { type: :integer, example: 10, 'x-nullable': true },
+    inventory: { type: :float, example: 10.3, 'x-nullable': true },
+    minimum_quantity: { type: :float, example: 10.3, 'x-nullable': true },
     ingredient_measures_attributes: {
       type: "array",
       items: {
@@ -43,7 +44,8 @@ INGREDIENT_RESPONSE_SCHEMA = {
         currency: { type: :string, example: 'CLP', 'x-nullable': true },
         quantity: { type: :integer, example: 2, 'x-nullable': true },
         measure: { type: :string, example: 'unidad', 'x-nullable': true },
-        inventory: { type: :integer, example: 10, 'x-nullable': true },
+        inventory: { type: :float, example: 10.3, 'x-nullable': true },
+        minimum_quantity: { type: :float, example: 10.3, 'x-nullable': true },
         measures: {
           type: "object",
           properties: {
@@ -87,4 +89,33 @@ INGREDIENT_RESOURCE_SCHEMA = {
   required: [
     :data
   ]
+}
+
+UPDATE_INVENTORY_INGREDIENTS_SCHEMA = {
+  type: "array",
+  items: {
+    type: :object,
+    properties: {
+      ingredient_id: { type: :integer, example: 5 },
+      inventory: { type: :float, example: 2.8 }
+    }
+  }
+}
+
+INGREDIENT_CRITICAL_ASSOCIATIONS = {
+  type: "object",
+  properties: {
+    recipes: {
+      type: :array,
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1 },
+          name: { type: :string, example: 'Pastel de choclo' },
+          portions: { type: :integer, example: 4 },
+          cook_minutes: { type: :integer, example: 25 }
+        }
+      }
+    }
+  }
 }

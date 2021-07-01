@@ -14,7 +14,10 @@
       </div>
     </div>
     <!-- cuadro blanco edición -->
-    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
+    <div
+      v-if="!loading"
+      class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4"
+    >
       <!-- datos básicos -->
       <div
         class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
@@ -60,8 +63,7 @@
         :recipe-ingredients="recipe.recipeIngredients.data"
         @add-ingredient="addIngredient"
         @delete-ingredient="deleteIngredient"
-        @increase-quantity="increaseQuantity"
-        @decrease-quantity="decreaseQuantity"
+        @change-quantity="changeQuantity"
         @change-measure="changeMeasure"
       />
       <!-- pasos -->
@@ -104,6 +106,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       status: '',
       error: '',
       recipe: {
@@ -119,12 +122,15 @@ export default {
     };
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
@@ -132,6 +138,7 @@ export default {
       window.location = `/recipes/${this.recipeId}`;
     },
     async editRecipe() {
+      this.loading = true;
       try {
         const updatedRecipe = this.getUpdatedRecipe();
         await updateRecipe(this.recipe.id, updatedRecipe);
@@ -139,6 +146,8 @@ export default {
         this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     addIngredient(ingredient) {
@@ -157,16 +166,8 @@ export default {
       }
       this.recipe.recipeIngredients.data.splice(recipeIngredientIdx, 1);
     },
-    increaseQuantity(recipeIngredientIdx) {
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity += 1;
-    },
-    decreaseQuantity(recipeIngredientIdx) {
-      if (this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity === 1) {
-        this.deleteIngredient(recipeIngredientIdx);
-
-        return;
-      }
-      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity -= 1;
+    changeQuantity(recipeIngredientIdx, ingredientQuantityData) {
+      this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientQuantity = ingredientQuantityData;
     },
     changeMeasure(measure, recipeIngredientIdx) {
       this.recipe.recipeIngredients.data[recipeIngredientIdx].attributes.ingredientMeasure = measure;

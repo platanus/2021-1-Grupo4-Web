@@ -36,6 +36,15 @@
             v-model="form.provider_name"
             id="ingredient-provider"
           >
+            <!--Add Mode unit from market -->
+            <option
+              v-if="!editMode && marketIngredient !== undefined"
+              selected
+              :key="form.provider_name"
+              :value="form.provider_name"
+            >
+              {{ form.provider_name }}
+            </option>
             <option
               v-for="(name, idx) in providersNames"
               :key="idx"
@@ -47,7 +56,7 @@
         </div>
       </div>
       <div
-        v-for="(unit, index) in form.ingredient_measures_attributes"
+        v-for="(unit, index) in form.ingredientMeasuresAttributes"
         :key="index"
       >
         <div
@@ -60,8 +69,8 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex flex-wrap -mx-3">
-          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div class="flex -mx-3">
+          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
               v-if="index == 0 || index == 1"
@@ -73,11 +82,12 @@
             <input
               class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
               v-model="unit.quantity"
+              min="1"
               type="number"
               :placeholder="$t('msg.ingredients.quantity')"
             >
           </div>
-          <div class="relative">
+          <div class="w-full px-3 mb-6 md:mb-0">
             <!--Measure -->
             <label
               v-if="index == 0 || index == 1"
@@ -87,38 +97,20 @@
               {{ $t('msg.ingredients.measure') }}
             </label>
             <div class="flex">
-              <select
-                class="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8
-                rounded leading-tight focus:outline-none"
-                v-model="unit.name"
-              >
-                <!--Add Mode unit Unselected -->
-                <option
-                  v-if="!editMode"
-                  hidden
-                  selected
-                >
-                  {{ $t('msg.ingredients.measure') }}
-                </option>
-                <!--Edit Mode unit ingredient -->
-                <option
-                  v-if="editMode"
-                  selected
-                  :key="ingredient.measure"
-                  :value="ingredient.measure"
-                >
-                  {{ ingredient.measure }}
-                </option>
-                <!--Other units -->
-                <option
-                  v-for="form_unit in formUnits"
-                  :key="form_unit"
-                  :value="form_unit"
-                >
-                  {{ form_unit }}
-                </option>
-              </select>
-
+              <measure-search
+                v-if="!editMode && marketIngredient !== undefined"
+                :selected-measure="form.ingredientMeasuresAttributes[0].name"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
+              <measure-search
+                v-if="!editMode && marketIngredient === undefined"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
+              <measure-search
+                v-if="editMode"
+                :selected-measure="unit.name"
+                @selectMeasure="changeUnitName(unit, ...arguments)"
+              />
               <button
                 type="button"
                 class="px-3"
@@ -135,11 +127,11 @@
           </div>
         </div>
         <div
-          v-if="index == form.ingredient_measures_attributes.length - 1"
+          v-if="index == form.ingredientMeasuresAttributes.length - 1"
         >
           <button
             type="button"
-            @click="AddMeasure"
+            @click="addMeasure"
             class="mb-6 bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded text-sm font-medium"
           >
             {{ $t('msg.ingredients.addUnit') }}
@@ -163,6 +155,20 @@
             type="number"
             :placeholder="$t('msg.ingredients.price')"
           >
+          <!--Minimum Quantity -->
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="ingredient-minimumQuantity"
+          >
+            {{ $t('msg.ingredients.minimumQuantity') }}
+          </label>
+          <input
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            id="ingredient-minimumQuantity"
+            v-model="form.minimumQuantity"
+            type="number"
+            :placeholder="$t('msg.ingredients.quantity')"
+          >
         </div>
       </div>
     </form>
@@ -172,6 +178,7 @@
 <script>
 
 import { getProviders } from './../../api/providers.js';
+import MeasureSearch from './measure_search';
 
 export default {
   props: {
@@ -179,9 +186,11 @@ export default {
     ingredient: { type: Object, default() {
       return {};
     } },
-    units: { type: Array, required: true },
+    marketIngredient: { type: Object, default: undefined },
   },
-
+  components: {
+    MeasureSearch,
+  },
   data() {
     return {
       form: {
@@ -190,69 +199,67 @@ export default {
         sku: null,
         price: '',
         currency: 'CLP',
-        ingredient_measures_attributes: [], /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [], /* eslint-disable-line camelcase */
       },
       showingMeasureModal: false,
       providersNames: [],
-      usedUnits: [],
       measuresToDelete: [],
     };
   },
   methods: {
-    AddMeasure() {
-      const lastItem = this.form.ingredient_measures_attributes[this.form.ingredient_measures_attributes.length - 1];
+    addMeasure() {
+      const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
       if (lastItem.name && lastItem.quantity) {
-        this.form.ingredient_measures_attributes.push({ name: undefined, quantity: undefined, id: undefined });
+        this.form.ingredientMeasuresAttributes.push({ name: undefined, quantity: undefined, id: undefined });
       }
     },
     deleteUnit(unit) {
-      this.form.ingredient_measures_attributes = this.form /* eslint-disable-line camelcase */
-        .ingredient_measures_attributes.filter((originalUnit) => originalUnit !== unit);
+      this.form.ingredientMeasuresAttributes = this.form /* eslint-disable-line camelcase */
+        .ingredientMeasuresAttributes.filter((originalUnit) => originalUnit !== unit);
       if (unit.id !== undefined) {
         this.measuresToDelete.push(unit.id);
       }
     },
+    changeUnitName(unit, measure) {
+      unit.name = measure;
+    },
   },
   async created() {
-    const {
-      providerName,
-      name,
-      sku,
-      price,
-      currency,
-      otherMeasures,
-    } = this.ingredient;
-    let ingredient_measures_attributes; /* eslint-disable-line camelcase */
-    if (otherMeasures) {
-      ingredient_measures_attributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
-        Object.assign({}, { id: unit.id }, unit.attributes),
-      );
+    if (this.marketIngredient === undefined) {
+      const {
+        providerName,
+        name,
+        sku,
+        price,
+        currency,
+        minimumQuantity,
+        otherMeasures,
+      } = this.ingredient;
+      let ingredientMeasuresAttributes;
+      if (otherMeasures) {
+        ingredientMeasuresAttributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+          Object.assign({}, { id: unit.id }, unit.attributes),
+        );
+      } else {
+        ingredientMeasuresAttributes = [{
+          name: undefined, quantity: undefined, id: undefined,
+        }];
+      }
+      this.form = {
+        provider_name: providerName, /* eslint-disable-line camelcase */
+        name,
+        sku,
+        price,
+        currency,
+        minimumQuantity,
+        ingredientMeasuresAttributes, /* eslint-disable-line camelcase */
+      };
     } else {
-      ingredient_measures_attributes = [{ /* eslint-disable-line camelcase */
-        name: undefined, quantity: undefined, id: undefined,
-      }];
+      this.form = this.marketIngredient;
     }
-    this.form = {
-      provider_name: providerName, /* eslint-disable-line camelcase */
-      name,
-      sku,
-      price,
-      currency,
-      ingredient_measures_attributes, /* eslint-disable-line camelcase */
-    };
 
     const providers = await getProviders();
     this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
-  },
-
-  computed: {
-    formUnits() {
-      if (!this.editMode) {
-        return this.units;
-      }
-
-      return this.units.filter(unit => unit !== this.ingredient.measure);
-    },
   },
 };
 

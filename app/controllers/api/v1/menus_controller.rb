@@ -23,15 +23,14 @@ class Api::V1::MenusController < Api::V1::BaseController
   end
 
   def reduce_inventory
-    ingredient_quantities_to_decrement = Hash.new(0)
     menu_recipes_ingredients_to_reduce_inventory.each do |record|
-      quantity_to_decrement = record.recipe_quantity.to_i * record.ingredient_quantity.to_i
-      ingredient_quantities_to_decrement[record.ingredient_id] += quantity_to_decrement
-    end
-    ingredients = Ingredient.where(id: ingredient_quantities_to_decrement.keys)
-    ingredients.each do |ingredient|
-      quantity = ingredient_quantities_to_decrement[ingredient.id]
-      ingredient.decrement_inventory!(quantity)
+      ingredient = Ingredient.find(record.ingredient_id)
+      ingredient_quantity = ingredient.factor_of_default_quantity_by_measure(
+        record.ingredient_measure
+      ) * record.ingredient_quantity.to_f
+      quantity_to_decrement = record.recipe_quantity.to_i * ingredient_quantity
+
+      ingredient.decrement_inventory!(quantity_to_decrement)
     end
 
     render json: {}, status: :ok
@@ -88,7 +87,8 @@ class Api::V1::MenusController < Api::V1::BaseController
     ).select(
       'ingredients.id as ingredient_id,
        menu_recipes.recipe_quantity as recipe_quantity,
-       recipe_ingredients.ingredient_quantity as ingredient_quantity'
+       recipe_ingredients.ingredient_quantity as ingredient_quantity,
+       recipe_ingredients.ingredient_measure as ingredient_measure'
     )
   end
 
@@ -106,18 +106,10 @@ class Api::V1::MenusController < Api::V1::BaseController
   def menu_ingredient_to_json(ingredient:, accumulated_quantity:)
     {
       name: ingredient.name,
-      measure: ingredient.ingredient_measure,
+      measure: ingredient.measure,
       quantity: accumulated_quantity,
-      total_price: get_price_of_ingredient(ingredient) * accumulated_quantity
+      total_price: ingredient.price.to_f / ingredient.quantity * accumulated_quantity
     }
-  end
-
-  def get_price_of_ingredient(ingredient)
-    ingredient.ingredient_measures.each do |ingredient_measure|
-      next unless ingredient_measure.name == ingredient.ingredient_measure
-
-      return ingredient.price / ingredient_measure.quantity
-    end
   end
 
   def format_providers_with_ingredients(providers_with_ingredients)
@@ -130,7 +122,11 @@ class Api::V1::MenusController < Api::V1::BaseController
   end
 
   def menu_ingredient_quantity(record)
-    record.recipe_quantity.to_i * record.ingredient_quantity.to_i
+    ingredient_quantity = record.factor_of_default_quantity_by_measure(
+      record.ingredient_measure
+    ) * record.ingredient_quantity.to_f
+
+    record.recipe_quantity.to_f * ingredient_quantity
   end
 
   def menu_params

@@ -19,12 +19,20 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     respond_with({ data: result })
   end
 
+  def minimum_alert_index
+    respond_with ingredients.below_minimum
+  end
+
   def index
     respond_with ingredients
   end
 
   def show
     respond_with ingredient
+  end
+
+  def critical_associations
+    respond_with critical_ingredient_associations
   end
 
   def create
@@ -37,14 +45,26 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     )
   end
 
-  def update
-    provider = Provider.find_or_create_by(
-      name: ingredient_params[:provider_name], user: current_user
-    )
+  def update_inventories
+    respond_with begin
+      update_inventories_params.each do |info|
+        ingredients.find(info[:ingredient_id]).update!(inventory: info[:inventory])
+      end
+    end
+  end
 
-    respond_with ingredient.update!(
-      ingredient_params.except(:provider_name).merge(provider_id: provider.id)
-    )
+  def update
+    if ingredient_params[:provider_name].blank?
+      respond_with ingredient.update!(ingredient_params)
+    else
+      provider = Provider.find_or_create_by(
+        name: ingredient_params[:provider_name], user: current_user
+      )
+
+      respond_with ingredient.update!(
+        ingredient_params.except(:provider_name).merge(provider_id: provider.id)
+      )
+    end
   end
 
   def destroy
@@ -65,6 +85,12 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     @ingredients ||= current_user.ingredients
   end
 
+  def critical_ingredient_associations
+    {
+      recipes: ingredient.recipes
+    }
+  end
+
   def ingredient_params
     params.require(:ingredient).permit(
       :name,
@@ -73,7 +99,12 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :currency,
       :inventory,
       :provider_name,
-      ingredient_measures_attributes: [:id, :name, :quantity, :_destroy]
+      :minimum_quantity,
+      ingredient_measures_attributes: [:id, :name, :quantity, :primary, :_destroy]
     )
+  end
+
+  def update_inventories_params
+    params.require(:ingredients)
   end
 end

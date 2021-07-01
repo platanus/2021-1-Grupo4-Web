@@ -1,12 +1,12 @@
 <template>
-  <div class="w-full m-auto">
+  <div>
     <button
       class="focus:outline-none"
       @click="toggleList"
     >
       <img
         svg-inline
-        src="../../../../assets/images/shopping-bag-svg.svg"
+        src="../../../../assets/images/shopping-cart-svg.svg"
         class="w-6 h-6 text-yellow-700"
       >
     </button>
@@ -56,6 +56,12 @@
               >
             </div>
           </button>
+          <button
+            class="focus:outline-none bg-gray-300 hover:bg-gray-400 p-4 mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md"
+            @click="reduceInventory"
+          >
+            {{ $t('msg.menus.reduceInventory') }}
+          </button>
         </div>
       </div>
       <span
@@ -99,6 +105,10 @@ export default {
     },
     async downloadShoppingList() {
       downloadShoppingList(this.menuId);
+    },
+    reduceInventory() {
+      this.toggleList();
+      this.$emit('reduceInventory', this.menuId);
     },
   },
 };

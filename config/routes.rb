@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   root to: 'home#index'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :ingredients
+      resources :ingredients do
+        collection do
+          post '/update-inventories', to: 'ingredients#update_inventories'
+        end
+        member do
+          get '/critical-associations', to: 'ingredients#critical_associations'
+        end
+      end
       resources :providers
       resources :menus do
         resources :menu_recipes, only: [:create, :update, :destroy]
@@ -15,6 +22,9 @@ Rails.application.routes.draw do
       resources :recipes do
         resources :recipe_ingredients, only: [:create, :update, :destroy]
         resources :recipe_steps, only: [:create, :update, :destroy]
+        member do
+          get '/critical-associations', to: 'recipes#critical_associations'
+        end
       end
 
       namespace :users do
@@ -28,6 +38,9 @@ Rails.application.routes.draw do
       get '/search-jumbo-products', to: 'ingredients#search_jumbo_products'
       get '/search-lider-products', to: 'ingredients#search_lider_products'
       get '/search-cornershop-products', to: 'ingredients#search_cornershop_products'
+
+      # Alerts
+      get '/alert-ingredients', to: 'ingredients#minimum_alert_index'
     end
   end
 
@@ -42,7 +55,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount Sidekiq::Web => '/queue'
 
-  resources :ingredients, only: [:index]
+  resources :ingredients, only: [:index, :show]
   resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :show, :new, :edit]
   resources :providers, only: [:index, :new]

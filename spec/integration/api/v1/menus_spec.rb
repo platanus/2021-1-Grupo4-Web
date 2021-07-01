@@ -150,12 +150,21 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     parameter name: :user_token, in: :query, type: :string
 
     let!(:first_ingredient) { create(:ingredient, inventory: 12) }
-    let!(:second_ingredient) { create(:ingredient, inventory: 10) }
+    let!(:second_ingredient) { create(:ingredient, inventory: 10_000) }
     let!(:third_ingredient) { create(:ingredient, inventory: 2) }
     let!(:first_recipe) { create(:recipe, ingredients: [first_ingredient, second_ingredient]) }
     let!(:second_recipe) { create(:recipe, ingredients: [third_ingredient]) }
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
+
+    def create_measure(ingredient, measure:, quantity:, primary: false)
+      IngredientMeasure.create!(
+        ingredient_id: ingredient.id,
+        name: measure,
+        quantity: quantity,
+        primary: primary
+      )
+    end
 
     post 'Reduces inventory' do
       description 'Reduces inventory of ingredients of menu through recipes'
@@ -165,16 +174,24 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       # rubocop:disable Rails/SkipsModelValidations
       before do
         existent_menu.menu_recipes.update_all(recipe_quantity: 3)
-        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1)
-        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 2)
+        first_recipe.recipe_ingredients.update_all(ingredient_quantity: 1, ingredient_measure: 'Kg')
+        second_recipe.recipe_ingredients.update_all(ingredient_quantity: 0.2,
+                                                    ingredient_measure: 'Kg')
+
+        create_measure(first_ingredient, measure: 'Kg', quantity: 2, primary: true)
+        create_measure(first_ingredient, measure: 'Gr', quantity: 2000)
+        create_measure(second_ingredient, measure: 'Kg', quantity: 1)
+        create_measure(second_ingredient, measure: 'Gr', quantity: 1000, primary: true)
+        create_measure(third_ingredient, measure: 'Kg', quantity: 3, primary: true)
+        create_measure(third_ingredient, measure: 'Gr', quantity: 3000)
       end
       # rubocop:enable Rails/SkipsModelValidations
 
       response '200', 'reduced inventory of menu' do
         run_test! do
           expect(first_ingredient.reload.inventory).to eq(9)
-          expect(second_ingredient.reload.inventory).to eq(7)
-          expect(third_ingredient.reload.inventory).to eq(0)
+          expect(second_ingredient.reload.inventory).to eq(7000)
+          expect(third_ingredient.reload.inventory).to eq(1.4)
         end
       end
     end
@@ -198,10 +215,10 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     let!(:existent_menu) { create(:menu, recipes: [first_recipe, second_recipe], user: user) }
     let(:id) { existent_menu.id }
 
-    def ingredient_hash(name, quantity)
+    def ingredient_hash(name, quantity, measure)
       hash_including(
-        measure: kind_of(String), name: name,
-        quantity: quantity, total_price: kind_of(Integer)
+        measure: measure, name: name,
+        quantity: quantity, total_price: kind_of(Float)
       )
     end
 
@@ -209,9 +226,9 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
       {
         provider: "Jumbo",
         ingredients: match_array([
-                                   ingredient_hash("First", 9),
-                                   ingredient_hash("Second", 30),
-                                   ingredient_hash("Third", 6)
+                                   ingredient_hash("First", 18, 'Unidades'),
+                                   ingredient_hash("Second", 30, 'L'),
+                                   ingredient_hash("Third", 6, 'Unidades')
                                  ])
       }
     end
@@ -240,12 +257,16 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
         )
 
         IngredientMeasure.create!(name: 'Kg', quantity: 3, ingredient_id: first_ingredient.id)
+        IngredientMeasure.create!(
+          name: 'Unidades', quantity: 6,
+          ingredient_id: first_ingredient.id, primary: true
+        )
         IngredientMeasure.create!(name: 'L', quantity: 5, ingredient_id: second_ingredient.id)
         IngredientMeasure.create!(name: 'Unidades', quantity: 2, ingredient_id: third_ingredient.id)
       end
       # rubocop:enable Rails/SkipsModelValidations
 
-      response '200', 'shopping list grouped by provider' do
+      response '200', 'shopping list grouped by provider with default measure' do
         run_test! do |response|
           expect(JSON.parse(response.body).first.deep_symbolize_keys).to match(expected_response)
         end

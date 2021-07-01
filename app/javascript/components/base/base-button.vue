@@ -1,6 +1,6 @@
 <template>
   <button
-    class="h-10 font-bold py-2 px-6 rounded shadow-md w-full h-auto focus:outline-none"
+    class="font-bold py-2 px-6 rounded shadow-md w-full h-auto focus:outline-none"
     :class="elements.color"
     @click="clickButton"
   >

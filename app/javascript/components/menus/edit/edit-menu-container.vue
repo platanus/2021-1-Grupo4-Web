@@ -58,7 +58,10 @@
               >
             </div>
             <!-- available recipes -->
-            <div class="flex flex-col bg-gray-200 overflow-scroll">
+            <div
+              v-if="!loading"
+              class="flex flex-col bg-gray-200 overflow-scroll"
+            >
               <add-recipe-card
                 v-for="recipe in filterRecipes"
                 :key="recipe.id"
@@ -73,6 +76,12 @@
                 {{ recipe.name }}
               </add-recipe-card>
             </div>
+            <span
+              v-if="loading"
+              class="flex my-auto w-8 h-8 pl-2 ml-2"
+            >
+              <base-spinner />
+            </span>
           </div>
         </div>
         <!-- selected recipes -->
@@ -80,10 +89,16 @@
           <div class="flex flex-col self-stretch flex-grow bg-gray-50">
             <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
               {{ $t('msg.menus.selectedRecipes') }}
+              <span
+                v-if="loading"
+                class="flex my-auto w-8 h-8 pl-2 ml-2"
+              >
+                <base-spinner />
+              </span>
             </div>
             <div
               class="flex flex-col bg-gray-200 overflow-scroll"
-              v-if="selectedRecipes.length > 0"
+              v-if="selectedRecipes.length > 0 && !loading"
             >
               <div
                 v-for="recipeSelected in selectedRecipes"
@@ -101,7 +116,7 @@
             </div>
             <div
               class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
-              v-else
+              v-if="!selectedRecipes.length > 0 && !loading"
             >
               {{ $t('msg.menus.noRecipes') }}
             </div>
@@ -141,6 +156,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       initialRecipes: [],
       recipes: [],
       error: '',
@@ -175,6 +191,7 @@ export default {
     },
   },
   async created() {
+    this.loading = true;
     try {
       const menuResponse = await getMenu(this.menuId);
       const response = await getRecipes();
@@ -186,16 +203,21 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
     async editMenu() {
+      this.loading = true;
       try {
         const updatedMenu = this.getUpdatedMenu();
         await updateMenu(this.menuId, updatedMenu);
         window.location = '/menus';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     useMenuInfo(menu) {
@@ -209,13 +231,20 @@ export default {
       this.addInitialRecipes();
     },
     addInitialRecipes() {
-      const ids = this.initialRecipes.map(recipe => recipe.id);
-      this.selectedRecipes = this.recipes.filter(recipe => ids.includes(parseInt(recipe.id, 10)));
-      this.selectedRecipes.forEach(element => {
-        const index = ids.indexOf(parseInt(element.id, 10));
-        element.quantity = this.initialRecipes[index].quantity;
-        element.idMenuRecipe = this.initialRecipes[index].idMenuRecipe;
-      });
+      this.loading = true;
+      try {
+        const ids = this.initialRecipes.map(recipe => recipe.id);
+        this.selectedRecipes = this.recipes.filter(recipe => ids.includes(parseInt(recipe.id, 10)));
+        this.selectedRecipes.forEach(element => {
+          const index = ids.indexOf(parseInt(element.id, 10));
+          element.quantity = this.initialRecipes[index].quantity;
+          element.idMenuRecipe = this.initialRecipes[index].idMenuRecipe;
+        });
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
     },
     addRecipe(recipe) {
       const defaultQuantity = 1;

@@ -12,12 +12,14 @@ function unitaryPrice(recipeIngredient) {
     return price;
   }
 
-  return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
+  return recipeIngredient.ingredient.price / defaultQuantity;
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export function getPriceOfSelectedIngredient(recipeIngredient) {
+function getPriceOfSelectedIngredient(recipeIngredient) {
   if (!recipeIngredient.ingredientQuantity) return 0;
 
-  return recipeIngredient.ingredientQuantity * unitaryPrice(recipeIngredient);
+  return Math.round(recipeIngredient.ingredientQuantity * unitaryPrice(recipeIngredient));
 }
+
+export { unitaryPrice, getPriceOfSelectedIngredient };

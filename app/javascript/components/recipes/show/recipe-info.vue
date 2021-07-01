@@ -7,7 +7,7 @@
         svg-inline
         src="../../../../assets/images/dollar-svg.svg"
       >
-      <div class="w-10 h-5 font-sans font-normal text-base text-black flex-grow-0">
+      <div class="w-auto h-5 font-sans font-normal text-base text-black flex-grow-0">
         {{ recipePrice | currency }}
       </div>
     </div>
@@ -18,7 +18,7 @@
         svg-inline
         src="../../../../assets/images/chart-pie-svg.svg"
       >
-      <div class="w-24 h-5 font-sans font-normal text-base text-black flex-grow-0">
+      <div class="w-auto h-5 font-sans font-normal text-base text-black flex-grow-0">
         {{ portions }} {{ $t('msg.recipes.portions') }}
       </div>
     </div>
@@ -29,7 +29,7 @@
         svg-inline
         src="../../../../assets/images/clock-svg.svg"
       >
-      <div class="w-36 h-5 font-sans font-normal text-base text-black flex-grow-0">
+      <div class="w-auto h-5 font-sans font-normal text-base text-black flex-grow-0">
         {{ cookMinutes }} {{ $t('msg.recipes.minutes') }}
       </div>
     </div>

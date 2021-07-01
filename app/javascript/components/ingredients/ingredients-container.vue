@@ -6,6 +6,12 @@
         <div class="text-4xl">
           {{ $t('msg.ingredients.title') }}
         </div>
+        <span
+          class="flex my-auto w-8 h-8 pl-2 ml-2"
+          v-if="loading"
+        >
+          <base-spinner />
+        </span>
       </div>
       <div class="flex flex-col p-10 w-full bg-gray-50 my-10">
         <!--SearchBar y Button-->
@@ -29,6 +35,13 @@
           </div>
           <div class="flex justify-start px-2 pb-2 my-auto">
             <base-button
+              :elements="{ placeholder: $t('msg.ingredients.inventory.editInventories'),
+                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
+              @click="goToEditInventories"
+            />
+          </div>
+          <div class="flex justify-start px-2 pb-2 my-auto">
+            <base-button
               :elements="{ placeholder: $t('msg.ingredients.add'),
                            color: 'bg-green-500 hover:bg-green-700 text-white' }"
               @click="toggleAddModal"
@@ -44,18 +57,24 @@
         </div>
 
         <!--Table-->
-        <div class="flex w-full 2xl:justify-center items-center overflow-auto">
+        <div v-if="!loading">
           <p
             v-if="this.ingredients.length===0"
+            class="p-2"
           >
-            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title') }}
+            {{ $t('msg.noElements') }} {{ $t('msg.ingredients.title').toLowerCase() }}
           </p>
-          <ingredients-table
+          <div
             v-else
-            :ingredients="filterIngredients"
-            @edit="toggleEditModal"
-            @del="toggleDelModal"
-          />
+            class="flex w-full 2xl:justify-center items-center overflow-auto"
+          >
+            <ingredients-table
+              :ingredients="filterIngredients"
+              @edit="toggleEditModal"
+              @del="toggleDelModal"
+              @updateInventory="UpdateInventory"
+            />
+          </div>
         </div>
       </div>
 
@@ -70,8 +89,8 @@
       >
         <ingredients-form
           ref="addIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="false"
+          :market-ingredient="marketIngredient"
         />
       </base-modal>
 
@@ -99,7 +118,6 @@
       >
         <ingredients-form
           ref="editIngredientInfo"
-          :units="['Kg','Litro', 'Cucharadas', 'Unidades', 'Oz']"
           :edit-mode="true"
           :ingredient="this.ingredientToEdit"
         />
@@ -114,7 +132,26 @@
         :ok-button-label="$t('msg.yesDelete')"
         :cancel-button-label="$t('msg.cancel')"
       >
-        <p>{{ $t('msg.ingredients.deleteMsg') }}</p>
+        <!-- Critical associations -->
+        <span
+          class="flex my-auto w-8 h-8 pl-2"
+          v-if="loadingAssociations"
+        >
+          <base-spinner />
+        </span>
+        <div v-else>
+          <div v-if="criticalAssociations.length > 0">
+            <p>{{ $t('msg.ingredients.associationWarning') }}</p>
+            <base-one-column-table
+              :header="$t('msg.recipes.title')"
+              :rows="criticalAssociations"
+            />
+          </div>
+          <!-- Delete msg -->
+          <p class="mt-4">
+            {{ $t('msg.ingredients.deleteMsg') }}
+          </p>
+        </div>
       </base-modal>
     </div>
   </div>
@@ -123,7 +160,8 @@
 <script>
 
 import Vue from 'vue';
-import { getIngredients, postIngredient, deleteIngredient, editIngredient } from './../../api/ingredients.js';
+import { getIngredients, postIngredient, deleteIngredient,
+  editIngredient, getCriticalAssociations } from './../../api/ingredients.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
@@ -132,6 +170,8 @@ export default {
 
   data() {
     return {
+      loading: false,
+      loadingAssociations: false,
       showingAdd: false,
       showingSearchIngredients: false,
       showingEdit: false,
@@ -139,7 +179,9 @@ export default {
       ingredientToEdit: {},
       ingredientToDelete: {},
       ingredients: [],
+      marketIngredient: undefined,
       searchQuery: '',
+      criticalAssociations: [],
       error: '',
     };
   },
@@ -151,16 +193,19 @@ export default {
   },
 
   async created() {
+    this.loading = true;
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
         id: element.id,
         ...element.attributes,
       }));
-      this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
+    this.roundInventory();
   },
 
   computed: {
@@ -177,8 +222,15 @@ export default {
   },
 
   methods: {
+    roundInventory() {
+      this.ingredients.forEach(ingredient => {
+        // eslint-disable-next-line no-magic-numbers
+        ingredient.inventory = Math.round(ingredient.inventory * 100) / 100;
+      });
+    },
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
+      this.marketIngredient = undefined;
     },
 
     toggleSearchIngredientsModal() {
@@ -193,16 +245,46 @@ export default {
     toggleDelModal(ingredient) {
       this.showingDel = !this.showingDel;
       this.ingredientToDelete = ingredient;
+      if (this.showingDel) {
+        this.getIngredientAssociations(ingredient.id);
+      }
+    },
+    goToEditInventories() {
+      window.location = '/ingredients/show';
     },
 
-    async addIngredient() {
-      let ingredientsInfo;
-      this.showingAdd = !this.showingAdd;
-
+    async getIngredientAssociations(ingredientId) {
+      this.loadingAssociations = true;
       try {
-        ingredientsInfo = this.$refs.addIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        const response = await getCriticalAssociations(ingredientId);
+        this.criticalAssociations = response.data.recipes.map((element) => element.name);
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loadingAssociations = false;
+      }
+    },
+
+    // eslint-disable-next-line max-statements
+    async addIngredient() {
+      const ingredientsInfo = this.$refs.addIngredientInfo.form;
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredientMeasuresAttributes[0].quantity ||
+       !ingredientsInfo.ingredientMeasuresAttributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
+
+        return;
+      } else if (ingredientsInfo.ingredientMeasuresAttributes[0].quantity < 1) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return;
+      }
+      try {
+        this.showingAdd = !this.showingAdd;
+        this.loading = true;
+        ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+          .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
         const {
           data:
             { data: { id, attributes },
@@ -210,67 +292,91 @@ export default {
         } = await postIngredient(ingredientsInfo);
         const ingredientToAdd = { id, ...attributes };
         this.ingredients.push(ingredientToAdd);
-        this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
 
     async addMarketIngredient(productForm) {
       this.toggleSearchIngredientsModal();
+      this.toggleAddModal();
+      this.marketIngredient = productForm;
+    },
+    addInventoryToIngredient(ingredientsInfo, id) {
+      this.ingredients.forEach(elem => {
+        if (elem.id === id) {
+          ingredientsInfo.inventory = elem.inventory;
+        }
+      });
 
-      try {
-        const {
-          data:
-            {
-              data: { id, attributes },
-            },
-        } = await postIngredient(productForm);
-        const ingredientToAdd = { id, ...attributes };
-        this.ingredients.push(ingredientToAdd);
-        this.error = '';
-      } catch (error) {
-        this.error = error;
-      }
+      return ingredientsInfo;
     },
 
+    // eslint-disable-next-line max-statements
     async editIngredient() {
-      this.showingEdit = !this.showingEdit;
+      const ingredientsInfo = this.$refs.editIngredientInfo.form;
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredientMeasuresAttributes[0].quantity ||
+      !ingredientsInfo.ingredientMeasuresAttributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
+
+        return;
+      } else if (ingredientsInfo.ingredientMeasuresAttributes[0].quantity < 1) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return;
+      }
       try {
-        const ingredientsInfo = this.$refs.editIngredientInfo.form;
-        ingredientsInfo.ingredient_measures_attributes = ingredientsInfo /* eslint-disable-line camelcase */
-          .ingredient_measures_attributes.filter(unit => unit.name && unit.quantity);
+        this.showingEdit = !this.showingEdit;
+        this.loading = true;
+        ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+          .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
         this.addMeasuresToDelete(ingredientsInfo);
-        await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
-        this.updateIngredient(ingredientsInfo);
+        const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
+        await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
+        this.updateIngredient(ingredientsInfoFinal);
         this.error = '';
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
       }
     },
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
-        .forEach(elem => ingredientsInfo.ingredient_measures_attributes.push({ id: elem, _destroy: true }));
+        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
     },
 
     async deleteIngredient() {
       this.showingDel = !this.showingDel;
+      this.loading = true;
       try {
         await deleteIngredient(this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
-        this.error = '';
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async UpdateInventory(ingredient) {
+      try {
+        await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
       } catch (error) {
         this.error = error;
       }
     },
 
     async updateIngredient(ingredientEdited) {
-      ingredientEdited.quantity = ingredientEdited.ingredient_measures_attributes[0].quantity;
-      ingredientEdited.measure = ingredientEdited.ingredient_measures_attributes[0].name;
+      ingredientEdited.quantity = ingredientEdited.ingredientMeasuresAttributes[0].quantity;
+      ingredientEdited.measure = ingredientEdited.ingredientMeasuresAttributes[0].name;
       ingredientEdited.id = this.ingredientToEdit.id;
       ingredientEdited.otherMeasures = { data: [] };
       ingredientEdited.providerName = ingredientEdited.provider_name;
-      ingredientEdited.ingredient_measures_attributes.forEach(element => {
+      ingredientEdited.ingredientMeasuresAttributes.forEach(element => {
         ingredientEdited.otherMeasures.data
           .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
       });

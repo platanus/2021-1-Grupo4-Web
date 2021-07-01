@@ -11,7 +11,10 @@
           v-model="query"
         >
         <!-- ingredientes disponibles -->
-        <div class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll">
+        <div
+          v-if="!loading"
+          class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-scroll"
+        >
           <add-ingredient-card
             v-for="ingredient in filteredIngredients"
             :key="ingredient.id"
@@ -26,6 +29,12 @@
             {{ ingredient.name }}
           </add-ingredient-card>
         </div>
+        <span
+          v-if="loading"
+          class="flex my-auto w-8 h-8 pl-2 ml-2"
+        >
+          <base-spinner />
+        </span>
       </div>
     </div>
     <!-- ingredientes seleccionados -->
@@ -33,10 +42,16 @@
       <div class="flex flex-col self-stretch flex-grow bg-gray-50">
         <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
           {{ $t('msg.recipes.selectedIngredients') }}
+          <span
+            v-if="loading"
+            class="flex my-auto w-8 h-8 pl-2 ml-2"
+          >
+            <base-spinner />
+          </span>
         </div>
         <div
           class="flex flex-col h-96 bg-gray-200 overflow-scroll"
-          v-if="recipeIngredients.length > 0"
+          v-if="recipeIngredients.length > 0 && !loading"
         >
           <div
             v-for="(recipeIngredient, idx) in recipeIngredients"
@@ -46,8 +61,7 @@
               :recipe-ingredient-idx="idx"
               :recipe-ingredient-attrs="recipeIngredient.attributes"
               @delete-ingredient="deleteIngredient"
-              @increase-quantity="increaseQuantity"
-              @decrease-quantity="decreaseQuantity"
+              @change-quantity="changeQuantity"
               @change-measure="changeMeasure"
             >
               {{ recipeIngredient.attributes.ingredient.name }}
@@ -56,7 +70,7 @@
         </div>
         <div
           class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
-          v-else
+          v-if="!recipeIngredients.length > 0 && !loading"
         >
           {{ $t('msg.recipes.noIngredients') }}
         </div>
@@ -72,12 +86,14 @@
 
 <script>
 import { getIngredients } from './../../../api/ingredients.js';
+import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils.js';
 import addIngredientCard from './add-ingredient-card.vue';
 import selectedIngredientCard from './selected-ingredient-card.vue';
 
 export default {
   data() {
     return {
+      loading: false,
       ingredients: [],
       error: '',
       query: '',
@@ -93,6 +109,7 @@ export default {
     } },
   },
   async created() {
+    this.loading = true;
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
@@ -102,12 +119,14 @@ export default {
       this.error = '';
     } catch (error) {
       this.error = error;
+    } finally {
+      this.loading = false;
     }
   },
   computed: {
     recipePrice() {
       return Math.round(this.recipeIngredients.reduce((recipePrice, recipeIngredient) =>
-        recipePrice + this.getPriceOfSelectedIngredient(recipeIngredient.attributes), 0));
+        recipePrice + getPriceOfSelectedIngredient(recipeIngredient.attributes), 0));
     },
     filteredIngredients() {
       if (this.query) {
@@ -127,34 +146,12 @@ export default {
     deleteIngredient(recipeIngredientIdx) {
       this.$emit('delete-ingredient', recipeIngredientIdx);
     },
-    increaseQuantity(recipeIngredientIdx) {
-      this.$emit('increase-quantity', recipeIngredientIdx);
+    changeQuantity(recipeIngredientIdx, ingredientQuantityData) {
+      this.$emit('change-quantity', recipeIngredientIdx, ingredientQuantityData);
     },
-    decreaseQuantity(recipeIngredientIdx) {
-      this.$emit('decrease-quantity', recipeIngredientIdx);
-    },
+
     changeMeasure(measure, recipeIngredientIdx) {
       this.$emit('change-measure', measure, recipeIngredientIdx);
-    },
-    getPriceOfSelectedIngredient(recipeIngredient) {
-      if (!recipeIngredient.ingredientQuantity) return 0;
-
-      return recipeIngredient.ingredientQuantity * this.unitaryPrice(recipeIngredient);
-    },
-
-    unitaryPrice(recipeIngredient) {
-      const defaultQuantity = recipeIngredient.ingredient.otherMeasures.data.map(element =>
-        element.attributes).filter(element =>
-        element.name === recipeIngredient.ingredientMeasure)[0].quantity;
-      const price = recipeIngredient.ingredient.price / defaultQuantity;
-      if (this.isInt(price)) {
-        return price;
-      }
-
-      return Math.round(recipeIngredient.ingredient.price / defaultQuantity);
-    },
-    isInt(n) {
-      return n % 1 === 0;
     },
   },
 };

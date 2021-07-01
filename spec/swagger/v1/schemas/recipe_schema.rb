@@ -21,7 +21,8 @@ RECIPE_SCHEMA = {
         type: :object,
         properties: {
           description: { type: :string, example: 'Horneamos la masa', 'x-nullable': false },
-          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true }
+          media_url: { type: :string, example: 'https://media-url', 'x-nullable': true },
+          step_order_position: { type: :integer, example: 0, 'x-nullable': true }
         }
       }
     }
@@ -137,4 +138,21 @@ RECIPE_RESOURCE_SCHEMA = {
   required: [
     :data
   ]
+}
+
+RECIPE_CRITICAL_ASSOCIATIONS = {
+  type: "object",
+  properties: {
+    menus: {
+      type: :array,
+      items: {
+        type: :object,
+        properties: {
+          id: { type: :integer, example: 1 },
+          name: { type: :string, example: 'Menú de almuerzo' },
+          portions: { type: :integer, example: 5 }
+        }
+      }
+    }
+  }
 }
