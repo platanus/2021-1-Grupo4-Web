@@ -204,7 +204,7 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <div
-        id="bankAccountInfo"
+        ref="bankAccountInfo"
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
           provider.accountType && provider.accountNumber && provider.email"
       >
@@ -272,7 +272,7 @@ export default {
       this.showBankAccount = !this.showBankAccount;
     },
     copyBankAccount() {
-      const element = document.getElementById('bankAccountInfo');
+      const element = this.$refs.bankAccountInfo;
       const elementText = element.textContent;
       navigator.clipboard.writeText(elementText);
     },
