@@ -264,13 +264,13 @@ export default {
     // eslint-disable-next-line max-statements
     async addIngredient() {
       const ingredientsInfo = this.$refs.addIngredientInfo.form;
-      if (!ingredientsInfo.name || !ingredientsInfo.ingredient_measures_attributes[0].quantity ||
-       !ingredientsInfo.ingredient_measures_attributes[0].name) {
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredientMeasuresAttributes[0].quantity ||
+       !ingredientsInfo.ingredientMeasuresAttributes[0].name) {
         // eslint-disable-next-line no-alert
         alert(this.$t('msg.ingredients.msjAlert'));
 
         return;
-      } else if (ingredientsInfo.ingredient_measures_attributes[0].quantity < 1) {
+      } else if (ingredientsInfo.ingredientMeasuresAttributes[0].quantity < 1) {
         // eslint-disable-next-line no-alert
         alert(this.$t('msg.ingredients.msjMinQuantity'));
 
@@ -313,13 +313,13 @@ export default {
     // eslint-disable-next-line max-statements
     async editIngredient() {
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
-      if (!ingredientsInfo.name || !ingredientsInfo.ingredient_measures_attributes[0].quantity ||
-      !ingredientsInfo.ingredient_measures_attributes[0].name) {
+      if (!ingredientsInfo.name || !ingredientsInfo.ingredientMeasuresAttributes[0].quantity ||
+      !ingredientsInfo.ingredientMeasuresAttributes[0].name) {
         // eslint-disable-next-line no-alert
         alert(this.$t('msg.ingredients.msjAlert'));
 
         return;
-      } else if (ingredientsInfo.ingredient_measures_attributes[0].quantity < 1) {
+      } else if (ingredientsInfo.ingredientMeasuresAttributes[0].quantity < 1) {
         // eslint-disable-next-line no-alert
         alert(this.$t('msg.ingredients.msjMinQuantity'));
 
