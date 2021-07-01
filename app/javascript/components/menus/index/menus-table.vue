@@ -97,17 +97,18 @@
           class="content-center py-2 px-8 items-center"
         >
           <div class="flex flex-col">
-            <div class="flex justify-between w-full">
+            <div class="flex w-full justify-between">
               <menu-shopping-list
+                class="flex w-5/12 m-auto"
                 :menu-id="menu.id"
                 @reduceInventory="toggleReduce"
               />
-              <p>
+              <div class="flex w-7/12">
                 Lista de Compras
-              </p>
+              </div>
             </div>
             <div class="flex w-full justify-between">
-              <div class="flex w-full m-auto">
+              <div class="flex w-5/12 m-auto">
                 <img
                   svg-inline
                   src="../../../../assets/images/reduce-inventory-svg.svg"
@@ -115,9 +116,9 @@
                   @click="toggleReduce(menu.id)"
                 >
               </div>
-              <p>
+              <div class="flex w-7/12">
                 Restar Inventario
-              </p>
+              </div>
             </div>
           </div>
         </td>

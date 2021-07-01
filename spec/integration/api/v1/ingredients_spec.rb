@@ -338,7 +338,8 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
 
     parameter name: :id, in: :path, type: :integer
 
-    let(:existent_ingredient) { create(:ingredient, user_id: user.id) }
+    let!(:provider) { create(:provider, user: user) }
+    let(:existent_ingredient) { create(:ingredient, user_id: user.id, provider: provider) }
     let(:id) { existent_ingredient.id }
 
     get 'Retrieves Ingredient' do
@@ -392,7 +393,9 @@ describe 'API::V1::Ingredients', swagger_doc: 'v1/swagger.json' do
           }
         end
 
-        run_test!
+        run_test! do
+          expect(existent_ingredient.reload.provider).to eq(provider)
+        end
       end
 
       response '200', 'ingredient updated with measure by default' do
