@@ -13,85 +13,81 @@
         v-model="modifiedRecipeSteps"
         @end="onEnd"
       >
-        <transition-group
-          type="transition"
+        <div
+          v-for="(step, idx) in modifiedRecipeSteps"
+          :key="idx"
+          :index="idx"
         >
           <div
-            v-for="(step, idx) in modifiedRecipeSteps"
-            :key="idx"
-            :index="idx"
+            class="flex justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
+            v-if="!step.isEditing"
           >
-            <div
-              class="flex justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
-              v-if="!step.isEditing"
-            >
-              <div class="flex flex-none self-stretch flex-grow-0 mr-2.5 flex-row items-center static w-2.5 h-auto left-3 top-3">
-                <div class="static left-0 right-0 top-1/3 bottom-1/3">
-                  <img
-                    class="flex-none flex-grow-0 mr-2.5"
-                    src="../../../../assets/images/menu-recipe-svg.svg"
-                  >
-                </div>
-              </div>
-              <div class="flex flex-col justify-center w-6 h-6 bg-yellow-500 shadow-sm rounded-full flex-none flex-grow-0 items-center mr-4 ">
-                <div class="font-sans font-normal text-lg text-white my-auto">
-                  {{ idx + 1 }}
-                </div>
-              </div>
-              <div
-                class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
-                v-if="step.step.attributes.description === null"
-              >
-                {{ $t('msg.recipes.noSteps') }}
-              </div>
-              <textarea
-                rows="1"
-                class="flex font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4 w-8/12 overflow-x-scroll bg-gray-50"
-                v-model="step.step.attributes.description"
-                v-else
-              />
-              <div class="flex m-auto items-center w-6 h-6 mx-4">
-                <dots-dropdown
-                  :elements="{
-                    del: true,
-                    edit: true,
-                    last: lastStep(idx)
-                  }"
-                  @delete="deleteStep(idx)"
-                  @edit="editStep(idx)"
-                />
+            <div class="flex flex-none self-stretch flex-grow-0 mr-2.5 flex-row items-center static w-2.5 h-auto left-3 top-3">
+              <div class="static left-0 right-0 top-1/3 bottom-1/3">
+                <img
+                  class="flex-none flex-grow-0 mr-2.5"
+                  src="../../../../assets/images/menu-recipe-svg.svg"
+                >
               </div>
             </div>
-
-            <div
-              class="flex flex-col justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
-              v-else
-            >
-              <textarea
-                class="flex-1 w-full resize-y border-2 rounded-md border-gray-300 w-full my-4 p-4"
-                v-model="modifiedRecipeSteps[idx].editingStepDescription"
-              />
-              <div
-                class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0"
-              >
-                <button
-                  class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 bg-green-500 shadow
-                  rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
-                  @click="acceptEdit(idx)"
-                >
-                  {{ $t('msg.recipes.saveChanges') }}
-                </button>
-                <button
-                  class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 border border-gray-800 box-border
-                    drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0"
-                  @click="closeEditStep(idx)"
-                >
-                  {{ $t('msg.recipes.cancel') }}
-                </button>
+            <div class="flex flex-col justify-center w-6 h-6 bg-yellow-500 shadow-sm rounded-full flex-none flex-grow-0 items-center mr-4 ">
+              <div class="font-sans font-normal text-lg text-white my-auto">
+                {{ idx + 1 }}
               </div>
+            </div>
+            <div
+              class="flex w-auto h-auto font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4"
+              v-if="step.step.attributes.description === null"
+            >
+              {{ $t('msg.recipes.noSteps') }}
+            </div>
+            <textarea
+              rows="1"
+              class="flex font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4 w-8/12 overflow-x-scroll bg-gray-50"
+              v-model="step.step.attributes.description"
+              v-else
+            />
+            <div class="flex m-auto items-center w-6 h-6 mx-4">
+              <dots-dropdown
+                :elements="{
+                  del: true,
+                  edit: true,
+                  last: lastStep(idx),
+                }"
+                @delete="deleteStep(idx)"
+                @edit="editStep(idx)"
+              />
             </div>
           </div>
-        </transition-group>
+
+          <div
+            class="flex flex-col justify-center items-start p-3 w-auto h-auto bg-gray-20 border border-gray-300 flex-none self-stretch flex-grow-0"
+            v-else
+          >
+            <textarea
+              class="flex-1 w-full resize-y border-2 rounded-md border-gray-300 w-full my-4 p-4"
+              v-model="modifiedRecipeSteps[idx].editingStepDescription"
+            />
+            <div
+              class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0"
+            >
+              <button
+                class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 bg-green-500 shadow
+                rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
+                @click="acceptEdit(idx)"
+              >
+                {{ $t('msg.recipes.saveChanges') }}
+              </button>
+              <button
+                class="flex justify-center items-center m-1 py-2.5 px-10 w-auto h-11 border border-gray-800 box-border
+                  drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0"
+                @click="closeEditStep(idx)"
+              >
+                {{ $t('msg.recipes.cancel') }}
+              </button>
+            </div>
+          </div>
+        </div>
       </draggable>
     </div>
     <div
