@@ -207,22 +207,22 @@
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
           provider.accountType && provider.accountNumber && provider.email"
       >
-        <p ref="contactName">
+        <p>
           {{ provider.contactName }}
         </p>
-        <p ref="contactRut">
+        <p>
           {{ provider.contactRut }}
         </p>
-        <p ref="bankName">
+        <p>
           {{ provider.bankName }}
         </p>
-        <p ref="accountType">
+        <p>
           {{ provider.accountType }}
         </p>
-        <p ref="accountNumber">
+        <p>
           {{ provider.accountNumber }}
         </p>
-        <p ref="email">
+        <p>
           {{ provider.email }}
         </p>
       </div>
