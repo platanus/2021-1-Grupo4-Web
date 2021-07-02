@@ -39,7 +39,8 @@
             <dots-dropdown
               :elements="{
                 del: true,
-                edit: true
+                edit: true,
+                last: lastStep(idx)
               }"
               @delete="deleteStep(idx)"
               @edit="editStep(idx)"
@@ -52,7 +53,7 @@
           v-else
         >
           <textarea
-            class="flex-1 w-full resize-y border-2 rounded-md border-gray-300 w-full my-4 p-4"
+            class="flex-1 resize-y border-2 rounded-md border-gray-300 w-full my-4 p-4"
             v-model="modifiedRecipeSteps[idx].editingStepDescription"
           />
           <div
@@ -149,6 +150,13 @@ export default {
     },
     closeEditStep(idx) {
       this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
+    },
+    lastStep(idx) {
+      if (idx === this.recipeSteps.length - 1) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

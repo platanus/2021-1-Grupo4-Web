@@ -115,7 +115,8 @@
             <dots-dropdown
               :elements="{
                 edit:true,
-                del:true
+                del:true,
+                last: lastIngredient(idx)
               }"
               @edit="editIngredient(ingredient)"
               @delete="deleteIngredient(ingredient)"
@@ -152,6 +153,13 @@ export default {
     changeInventory(ingredient, inventory) {
       ingredient.inventory = inventory;
       this.$emit('updateInventory', ingredient);
+    },
+    lastIngredient(idx) {
+      if (idx === this.ingredients.length - 1) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

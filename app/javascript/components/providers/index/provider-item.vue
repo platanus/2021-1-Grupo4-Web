@@ -204,26 +204,25 @@
       :cancel-button-label="$t('msg.cancel')"
     >
       <div
-        ref="bankAccountInfo"
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
           provider.accountType && provider.accountNumber && provider.email"
       >
-        <p>
+        <p ref="contactName">
           {{ provider.contactName }}
         </p>
-        <p>
+        <p ref="contactRut">
           {{ provider.contactRut }}
         </p>
-        <p>
+        <p ref="bankName">
           {{ provider.bankName }}
         </p>
-        <p>
+        <p ref="accountType">
           {{ provider.accountType }}
         </p>
-        <p>
+        <p ref="accountNumber">
           {{ provider.accountNumber }}
         </p>
-        <p>
+        <p ref="email">
           {{ provider.email }}
         </p>
       </div>
@@ -272,9 +271,9 @@ export default {
       this.showBankAccount = !this.showBankAccount;
     },
     copyBankAccount() {
-      const element = this.$refs.bankAccountInfo;
-      const elementText = element.textContent;
-      navigator.clipboard.writeText(elementText);
+      const textToCopy = `${this.provider.contactName}\n${this.provider.contactRut}\n${this.provider.bankName
+      }\n${this.provider.accountType}\n${this.provider.accountNumber}\n${this.provider.email}`;
+      navigator.clipboard.writeText(textToCopy);
     },
     async editProvider(provider) {
       this.toggleEditModal();

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 <template>
   <div class="relative">
     <button
@@ -11,7 +12,9 @@
       >
     </button>
     <div v-if="active">
-      <div class="-left-20 absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10">
+      <div
+        :class="dropdownStyle"
+      >
         <ul>
           <li class="hover:bg-gray-100">
             <a
@@ -64,6 +67,16 @@ export default {
     deleteElement() {
       this.$emit('delete');
       this.toggleDropdown();
+    },
+  },
+  computed: {
+    dropdownStyle() {
+      if (!this.elements.last) {
+        return '-left-20 absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10';
+      }
+
+      // eslint-disable-next-line max-len
+      return '-left-20 bottom-10 absolute mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10';
     },
   },
 };
