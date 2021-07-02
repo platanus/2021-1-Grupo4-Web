@@ -33,8 +33,6 @@ export default {
       login: 'Iniciar Sesión',
       logout: 'Cerrar Sesión',
       successRegister: 'Usuario creado exitosamente',
-      failRegister: 'No se pudo registrar el usuario',
-      failLogin: 'No se pudo iniciar sesión',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',
       requiredEmail: 'El correo es obligatorio',
@@ -43,6 +41,10 @@ export default {
       passwordTooShort: 'La contraseña debe tener al menos 6 caracteres',
       requiredPasswordConfirmation: 'Confirma tu contraseña',
       passwordConfirmationIncorrect: 'La contraseña no coincide',
+      emailNotFound: 'Este correo no está registrado',
+      incorrectPassword: 'La contraseña es incorrecta',
+      enterEmail: 'Ingresa tu correo',
+      enterPassword: 'Ingresa tu contraseña',
     },
 
     ingredients: {
