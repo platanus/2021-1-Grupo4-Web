@@ -14,10 +14,16 @@ class MarketClient < ChromeClient
   def products_found_to_json
     [
       {
-        price: nil,
-        measure: nil,
-        name: nil,
-        provider: 'provider'
+        provider: 'provider',
+        products: [
+          {
+            price: nil,
+            quantity: nil,
+            measure: nil,
+            name: nil,
+            img_url: nil
+          }
+        ]
       }
     ]
   end
