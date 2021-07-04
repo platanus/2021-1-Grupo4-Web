@@ -227,7 +227,27 @@
         </p>
       </div>
       <div v-else>
-        <p> {{ $t('msg.providers.noTransferData') }} </p>
+        <p> {{ $t('msg.providers.dataMissing') }} </p>
+        <ul>
+          <li v-if="!provider.contactName">
+            {{ $t('msg.providers.bankAccount.name') }}
+          </li>
+          <li v-if="!provider.contactRut">
+            {{ $t('msg.providers.bankAccount.rut') }}
+          </li>
+          <li v-if="!provider.bankName">
+            {{ $t('msg.providers.bankAccount.bank') }}
+          </li>
+          <li v-if="!provider.accountType">
+            {{ $t('msg.providers.bankAccount.type') }}
+          </li>
+          <li v-if="!provider.accountNumber">
+            {{ $t('msg.providers.bankAccount.number') }}
+          </li>
+          <li v-if="!provider.email">
+            {{ $t('msg.providers.email') }}
+          </li>
+        </ul>
       </div>
     </base-modal>
   </div>
