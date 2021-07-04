@@ -61,7 +61,7 @@ class JumboClient < MarketClient
 
   def get_measure(product)
     measure = product.search('.shelf-single-unit').text.split(' ').second
-    format_search(measure)
+    MeasuresService.map_measure(format_search(measure))
   end
 
   def get_name(product)
