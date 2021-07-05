@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-start absolute w-20 h-full bg-gray-800">
+  <div class="flex flex-col w-20 h-full bg-gray-800">
     <a href="/ingredients">
       <side-navbar-item
         :label="$t('msg.ingredients.title')"

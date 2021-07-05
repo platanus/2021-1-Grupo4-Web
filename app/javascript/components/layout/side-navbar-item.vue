@@ -19,7 +19,7 @@
     </button>
     <div
       v-if="showLabel"
-      class="flex items-center z-50 pl-4 -mr-36 w-36 font-bold text-xl text-white"
+      class="flex items-center z-50 pl-4 -mr-40 w-40 font-bold text-xl text-white"
       :class="active ? 'bg-yellow-500' : 'bg-gray-600'"
     >
       {{ label }}
