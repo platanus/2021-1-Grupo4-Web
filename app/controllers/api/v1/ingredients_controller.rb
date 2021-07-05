@@ -55,7 +55,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
 
   def update
     if ingredient_params[:provider_name].blank?
-      respond_with ingredient.update!(ingredient_params)
+      respond_with ingredient.update!(ingredient_params.except(:provider_name))
     else
       provider = Provider.find_or_create_by(
         name: ingredient_params[:provider_name], user: current_user
