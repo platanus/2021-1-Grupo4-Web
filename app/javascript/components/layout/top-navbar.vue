@@ -15,6 +15,7 @@
       <template v-if="isCurrentUser">
         <div class="flex items-center relative">
           <button
+            class="mr-4"
             @click="toggleAlerts(true)"
           >
             <img
@@ -26,7 +27,7 @@
           <div
             v-if="alertIngredients.length > 0"
           >
-            <span class="absolute top-0 right-0 inline-block w-2 h-2 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full" />
+            <span class="absolute top-0 right-0 inline-block w-2 h-2 mr-4 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full" />
           </div>
         </div>
         <button
