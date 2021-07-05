@@ -5,12 +5,12 @@
         <!--Title-->
         <a href="/ingredients">
           <img
-            class="h-6 w-6 text-white mx-2"
+            class="h-6 w-6 text-white mr-2"
             svg-inline
             src="../../../assets/images/arrow-left-svg.svg"
           >
         </a>
-        <div class="text-4xl">
+        <div class="text-4xl font-bold">
           {{ $t('msg.ingredients.inventory.editingInventories') }}
         </div>
         <span
@@ -21,9 +21,9 @@
         </span>
       </div>
       <div class="flex flex-col p-10 w-auto bg-gray-50 my-10">
-        <!--SearchBar y Button-->
+        <!--SearchBar-->
         <div class="flex flex-col lg:flex-row pb-4">
-          <div class="flex items-center p-2 lg:w-1/3">
+          <div class="flex items-center lg:w-1/3">
             <div class="relative text-yellow-700 w-full">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <img

@@ -60,17 +60,19 @@
         :key="index"
       >
         <div
+          class="mb-2 text-gray-700 text-sm font-bold"
           v-if="index == 0"
         >
           {{ $t('msg.ingredients.defaultUnit') }}
         </div>
         <div
+          class="mb-2 text-gray-700 text-sm font-bold"
           v-if="index == 1"
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
         <div class="flex -mx-3">
-          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6">
+          <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
               v-if="index == 0 || index == 1"

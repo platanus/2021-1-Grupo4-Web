@@ -1,6 +1,6 @@
 <template>
   <p
-    class="content-center font-semibold text-left"
+    class="content-center text-left"
   >
     {{ recipesQuantity }}
   </p>

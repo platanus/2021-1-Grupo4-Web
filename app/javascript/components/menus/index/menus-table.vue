@@ -1,40 +1,40 @@
 <template>
   <div class="w-full">
     <table class="w-full divide-y divide-gray-200">
-      <thead class="justify-between bg-gray-600 border-4 border-gray-600">
+      <thead class="justify-between bg-gray-600 border-2 border-gray-600">
         <tr class="text-left">
           <th
-            class="px-8 py-3"
+            class="px-6 py-3 w-60"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.name') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-6 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.totalCost') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-6 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.portions') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-6 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-6 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-6 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.actions') }}</span>
           </th>
           <th
-            class="px-8 py-3"
+            class="px-4 py-3"
           />
         </tr>
       </thead>
@@ -42,44 +42,38 @@
         <tr
           v-for="menu in menus"
           :key="menu.id"
-          class="bg-white border-4 border-gray-200 text-left"
+          class="bg-white border-2 border-gray-200 text-left"
         >
           <!-- name -->
           <td
             key="name"
-            class="py-2 px-8"
+            class="py-2 px-6"
           >
-            <p
-              class="ml-2 font-medium"
-            >
+            <p>
               {{ menu.name }}
             </p>
           </td>
           <!-- totalPrice -->
           <td
             key="totalPrice"
-            class="py-2 px-8"
+            class="py-2 px-6"
           >
-            <p
-              class="ml-2 font-medium"
-            >
+            <p>
               {{ totalMenuPrice(menu.menuRecipes.data) | currency }}
             </p>
           </td>
           <td
             key="portions"
-            class="py-2 px-8"
+            class="py-2 px-6"
           >
-            <p
-              class="ml-2 font-medium"
-            >
+            <p>
               {{ menu.portions }}
             </p>
           </td>
           <!-- recipesQuantity -->
           <td
             key="recipesQuantity"
-            class="py-2 px-8"
+            class="py-2 px-6"
           >
             <menus-table-recipes-quantity
               :menu="menu"
@@ -88,14 +82,14 @@
           <!-- recipes -->
           <td
             key="recipes"
-            class="py-2 px-4"
+            class="py-2 px-6"
           >
             <menus-table-recipes
               :menu="menu"
             />
           </td>
           <td
-            class="content-center py-2 px-8 items-center"
+            class="content-center py-2 px-6 items-center"
           >
             <div class="flex flex-col">
               <div class="flex w-full justify-between">

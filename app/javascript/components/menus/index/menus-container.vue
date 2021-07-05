@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col">
     <!-- Title -->
-    <div class="flex items-center h-8 order-0 flex-grow-0 mt-1">
-      <div class="text-4xl order-0 flex-grow-0">
+    <div class="flex items-center">
+      <div class="text-4xl font-bold">
         {{ $t('msg.menus.title') }}
       </div>
       <span
         v-if="loading"
-        class="flex my-auto w-8 h-8 ml-2 pl-2 "
+        class="flex my-auto w-8 h-8 ml-2 pl-2"
       >
         <base-spinner />
       </span>
@@ -32,12 +32,14 @@
             v-model="searchQuery"
           >
         </div>
-        <a
-          class="mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white"
-          href="/menus/new"
-        >
-          {{ $t('msg.menus.add') }}
-        </a>
+        <div class="flex justify-end w-full">
+          <a
+            class="my-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white"
+            href="/menus/new"
+          >
+            {{ $t('msg.menus.add') }}
+          </a>
+        </div>
       </div>
       <!-- Content -->
       <div v-if="!loading">

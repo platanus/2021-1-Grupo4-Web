@@ -1,18 +1,13 @@
 <template>
   <div class="flex flex-col m-auto p-4 border-2 border-solid border-gray-400 box-border mb-6 w-96 order-none">
     <div class="flex flex-row items-center w-auto h-auto self-stretch my-4 px-3">
-      <!-- Imagen -->
-      <div class="w-24 h-24 border-2 border-solid border-gray-400 box-border mr-2 order-none">
-        <img
-          svg-inline
-          src="../../../../assets/images/recipe.jpg"
-          class="w-24 h-24"
-        >
-      </div>
       <!-- Info -->
       <div class="flex flex-col w-auto h-auto self-stretch flex-grow mx-2">
         <!-- nombre Proveedor -->
-        <div class="flex items-center w-auto h-5">
+        <div
+          class="flex items-center w-auto h-5 text-xl font-bold"
+          @click="openWindow"
+        >
           {{ provider.name }}
         </div>
         <div class="flex flex-col items-start w-auto h-10 my-4">
@@ -63,7 +58,7 @@
     <div
       v-if="showingDetails"
     >
-      <div class="flex flex-col items-start order-1 w-80 mr-1">
+      <div class="flex flex-col items-start order-1 w-full">
         <!-- Pagina Web -->
         <div class="flex flex-row items-start order-none w-full justify-between">
           <div class="flex flex-row items-center order-none w-48">
@@ -82,7 +77,7 @@
           </div>
           <!-- Link -->
           <div
-            class="flex items-center underline text-gray-600 overflow-scroll order-1 text-right justify-items-end max-w-full"
+            class="flex items-center underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
             {{ provider.webpageUrl }}

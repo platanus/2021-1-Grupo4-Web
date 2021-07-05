@@ -11,16 +11,49 @@
       <p class="py-2 pr-3 font-medium">
         {{ name }}
       </p>
-      <div>
-        <p class="py-2 pr-3 text-xs inline-block">
-          {{ portions }} {{ $t('msg.recipes.portions') }}
-        </p>
-        <p class="py-2 pr-3 text-xs inline-block">
-          {{ recipePrice | currency }}
-        </p>
-        <p class="py-2 pr-3 text-xs inline-block">
-          {{ minutes }} {{ $t('msg.recipes.minutes') }}
-        </p>
+      <div class="flex flex-row">
+        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+          <div class="mr-2">
+            <img
+              class="h-5 w-5 text-white"
+              svg-inline
+              src="../../../../assets/images/chart-pie-svg.svg"
+            >
+          </div>
+          <div>
+            <p class="py-2 pr-3 text-xs inline-block">
+              {{ portions }} {{ $t('msg.recipes.portions') }}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+          <div class="mr-2">
+            <img
+              class="h-5 w-5 text-white"
+              svg-inline
+              src="../../../../assets/images/dollar-svg.svg"
+            >
+          </div>
+          <div>
+            <p class="py-2 pr-3 text-xs inline-block">
+              {{ recipePrice | currency }}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+          <div class="mr-2">
+            <img
+              class="h-5 w-5 text-white"
+              svg-inline
+              src="../../../../assets/images/chart-pie-svg.svg"
+            >
+          </div>
+          <div>
+            <p class="py-2 pr-3 text-xs inline-block">
+              {{ minutes }} {{ $t('msg.recipes.minutes') }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <!-- button -->
