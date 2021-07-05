@@ -13,7 +13,7 @@
     <div class="w-full flex-grow lg:flex items-center lg:w-auto justify-end pr-5">
       <!--Logged -->
       <template v-if="isCurrentUser">
-        <div class="relative">
+        <div class="flex items-center relative">
           <button
             @click="toggleAlerts(true)"
           >
