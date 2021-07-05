@@ -236,29 +236,32 @@ export default {
       this.autoAddUnit(unit);
     },
     autoAddUnit(currentUnit) {
+      const decimals = 100; // la cantidad de 0s es la cantidad de decimales que tendrá la conversion.
       const presentUnits = this.form.ingredientMeasuresAttributes.map((unit) => unit.name);
       if (this.directConvertions[currentUnit.name] && currentUnit.quantity !== undefined) {
-        for (const unit of Object.keys(this.directConvertions[currentUnit.name])) {
+        Object.keys(this.directConvertions[currentUnit.name]).forEach((unit) => {
           if (presentUnits.includes(unit)) {
             const unitsToUpdate = this.form.ingredientMeasuresAttributes.filter((obj) => obj.name === unit);
-            for (const toUpdate of unitsToUpdate) {
-              toUpdate.quantity = currentUnit.quantity / this.directConvertions[currentUnit.name][unit];
+            for (const unitToUpdate of unitsToUpdate) {
+              unitToUpdate.quantity = Math.round(
+                currentUnit.quantity * decimals / this.directConvertions[currentUnit.name][unit]) / decimals;
             }
           } else {
-            this.pushAutoUnit(unit, currentUnit.quantity / this.directConvertions[currentUnit.name][unit]);
+            this.pushAutoUnit(
+              unit,
+              Math.round(currentUnit.quantity * decimals / this.directConvertions[currentUnit.name][unit]) / decimals);
           }
-        }
+        });
       }
     },
     pushAutoUnit(name, quantity) {
       const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
-      const incompletedLastItem = !lastItem.name || !lastItem.quantity;
-      if (incompletedLastItem) {
+      if (!lastItem.name || !lastItem.quantity) {
         this.form.ingredientMeasuresAttributes.pop(-1);
-      }
-      this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
-      if (incompletedLastItem) {
+        this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
         this.form.ingredientMeasuresAttributes.push(lastItem);
+      } else {
+        this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
       }
     },
   },
@@ -275,7 +278,7 @@ export default {
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
-        ingredientMeasuresAttributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes = otherMeasures.data.map(unit =>
           Object.assign({}, { id: unit.id }, unit.attributes),
         );
       } else {
