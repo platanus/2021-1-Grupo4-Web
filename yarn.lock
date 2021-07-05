@@ -1361,6 +1361,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@vee-validate/i18n@^4.1.20":
+  version "4.1.20"
+  resolved "https://registry.yarnpkg.com/@vee-validate/i18n/-/i18n-4.1.20.tgz#1f3a3a5da83217fc77fd32e5da6c9d714e91c515"
+  integrity sha512-3K7R3m3Z206Hq6iJpXHJNSYDjJFFHzZrA7wjowTts52iEsv9kNpA/WCkdJsQLae8J+QLiKyK53ma35gAet8yFg==
+
 "@vue/component-compiler-utils@^3.1.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-3.2.0.tgz"
