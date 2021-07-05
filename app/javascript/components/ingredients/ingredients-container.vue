@@ -3,7 +3,7 @@
     <div class="flex flex-col">
       <div class="flex items-center h-8 mt-1">
         <!--Title-->
-        <div class="text-4xl">
+        <div class="text-4xl font-bold">
           {{ $t('msg.ingredients.title') }}
         </div>
         <span
@@ -16,7 +16,7 @@
       <div class="flex flex-col p-10 w-full bg-gray-50 my-10">
         <!--SearchBar y Button-->
         <div class="flex flex-col lg:flex-row pb-4">
-          <div class="flex items-center p-2 lg:w-1/3">
+          <div class="flex items-center py-2 pr-2 lg:w-1/2">
             <div class="relative text-yellow-700 w-full">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <img
@@ -26,33 +26,35 @@
                 >
               </span>
               <input
-                class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
+                class="w-full py-2 pl-12 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none"
                 :placeholder="$t('msg.ingredients.search')"
                 @keyup="filterIngredients"
                 v-model="searchQuery"
               >
             </div>
           </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <base-button
-              :elements="{ placeholder: $t('msg.ingredients.inventory.editInventories'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="goToEditInventories"
-            />
-          </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <base-button
-              :elements="{ placeholder: $t('msg.ingredients.add'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="toggleAddModal"
-            />
-          </div>
-          <div class="flex justify-start px-2 pb-2 my-auto">
-            <base-button
-              :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="toggleSearchIngredientsModal"
-            />
+          <div class="flex flex-wrap justify-end w-full">
+            <div class="p-2 my-auto">
+              <base-button
+                :elements="{ placeholder: $t('msg.ingredients.inventory.editInventories'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white' }"
+                @click="goToEditInventories"
+              />
+            </div>
+            <div class="p-2 my-auto">
+              <base-button
+                :elements="{ placeholder: $t('msg.ingredients.add'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white' }"
+                @click="toggleAddModal"
+              />
+            </div>
+            <div class="p-2 pr-0 my-auto">
+              <base-button
+                :elements="{ placeholder: $t('msg.ingredients.searchInMarket'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white' }"
+                @click="toggleSearchIngredientsModal"
+              />
+            </div>
           </div>
         </div>
 
@@ -66,7 +68,7 @@
           </p>
           <div
             v-else
-            class="flex w-full 2xl:justify-center items-center overflow-auto"
+            class="flex 2xl:justify-center items-center overflow-x-auto"
           >
             <ingredients-table
               :ingredients="filterIngredients"

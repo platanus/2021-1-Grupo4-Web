@@ -3,7 +3,7 @@
     <table
       class="divide-y divide-gray-200 w-full"
     >
-      <thead class="justify-between bg-gray-600 border-4 border-gray-600">
+      <thead class="justify-between bg-gray-600 border-2 border-gray-600">
         <tr class="text-left items-center w-full">
           <th class="px-8 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
@@ -26,22 +26,22 @@
         <tr
           v-for="(ingredient, idx) in ingredients"
           :key="ingredient.id"
-          class="bg-white border-4 border-gray-200 text-left"
+          class="bg-white border-2 border-gray-200 text-left"
         >
           <!-- ingredient name -->
           <td class="py-2 px-8">
-            <p class="ml-2 font-medium">
+            <p class="ml-2">
               {{ ingredient.name }}
             </p>
           </td>
           <td class="py-2 px-8">
-            <p class="ml-2 font-medium">
+            <p class="ml-2">
               {{ actualInventories[idx] === null ? "-" : actualInventories[idx] }}
             </p>
           </td>
           <!-- increase in -->
           <td class="py-2 px-8">
-            <p class="ml-2 font-medium">
+            <p class="ml-2">
               <input
                 type="number"
                 :min="0"
@@ -54,7 +54,7 @@
           </td>
           <!-- deacrease in -->
           <td class="py-2 px-8">
-            <p class="ml-2 font-medium">
+            <p class="ml-2">
               <input
                 type="number"
                 min="0"
@@ -71,7 +71,7 @@
             <div
               class="flex justify-between"
             >
-              <p class="ml-2 font-medium">
+              <p class="ml-2">
                 {{ ingredient.inventory }}
               </p>
             </div>
