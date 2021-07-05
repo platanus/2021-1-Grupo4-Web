@@ -77,6 +77,11 @@ export default {
       return false;
     },
   },
+  watch: {
+    selectedMeasure() {
+      this.query = this.selectedMeasure;
+    },
+  },
 };
 
 </script>

@@ -1,37 +1,57 @@
 <template>
   <div>
     <!-- Price Filters -->
-    <div>
-      <p>
-        {{ $t('msg.recipes.price') }}
-      </p>
-      <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border roundedflex-grow-0 my-1"
-        :placeholder="$t('msg.min')"
-        v-model="filters.price.min"
-      >
-      <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
-        :placeholder="$t('msg.max')"
-        v-model="filters.price.max"
-      >
+    <p class="font-bold text-lg">
+      {{ $t('msg.recipes.price') }}
+    </p>
+    <div class="flex">
+      <div>
+        <p>
+          {{ $t('msg.min') }}
+        </p>
+        <input
+          class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          :placeholder="$t('msg.min')"
+          v-model="filters.price.min"
+        >
+      </div>
+      <div class="ml-2">
+        <p>
+          {{ $t('msg.max') }}
+        </p>
+        <input
+          class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          :placeholder="$t('msg.max')"
+          v-model="filters.price.max"
+        >
+      </div>
     </div>
 
     <!-- Portion Filters -->
-    <div class="mt-6">
-      <p>
-        {{ $t('msg.recipes.portions') }}
-      </p>
-      <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border roundedflex-grow-0 my-1"
-        :placeholder="$t('msg.min')"
-        v-model="filters.portions.min"
-      >
-      <input
-        class="px-4 w-60 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
-        :placeholder="$t('msg.max')"
-        v-model="filters.portions.max"
-      >
+    <p class="font-bold text-lg mt-6">
+      {{ $t('msg.recipes.portions') }}
+    </p>
+    <div class="flex">
+      <div>
+        <p>
+          {{ $t('msg.min') }}
+        </p>
+        <input
+          class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          :placeholder="$t('msg.min')"
+          v-model="filters.portions.min"
+        >
+      </div>
+      <div class="ml-2">
+        <p>
+          {{ $t('msg.max') }}
+        </p>
+        <input
+          class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          :placeholder="$t('msg.max')"
+          v-model="filters.portions.max"
+        >
+      </div>
     </div>
   </div>
 </template>

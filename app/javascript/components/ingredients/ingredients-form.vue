@@ -60,17 +60,19 @@
         :key="index"
       >
         <div
+          class="mb-2 text-gray-700 text-sm font-bold"
           v-if="index == 0"
         >
           {{ $t('msg.ingredients.defaultUnit') }}
         </div>
         <div
+          class="mb-2 text-gray-700 text-sm font-bold"
           v-if="index == 1"
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
         <div class="flex -mx-3">
-          <div class="w-full md:w-1/3 px-3 mb-0 md:mb-6">
+          <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
               v-if="index == 0 || index == 1"
@@ -85,6 +87,7 @@
               min="1"
               type="number"
               :placeholder="$t('msg.ingredients.quantity')"
+              @change="autoAddUnit(unit)"
             >
           </div>
           <div class="w-full px-3 mb-6 md:mb-0">
@@ -99,11 +102,12 @@
             <div class="flex">
               <measure-search
                 v-if="!editMode && marketIngredient !== undefined"
-                :selected-measure="form.ingredientMeasuresAttributes[0].name"
+                :selected-measure="unit.name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <measure-search
                 v-if="!editMode && marketIngredient === undefined"
+                :selected-measure="unit.name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <measure-search
@@ -199,7 +203,16 @@ export default {
         sku: null,
         price: '',
         currency: 'CLP',
-        ingredientMeasuresAttributes: [], /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [],
+      },
+      directConvertions: {
+        Gramo: { Kilo: 1000 },
+        Kilo: { Gramo: 0.001 },
+        Litro: { Mililitro: 0.001 },
+        Mililitro: { Litro: 1000 },
+        Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
+        Cucharada: { Cucharadita: 0.333, Taza: 16 },
+        Cucharadita: { Taza: 48, Cucharada: 3 },
       },
       showingMeasureModal: false,
       providersNames: [],
@@ -214,7 +227,7 @@ export default {
       }
     },
     deleteUnit(unit) {
-      this.form.ingredientMeasuresAttributes = this.form /* eslint-disable-line camelcase */
+      this.form.ingredientMeasuresAttributes = this.form
         .ingredientMeasuresAttributes.filter((originalUnit) => originalUnit !== unit);
       if (unit.id !== undefined) {
         this.measuresToDelete.push(unit.id);
@@ -222,6 +235,36 @@ export default {
     },
     changeUnitName(unit, measure) {
       unit.name = measure;
+      this.autoAddUnit(unit);
+    },
+    autoAddUnit(currentUnit) {
+      const decimals = 100; // la cantidad de 0s es la cantidad de decimales que tendrá la conversion.
+      const presentUnits = this.form.ingredientMeasuresAttributes.map((unit) => unit.name);
+      if (this.directConvertions[currentUnit.name] && currentUnit.quantity !== undefined) {
+        Object.keys(this.directConvertions[currentUnit.name]).forEach((unit) => {
+          if (presentUnits.includes(unit)) {
+            const unitsToUpdate = this.form.ingredientMeasuresAttributes.filter((obj) => obj.name === unit);
+            for (const unitToUpdate of unitsToUpdate) {
+              unitToUpdate.quantity = Math.round(
+                currentUnit.quantity * decimals / this.directConvertions[currentUnit.name][unit]) / decimals;
+            }
+          } else {
+            this.pushAutoUnit(
+              unit,
+              Math.round(currentUnit.quantity * decimals / this.directConvertions[currentUnit.name][unit]) / decimals);
+          }
+        });
+      }
+    },
+    pushAutoUnit(name, quantity) {
+      const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
+      if (!lastItem.name || !lastItem.quantity) {
+        this.form.ingredientMeasuresAttributes.pop(-1);
+        this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
+        this.form.ingredientMeasuresAttributes.push(lastItem);
+      } else {
+        this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
+      }
     },
   },
   async created() {
@@ -237,7 +280,7 @@ export default {
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
-        ingredientMeasuresAttributes = otherMeasures.data.map(unit => /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes = otherMeasures.data.map(unit =>
           Object.assign({}, { id: unit.id }, unit.attributes),
         );
       } else {

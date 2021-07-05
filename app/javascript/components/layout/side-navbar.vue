@@ -1,54 +1,34 @@
 <template>
-  <div class="flex flex-col items-start pt-0 pl-0 pr-0 pb-8 absolute w-64 h-screen left-0 top-16 bg-gray-800">
+  <div class="flex flex-col w-20 h-full bg-gray-800">
     <a href="/ingredients">
       <side-navbar-item
         :label="$t('msg.ingredients.title')"
         :active="activeElement==='ingredients'"
-      >
-        <img
-          class="h-5 w-5 text-white"
-          svg-inline
-          src="../../../assets/images/ingredients-svg.svg"
-        >
-      </side-navbar-item>
+        img-src="ingredients-svg.svg"
+      />
     </a>
 
     <a href="/recipes">
       <side-navbar-item
         :label="$t('msg.recipes.title')"
         :active="activeElement==='recipes'"
-      >
-        <img
-          class="h-5 w-5 text-white"
-          svg-inline
-          src="../../../assets/images/recipes-svg.svg"
-        >
-      </side-navbar-item>
+        img-src="recipes-svg.svg"
+      />
     </a>
 
     <a href="/menus">
       <side-navbar-item
         :label="$t('msg.menus.title')"
         :active="activeElement==='menus'"
-      >
-        <img
-          class="h-5 w-5 text-white"
-          svg-inline
-          src="../../../assets/images/menus-svg.svg"
-        >
-      </side-navbar-item>
+        img-src="menus-svg.svg"
+      />
     </a>
     <a href="/providers">
       <side-navbar-item
         :label="$t('msg.providers.title')"
         :active="activeElement==='providers'"
-      >
-        <img
-          class="h-5 w-5 text-white"
-          svg-inline
-          src="../../../assets/images/providers-svg.svg"
-        >
-      </side-navbar-item>
+        img-src="providers-svg.svg"
+      />
     </a>
   </div>
 </template>

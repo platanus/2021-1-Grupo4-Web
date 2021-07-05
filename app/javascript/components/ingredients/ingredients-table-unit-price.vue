@@ -1,5 +1,5 @@
 <template>
-  <p class="ml-2 font-medium">
+  <p>
     {{ unitPrice | currency }}
   </p>
 </template>
