@@ -36,7 +36,8 @@ class Api::V1::RecipeIngredientsController < Api::V1::BaseController
     params.require(:recipe_ingredient).permit(
       :recipe_id,
       :ingredient_id,
-      :ingredient_quantity
+      :ingredient_quantity,
+      :ingredient_measure
     )
   end
 end

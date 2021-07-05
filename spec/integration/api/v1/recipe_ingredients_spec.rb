@@ -37,7 +37,8 @@ describe 'API::V1::RecipeIngredients', swagger_doc: 'v1/swagger.json' do
         let(:recipe_ingredient) do
           {
             ingredient_id: ingredient.id,
-            ingredient_quantity: 3
+            ingredient_quantity: 3,
+            ingredient_measure: 'Kilo'
           }
         end
 

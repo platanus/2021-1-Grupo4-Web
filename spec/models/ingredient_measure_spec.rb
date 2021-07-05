@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe IngredientMeasure, type: :model do
-  let(:ingredient_measure) { build(:ingredient_measure) }
+  let(:ingredient) { create(:ingredient) }
+  let(:ingredient_measure) { ingredient.ingredient_measures.first }
 
   it { is_expected.to belong_to(:ingredient) }
 
@@ -22,12 +23,6 @@ RSpec.describe IngredientMeasure, type: :model do
 
     it "raises RecordInvalid exception" do
       expect { ingredient_measure.save! }.to raise_error(ActiveRecord::RecordInvalid)
-    end
-  end
-
-  describe "factory" do
-    it "has a valid factory" do
-      expect(build(:ingredient_measure)).to be_valid
     end
   end
 end

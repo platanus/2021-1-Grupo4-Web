@@ -2,6 +2,7 @@ class IngredientMeasure < ApplicationRecord
   belongs_to :ingredient
 
   validates :name, presence: true, uniqueness: { scope: :ingredient_id }
+  validates :quantity, presence: true
 
   before_save { name.capitalize! }
 end

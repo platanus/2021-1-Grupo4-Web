@@ -93,6 +93,7 @@ export default {
       this.ingredientQuantityData = parseFloat(this.ingredientQuantityData) + 1;
     },
     decreaseQuantity() {
+      if (this.ingredientQuantityData <= 1) return;
       this.ingredientQuantityData = parseFloat(this.ingredientQuantityData) - 1;
     },
     changeMeasure(measure) {
