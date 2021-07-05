@@ -152,11 +152,7 @@ export default {
       this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
     },
     lastStep(idx) {
-      if (idx === this.recipeSteps.length - 1) {
-        return true;
-      }
-
-      return false;
+      return (idx === this.recipeSteps.length - 1);
     },
   },
 };

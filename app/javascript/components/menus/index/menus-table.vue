@@ -216,11 +216,7 @@ export default {
       return returnArray;
     },
     lastMenu(idx) {
-      if (idx === this.menus.length - 1) {
-        return true;
-      }
-
-      return false;
+      return (idx === this.menus.length - 1);
     },
   },
 };
