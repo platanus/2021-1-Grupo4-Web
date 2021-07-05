@@ -10,11 +10,11 @@
           src="../../../../assets/images/arrow-left-svg.svg"
         >
       </a>
-      <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
+      <div class="text-4xl font-bold">
         {{ $t('msg.menus.create') }}
       </div>
     </div>
-    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4">
+    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <!-- Menu Name -->
       <div class="flex flex-row justify-between">
         <div class="relative w-3/5 ml-4">
@@ -88,7 +88,7 @@
         <div class="w-1/2 p-4">
           <div class="flex flex-col self-stretch flex-grow bg-gray-50">
             <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
-              {{ $t('msg.menus.selectedRecipes') }}
+              {{ $t('msg.menus.selectedRecipes') }} ({{ selectedRecipes.length }})
               <span
                 v-if="loading"
                 class="flex my-auto w-8 h-8 pl-2 ml-2"
@@ -126,12 +126,14 @@
               </div>
             </div>
           </div>
-          <button
-            class="bg-green-500 hover:bg-green-700 text-white mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 focus:outline-none"
-            @click="createMenu"
-          >
-            {{ $t('msg.menus.create') }}
-          </button>
+          <div class="flex justify-end">
+            <button
+              class="bg-green-500 hover:bg-green-700 text-white my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 focus:outline-none"
+              @click="createMenu"
+            >
+              {{ $t('msg.menus.create') }}
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 <template>
-  <nav class="flex items-center justify-between bg-black p-6 h-16">
+  <nav class="flex items-center justify-between bg-black h-16">
     <!--Left Buttons -->
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
+    <div class="flex items-center flex-shrink-0 text-white ml-4">
       <a
         href="/"
-        class="font-semibold text-xl tracking-widest"
+        class="font-bold text-2xl tracking-wider"
       >
         KitchenGram
       </a>

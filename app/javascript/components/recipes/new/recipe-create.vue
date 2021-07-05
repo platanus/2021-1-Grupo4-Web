@@ -9,7 +9,7 @@
           src="../../../../assets/images/arrow-left-svg.svg"
         >
       </a>
-      <div class="h-7 font-sans font-lg text-2xl text-black font-bold flex-grow">
+      <div class="text-4xl font-bold">
         {{ $t('msg.recipes.create') }}
       </div>
       <span
@@ -22,7 +22,7 @@
     <!-- cuadro blanco edición -->
     <div
       v-if="!loading"
-      class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-4"
+      class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10"
     >
       <!-- datos básicos -->
       <div
@@ -79,19 +79,20 @@
         @delete-step="deleteStep"
       />
       <!--  botones -->
-      <div class="flex items-start w-auto h-11 flex-none self-stretch flex-grow-0">
+      <div class="flex items-start items-center">
         <button
-          class="flex justify-center items-center py-2.5 px-10 w-auto h-11 border border-gray-800 box-border drop-shadow rounded-md font-sans font-normal text-base text-gray-800 flex-none flex-grow-0 mr-8"
+          class="py-2 px-6 rounded shadow-md w-auto h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
           @click="cancelCreate"
         >
           {{ $t('msg.recipes.cancel') }}
         </button>
-        <button
-          class="flex justify-center items-center py-2.5 px-10 w-auto h-11 bg-green-500 shadow rounded-md font-sans font-normal text-base text-white flex-none flex-grow-0"
-          @click="createRecipe"
-        >
-          {{ $t('msg.recipes.add') }}
-        </button>
+        <div>
+          <base-button
+            :elements="{ placeholder: $t('msg.recipes.add'),
+                         color: 'bg-green-500 hover:bg-green-700 text-white' }"
+            @click="createRecipe"
+          />
+        </div>
       </div>
     </div>
   </div>

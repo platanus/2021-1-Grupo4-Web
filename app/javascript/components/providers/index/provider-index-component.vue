@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex justify-between items-center h-8 mb-5">
-      <div class="flex w-auto font-sans font-normal text-4xl text-black flex-none flex-grow-0">
+    <div class="flex justify-between items-center h-8">
+      <div class="flex font-bold text-4xl">
         {{ $t('msg.providers.title') }}
         <span
           v-if="loading"
@@ -10,7 +10,7 @@
           <base-spinner />
         </span>
       </div>
-      <div class="px-2">
+      <div>
         <base-button
           :elements="{ placeholder: $t('msg.providers.add'),
                        color: 'bg-green-500 hover:bg-green-700 text-white' }"
@@ -20,7 +20,7 @@
     </div>
 
     <div
-      class="flex flex-col sm:flex-row flex-wrap justify-between w-full bg-gray-50 my-10 p-10"
+      class="flex w-full flex-wrap justify-between bg-gray-50 my-10 p-10"
     >
       <p
         v-if="this.providers.length===0 && !loading"
@@ -30,11 +30,11 @@
       </p>
       <div
         v-else
-        class="flex justify-center w-6/12 bg-gray-50"
+        class="flex bg-gray-50"
         v-for="element in this.providers"
         :key="element.id"
       >
-        <div class="flex flex-row my-auto items-center justify-center flex-none flex-grow-0 order-none w-full bg-gray-50">
+        <div>
           <provider-item
             :provider="element"
             @update="updateProvider"
