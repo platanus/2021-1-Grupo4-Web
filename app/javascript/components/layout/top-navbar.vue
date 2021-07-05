@@ -13,18 +13,25 @@
     <div class="w-full flex-grow lg:flex items-center lg:w-auto justify-end pr-5">
       <!--Logged -->
       <template v-if="isCurrentUser">
-        <button
-          v-if="alertIngredients.length > 0"
-          @click="toggleAlerts(true)"
-        >
-          <img
-            class="h-5 w-5 text-white"
-            svg-inline
-            src="../../../assets/images/bell-svg.svg"
+        <div class="flex items-center relative">
+          <button
+            class="mr-4"
+            @click="toggleAlerts(true)"
           >
-        </button>
+            <img
+              class="h-5 w-5 text-white"
+              svg-inline
+              src="../../../assets/images/bell-svg.svg"
+            >
+          </button>
+          <div
+            v-if="alertIngredients.length > 0"
+          >
+            <span class="absolute top-0 right-0 inline-block w-2 h-2 mr-4 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full" />
+          </div>
+        </div>
         <button
-          class="text-lg px-4 py-2 text-white hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
+          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
           @click="logout"
         >
           {{ $t('msg.users.logout') }}
