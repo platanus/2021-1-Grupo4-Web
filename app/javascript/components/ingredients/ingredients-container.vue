@@ -426,7 +426,7 @@ export default {
       const quantity = form.ingredientMeasuresAttributes[0].quantity;
 
       if (!(typeof (quantity - 0) === 'number') || !(quantity > 0)) {
-        this.errors.quantity = 'intNonZero';
+        this.errors.quantity = 'floatNonZero';
         validForm = false;
       }
 
