@@ -25,7 +25,14 @@
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuName"
           >
+          <p
+            v-if="errors.name"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.name}`) }}
+          </p>
         </div>
+        <!-- Menu Portions -->
         <div class="relative w-2/5 ml-4">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.portions') }}
@@ -34,6 +41,12 @@
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuPortions"
           >
+          <p
+            v-if="errors.portions"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.portions}`) }}
+          </p>
         </div>
       </div>
       <!-- Recipes -->
@@ -157,12 +170,13 @@ export default {
     return {
       loading: false,
       recipes: [],
-      error: '',
       query: '',
       menuName: '',
       menuPortions: '',
       selectedRecipes: [],
       searchQuery: '',
+      errors: { name: '', portions: '' },
+      error: false,
     };
   },
 
@@ -197,9 +211,8 @@ export default {
         id: element.id,
         ...element.attributes,
       }));
-      this.error = '';
     } catch (error) {
-      this.error = error;
+      this.error = true;
     } finally {
       this.loading = false;
     }
@@ -231,29 +244,46 @@ export default {
     },
 
     async createMenu() {
-      if (!this.menuName) {
-        alert(this.$t('msg.menus.noNameAlert')); // eslint-disable-line no-alert
-
-        return;
-      }
-      const menuRecipesToPost = this.selectedRecipes.map(element => (
-        {
-          recipeId: parseInt(element.id, 10),
-          recipeQuantity: element.quantity,
+      if (this.validations()) {
+        const menuRecipesToPost = this.selectedRecipes.map(element => (
+          {
+            recipeId: parseInt(element.id, 10),
+            recipeQuantity: element.quantity,
+          }
+        ));
+        const menuToPost = {
+          name: this.menuName,
+          menuRecipesAttributes: menuRecipesToPost,
+          portions: this.menuPortions,
+        };
+        try {
+          await postMenu(menuToPost);
+          window.location.href = '/menus';
+        } catch (error) {
+          this.error = true;
         }
-      ));
-      const menuToPost = {
-        name: this.menuName,
-        menuRecipesAttributes: menuRecipesToPost,
-        portions: this.menuPortions,
-      };
-      try {
-        await postMenu(menuToPost);
-        this.error = '';
-        window.location.href = '/menus';
-      } catch (error) {
-        this.error = error;
       }
+    },
+
+    // eslint-disable-next-line max-statements,complexity
+    validations() {
+      this.errors = { name: '', portions: '' };
+
+      if (!(Number.isInteger(this.menuPortions - 0)) || !(this.menuPortions > 0)) {
+        this.errors.portions = 'intGeqZero';
+      }
+
+      if (!this.menuName) {
+        this.errors.name = 'requiredField';
+      }
+
+      if (!this.menuPortions) {
+        this.errors.portions = 'requiredField';
+      }
+
+      const validForm = !(Object.values(this.errors).some(value => !!value));
+
+      return validForm;
     },
   },
 };

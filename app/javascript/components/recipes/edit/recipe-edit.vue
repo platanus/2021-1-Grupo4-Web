@@ -127,7 +127,7 @@ export default {
     return {
       loading: false,
       status: '',
-      error: '',
+      error: false,
       recipe: {
         id: null,
         name: '',
@@ -148,7 +148,7 @@ export default {
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
-      this.error = error;
+      this.error = true;
     } finally {
       this.loading = false;
     }
@@ -164,9 +164,8 @@ export default {
           const updatedRecipe = this.getUpdatedRecipe();
           await updateRecipe(this.recipe.id, updatedRecipe);
           window.location = `/recipes/${this.recipeId}`;
-          this.error = '';
         } catch (error) {
-          this.error = error;
+          this.error = true;
         } finally {
           this.loading = false;
         }

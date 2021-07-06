@@ -25,7 +25,14 @@
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuName"
           >
+          <p
+            v-if="errors.name"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.name}`) }}
+          </p>
         </div>
+        <!-- Menu Portions -->
         <div class="relative w-2/5 ml-4">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.portions') }}
@@ -34,6 +41,12 @@
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuPortions"
           >
+          <p
+            v-if="errors.portions"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.portions}`) }}
+          </p>
         </div>
       </div>
       <!-- Recipes -->
@@ -161,13 +174,14 @@ export default {
       loading: false,
       initialRecipes: [],
       recipes: [],
-      error: '',
+      error: false,
       query: '',
       menuName: '',
       menuPortions: '',
       selectedRecipes: [],
       deletedRecipes: [],
       searchQuery: '',
+      errors: { name: '', portions: '' },
     };
   },
   computed: {
@@ -202,24 +216,25 @@ export default {
         ...element.attributes,
       }));
       this.useMenuInfo(menuResponse.data.data);
-      this.error = '';
     } catch (error) {
-      this.error = error;
+      this.error = true;
     } finally {
       this.loading = false;
     }
   },
   methods: {
     async editMenu() {
-      this.loading = true;
-      try {
-        const updatedMenu = this.getUpdatedMenu();
-        await updateMenu(this.menuId, updatedMenu);
-        window.location = '/menus';
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
+      if (this.validations()) {
+        this.loading = true;
+        try {
+          const updatedMenu = this.getUpdatedMenu();
+          await updateMenu(this.menuId, updatedMenu);
+          window.location = '/menus';
+        } catch (error) {
+          this.error = true;
+        } finally {
+          this.loading = false;
+        }
       }
     },
     useMenuInfo(menu) {
@@ -243,7 +258,7 @@ export default {
           element.idMenuRecipe = this.initialRecipes[index].idMenuRecipe;
         });
       } catch (error) {
-        this.error = error;
+        this.error = true;
       } finally {
         this.loading = false;
       }
@@ -310,6 +325,27 @@ export default {
           },
         );
       });
+    },
+
+    // eslint-disable-next-line max-statements,complexity
+    validations() {
+      this.errors = { name: '', portions: '' };
+
+      if (!(Number.isInteger(this.menuPortions - 0)) || !(this.menuPortions > 0)) {
+        this.errors.portions = 'intGeqZero';
+      }
+
+      if (!this.menuName) {
+        this.errors.name = 'requiredField';
+      }
+
+      if (!this.menuPortions) {
+        this.errors.portions = 'requiredField';
+      }
+
+      const validForm = !(Object.values(this.errors).some(value => !!value));
+
+      return validForm;
     },
   },
 };

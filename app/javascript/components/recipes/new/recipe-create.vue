@@ -130,7 +130,7 @@ export default {
     return {
       loading: false,
       status: '',
-      error: '',
+      error: false,
       recipe: {
         id: null,
         name: '',
@@ -157,7 +157,7 @@ export default {
           await postRecipe(recipeToCreate);
           window.location = '/recipes';
         } catch (error) {
-          this.error = error;
+          this.error = true;
         } finally {
           this.loading = false;
         }
