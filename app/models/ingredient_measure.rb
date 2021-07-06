@@ -11,7 +11,7 @@ end
 # Table name: ingredient_measures
 #
 #  id            :bigint(8)        not null, primary key
-#  quantity      :integer
+#  quantity      :float
 #  ingredient_id :bigint(8)        not null
 #  name          :string
 #  created_at    :datetime         not null
