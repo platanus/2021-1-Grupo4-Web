@@ -206,7 +206,7 @@ export default {
       marketIngredient: undefined,
       searchQuery: '',
       criticalAssociations: [],
-      unexpectedError: 'error',
+      unexpectedError: false,
       errors: {
         name: '',
         quantity: '',
@@ -225,7 +225,6 @@ export default {
 
   async created() {
     this.loading = true;
-    this.unexpectedError = '';
     try {
       const response = await getIngredients();
       this.ingredients = response.data.data.map((element) => ({
@@ -233,7 +232,7 @@ export default {
         ...element.attributes,
       }));
     } catch (error) {
-      this.unexpectedError = 'unexpectedError';
+      this.unexpectedError = true;
     } finally {
       this.loading = false;
     }
@@ -255,7 +254,7 @@ export default {
 
   methods: {
     closeAlert() {
-      this.unexpectedError = '';
+      this.unexpectedError = false;
     },
     roundInventory() {
       this.ingredients.forEach(ingredient => {
@@ -264,13 +263,7 @@ export default {
       });
     },
     toggleAddModal() {
-      this.errors = {
-        name: '',
-        quantity: '',
-        measure: '',
-        price: '',
-        minimumQuantity: '',
-      };
+      this.cleanErrors();
       this.showingAdd = !this.showingAdd;
       this.marketIngredient = undefined;
     },
@@ -280,13 +273,7 @@ export default {
     },
 
     toggleEditModal(ingredient) {
-      this.errors = {
-        name: '',
-        quantity: '',
-        measure: '',
-        price: '',
-        minimumQuantity: '',
-      };
+      this.cleanErrors();
       this.showingEdit = !this.showingEdit;
       this.ingredientToEdit = ingredient;
     },
@@ -308,7 +295,7 @@ export default {
         const response = await getCriticalAssociations(ingredientId);
         this.criticalAssociations = response.data.recipes.map((element) => element.name);
       } catch (error) {
-        this.unexpectedError = 'unexpectedError';
+        this.unexpectedError = true;
       } finally {
         this.loadingAssociations = false;
       }
@@ -329,7 +316,7 @@ export default {
           } = await postIngredient(ingredientsInfo);
           this.ingredients.push({ id, ...attributes });
         } catch (error) {
-          this.unexpectedError = 'unexpectedError';
+          this.unexpectedError = true;
         } finally {
           this.loading = false;
         }
@@ -366,7 +353,7 @@ export default {
           await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
           this.updateIngredient(ingredientsInfoFinal);
         } catch (error) {
-          this.unexpectedError = 'unexpectedError';
+          this.unexpectedError = true;
         } finally {
           this.loading = false;
         }
@@ -385,7 +372,7 @@ export default {
         await deleteIngredient(this.ingredientToDelete.id);
         this.ingredients = this.ingredients.filter(item => item.id !== this.ingredientToDelete.id);
       } catch (error) {
-        this.unexpectedError = 'unexpectedError';
+        this.unexpectedError = true;
       } finally {
         this.loading = false;
       }
@@ -394,7 +381,7 @@ export default {
       try {
         await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
       } catch (error) {
-        this.unexpectedError = 'unexpectedError';
+        this.unexpectedError = true;
       }
     },
 
@@ -412,8 +399,7 @@ export default {
       Vue.set(this.ingredients, objectIndex, ingredientEdited);
     },
 
-    // eslint-disable-next-line max-statements,complexity
-    validations(form) {
+    cleanErrors() {
       this.errors = {
         name: '',
         quantity: '',
@@ -421,44 +407,44 @@ export default {
         price: '',
         minimumQuantity: '',
       };
-      let validForm = true;
+    },
+
+    // eslint-disable-next-line max-statements,complexity
+    validations(form) {
+      this.cleanErrors();
 
       const quantity = form.ingredientMeasuresAttributes[0].quantity;
 
       if (!(typeof (quantity - 0) === 'number') || !(quantity > 0)) {
         this.errors.quantity = 'floatNonZero';
-        validForm = false;
       }
 
-      if (!(form.price >= 0)) {
-        this.errors.price = 'geqZero';
-        validForm = false;
+      if (!(Number.isInteger(form.price - 0)) || !(form.price >= 0)) {
+        this.errors.price = 'intGeqZero';
       }
 
-      if (!(form.minimumQuantity >= 0)) {
+      if (form.minimumQuantity && !(form.minimumQuantity >= 0)) {
         this.errors.minimumQuantity = 'geqZero';
-        validForm = false;
       }
 
       if (!form.name) {
         this.errors.name = 'requiredField';
-        validForm = false;
       }
 
       if (!form.ingredientMeasuresAttributes[0].quantity) {
         this.errors.quantity = 'requiredField';
-        validForm = false;
       }
 
       if (!form.ingredientMeasuresAttributes[0].name) {
         this.errors.measure = 'requiredField';
-        validForm = false;
       }
 
       if (!form.price) {
         this.errors.price = 'requiredField';
-        validForm = false;
       }
+
+      Object.values(this.errors);
+      const validForm = !(Object.values(this.errors).some(value => !!value));
 
       return validForm;
     },

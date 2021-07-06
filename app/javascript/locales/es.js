@@ -26,6 +26,7 @@ export default {
     intNonZero: 'Debe ser un entero mayor a cero',
     floatNonZero: 'Debe ser mayor a cero',
     geqZero: 'Debe ser mayor o igual a cero',
+    intGeqZero: 'Debe ser un entero mayor o igual a cero',
 
     users: {
       registerTitle: 'Crear Cuenta',
