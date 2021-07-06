@@ -40,6 +40,12 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.name"
             >
+            <p
+              v-if="errors.name"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.name}`) }}
+            </p>
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -49,6 +55,12 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.portions"
             >
+            <p
+              v-if="errors.portions"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.portions}`) }}
+            </p>
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -58,6 +70,12 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.cookMinutes"
             >
+            <p
+              v-if="errors.cookMinutes"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.cookMinutes}`) }}
+            </p>
           </div>
         </div>
       </div>
@@ -123,6 +141,7 @@ export default {
       },
       deletedRecipes: [],
       deletedSteps: [],
+      errors: { name: '', portions: '', cookMinutes: '' },
     };
   },
   methods: {
@@ -131,20 +150,17 @@ export default {
     },
     // por editar
     async createRecipe() {
-      if (!this.recipe.name || !this.recipe.portions || !this.recipe.cookMinutes) {
-        alert(this.$t('msg.recipes.noMainInfoAlert')); // eslint-disable-line no-alert
-
-        return;
-      }
-      this.loading = true;
-      try {
-        const recipeToCreate = this.getUpdatedRecipe();
-        await postRecipe(recipeToCreate);
-        window.location = '/recipes';
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
+      if (this.validations()) {
+        try {
+          this.loading = true;
+          const recipeToCreate = this.getUpdatedRecipe();
+          await postRecipe(recipeToCreate);
+          window.location = '/recipes';
+        } catch (error) {
+          this.error = error;
+        } finally {
+          this.loading = false;
+        }
       }
     },
     addIngredient(ingredient) {
@@ -248,6 +264,31 @@ export default {
           },
         );
       }
+    },
+
+    // eslint-disable-next-line max-statements,complexity
+    validations() {
+      this.errors = { name: '', portions: '', cookMinutes: '' };
+
+      if (!(Number.isInteger(this.recipe.portions - 0)) || !(this.recipe.portions > 0)) {
+        this.errors.portions = 'intGeqZero';
+      }
+
+      if (this.recipe.cookMinutes && !(this.recipe.cookMinutes >= 0)) {
+        this.errors.cookMinutes = 'geqZero';
+      }
+
+      if (!this.recipe.name) {
+        this.errors.name = 'requiredField';
+      }
+
+      if (!this.recipe.portions) {
+        this.errors.portions = 'requiredField';
+      }
+
+      const validForm = !(Object.values(this.errors).some(value => !!value));
+
+      return validForm;
     },
   },
 };
