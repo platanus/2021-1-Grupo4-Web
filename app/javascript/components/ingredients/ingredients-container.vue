@@ -443,7 +443,6 @@ export default {
         this.errors.price = 'requiredField';
       }
 
-      Object.values(this.errors);
       const validForm = !(Object.values(this.errors).some(value => !!value));
 
       return validForm;
