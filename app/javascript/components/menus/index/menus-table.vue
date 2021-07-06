@@ -206,7 +206,8 @@ export default {
     getMessageofReduction(menuIngredients) {
       const listOfMessages = menuIngredients.map((obj) =>
         obj.ingredients.map((element) =>
-          `Has reducido ${element.quantity} ${element.measure} de ${element.name}`,
+          `Has reducido ${element.quantity} ${element.measure} de ${element.name} y quedaste en ${element.inventory}
+           ${element.measure}`,
         ));
 
       return listOfMessages;
