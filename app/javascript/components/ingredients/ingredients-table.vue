@@ -135,6 +135,13 @@ export default {
   props: {
     ingredients: { type: Array, required: true },
   },
+
+  data() {
+    return {
+      originalIngredients: [...this.ingredients].map(element => JSON.parse(JSON.stringify(element))),
+    };
+  },
+
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
@@ -148,8 +155,13 @@ export default {
       });
     },
     changeInventory(ingredient, inventory) {
-      ingredient.inventory = inventory;
-      this.$emit('updateInventory', ingredient);
+      if (inventory && parseFloat(inventory) >= 0) {
+        ingredient.inventory = inventory;
+        this.$emit('updateInventory', ingredient);
+      } else {
+        const originalIngredient = this.originalIngredients.filter(original => original.id === ingredient.id)[0];
+        ingredient.inventory = originalIngredient.inventory;
+      }
     },
   },
 };

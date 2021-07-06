@@ -21,6 +21,12 @@ export default {
     saveChanges: 'Guardar cambios',
     close: 'Cerrar',
     current: 'Actual',
+    unexpectedError: 'Ha ocurrido un error inesperado',
+    requiredField: 'Campo Obligatorio',
+    intNonZero: 'Debe ser un entero mayor a cero',
+    floatNonZero: 'Debe ser mayor a cero',
+    geqZero: 'Debe ser mayor o igual a cero',
+    intGeqZero: 'Debe ser un entero mayor o igual a cero',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -69,8 +75,6 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
-      msjAlert: 'Debe ingresar el nombre, la cantidad y la unidad',
-      msjMinQuantity: 'La cantidad mínima debe ser mayor o igual a 1',
       associationWarning: 'Este ingrediente se encuentra en la(s) siguiente(s) receta(s):',
       newMeasure: 'Crear la medida',
       inventory: {
