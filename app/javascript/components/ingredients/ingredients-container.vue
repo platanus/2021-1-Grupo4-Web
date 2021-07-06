@@ -46,7 +46,7 @@
                 >
               </span>
               <input
-                class="w-full py-2 pl-12 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none"
+                class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
                 :placeholder="$t('msg.ingredients.search')"
                 @keyup="filterIngredients"
                 v-model="searchQuery"
