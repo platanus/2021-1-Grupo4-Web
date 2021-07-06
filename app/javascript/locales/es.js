@@ -24,6 +24,7 @@ export default {
     unexpectedError: 'Ha ocurrido un error inesperado',
     requiredField: 'Campo Obligatorio',
     intNonZero: 'Debe ser un entero mayor a cero',
+    floatNonZero: 'Debe ser mayor a cero',
     geqZero: 'Debe ser mayor o igual a cero',
 
     users: {
