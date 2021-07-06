@@ -201,7 +201,7 @@
       v-if="showBankAccount"
       :title="$t('msg.providers.bank')"
       :ok-button-label="$t('msg.providers.copy')"
-      :cancel-button-label="$t('msg.cancel')"
+      :cancel-button-label="$t('msg.close')"
     >
       <div
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
