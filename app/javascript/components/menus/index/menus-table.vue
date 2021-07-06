@@ -141,6 +141,25 @@
       >
         <p>{{ $t('msg.menus.reduceMsg') }}</p>
       </base-modal>
+      <base-modal
+        @cancel="toggleMessageReduction"
+        v-if="showReductionOfInventory"
+        :title="$t('msg.menus.reduceInventory')"
+        :cancel-button-label="$t('msg.cancel')"
+        :ok-button-present="false"
+      >
+        <div
+          v-for="(messages, idx) in ListMessages"
+          :key="idx"
+        >
+          <div
+            v-for="(message, msg_idx) in messages"
+            :key="msg_idx"
+          >
+            <p>{{ message }}</p>
+          </div>
+        </div>
+      </base-modal>
     </table>
   </div>
 </template>
@@ -149,7 +168,7 @@
 import MenusTableRecipesQuantity from './menus-table-recipes-quantity';
 import MenusTableRecipes from './menus-table-recipes';
 import MenuShoppingList from './menu-shopping-list';
-import { reduceInventoryApi } from '../../../api/menus';
+import { reduceInventoryApi, getShoppingList } from '../../../api/menus';
 import { unitaryPrice } from '../../../utils/recipeUtils.js';
 
 export default {
@@ -162,6 +181,7 @@ export default {
     return {
       error: '',
       showingReduceMsg: false,
+      showReductionOfInventory: false,
     };
   },
   props: {
@@ -175,6 +195,21 @@ export default {
       } catch (error) {
         this.error = error;
       }
+      const menuIngredientsResponse = await getShoppingList(this.idMenuToReduce);
+      this.menuIngredients = menuIngredientsResponse.data;
+      this.toggleMessageReduction();
+    },
+    toggleMessageReduction() {
+      this.ListMessages = this.getMessageofReduction(this.menuIngredients);
+      this.showReductionOfInventory = ! this.showReductionOfInventory;
+    },
+    getMessageofReduction(menuIngredients) {
+      const listOfMessages = menuIngredients.map((obj) =>
+        obj.ingredients.map((element) =>
+          `Has reducido ${element.quantity} ${element.measure} de ${element.name}`,
+        ));
+
+      return listOfMessages;
     },
     toggleReduce(menuId) {
       this.showingReduceMsg = !this.showingReduceMsg;
