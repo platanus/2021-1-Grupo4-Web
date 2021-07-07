@@ -176,6 +176,7 @@
 <script>
 import { getRecipes } from '../../../api/recipes.js';
 import { getMenu, updateMenu } from '../../../api/menus.js';
+import { intGeqZero, requiredField } from '../../../utils/validations.js';
 import SelectedRecipesCard from '../base/selected-recipes-card.vue';
 import AddRecipeCard from '../base/add-recipe-card';
 import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
@@ -356,18 +357,9 @@ export default {
     validations() {
       this.errors = { name: '', portions: '' };
 
-      if (!(Number.isInteger(this.menuPortions - 0)) || !(this.menuPortions > 0)) {
-        this.errors.portions = 'intGeqZero';
-      }
-
-      if (!this.menuName) {
-        this.errors.name = 'requiredField';
-      }
-
-      if (!this.menuPortions) {
-        this.errors.portions = 'requiredField';
-      }
-
+      this.errors.portions = intGeqZero(this.menuPortions, this.errors.portions);
+      this.errors.name = requiredField(this.menuName, this.errors.name);
+      this.errors.portions = requiredField(this.menuPortions, this.errors.portions);
       const validForm = !(Object.values(this.errors).some(value => !!value));
 
       return validForm;

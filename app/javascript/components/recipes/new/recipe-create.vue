@@ -137,6 +137,7 @@
 
 <script>
 import { postRecipe } from '../../../api/recipes.js';
+import { geqZero, intGeqZero, requiredField } from '../../../utils/validations.js';
 import recipeIngredients from '../base/recipe-ingredients.vue';
 import recipeSteps from '../base/recipe-steps.vue';
 
@@ -292,25 +293,11 @@ export default {
     validations() {
       this.errors = { name: '', portions: '', cookMinutes: '' };
 
-      if (!(Number.isInteger(this.recipe.portions - 0)) || !(this.recipe.portions > 0)) {
-        this.errors.portions = 'intGeqZero';
-      }
-
-      if (this.recipe.cookMinutes && !(this.recipe.cookMinutes >= 0)) {
-        this.errors.cookMinutes = 'geqZero';
-      }
-
-      if (!this.recipe.name) {
-        this.errors.name = 'requiredField';
-      }
-
-      if (!this.recipe.portions) {
-        this.errors.portions = 'requiredField';
-      }
-
-      if (!this.recipe.cookMinutes) {
-        this.errors.cookMinutes = 'requiredField';
-      }
+      this.errors.portions = intGeqZero(this.recipe.portions, this.errors.portions);
+      this.errors.cookMinutes = geqZero(this.recipe.cookMinutes, this.errors.cookMinutes);
+      this.errors.name = requiredField(this.recipe.name, this.errors.name);
+      this.errors.portions = requiredField(this.recipe.portions, this.errors.portions);
+      this.errors.cookMinutes = requiredField(this.recipe.cookMinutes, this.errors.cookMinutes);
 
       const validForm = !(Object.values(this.errors).some(value => !!value));
 
