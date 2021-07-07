@@ -145,7 +145,7 @@
         @cancel="toggleMessageReduction"
         v-if="showReductionOfInventory"
         :title="$t('msg.menus.reduceInventory')"
-        :cancel-button-label="$t('msg.cancel')"
+        :cancel-button-label="$t('msg.close')"
         :ok-button-present="false"
       >
         <div
