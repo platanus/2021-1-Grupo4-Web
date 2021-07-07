@@ -196,7 +196,8 @@
       v-if="showBankAccount"
       :title="$t('msg.providers.bank')"
       :ok-button-label="$t('msg.providers.copy')"
-      :cancel-button-label="$t('msg.close')"
+      :cancel-button-label="$t('msg.cancel')"
+      :ok-button-present="copyButtonAvailable"
     >
       <div
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
@@ -268,6 +269,17 @@ export default {
       providerToDelete: {},
       providerToEdit: {},
     };
+  },
+  computed: {
+    // eslint-disable-next-line complexity
+    copyButtonAvailable() {
+      if (this.provider.contactName && this.provider.contactRut && this.provider.bankName &&
+          this.provider.accountType && this.provider.accountNumber && this.provider.email) {
+        return true;
+      }
+
+      return false;
+    },
   },
   methods: {
     toggleOpenModal(provider) {
