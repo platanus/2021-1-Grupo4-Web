@@ -619,6 +619,9 @@ export default {
         if (!this.form.accountNumber) {
           this.errors.accountNumber = 'requiredField';
         }
+        if (!this.form.email) {
+          this.errors.email = 'requiredField';
+        }
       }
 
       const validForm = !(Object.values(this.errors).some(value => !!value));

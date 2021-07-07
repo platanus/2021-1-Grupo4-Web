@@ -304,6 +304,8 @@ export default {
       const textToCopy = `${this.provider.contactName}\n${this.provider.contactRut}\n${this.provider.bankName
       }\n${this.provider.accountType}\n${this.provider.accountNumber}\n${this.provider.email}`;
       navigator.clipboard.writeText(textToCopy);
+      this.toggleBankAccount();
+      this.$emit('copied');
     },
     async editProvider(provider) {
       this.toggleEditModal();

@@ -201,6 +201,7 @@ export default {
       },
       noTransferData: 'Aún no se tiene esta información',
       dataMissing: 'Faltan los siguientes datos:',
+      dataCopied: 'Datos copiados correctamente!',
     },
   },
 };

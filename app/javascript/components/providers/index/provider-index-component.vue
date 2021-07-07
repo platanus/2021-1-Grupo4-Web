@@ -94,6 +94,7 @@ export default {
       showingAdd: false,
       providers: [],
       searchQuery: '',
+      dataCopied: false,
     };
   },
   components: {
@@ -117,6 +118,10 @@ export default {
     }
   },
   methods: {
+    closeAlert() {
+      this.dataCopied = false;
+    },
+
     toggleAddModal() {
       this.showingAdd = !this.showingAdd;
     },
