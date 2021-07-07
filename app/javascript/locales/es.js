@@ -88,7 +88,7 @@ export default {
       },
       noAlert: 'No tienes ingredientes bajo el límite de inventario',
       alertIngredients: 'Ingredientes acabándose',
-      minimumQuantity: 'Regla mínimo en inventario',
+      minimumQuantity: 'Inventario mínimo necesario',
       minimumQuantityShort: 'Mínimo',
     },
 

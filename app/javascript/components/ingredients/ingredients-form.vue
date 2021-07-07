@@ -128,13 +128,13 @@
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <button
-                type="button"
+                type="button text-black"
                 class="px-3"
                 v-if="index > 0"
                 @click="deleteUnit(unit)"
               >
                 <img
-                  class="h-9 w-9 text-white m-auto"
+                  class="h-5 w-5 m-auto"
                   svg-inline
                   src="../../../assets/images/cross-svg.svg"
                 >
@@ -188,7 +188,7 @@
             class="block text-gray-700 text-sm font-bold mb-2 mt-4"
             for="ingredient-minimumQuantity"
           >
-            {{ $t('msg.ingredients.minimumQuantity') }}
+            {{ $t('msg.ingredients.minimumQuantity') + " (en "+ ingredient.measure +")" }}
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
