@@ -92,7 +92,7 @@
               v-model="unit.quantity"
               min="1"
               type="number"
-              :placeholder="$t('msg.ingredients.quantity')"
+              :placeholder="unit.name"
               @change="autoAddUnit(unit)"
             >
             <p
