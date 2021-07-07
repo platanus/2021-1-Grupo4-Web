@@ -27,6 +27,7 @@ export default {
     floatNonZero: 'Debe ser mayor a cero',
     geqZero: 'Debe ser mayor o igual a cero',
     intGeqZero: 'Debe ser un entero mayor o igual a cero',
+    invalidEmail: 'El correo no es válido',
 
     users: {
       registerTitle: 'Crear Cuenta',
