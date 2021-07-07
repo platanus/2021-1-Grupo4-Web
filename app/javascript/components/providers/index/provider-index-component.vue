@@ -5,6 +5,15 @@
       <div class="font-bold text-4xl">
         {{ $t('msg.providers.title') }}
       </div>
+    </div>
+
+    <!-- Alert data copied -->
+    <div
+      v-if="dataCopied"
+      class="mt-4 w-max bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.providers.dataCopied') }}</span>
       <span
         v-if="loading"
         class="flex w-8 h-8 my-auto pl-2 ml-2"
@@ -95,6 +104,7 @@ export default {
       providers: [],
       searchQuery: '',
       dataCopied: false,
+      unexpectedError: false,
     };
   },
   components: {
@@ -110,9 +120,8 @@ export default {
         id: element.id,
         ...element.attributes,
       }));
-      this.successResponse(response);
     } catch (error) {
-      this.errorResponse(error);
+      this.unexpectedError = true;
     } finally {
       this.loading = false;
     }
@@ -120,6 +129,10 @@ export default {
   methods: {
     closeAlert() {
       this.dataCopied = false;
+    },
+
+    closeAlertError() {
+      this.unexpectedError = false;
     },
 
     toggleAddModal() {
@@ -130,19 +143,18 @@ export default {
       this.loading = true;
       try {
         const {
-          status,
           data:
             { data: { id, attributes },
             },
         } = await postProvider(provider);
-        this.toggleAddModal();
         const providerToAdd = { id, ...attributes };
         this.providers.push(providerToAdd);
-        this.successResponse(status);
       } catch (error) {
-        this.errorResponse(error);
+        this.unexpectedError = true;
+        console.log()
       } finally {
         this.loading = false;
+        this.toggleAddModal();
       }
     },
 
@@ -165,22 +177,12 @@ export default {
       this.providers.splice(objectIndex, 0, providerEdited);
     },
 
-    async deleteProvider(id, response) {
+    async deleteProvider(id) {
       try {
         this.providers = this.providers.filter(item => item.id !== id);
-        this.successResponse(response);
       } catch (error) {
-        this.errorResponse(error);
+        this.unexpectedError = true;
       }
-    },
-
-    async successResponse(status) {
-      this.status = status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
     },
   },
   computed: {

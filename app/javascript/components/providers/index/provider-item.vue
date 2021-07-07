@@ -313,25 +313,19 @@ export default {
         const res = await editProvider(this.providerToEdit.id, provider);
         this.$emit('update', res, this.providerToEdit.id);
       } catch (error) {
-        this.errorResponse(error);
+        this.$emit('error');
       }
     },
     async deleteProvider() {
+      this.toggleDelModal();
       try {
         const response = await deleteProvider(this.providerToDelete.id);
         this.$emit('del', this.provider.id, response);
       } catch (error) {
-        this.errorResponse(error);
+        this.$emit('error');
       }
     },
-    async successResponse(status) {
-      this.status = status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
-    },
+
     openWindow() {
       // eslint-disable-next-line no-magic-numbers
       // eslint-disable-next-line no-negated-condition
