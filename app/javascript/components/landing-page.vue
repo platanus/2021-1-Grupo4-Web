@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10 flex flex-col items-center bg-gray-200">
+  <div class="mt-10 flex flex-col items-center">
     <!-- mensaje bienvenida -->
     <div class="flex flex-col items-center flex-none flex-grow-0 mb-4">
       <img
