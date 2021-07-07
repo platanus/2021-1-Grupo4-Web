@@ -45,6 +45,7 @@
               <input
                 type="number"
                 :min="0"
+                oninput="validity.valid||(value='');"
                 ref="increase-inventory"
                 class="w-10 border-2 border-solid border-gray-400 box-border"
                 v-model="increaseInventoryIn[idx]"
