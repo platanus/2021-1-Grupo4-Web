@@ -32,7 +32,7 @@
         src="../../../../assets/images/clock-svg.svg"
       >
       <div class="w-auto h-6 font-sans font-normal text-base text-black flex-grow-0">
-        {{ cookMinutes }} {{ $t('msg.recipes.minutes') }}
+        {{ cookMinutes || "-" }} {{ $t('msg.recipes.minutes') }}
       </div>
     </div>
   </div>
