@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <!-- nombre -->
+    <!-- Title -->
     <div class="flex items-center">
       <a :href="`/recipes/${recipeId}`">
         <img
@@ -13,12 +13,31 @@
         {{ recipe.name }}
       </div>
     </div>
-    <!-- cuadro blanco edición -->
+
+    <!-- Alert -->
+    <div
+      v-if="error"
+      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
+      <span
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert"
+      >
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-red-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
+      </span>
+    </div>
+
     <div
       v-if="!loading"
       class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10"
     >
-      <!-- datos básicos -->
+      <!-- Basic info -->
       <div
         class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
       >
@@ -73,7 +92,7 @@
           </div>
         </div>
       </div>
-      <!-- ingredients -->
+      <!-- Ingredients -->
       <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
@@ -84,13 +103,13 @@
         @change-quantity="changeQuantity"
         @change-measure="changeMeasure"
       />
-      <!-- pasos -->
+      <!-- Steps -->
       <recipe-steps
         :recipe-steps="recipe.steps.data"
         @new-step="addStep"
         @delete-step="deleteStep"
       />
-      <!--  botones -->
+      <!-- Buttons -->
       <div class="flex items-start items-center">
         <button
           class="py-2 px-6 rounded shadow-md w-auto h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
@@ -154,6 +173,9 @@ export default {
     }
   },
   methods: {
+    closeAlert() {
+      this.error = false;
+    },
     cancelEdit() {
       window.location = `/recipes/${this.recipeId}`;
     },
@@ -291,6 +313,10 @@ export default {
 
       if (!this.recipe.portions) {
         this.errors.portions = 'requiredField';
+      }
+
+      if (!this.recipe.cookMinutes) {
+        this.errors.cookMinutes = 'requiredField';
       }
 
       const validForm = !(Object.values(this.errors).some(value => !!value));

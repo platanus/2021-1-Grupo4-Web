@@ -14,6 +14,26 @@
         {{ menuName }}
       </div>
     </div>
+
+    <!-- Alert -->
+    <div
+      v-if="error"
+      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
+      <span
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert"
+      >
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-red-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
+      </span>
+    </div>
+
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <div class="flex flex-row">
         <!-- Menu Name -->
@@ -223,6 +243,11 @@ export default {
     }
   },
   methods: {
+
+    closeAlert() {
+      this.error = false;
+    },
+
     async editMenu() {
       if (this.validations()) {
         this.loading = true;
