@@ -15,10 +15,52 @@
     >
       <span class="mr-7 block sm:inline">{{ $t('msg.providers.dataCopied') }}</span>
       <span
-        v-if="loading"
-        class="flex w-8 h-8 my-auto pl-2 ml-2"
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert('dataCopied')"
       >
-        <base-spinner />
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
+      </span>
+    </div>
+
+    <!-- Alert unexpected error -->
+    <div
+      v-if="unexpectedError"
+      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
+      <span
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert('unexpectedError')"
+      >
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-red-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
+      </span>
+    </div>
+
+    <!-- Alert provider name error -->
+    <div
+      v-if="providerNameError"
+      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.providers.providerNameError') }}</span>
+      <span
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert('providerNameError')"
+      >
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-red-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
       </span>
     </div>
     <!-- info -->
@@ -105,6 +147,7 @@ export default {
       searchQuery: '',
       dataCopied: false,
       unexpectedError: false,
+      providerNameError: true,
     };
   },
   components: {
@@ -127,12 +170,16 @@ export default {
     }
   },
   methods: {
-    closeAlert() {
-      this.dataCopied = false;
-    },
-
-    closeAlertError() {
-      this.unexpectedError = false;
+    closeAlert(alert) {
+      if (alert === 'unexpectedError') {
+        this.unexpectedError = false;
+      }
+      if (alert === 'dataCopied') {
+        this.dataCopied = false;
+      }
+      if (alert === 'providerNameError') {
+        this.providerNameError = false;
+      }
     },
 
     toggleAddModal() {
@@ -150,8 +197,11 @@ export default {
         const providerToAdd = { id, ...attributes };
         this.providers.push(providerToAdd);
       } catch (error) {
-        this.unexpectedError = true;
-        console.log()
+        if (error.response.data.errors.name[0] === 'Name ya tiene cuenta') {
+          this.providerNameError = true;
+        } else {
+          this.unexpectedError = true;
+        }
       } finally {
         this.loading = false;
         this.toggleAddModal();

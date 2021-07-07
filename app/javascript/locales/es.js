@@ -202,6 +202,7 @@ export default {
       noTransferData: 'Aún no se tiene esta información',
       dataMissing: 'Faltan los siguientes datos:',
       dataCopied: 'Datos copiados correctamente!',
+      providerNameError: 'Ya tienes agregado a este proveedor',
     },
   },
 };
