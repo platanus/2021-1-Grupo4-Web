@@ -23,6 +23,16 @@
       >
         <!--Title-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
+          <a
+            v-if="back"
+            @click="goBack"
+            class="text-white cursor-pointer"
+          >
+            <img
+              class="h-6 w-6 text-white mr-2"
+              src="../../../assets/images/arrow-left-svg.svg"
+            >
+          </a>
           <h3
             class="text-lg leading-6 font-medium text-white"
             id="modal-title"
@@ -77,6 +87,7 @@ export default {
     okButtonPresent: { type: Boolean, required: false, default: true },
     okButtonLabel: { type: String, required: false, default: 'Ok' },
     cancelButtonLabel: { type: String, required: true },
+    back: { type: Boolean, default: false },
   },
   methods: {
     ok() {
@@ -84,6 +95,9 @@ export default {
     },
     cancel() {
       this.$emit('cancel');
+    },
+    goBack() {
+      this.$emit('back');
     },
   },
 };

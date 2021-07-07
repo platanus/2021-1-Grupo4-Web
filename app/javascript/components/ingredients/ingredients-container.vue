@@ -103,10 +103,12 @@
     <base-modal
       @ok="addIngredient"
       @cancel="toggleAddModal"
+      @back="goBackAddModal"
       v-if="showingAdd"
       :title="$t('msg.ingredients.add')"
       :ok-button-label="$t('msg.add')"
       :cancel-button-label="$t('msg.cancel')"
+      :back="true"
     >
       <ingredients-form
         ref="addIngredientInfo"
@@ -264,6 +266,15 @@ export default {
       this.cleanErrors();
       this.showingAdd = !this.showingAdd;
       this.marketIngredient = undefined;
+    },
+
+    goBackAddModal() {
+      if (this.marketIngredient) {
+        this.showingAdd = !this.showingAdd;
+        this.showingSearchIngredients = !this.showingSearchIngredients;
+      } else {
+        this.showingAdd = !this.showingAdd;
+      }
     },
 
     toggleSearchIngredientsModal() {
