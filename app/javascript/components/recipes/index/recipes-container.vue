@@ -14,6 +14,7 @@
     </div>
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+      <!-- searchBar y button -->
       <div class="flex flex-col lg:flex-row pb-4">
         <div class="flex items-center py-2 pr-2 lg:w-1/2">
           <div class="relative text-yellow-700 w-full">

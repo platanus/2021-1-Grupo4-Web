@@ -36,7 +36,7 @@
         </div>
         <div class="flex justify-end w-full">
           <a
-            class="my-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white"
+            class="my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white"
             href="/menus/new"
           >
             {{ $t('msg.menus.add') }}
