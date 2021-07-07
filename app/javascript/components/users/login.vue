@@ -23,8 +23,14 @@
           {{ $t('msg.users.login') }}
         </h2>
         <div class="w-full mb-8">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="email"
+          >
+            {{ $t('msg.users.labelEmail') }}
+          </label>
           <input
-            class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-50 rounded-md flex-none flex-grow-0"
+            class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-200 rounded-md flex-none flex-grow-0"
             id="email"
             type="email"
             :placeholder="$t('msg.users.placeholderEmail')"
@@ -38,8 +44,14 @@
           </p>
         </div>
         <div class="mb-8 w-full">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="password"
+          >
+            {{ $t('msg.users.labelPassword') }}
+          </label>
           <input
-            class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-50 rounded-md flex-none flex-grow-0"
+            class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-200 rounded-md flex-none flex-grow-0"
             id="password"
             type="password"
             placeholder="******************"
