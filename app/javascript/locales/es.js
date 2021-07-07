@@ -197,6 +197,7 @@ export default {
         number: 'Número de cuenta',
       },
       noTransferData: 'Aún no se tiene esta información',
+      dataMissing: 'Faltan los siguientes datos:',
     },
   },
 };

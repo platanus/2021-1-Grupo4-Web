@@ -6,7 +6,6 @@ import Locales from '../locales/locales.js';
 
 import BaseButton from '../components/base/base-button.vue';
 import BaseModal from '../components/base/base-modal.vue';
-import BaseTable from '../components/base/base-table.vue';
 import DotsDropdown from '../components/base/dots-dropdown.vue';
 import BaseDropdown from '../components/base/base-dropdown.vue';
 import BaseSpinner from '../components/base/base-spinner.vue';
@@ -36,7 +35,6 @@ import formatCurrency from '../filters/format-currency.js';
 
 Vue.use(VueI18n);
 
-Vue.component('BaseTable', BaseTable);
 Vue.component('BaseModal', BaseModal);
 Vue.component('BaseButton', BaseButton);
 Vue.component('DotsDropdown', DotsDropdown);

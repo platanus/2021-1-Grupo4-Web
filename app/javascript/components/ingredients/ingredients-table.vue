@@ -113,7 +113,8 @@
             <dots-dropdown
               :elements="{
                 edit:true,
-                del:true
+                del:true,
+                last: lastIngredient(idx)
               }"
               @edit="editIngredient(ingredient)"
               @delete="deleteIngredient(ingredient)"
@@ -162,6 +163,13 @@ export default {
         const originalIngredient = this.originalIngredients.filter(original => original.id === ingredient.id)[0];
         ingredient.inventory = originalIngredient.inventory;
       }
+    },
+    lastIngredient(idx) {
+      if (idx === this.ingredients.length - 1) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

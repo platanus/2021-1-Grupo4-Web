@@ -40,7 +40,7 @@
       </thead>
       <tbody class="bg-gray-200">
         <tr
-          v-for="menu in menus"
+          v-for="(menu, idx) in menus"
           :key="menu.id"
           class="bg-white border-2 border-gray-200 text-left"
         >
@@ -123,7 +123,8 @@
             <dots-dropdown
               :elements="{
                 edit:true,
-                del:true
+                del:true,
+                last: lastMenu(idx)
               }"
               @edit="editMenu(menu)"
               @delete="deleteMenu(menu)"
@@ -207,6 +208,9 @@ export default {
       });
 
       return returnArray;
+    },
+    lastMenu(idx) {
+      return (idx === this.menus.length - 1);
     },
   },
 };
