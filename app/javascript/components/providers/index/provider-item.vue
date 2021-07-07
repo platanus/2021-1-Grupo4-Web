@@ -223,7 +223,10 @@
         </p>
       </div>
       <div v-else>
-        <p> {{ $t('msg.providers.dataMissing') }} </p>
+        <p class="font-bold">
+          {{ $t('msg.providers.dataMissing') }}
+        </p>
+        <br>
         <ul>
           <li v-if="!provider.contactName">
             {{ $t('msg.providers.bankAccount.name') }}
