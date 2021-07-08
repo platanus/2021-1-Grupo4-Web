@@ -92,7 +92,7 @@
             </div>
             <!-- available recipes -->
             <div
-              v-if="!loading"
+              v-if="!loading && filterRecipes.length > 0"
               class="flex flex-col bg-gray-200 overflow-auto"
             >
               <add-recipe-card
@@ -108,6 +108,12 @@
               >
                 {{ recipe.name }}
               </add-recipe-card>
+            </div>
+            <div
+              class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
+              v-else
+            >
+              {{ $t('msg.menus.noRecipesAvailable') }}
             </div>
             <span
               v-if="loading"

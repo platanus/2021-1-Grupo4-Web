@@ -14,22 +14,24 @@
     </div>
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
-      <!-- Search Bar and Add Button -->
-      <div class="flex items-center mb-4">
-        <div class="relative text-yellow-700">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-            <img
-              svg-inline
-              src="../../../../assets/images/magnifyng-glass-svg.svg"
-              class="w-6 h-6 text-yellow-700"
+      <!-- searchBar y button -->
+      <div class="flex flex-col lg:flex-row pb-4">
+        <div class="flex items-center py-2 pr-2 lg:w-1/2">
+          <div class="relative text-yellow-700 w-full">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <img
+                svg-inline
+                src="../../../../assets/images/magnifyng-glass-svg.svg"
+                class="w-6 h-6 text-yellow-700"
+              >
+            </span>
+            <input
+              class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
+              :placeholder="$t('msg.recipes.search')"
+              @keyup="filterRecipes"
+              v-model="searchQuery"
             >
-          </span>
-          <input
-            class="my-4 py-2 pl-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
-            :placeholder="$t('msg.recipes.search')"
-            @keyup="filterRecipes"
-            v-model="searchQuery"
-          >
+          </div>
         </div>
         <div class="flex justify-end w-full">
           <a
