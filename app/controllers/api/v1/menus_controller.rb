@@ -108,6 +108,7 @@ class Api::V1::MenusController < Api::V1::BaseController
       name: ingredient.name,
       measure: ingredient.measure,
       quantity: accumulated_quantity,
+      inventory: ingredient.inventory,
       total_price: ingredient.price.to_f / ingredient.quantity * accumulated_quantity
     }
   end
