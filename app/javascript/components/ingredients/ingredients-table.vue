@@ -99,14 +99,22 @@
           <!-- minimum quantity -->
           <td class="py-2">
             <p
+              class="ml-2 font-medium"
+              v-if="ingredient.minimumQuantity == ''"
+            >
+              0
+            </p>
+            <p
+              class="ml-2 font-medium"
               v-if="ingredient.minimumQuantity != undefined"
             >
               {{ ingredient.minimumQuantity }}
             </p>
             <p
+              class="ml-2 font-medium"
               v-if="ingredient.minimumQuantity == undefined"
             >
-              -
+              0
             </p>
           </td>
           <td class="content-center">

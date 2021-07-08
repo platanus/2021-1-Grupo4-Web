@@ -342,6 +342,9 @@ export default {
     // eslint-disable-next-line max-statements
     async editIngredient() {
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
+      if (this.checkErrorsEditIngredient(ingredientsInfo)) {
+        return;
+      }
       if (this.validations(this.$refs.editIngredientInfo.form)) {
         try {
           this.showingEdit = !this.showingEdit;
@@ -359,7 +362,27 @@ export default {
         }
       }
     },
+    checkErrorsEditIngredient(info) {
+      if (!info.name || !info.ingredientMeasuresAttributes[0].quantity ||
+      !info.ingredientMeasuresAttributes[0].name) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjAlert'));
 
+        return true;
+      } else if (info.ingredientMeasuresAttributes[0].quantity < 1) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjMinQuantity'));
+
+        return true;
+      } else if (info.minimumQuantity < 0) {
+        // eslint-disable-next-line no-alert
+        alert(this.$t('msg.ingredients.msjNegativeQuantity'));
+
+        return true;
+      }
+
+      return false;
+    },
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
         .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
