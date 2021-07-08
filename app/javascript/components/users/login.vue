@@ -64,7 +64,7 @@
             {{ $t(`msg.users.${errors.password}`) }}
           </p>
         </div>
-        <div class=" w-auto flex justify-between items-end flex-none self-stretch flex-grow-0 mb-8">
+        <div class=" w-auto flex flex-col sm:flex-row justify-between items-end flex-none self-stretch flex-grow-0 mb-8">
           <div class="font-normal text-base underline text-yellow-500 flex-none flex-grow-0 mb-1 mr-8">
             <a href="/users/sign_up">
               {{ $t('msg.users.notHaveAccount') }}
