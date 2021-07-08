@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Ingredient, type: :model do
-  let(:ingredient) { build(:ingredient) }
+  let(:ingredient) { create(:ingredient) }
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:provider).optional }

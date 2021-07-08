@@ -1,6 +1,9 @@
 class RecipeIngredient < ApplicationRecord
   belongs_to :ingredient
   belongs_to :recipe
+
+  validates :ingredient_quantity, :ingredient_measure, presence: true
+  validates :ingredient_quantity, numericality: { greater_than_or_equal_to: 0 }
 end
 
 # == Schema Information

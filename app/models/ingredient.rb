@@ -7,10 +7,15 @@ class Ingredient < ApplicationRecord
   accepts_nested_attributes_for :ingredient_measures, allow_destroy: true
 
   validates :inventory, numericality: { greater_than_or_equal_to: 0 }
+  validate :has_measures?
 
   scope :below_minimum, -> {
                           where.not(minimum_quantity: nil).where("inventory < minimum_quantity")
                         }
+
+  def has_measures?
+    errors.add(:base, "ingredient_measures cant be empty") if ingredient_measures.empty?
+  end
 
   def decrement_inventory!(quantity_to_decrement)
     final_inventory = [inventory - quantity_to_decrement, 0].max
