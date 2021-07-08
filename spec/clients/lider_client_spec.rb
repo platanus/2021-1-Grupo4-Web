@@ -6,15 +6,15 @@ RSpec.describe LiderClient do
   let(:lider_client) { described_class.new }
   let(:user) { create(:user) }
 
-  let(:brand_result) { instance_double('Brand div', text: 'El Buen Corte') }
-  let(:measure_result) { instance_double('Measure div', text: '500 g') }
-  let(:name_result) { instance_double('Description div', text: 'Carne Molida 4%') }
-  let(:expected_measure) { '500 g' }
-  let(:expected_name) { 'Carne Molida 4%' }
+  let(:price) { instance_double('Price div', text: '$1.990') }
+  let(:package) { instance_double('Package div', text: '500 g') }
+  let(:name) { instance_double('Name div', text: 'Carne Molida 4%') }
 
-  let(:browser) { instance_double('Chrome Browser', close: true, goto: true) }
+  let(:image_response) { instance_double('Image tag', value: 'some-url.com') }
+  let(:image_url) { instance_double('URL div', attr: image_response) }
 
-  let(:products_search) { instance_double('Products search') }
+  let(:document) { instance_double('Document') }
+
   let(:product) { instance_double('Product') }
   let(:products) { [product] }
 
@@ -23,43 +23,42 @@ RSpec.describe LiderClient do
   end
 
   def mock_products_found
-    allow(browser).to receive(:search).with('.product-details').and_return(products_search)
-    allow(products_search).to receive(:wait).with(:present, timeout: 5.0).and_return(products)
+    allow(document).to receive(:css).with("div[id^=\"productBox\"]").and_return(products)
   end
 
   def mock_product
-    allow(product).to receive(:search).with('.product-attribute').and_return(measure_result)
-    allow(product).to receive(:search).with('.product-description').and_return(name_result)
+    allow(product).to receive(:css).with('/div[2]/div[1]/div/span[1]').and_return(package)
+    allow(product).to receive(:css).with('/div[2]/div[1]/a/span[2]').and_return(name)
+    allow(product).to receive(:css).with('/div[1]/div[1]/a/div/img').and_return(image_url)
   end
 
   def mock_product_prices
-    allow(product).to receive(:search).with('.price-internet').and_return(normal_price_result)
-    allow(product).to receive(:search).with('.price-sell').and_return(offer_price_result)
+    allow(product).to receive(:css).with('/div[2]/div[1]/div/span[2]/b').and_return(price)
   end
 
   before do
     allow(described_class).to receive(:new).and_return(lider_client)
-    allow(lider_client).to receive(:browser).and_return(browser)
+    allow(Nokogiri::HTML::Document).to receive(:parse).and_return(document)
     mock_products_found
   end
 
-  describe 'getting all products with normal and offer price' do
-    let(:offer_price_result) { instance_double('Offer price div', text: "$4.690") }
-    let(:normal_price_result) { instance_double('Normal price div', text: nil) }
-
-    let(:expected_offer_price) { '$4.690' }
-    let(:expected_normal_price) { nil }
-
+  describe 'getting all products' do
     let!(:provider) { create(:provider, name: 'Lider', user: user) }
 
     let(:expected_result) do
       [
         {
-          price: expected_offer_price,
-          measure: expected_measure,
-          name: expected_name,
-          provider: 'Lider',
-          provider_id: provider.to_param
+          provider: { name: 'Lider' },
+          products: [
+            {
+              price: 1990,
+              measure: 'g',
+              quantity: 500,
+              package: '500 g',
+              name: 'Carne Molida 4%',
+              img_url: 'some-url.com'
+            }
+          ]
         }
       ]
     end

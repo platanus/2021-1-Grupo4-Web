@@ -35,6 +35,7 @@ class CornershopClient
 
       {
         price: get_price(product),
+        quantity: 1,
         measure: get_measure(product),
         package: get_package(product),
         name: get_name(product),

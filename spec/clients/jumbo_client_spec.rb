@@ -8,8 +8,13 @@ RSpec.describe JumboClient do
 
   let(:measure_result) { instance_double('Measure div', text: '1 Un.') }
   let(:name_result) { [instance_double('Title div', text: 'Pan del oso.'), double] }
-  let(:expected_measure) { '1 Un.' }
+  let(:url_result) { [instance_double('Image div', attribute: 'some-url.com')] }
+  let(:image_result) { instance_double('Image', wait: url_result) }
+  let(:expected_package) { '1 Un.' }
+  let(:expected_measure) { 'Un.' }
+  let(:expected_quantity) { 1 }
   let(:expected_name) { 'Pan del oso.' }
+  let(:expected_image_url) { 'some-url.com' }
 
   let(:browser) { instance_double('Chrome Browser', close: true, goto: true) }
 
@@ -31,6 +36,7 @@ RSpec.describe JumboClient do
   def mock_product
     allow(product).to receive(:search).with('.shelf-single-unit').and_return(measure_result)
     allow(product).to receive(:search).with('.shelf-product-title h2').and_return(name_result)
+    allow(product).to receive(:search).with('.lazy-image').and_return(image_result)
   end
 
   def mock_product_prices
@@ -53,18 +59,22 @@ RSpec.describe JumboClient do
     let(:old_price_result) { instance_double('Old price div', text: "$ 13 390") }
     let(:offer_price_result) { [instance_double('Offer price div', text: "$ 8 390"), double] }
 
-    let(:expected_price) { '$ 12 390' }
+    let(:expected_price) { 12390 }
 
     let(:expected_result) do
-      [
-        {
-          price: expected_price,
-          measure: expected_measure,
-          name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
-        }
-      ]
+      [{
+        provider: { name: 'Jumbo' },
+        products: [
+          {
+            price: expected_price,
+            package: expected_package,
+            quantity: expected_quantity,
+            measure: expected_measure,
+            name: expected_name,
+            img_url: expected_image_url
+          }
+        ]
+      }]
     end
 
     before do
@@ -82,18 +92,22 @@ RSpec.describe JumboClient do
     let(:old_price_result) { instance_double('Old price div', text: "$ 13 390") }
     let(:offer_price_result) { [instance_double('Offer price div', text: "$ 8 390"), double] }
 
-    let(:expected_price) { '$ 13 390' }
+    let(:expected_price) { 13390 }
 
     let(:expected_result) do
-      [
-        {
-          price: expected_price,
-          measure: expected_measure,
-          name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
-        }
-      ]
+      [{
+        provider: { name: 'Jumbo' },
+        products: [
+          {
+            price: expected_price,
+            package: expected_package,
+            quantity: expected_quantity,
+            measure: expected_measure,
+            name: expected_name,
+            img_url: expected_image_url
+          }
+        ]
+      }]
     end
 
     before do
@@ -111,18 +125,22 @@ RSpec.describe JumboClient do
     let(:old_price_result) { instance_double('Old price div', text: "") }
     let(:offer_price_result) { [instance_double('Offer price div', text: "$ 8 390"), double] }
 
-    let(:expected_price) { '$ 8 390' }
+    let(:expected_price) { 8390 }
 
     let(:expected_result) do
-      [
-        {
-          price: expected_price,
-          measure: expected_measure,
-          name: expected_name,
-          provider: 'Jumbo',
-          provider_id: provider.to_param
-        }
-      ]
+      [{
+        provider: { name: 'Jumbo' },
+        products: [
+          {
+            price: expected_price,
+            package: expected_package,
+            quantity: expected_quantity,
+            measure: expected_measure,
+            name: expected_name,
+            img_url: expected_image_url
+          }
+        ]
+      }]
     end
 
     before do

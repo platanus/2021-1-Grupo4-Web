@@ -64,15 +64,17 @@ RSpec.describe CornershopClient do
         products:
           [
             {
-              price: 1950.0,
+              price: 1950,
               measure: "UN",
+              quantity: 1,
               package: "Bolsa 600 g",
               name: "Kingsbury - Pan molde perfecto blanco",
               img_url: "https://s.cornershopapp.com/img-url"
             },
             {
-              price: 2250.0,
+              price: 2250,
               measure: "UN",
+              quantity: 1,
               package: "Bolsa 10 rebanadas",
               name: "Ideal - Pan molde XL",
               img_url: "https://s.cornershopapp.com/img-url-2"
