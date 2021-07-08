@@ -104,8 +104,9 @@
       >
     </div>
     <button
-      class="flex justify-center items-center py-1.5 px-10 border border-gray-800 drop-shadow
-    rounded-md flex-none flex-grow-0 font-ans font-normal text-base text-gray-800 mb-8"
+      class="flex justify-center items-center py-1.5 px-10 drop-shadow focus:outline-none
+    rounded-md flex-none flex-grow-0 font-ans font-normal text-base text-white w-48 bg-yellow-500
+    shadow-sm opacity-100"
       @click="addStep()"
     >
       {{ $t('msg.recipes.addstep') }}
