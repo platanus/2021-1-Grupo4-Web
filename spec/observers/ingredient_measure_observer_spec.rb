@@ -10,12 +10,13 @@ describe IngredientMeasureObserver do
   end
 
   describe 'capitalize name of measure before save' do
-    let(:ingredient_measure) { create(:ingredient_measure) }
+    let!(:ingredient) { create(:ingredient) }
+    let!(:ingredient_measure) { create(:ingredient_measure, name: 'Kg', ingredient: ingredient) }
 
-    before { ingredient_measure.update!(name: 'kilo') }
+    before { ingredient_measure.update!(name: 'gramo') }
 
     it 'capializes the name' do
-      expect(ingredient_measure.name).to eq('Kilo')
+      expect(ingredient_measure.name).to eq('Gramo')
     end
   end
 
