@@ -50,21 +50,22 @@
       </div>
       <div
         v-else
+        class="w-full"
       >
-        <p class="text-2xl text-gray-700 font-normal text-center p-2 mb-10">
+        <p class="text-2xl text-gray-700 font-normal text-center p-2">
           {{ $t('msg.start') }}
         </p>
-        <div class="flex">
-          <div class="w-auto m-auto p-1">
+        <div class="flex flex-col">
+          <div class="w-1/4 m-auto p-1">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.login'),
-                color: 'bg-green-500 hover:bg-green-700 text-white'
+                color: 'bg-gray-200 hover:bg-gray-300 text-gray-700'
               }"
               @click="signIn"
             />
           </div>
-          <div class="w-auto m-auto p-1">
+          <div class="w-1/4 m-auto p-1">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.register'),
