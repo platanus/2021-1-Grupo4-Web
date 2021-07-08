@@ -108,6 +108,7 @@
         :recipe-steps="recipe.steps.data"
         @new-step="addStep"
         @delete-step="deleteStep"
+        @switch-steps="switchSteps"
       />
       <!-- Buttons -->
       <div class="flex items-start items-center">
@@ -266,6 +267,11 @@ export default {
       }
       this.recipe.steps.data.splice(stepIdx, 1);
     },
+    switchSteps(oldIndex, newIndex) {
+      const oldData = this.recipe.steps.data[oldIndex];
+      this.recipe.steps.data.splice(oldIndex, 1);
+      this.recipe.steps.data.splice(newIndex, 0, oldData);
+    },
     addUpdatedSteps(updatedRecipe) {
       const stepsAttributes = [];
 
@@ -275,15 +281,16 @@ export default {
       updatedRecipe.stepsAttributes = stepsAttributes;
     },
     addNewAndUpdatedSteps(stepsAttributes) {
-      for (const step of this.recipe.steps.data) {
+      this.recipe.steps.data.forEach((step, index) => {
         const hash = {
           description: step.attributes.description,
+          stepOrderPosition: index,
         };
         if (!!step.id) {
           hash.id = step.id;
         }
         stepsAttributes.push(hash);
-      }
+      });
     },
     addDeletedSteps(stepsAttributes) {
       for (const step of this.deletedSteps) {
