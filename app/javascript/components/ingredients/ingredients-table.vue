@@ -99,21 +99,30 @@
           <!-- minimum quantity -->
           <td class="py-2">
             <p
+              class="ml-2 font-medium"
+              v-if="ingredient.minimumQuantity == ''"
+            >
+              0
+            </p>
+            <p
+              class="ml-2 font-medium"
               v-if="ingredient.minimumQuantity != undefined"
             >
               {{ ingredient.minimumQuantity }}
             </p>
             <p
+              class="ml-2 font-medium"
               v-if="ingredient.minimumQuantity == undefined"
             >
-              -
+              0
             </p>
           </td>
           <td class="content-center">
             <dots-dropdown
               :elements="{
                 edit:true,
-                del:true
+                del:true,
+                last: lastIngredient(idx)
               }"
               @edit="editIngredient(ingredient)"
               @delete="deleteIngredient(ingredient)"
@@ -135,6 +144,13 @@ export default {
   props: {
     ingredients: { type: Array, required: true },
   },
+
+  data() {
+    return {
+      originalIngredients: [...this.ingredients].map(element => JSON.parse(JSON.stringify(element))),
+    };
+  },
+
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
@@ -148,8 +164,20 @@ export default {
       });
     },
     changeInventory(ingredient, inventory) {
-      ingredient.inventory = inventory;
-      this.$emit('updateInventory', ingredient);
+      if (inventory && parseFloat(inventory) >= 0) {
+        ingredient.inventory = inventory;
+        this.$emit('updateInventory', ingredient);
+      } else {
+        const originalIngredient = this.originalIngredients.filter(original => original.id === ingredient.id)[0];
+        ingredient.inventory = originalIngredient.inventory;
+      }
+    },
+    lastIngredient(idx) {
+      if (idx === this.ingredients.length - 1) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

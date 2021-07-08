@@ -1,46 +1,66 @@
-class LiderClient < MarketClient
+class LiderClient
   BASE_URL = 'https://www.lider.cl/supermercado/search'
   MARKET_NAME = 'Lider'
 
-  private
+  def products_by_query(query: nil)
+    doc = Nokogiri::HTML(
+      URI.parse(products_url(query)).open
+    )
 
-  def products_found_to_json
-    products_found.map do |product|
-      {
-        price: get_price(product) || get_offer_price(product),
-        measure: get_measure(product),
-        name: get_name(product),
-        provider: MARKET_NAME,
-        provider_id: Provider.find_by(name: MARKET_NAME).to_param
-      }
-    end
+    products_found_to_json(doc)
   end
 
-  def products_found
-    browser.search('.product-details').wait(:present, timeout: 5.0)
+  private
+
+  def products_found_to_json(doc)
+    [{
+      provider: { name: MARKET_NAME },
+      products: products_found(doc)
+    }]
+  end
+
+  def products_found(doc)
+    doc.css('div[id^="productBox"]').map do |product|
+      {
+        price: get_price(product),
+        quantity: get_quantity(product),
+        measure: get_measure(product),
+        package: get_package(product),
+        name: get_name(product),
+        img_url: get_image_url(product)
+      }
+    end.compact
   end
 
   def get_price(product)
-    normal_price = product.search('.price-internet').text
-    format_search(normal_price)
+    price = product.css('/div[2]/div[1]/div/span[2]/b').text.delete('$.')
+
+    price.to_i
   end
 
-  def get_offer_price(product)
-    offer_price = product.search('.price-sell').text
-    format_search(offer_price)
+  def get_quantity(product)
+    product.css('/div[2]/div[1]/div/span[1]').text.split(' ').first.to_i
   end
 
   def get_measure(product)
-    measure = product.search('.product-attribute').text
-    format_search(measure)
+    product.css('/div[2]/div[1]/div/span[1]').text.split(' ').second
+  end
+
+  def get_package(product)
+    product.css('/div[2]/div[1]/div/span[1]').text
   end
 
   def get_name(product)
-    name = product.search('.product-description').text
-    format_search(name)
+    product.css('/div[2]/div[1]/a/span[2]').text
+  end
+
+  def get_image_url(product)
+    product.css('/div[1]/div[1]/a/div/img').attr('src').value
   end
 
   def products_url(query)
-    "#{BASE_URL}?Ntt=#{query}"
+    url = "#{BASE_URL}?Ntt=#{query}"
+
+    URI::DEFAULT_PARSER.escape(url)
   end
 end

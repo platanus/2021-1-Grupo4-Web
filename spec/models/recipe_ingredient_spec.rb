@@ -4,7 +4,9 @@ RSpec.describe RecipeIngredient, type: :model do
   let(:user) { create(:user) }
   let(:recipe_ingredient) do
     build(:recipe_ingredient, ingredient: create(:ingredient, user: user),
-                              recipe: create(:recipe, user: user))
+                              recipe: create(:recipe, user: user),
+                              ingredient_measure: 'Kilo',
+                              ingredient_quantity: 3)
   end
 
   it { is_expected.to belong_to(:recipe) }

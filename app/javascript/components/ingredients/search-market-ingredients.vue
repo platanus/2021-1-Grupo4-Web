@@ -47,6 +47,14 @@
         </div>
       </div>
     </div>
+
+    <div
+      v-if="scraperProblems !== null"
+      class="text-sm text-gray-500 pb-2"
+    >
+      {{ scraperProblems }}
+    </div>
+
     <div>
       <div class="pb-2">
         <select
@@ -98,6 +106,7 @@ import MarketIngredient from './market-ingredient.vue';
 export default {
   data() {
     return {
+      scraperProblems: null,
       loading: false,
       status: null,
       error: '',
@@ -114,10 +123,11 @@ export default {
       this.loading = true;
       try {
         const {
-          data: { data },
+          data,
         } = await searchCornershopIngredients(this.query);
-        this.productsByMarket = data;
+        this.productsByMarket = data.data;
         this.market = 0;
+        this.scraperProblems = data.message;
       } catch (error) {
         this.errorResponse(error);
       } finally {
@@ -133,7 +143,7 @@ export default {
         price: productInfo.price,
         currency: 'CLP',
         ingredientMeasuresAttributes: [ /* eslint-disable-line camelcase */
-          { name: productInfo.measure, quantity: 1 }],
+          { name: productInfo.measure, quantity: productInfo.quantity }],
       };
       this.$emit('submit', productForm);
     },

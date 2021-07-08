@@ -14,7 +14,7 @@ INGREDIENT_SCHEMA = {
         type: :object,
         properties: {
           name: { type: :string, example: 'Kg', 'x-nullable': false },
-          quantity: { type: :integer, example: 1, 'x-nullable': true }
+          quantity: { type: :float, example: 1.2, 'x-nullable': true }
         }
       }
     }
@@ -42,7 +42,7 @@ INGREDIENT_RESPONSE_SCHEMA = {
         sku: { type: :string, example: 'SK28CD2', 'x-nullable': true },
         price: { type: :integer, example: 2990, 'x-nullable': true },
         currency: { type: :string, example: 'CLP', 'x-nullable': true },
-        quantity: { type: :integer, example: 2, 'x-nullable': true },
+        quantity: { type: :float, example: 2.4, 'x-nullable': true },
         measure: { type: :string, example: 'unidad', 'x-nullable': true },
         inventory: { type: :float, example: 10.3, 'x-nullable': true },
         minimum_quantity: { type: :float, example: 10.3, 'x-nullable': true },

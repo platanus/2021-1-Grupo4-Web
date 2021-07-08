@@ -17,6 +17,12 @@
             :placeholder="$t('msg.ingredients.name')"
             v-model="form.name"
           >
+          <p
+            v-if="ingredientErrors.name"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${ingredientErrors.name}`) }}
+          </p>
         </div>
       </div>
 
@@ -24,7 +30,7 @@
         class="flex flex-wrap -mx-3 mb-6"
       >
         <div class="w-full px-3">
-          <!--Name -->
+          <!--Provider Name -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="provider-name"
@@ -33,17 +39,17 @@
           </label>
           <select
             class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-            v-model="form.provider_name"
+            v-model="form.providerName"
             id="ingredient-provider"
           >
             <!--Add Mode unit from market -->
             <option
               v-if="!editMode && marketIngredient !== undefined"
               selected
-              :key="form.provider_name"
-              :value="form.provider_name"
+              :key="form.providerName"
+              :value="form.providerName"
             >
-              {{ form.provider_name }}
+              {{ form.providerName }}
             </option>
             <option
               v-for="(name, idx) in providersNames"
@@ -82,13 +88,19 @@
               {{ $t('msg.ingredients.quantity') }}
             </label>
             <input
-              class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+              class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
               v-model="unit.quantity"
               min="1"
               type="number"
               :placeholder="$t('msg.ingredients.quantity')"
               @change="autoAddUnit(unit)"
             >
+            <p
+              v-if="ingredientErrors.quantity"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${ingredientErrors.quantity}`) }}
+            </p>
           </div>
           <div class="w-full px-3 mb-6 md:mb-0">
             <!--Measure -->
@@ -116,18 +128,24 @@
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <button
-                type="button"
+                type="button text-black"
                 class="px-3"
                 v-if="index > 0"
                 @click="deleteUnit(unit)"
               >
                 <img
-                  class="h-9 w-9 text-white m-auto"
+                  class="h-5 w-5 m-auto"
                   svg-inline
                   src="../../../assets/images/cross-svg.svg"
                 >
               </button>
             </div>
+            <p
+              v-if="ingredientErrors.measure"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${ingredientErrors.measure}`) }}
+            </p>
           </div>
         </div>
         <div
@@ -159,12 +177,27 @@
             type="number"
             :placeholder="$t('msg.ingredients.price')"
           >
+          <p
+            v-if="ingredientErrors.price"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${ingredientErrors.price}`) }}
+          </p>
           <!--Minimum Quantity -->
           <label
-            class="block text-gray-700 text-sm font-bold mb-2"
+            class="block text-gray-700 text-sm font-bold mb-2 mt-4"
             for="ingredient-minimumQuantity"
           >
-            {{ $t('msg.ingredients.minimumQuantity') }}
+            <div
+              v-if="form.ingredientMeasuresAttributes[0].name"
+            >
+              {{ $t('msg.ingredients.minimumQuantity') + " (en "+ form.ingredientMeasuresAttributes[0].name +")" }}
+            </div>
+            <div
+              v-else
+            >
+              {{ $t('msg.ingredients.minimumQuantity') + " (en Unidad por defecto)" }}
+            </div>
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -173,6 +206,12 @@
             type="number"
             :placeholder="$t('msg.ingredients.quantity')"
           >
+          <p
+            v-if="ingredientErrors.minimumQuantity"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${ingredientErrors.minimumQuantity}`) }}
+          </p>
         </div>
       </div>
     </form>
@@ -186,6 +225,7 @@ import MeasureSearch from './measure_search';
 
 export default {
   props: {
+    ingredientErrors: { type: Object, required: true },
     editMode: { type: Boolean, required: true },
     ingredient: { type: Object, default() {
       return {};
@@ -198,7 +238,7 @@ export default {
   data() {
     return {
       form: {
-        provider_name: null, /* eslint-disable-line camelcase */
+        providerName: null,
         name: '',
         sku: null,
         price: '',
@@ -289,13 +329,13 @@ export default {
         }];
       }
       this.form = {
-        provider_name: providerName, /* eslint-disable-line camelcase */
+        providerName,
         name,
         sku,
         price,
         currency,
         minimumQuantity,
-        ingredientMeasuresAttributes, /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes,
       };
     } else {
       this.form = this.marketIngredient;

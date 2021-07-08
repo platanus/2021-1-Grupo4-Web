@@ -16,7 +16,7 @@
               >
             </div>
             <div class="w-auto h-6">
-              {{ recipePortions + " porcion(es)" }}
+              {{ recipePortions }} {{ $t('msg.recipes.portions') }}
             </div>
           </div>
 
@@ -29,7 +29,7 @@
               >
             </div>
             <div class="w-auto h-6">
-              {{ recipeMinutes + " minuto(s)" }}
+              {{ recipeMinutes || "-" }} {{ $t('msg.recipes.minutes') }}
             </div>
           </div>
         </div>

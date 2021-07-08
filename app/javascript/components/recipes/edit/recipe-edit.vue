@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <!-- nombre -->
+    <!-- Title -->
     <div class="flex items-center">
       <a :href="`/recipes/${recipeId}`">
         <img
@@ -13,12 +13,31 @@
         {{ recipe.name }}
       </div>
     </div>
-    <!-- cuadro blanco edición -->
+
+    <!-- Alert -->
+    <div
+      v-if="error"
+      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
+      <span
+        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        @click="closeAlert"
+      >
+        <img
+          svg-inline
+          src="../../../../assets/images/cancel-red-svg.svg"
+          class="h-5 w-5 text-red-700"
+        >
+      </span>
+    </div>
+
     <div
       v-if="!loading"
       class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10"
     >
-      <!-- datos básicos -->
+      <!-- Basic info -->
       <div
         class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8"
       >
@@ -34,6 +53,12 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.name"
             >
+            <p
+              v-if="errors.name"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.name}`) }}
+            </p>
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -43,6 +68,12 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.portions"
             >
+            <p
+              v-if="errors.portions"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.portions}`) }}
+            </p>
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -52,10 +83,16 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.cookMinutes"
             >
+            <p
+              v-if="errors.cookMinutes"
+              class="mt-2 ml-1 text-xs text-red-400"
+            >
+              {{ $t(`msg.${errors.cookMinutes}`) }}
+            </p>
           </div>
         </div>
       </div>
-      <!-- ingredients -->
+      <!-- Ingredients -->
       <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
         2. {{ $t('msg.recipes.ingredients') }}
       </div>
@@ -66,13 +103,14 @@
         @change-quantity="changeQuantity"
         @change-measure="changeMeasure"
       />
-      <!-- pasos -->
+      <!-- Steps -->
       <recipe-steps
         :recipe-steps="recipe.steps.data"
         @new-step="addStep"
         @delete-step="deleteStep"
+        @switch-steps="switchSteps"
       />
-      <!--  botones -->
+      <!-- Buttons -->
       <div class="flex items-start items-center">
         <button
           class="py-2 px-6 rounded shadow-md w-auto h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
@@ -94,6 +132,7 @@
 
 <script>
 import { getRecipe, updateRecipe } from '../../../api/recipes.js';
+import { geqZero, intGeqZero, requiredField } from '../../../utils/validations.js';
 import recipeIngredients from '../base/recipe-ingredients.vue';
 import recipeSteps from '../base/recipe-steps.vue';
 
@@ -109,7 +148,7 @@ export default {
     return {
       loading: false,
       status: '',
-      error: '',
+      error: false,
       recipe: {
         id: null,
         name: '',
@@ -120,6 +159,7 @@ export default {
       },
       deletedRecipes: [],
       deletedSteps: [],
+      errors: { name: '', portions: '', cookMinutes: '' },
     };
   },
   async created() {
@@ -129,26 +169,30 @@ export default {
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
       this.status = status;
     } catch (error) {
-      this.error = error;
+      this.error = true;
     } finally {
       this.loading = false;
     }
   },
   methods: {
+    closeAlert() {
+      this.error = false;
+    },
     cancelEdit() {
       window.location = `/recipes/${this.recipeId}`;
     },
     async editRecipe() {
-      this.loading = true;
-      try {
-        const updatedRecipe = this.getUpdatedRecipe();
-        await updateRecipe(this.recipe.id, updatedRecipe);
-        window.location = `/recipes/${this.recipeId}`;
-        this.error = '';
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
+      if (this.validations()) {
+        this.loading = true;
+        try {
+          const updatedRecipe = this.getUpdatedRecipe();
+          await updateRecipe(this.recipe.id, updatedRecipe);
+          window.location = `/recipes/${this.recipeId}`;
+        } catch (error) {
+          this.error = true;
+        } finally {
+          this.loading = false;
+        }
       }
     },
     addIngredient(ingredient) {
@@ -223,6 +267,11 @@ export default {
       }
       this.recipe.steps.data.splice(stepIdx, 1);
     },
+    switchSteps(oldIndex, newIndex) {
+      const oldData = this.recipe.steps.data[oldIndex];
+      this.recipe.steps.data.splice(oldIndex, 1);
+      this.recipe.steps.data.splice(newIndex, 0, oldData);
+    },
     addUpdatedSteps(updatedRecipe) {
       const stepsAttributes = [];
 
@@ -232,15 +281,16 @@ export default {
       updatedRecipe.stepsAttributes = stepsAttributes;
     },
     addNewAndUpdatedSteps(stepsAttributes) {
-      for (const step of this.recipe.steps.data) {
+      this.recipe.steps.data.forEach((step, index) => {
         const hash = {
           description: step.attributes.description,
+          stepOrderPosition: index,
         };
         if (!!step.id) {
           hash.id = step.id;
         }
         stepsAttributes.push(hash);
-      }
+      });
     },
     addDeletedSteps(stepsAttributes) {
       for (const step of this.deletedSteps) {
@@ -252,6 +302,21 @@ export default {
         );
       }
     },
+
+    // eslint-disable-next-line max-statements,complexity
+    validations() {
+      this.errors = { name: '', portions: '', cookMinutes: '' };
+
+      this.errors.portions = intGeqZero(this.recipe.portions, this.errors.portions);
+      this.errors.cookMinutes = geqZero(this.recipe.cookMinutes, this.errors.cookMinutes);
+      this.errors.name = requiredField(this.recipe.name, this.errors.name);
+      this.errors.portions = requiredField(this.recipe.portions, this.errors.portions);
+      this.errors.cookMinutes = requiredField(this.recipe.cookMinutes, this.errors.cookMinutes);
+      const validForm = !(Object.values(this.errors).some(value => !!value));
+
+      return validForm;
+    },
+
   },
 };
 </script>

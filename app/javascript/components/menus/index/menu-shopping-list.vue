@@ -57,7 +57,7 @@
             </div>
           </button>
           <button
-            class="focus:outline-none bg-gray-300 hover:bg-gray-400 p-4 mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md"
+            class="focus:outline-none bg-green-500 hover:bg-green-700 text-white p-4 mx-2 my-2 h-10 font-bold py-2 px-6 rounded shadow-md"
             @click="reduceInventory"
           >
             {{ $t('msg.menus.reduceInventory') }}

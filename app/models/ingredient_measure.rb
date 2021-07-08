@@ -1,9 +1,9 @@
 class IngredientMeasure < ApplicationRecord
+  include PowerTypes::Observable
   belongs_to :ingredient
 
   validates :name, presence: true, uniqueness: { scope: :ingredient_id }
-
-  before_save { name.capitalize! }
+  validates :quantity, presence: true
 end
 
 # == Schema Information
@@ -11,7 +11,7 @@ end
 # Table name: ingredient_measures
 #
 #  id            :bigint(8)        not null, primary key
-#  quantity      :integer
+#  quantity      :float
 #  ingredient_id :bigint(8)        not null
 #  name          :string
 #  created_at    :datetime         not null

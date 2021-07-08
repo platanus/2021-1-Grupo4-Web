@@ -6,3 +6,6 @@ es-CL:
     errors:
       messages:
         taken: "%{attribute} ya tiene cuenta"
+  alerts:
+    scraper: 'Estamos teniendo problemas para obtener productos de más supermercados.'
+    scraper-failed: 'Ocurrió un problema. Por favor ingresa productos manualmente.'

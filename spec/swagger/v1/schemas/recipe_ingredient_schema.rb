@@ -2,7 +2,8 @@ RECIPE_INGREDIENT_SCHEMA = {
   type: :object,
   properties: {
     ingredient_id: { type: :integer, example: 1, 'x-nullable': false },
-    ingredient_quantity: { type: :integer, example: 3, 'x-nullable': true }
+    ingredient_quantity: { type: :integer, example: 3, 'x-nullable': true },
+    ingredient_measure: { type: :string, example: 'Kilo', 'x-nullable': true }
   }
 }
 
@@ -17,6 +18,7 @@ RECIPE_INGREDIENT_RESPONSE = {
         recipe_id: { type: :integer, example: 1, 'x-nullable': false },
         ingredient: { "$ref" => "#/definitions/ingredient_response" },
         ingredient_quantity: { type: :integer, example: 3, 'x-nullable': true },
+        ingredient_measure: { type: :string, example: 'Kilo', 'x-nullable': true },
         created_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true },
         updated_at: { type: :string, example: '1984-06-04 09:00', 'x-nullable': true }
       },
