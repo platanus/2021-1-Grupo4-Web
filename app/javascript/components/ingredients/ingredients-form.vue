@@ -188,7 +188,16 @@
             class="block text-gray-700 text-sm font-bold mb-2 mt-4"
             for="ingredient-minimumQuantity"
           >
-            {{ $t('msg.ingredients.minimumQuantity') + " (en "+ ingredient.measure +")" }}
+            <div
+              v-if="form.ingredientMeasuresAttributes[0].name"
+            >
+              {{ $t('msg.ingredients.minimumQuantity') + " (en "+ form.ingredientMeasuresAttributes[0].name +")" }}
+            </div>
+            <div
+              v-else
+            >
+              {{ $t('msg.ingredients.minimumQuantity') + " (en Unidad por defecto)" }}
+            </div>
           </label>
           <input
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
