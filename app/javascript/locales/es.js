@@ -38,6 +38,7 @@ export default {
       register: 'Registrarse',
       login: 'Iniciar Sesión',
       logout: 'Cerrar Sesión',
+      enter: 'Ingresar',
       successRegister: 'Usuario creado exitosamente',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',

@@ -10,7 +10,7 @@
       <h1 class="font-bold text-3xl text-gray-700 flex-none flex-grow-0 mb-1">
         {{ $t(`msg.welcomeTitle`) }}
       </h1>
-      <h2 class="">
+      <h2 class="text-xl text-gray-700">
         {{ $t(`msg.welcomeSubtitle`) }}
       </h2>
     </div>
@@ -51,20 +51,20 @@
       <div
         v-else
       >
-        <p class="text-2xl font-normal text-center p-2 mb-10">
+        <p class="text-2xl text-gray-700 font-normal text-center p-2 mb-10">
           {{ $t('msg.start') }}
         </p>
-        <div class="flex flex-col">
-          <div class="w-full m-auto p-1">
+        <div class="flex">
+          <div class="w-auto m-auto p-1">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.login'),
-                color: 'bg-white hover:bg-gray-300 text-black'
+                color: 'bg-green-500 hover:bg-green-700 text-white'
               }"
               @click="signIn"
             />
           </div>
-          <div class="w-full m-auto p-1">
+          <div class="w-auto m-auto p-1">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.register'),

@@ -10,7 +10,7 @@
       <h1 class="font-bold text-3xl text-gray-700 flex-none flex-grow-0 mb-1">
         {{ $t(`msg.welcomeTitle`) }}
       </h1>
-      <h2 class="">
+      <h2 class="text-xl text-gray-700">
         {{ $t(`msg.welcomeSubtitle`) }}
       </h2>
     </div>
@@ -71,7 +71,7 @@
             </a>
           </div>
           <base-button
-            :elements="{ placeholder: $t('msg.users.login'),
+            :elements="{ placeholder: $t('msg.users.enter'),
                          color: 'bg-green-500 hover:bg-green-700 text-white' }"
           />
         </div>

@@ -10,7 +10,7 @@
       <h1 class="font-bold text-3xl text-gray-700 flex-none flex-grow-0 mb-1">
         {{ $t(`msg.welcomeTitle`) }}
       </h1>
-      <h2 class="">
+      <h2 class="text-xl text-gray-700">
         {{ $t(`msg.welcomeSubtitle`) }}
       </h2>
     </div>
