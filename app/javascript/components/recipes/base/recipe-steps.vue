@@ -98,14 +98,14 @@
     </div>
     <div class="flex items-center justify-between w-auto h-24 mb-8">
       <input
-        class="w-full h-24 bg-white border border-gray-300 box-boder rounded flex-none flex-grow-1 px-3 py-0.5"
+        class="w-full h-24 bg-white border border-gray-300 box-border rounded flex-none flex-grow-1 px-3 py-0.5"
         :placeholder="$t('msg.recipes.step')"
         v-model="newStepDescription"
       >
     </div>
     <button
       class="flex justify-center items-center py-1.5 px-10 drop-shadow focus:outline-none
-    rounded-md flex-none flex-grow-0 font-ans font-normal text-base text-white w-48 bg-yellow-500
+    rounded-md flex-none flex-grow-0 font-sans font-normal text-base text-white w-48 bg-yellow-500
     shadow-sm opacity-100"
       @click="addStep()"
     >
