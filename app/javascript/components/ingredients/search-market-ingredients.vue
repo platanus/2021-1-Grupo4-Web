@@ -38,7 +38,7 @@
               v-else
             >
               <span
-                class="flex my-auto w-8 h-8 pl-2"
+                class="flex m-auto w-8 h-8"
               >
                 <base-spinner />
               </span>

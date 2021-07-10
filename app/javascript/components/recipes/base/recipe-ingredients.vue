@@ -37,7 +37,7 @@
         </div>
         <span
           v-if="loading"
-          class="flex my-auto w-8 h-8 pl-2 ml-2"
+          class="flex m-auto w-8 h-8 ml-2"
         >
           <base-spinner />
         </span>
@@ -50,7 +50,7 @@
           {{ $t('msg.recipes.selectedIngredients') }} ({{ recipeIngredients.length }})
           <span
             v-if="loading"
-            class="flex my-auto w-8 h-8 pl-2 ml-2"
+            class="flex m-auto w-8 h-8 ml-2"
           >
             <base-spinner />
           </span>
