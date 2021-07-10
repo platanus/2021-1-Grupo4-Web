@@ -23,16 +23,21 @@
       >
         <!--Title-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
-          <a
+          <button
             v-if="back"
             @click="goBack"
-            class="text-white cursor-pointer"
+            class="cursor-pointer text-white"
           >
-            <img
-              class="h-6 w-6 text-white mr-2"
-              src="../../../assets/images/arrow-left-svg.svg"
+            <span
+              class="text-white"
             >
-          </a>
+              <img
+                svg-inline
+                class="h-6 w-6 mr-2 text-white"
+                src="../../../assets/images/arrow-left-white-svg.svg"
+              >
+            </span>
+          </button>
           <h3
             class="text-lg leading-6 font-medium text-white"
             id="modal-title"

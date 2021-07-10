@@ -125,8 +125,10 @@
       :title="$t('msg.ingredients.searchInMarket')"
       :ok-button-present="false"
       :cancel-button-label="$t('msg.cancel')"
+      :class="invisible ? 'hidden' : ''"
     >
       <search-market-ingredients
+        @make-invisible="makeInvisible"
         @submit="addMarketIngredient"
       />
     </base-modal>
@@ -194,6 +196,7 @@ export default {
 
   data() {
     return {
+      invisible: false,
       loading: false,
       loadingAssociations: false,
       showingAdd: false,
@@ -263,16 +266,23 @@ export default {
       });
     },
     toggleAddModal() {
+      if (this.invisible) {
+        this.toggleSearchIngredientsModal();
+        this.makeInvisible();
+      }
       this.cleanErrors();
       this.showingAdd = !this.showingAdd;
       this.marketIngredient = undefined;
     },
 
     goBackAddModal() {
+      if (this.invisible) {
+        this.makeInvisible();
+      }
       if (this.marketIngredient) {
         this.showingAdd = !this.showingAdd;
-        this.showingSearchIngredients = !this.showingSearchIngredients;
       } else {
+        // Aqui arreglar si se vuelve a la pagina principal o no
         this.showingAdd = !this.showingAdd;
       }
     },
@@ -310,7 +320,7 @@ export default {
       }
     },
 
-    async addIngredient() {
+    async validateAddIngredient() {
       if (this.validations(this.$refs.addIngredientInfo.form)) {
         const ingredientsInfo = this.$refs.addIngredientInfo.form;
         try {
@@ -332,9 +342,20 @@ export default {
       }
     },
 
-    async addMarketIngredient(productForm) {
+    async addIngredient() {
       this.toggleSearchIngredientsModal();
-      this.toggleAddModal();
+      this.makeInvisible();
+      this.validateAddIngredient();
+    },
+
+    makeInvisible() {
+      this.invisible = !this.invisible;
+    },
+
+    async addMarketIngredient(productForm) {
+      this.cleanErrors();
+      this.showingAdd = !this.showingAdd;
+      this.marketIngredient = undefined;
       this.marketIngredient = productForm;
     },
 
