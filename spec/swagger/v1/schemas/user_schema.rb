@@ -15,3 +15,10 @@ CHANGE_PASSWORD_SCHEMA = {
     password_confirmation: { type: :string }
   }
 }
+
+FORGOT_PASSWORD_SCHEMA = {
+  type: :object,
+  properties: {
+    email: { type: :string }
+  }
+}

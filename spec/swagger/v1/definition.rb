@@ -22,6 +22,7 @@ API_V1 = {
     recipe_critical_associations: RECIPE_CRITICAL_ASSOCIATIONS,
     user: USER_SCHEMA,
     change_password: CHANGE_PASSWORD_SCHEMA,
+    forgot_password: FORGOT_PASSWORD_SCHEMA,
     provider_ingredient: PROVIDER_INGREDIENT_SCHEMA,
     cornershop_product: CORNERSHOP_PRODUCT_SCHEMA,
     ingredient: INGREDIENT_SCHEMA,

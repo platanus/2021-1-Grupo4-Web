@@ -1,6 +1,7 @@
 Rails.application.configure do
   config.active_job.queue_adapter = :async
   config.action_mailer.delivery_method = :sendgrid_dev
+  config.action_mailer.default_url_options = { host: 'localhost' }
   Rails.application.config.action_mailer.sendgrid_dev_settings = {
     api_key: ENV['SENDGRID_API_KEY']
   }

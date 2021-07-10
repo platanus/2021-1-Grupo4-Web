@@ -9,3 +9,8 @@ es-CL:
   alerts:
     scraper: 'Estamos teniendo problemas para obtener productos de más supermercados.'
     scraper-failed: 'Ocurrió un problema. Por favor ingresa productos manualmente.'
+  devise:
+    recover-password: 'Recupera tu contraseña'
+    new-password: 'Nueva contraseña'
+    confirm-password: 'Confirmar contraseña'
+    confirm: 'Confirmar'

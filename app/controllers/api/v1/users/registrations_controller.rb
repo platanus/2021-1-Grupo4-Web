@@ -25,6 +25,12 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def forgot_password
+    user_email = forgot_password_params[:email]
+
+    respond_with User.find_by!(email: user_email).send_reset_password_instructions
+  end
+
   private
 
   def user_params
@@ -33,5 +39,9 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   def change_password_params
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def forgot_password_params
+    params.require(:user).permit(:email)
   end
 end
