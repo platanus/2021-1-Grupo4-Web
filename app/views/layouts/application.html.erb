@@ -8,6 +8,9 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="shortcut icon" href=<%= asset_path('chef-svg.svg')%> sizes="any" type="image/svg+xml" />
+
     <%if Rails.env.production? %>
       <%= render "shared/gtm_head" %>
     <% end %>
