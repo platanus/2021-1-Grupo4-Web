@@ -48,4 +48,16 @@ async function logoutUser() {
   );
 }
 
-export { registerUser, loginUser, logoutUser };
+async function changeUserPassword() {
+  return (axios
+    .patch('/users/sign_out',
+      {
+        headers: {
+          'X-CSRF-Token': CSRFToken,
+        },
+      },
+    )
+  );
+}
+
+export { registerUser, loginUser, logoutUser, changeUserPassword };
