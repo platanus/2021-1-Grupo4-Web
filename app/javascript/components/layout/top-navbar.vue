@@ -85,7 +85,7 @@
 
 import { logoutUser } from './../../api/users.js';
 import { getAlertedIngredients } from './../../api/ingredients.js';
-import Dropdown from './dropdown.vue';
+import Dropdown from './dropdown-user.vue';
 
 export default {
 
@@ -121,7 +121,7 @@ export default {
       window.location.href = '/';
     },
     goToProfile() {
-      alert("go to profile");
+      window.location.href = '/users/password/edit';
     },
     async toggleAlerts(reload) {
       this.showAlerts = !this.showAlerts;
