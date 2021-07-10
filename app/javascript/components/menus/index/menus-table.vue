@@ -246,7 +246,12 @@ export default {
       return returnArray;
     },
     lastMenu(idx) {
-      return (idx === this.menus.length - 1);
+      const finalRowsCount = 2;
+      if (idx >= this.menus.length - finalRowsCount) {
+        return true;
+      }
+
+      return false;
     },
   },
 };
