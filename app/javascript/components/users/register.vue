@@ -15,7 +15,7 @@
       </h2>
     </div>
     <!-- form -->
-    <div class="flex flex-col justify-center items-center p-12 bg-white rounded flex-none flex-grow-0 w-auto">
+    <div class="flex flex-col justify-center items-center p-12 bg-white rounded flex-none flex-grow-0 w-4/5 lg:w-1/2">
       <!-- Alert -->
       <div
         v-if="takenEmailAlert"
@@ -36,6 +36,7 @@
       </div>
       <form
         @submit.prevent="register"
+        class="w-full"
       >
         <h2 class="font-bold text-2xl text-black flex-none self-stretch flex-grow-0 mb-8">
           {{ $t('msg.users.register') }}
@@ -105,16 +106,18 @@
           </p>
         </div>
 
-        <div class=" w-auto flex flex-col sm:flex-row justify-between items-end flex-none self-stretch flex-grow-0 mb-8">
-          <div class="font-normal text-base underline text-yellow-500 flex-none flex-grow-0 mb-1 mr-8">
+        <div class="w-full flex flex-col lg:flex-row justify-between items-center flex-none self-stretch flex-grow-0 mb-8">
+          <div class="font-normal text-base underline text-yellow-500 flex-none flex-grow-0 mb-1 mx-auto lg:mr-8">
             <a href="/users/sign_in">
               {{ $t('msg.users.alreadyHaveAccount') }}
             </a>
           </div>
-          <base-button
-            :elements="{ placeholder: $t('msg.users.register'),
-                         color: 'bg-green-500 hover:bg-green-700 text-white' }"
-          />
+          <div class="mx-auto lg:m-0">
+            <base-button
+              :elements="{ placeholder: $t('msg.users.register'),
+                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
+            />
+          </div>
         </div>
       </form>
     </div>

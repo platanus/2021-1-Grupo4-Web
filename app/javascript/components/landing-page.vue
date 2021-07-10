@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10 flex flex-col items-center">
+  <div class="mt-10 flex flex-col">
     <!-- mensaje bienvenida -->
     <div class="flex flex-col items-center flex-none flex-grow-0 mb-4">
       <img
@@ -15,10 +15,10 @@
       </h2>
     </div>
     <!-- form -->
-    <div class="flex flex-col justify-center items-center p-12 rounded flex-none flex-grow-0 w-auto">
+    <div class="flex flex-col justify-center p-12 flex-none flex-grow-0 w-auto">
       <div
         v-if="isCurrentUser"
-        class="flex flex-wrap justify-around p-10 mx-24"
+        class="flex flex-wrap justify-around p-4 mx-24"
       >
         <navegation-item
           :label="$t('msg.ingredients.title')"
@@ -52,20 +52,20 @@
         v-else
         class="w-full"
       >
-        <p class="text-2xl text-gray-700 font-normal text-center p-2">
+        <p class="text-2xl text-gray-700 font-normal text-center p-2 mb-8">
           {{ $t('msg.start') }}
         </p>
-        <div class="flex flex-col">
-          <div class="w-1/4 m-auto p-1">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-48 p-1 mx-auto">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.login'),
-                color: 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                color: 'bg-green-500 hover:bg-green-700 text-white'
               }"
               @click="signIn"
             />
           </div>
-          <div class="w-1/4 m-auto p-1">
+          <div class="w-48 p-1 mx-auto">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.register'),
