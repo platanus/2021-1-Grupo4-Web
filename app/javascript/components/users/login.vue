@@ -91,10 +91,9 @@ export default {
   data() {
     return {
       form: {
-        userEmail: '',
         userPassword: '',
       },
-      errors: { email: '', password: '' },
+      errors: { password: '' },
     };
   },
 
@@ -118,13 +117,9 @@ export default {
       }
     },
     validations() {
-      this.errors = { email: '', password: '' };
+      this.errors = { password: '' };
       let validForm = true;
 
-      if (!this.form.userEmail) {
-        this.errors.email = 'enterEmail';
-        validForm = false;
-      }
       if (!this.form.userPassword) {
         this.errors.password = 'enterPassword';
         validForm = false;

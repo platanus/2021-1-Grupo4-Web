@@ -53,6 +53,8 @@ export default {
       incorrectPassword: 'La contraseña es incorrecta',
       enterEmail: 'Ingresa tu correo',
       enterPassword: 'Ingresa tu contraseña',
+      profile: 'Perfil de usuario',
+      modify: 'Modifica tus datos',
     },
 
     ingredients: {
