@@ -54,6 +54,7 @@ export default {
       enterEmail: 'Ingresa tu correo',
       enterPassword: 'Ingresa tu contraseña',
       profile: 'Perfil de usuario',
+      myProfile: 'Mi perfil',
       modify: 'Modifica tus datos',
     },
 
