@@ -1,3 +1,7 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable consistent-return */
+/* eslint-disable consistent-return */
 <template>
   <div class="w-full">
     <table class="w-full divide-y divide-gray-200">
@@ -134,13 +138,51 @@
       </tbody>
       <base-modal
         @ok="reduceInventory"
-        @cancel="toggleReduce"
+        @cancel="toggleCloseReduceModal"
         v-if="showingReduceMsg"
         :title="$t('msg.menus.reduceInventory')"
         :ok-button-label="$t('msg.menus.yesReduce')"
         :cancel-button-label="$t('msg.cancel')"
       >
-        <p>{{ $t('msg.menus.reduceMsg') }}</p>
+        <div
+          v-if="!loading"
+        >
+          <p class="text-md font-bold">
+            Ingredientes a reducir inventario
+          </p>
+          <div
+            v-for="(messages, idx) in listOfMessagesToConfirmWithInventory"
+            :key="idx"
+          >
+            <div
+              v-for="(message, msg_idx) in messages"
+              :key="msg_idx"
+            >
+              <p>{{ message }}</p>
+            </div>
+          </div>
+          <br>
+          <p class="text-md font-bold">
+            Ingredientes con falta de inventario
+          </p>
+          <div
+            v-for="(messages, index) in listOfMessagesToConfirmWithoutInventory"
+            :key="`toReduce${index}`"
+          >
+            <div
+              v-for="(message, msg_idx) in messages"
+              :key="`toReduce${msg_idx}`"
+            >
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        </div>
+        <span
+          v-else
+          class="flex justify-center m-auto w-8 h-8"
+        >
+          <base-spinner />
+        </span>
       </base-modal>
       <base-modal
         @cancel="toggleMessageReduction"
@@ -183,6 +225,7 @@ export default {
       error: '',
       showingReduceMsg: false,
       showReductionOfInventory: false,
+      loading: true,
     };
   },
   props: {
@@ -197,7 +240,7 @@ export default {
         this.error = error;
       }
       const menuIngredientsResponse = await getShoppingList(this.idMenuToReduce);
-      this.menuIngredients = menuIngredientsResponse.data;
+      this.menuIngredients = menuIngredientsResponse.data; // Quizas estas lineas sobran. REV
       this.toggleMessageReduction();
     },
     toggleMessageReduction() {
@@ -213,9 +256,51 @@ export default {
 
       return listOfMessages;
     },
-    toggleReduce(menuId) {
+
+    getMessageConfirmationElementsWithInventory(menuIngredients) {
+      const listOfMessagesWithInventory = menuIngredients.map((obj) =>
+        obj.ingredients.map((element) => {
+          const nuevoInventario = element.inventory - element.quantity;
+          if (nuevoInventario >= 0) {
+            return ` ${element.name}: de ${element.inventory} a ${nuevoInventario}  ${element.measure}`;
+          }
+
+          return '';
+        },
+        ));
+
+      return listOfMessagesWithInventory;
+    },
+    getMessageConfirmationElementsWithoutInventory(menuIngredients) {
+      const listOfMessagesWithoutInventory = menuIngredients.map((obj) =>
+        obj.ingredients.map((element) => {
+          const nuevoInventario = element.inventory - element.quantity;
+          if (nuevoInventario < 0) {
+            return ` ${element.name}: ${element.quantity} ${element.measure} (Tienes ${element.inventory}
+            ${element.measure})`;
+          }
+
+          return '';
+        },
+        ));
+
+      return listOfMessagesWithoutInventory;
+    },
+    toggleCloseReduceModal() {
+      this.showingReduceMsg = !this.showingReduceMsg;
+    },
+
+    async toggleReduce(menuId) {
       this.showingReduceMsg = !this.showingReduceMsg;
       this.idMenuToReduce = menuId;
+      const menuIngredientsResponse = await getShoppingList(menuId);
+      this.menuIngredients = menuIngredientsResponse.data;
+      this.listOfMessagesToConfirmWithInventory =
+      this.getMessageConfirmationElementsWithInventory(this.menuIngredients);
+      this.listOfMessagesToConfirmWithoutInventory =
+      this.getMessageConfirmationElementsWithoutInventory(this.menuIngredients);
+
+      this.loading = false;
     },
     editMenu(element) {
       window.location = `/menus/${element.id}/edit`;
