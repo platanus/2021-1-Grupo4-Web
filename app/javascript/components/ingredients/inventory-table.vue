@@ -45,6 +45,7 @@
               <input
                 type="number"
                 :min="0"
+                oninput="validity.valid||(value='0');"
                 ref="increase-inventory"
                 class="w-10 border-2 border-solid border-gray-400 box-border"
                 v-model="increaseInventoryIn[idx]"
@@ -58,6 +59,7 @@
               <input
                 type="number"
                 min="0"
+                oninput="validity.valid||(value='0');"
                 :max="maxDecrease(idx)"
                 ref="decrease-inventory"
                 class="w-10 border-2 border-solid border-gray-400 box-border"
@@ -97,6 +99,8 @@ export default {
   },
   methods: {
     changeInventory(ingredient, idx) {
+      this.increaseInventoryIn[idx] = (this.increaseInventoryIn[idx] === '' ? '0' : this.increaseInventoryIn[idx]);
+      this.decreaseInventoryIn[idx] = (this.decreaseInventoryIn[idx] === '' ? '0' : this.decreaseInventoryIn[idx]);
       ingredient.inventory = this.actualInventories[idx] + parseFloat(this.increaseInventoryIn[idx]) -
       parseFloat(this.decreaseInventoryIn[idx]);
       this.$emit('updateIngredientInventory', ingredient);
