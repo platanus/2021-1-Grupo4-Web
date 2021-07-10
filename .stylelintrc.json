@@ -41,6 +41,7 @@
     "media-feature-name-no-vendor-prefix": true,
     "at-rule-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
-    "length-zero-no-unit": true
+    "length-zero-no-unit": true,
+    "css.lint.unknownAtRules": "ignore"
   }
 }

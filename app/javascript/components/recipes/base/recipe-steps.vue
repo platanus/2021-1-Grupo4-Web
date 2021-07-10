@@ -10,6 +10,8 @@
       v-if="recipeSteps.length > 0"
     >
       <draggable
+        ghost-class="ghost"
+        drag-class="opacity-0"
         v-model="modifiedRecipeSteps"
         @end="onEnd"
       >
@@ -43,7 +45,7 @@
             </div>
             <textarea
               rows="1"
-              class="flex font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4 w-8/12 overflow-x-scroll bg-gray-50"
+              class="flex font-sans font-normal text-base text-black bg-gray-20 flex-none flex-grow mr-4 w-8/12 overflow-auto h-auto bg-gray-50"
               v-model="step.step.attributes.description"
               v-else
             />
@@ -183,3 +185,11 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.ghost {
+  @apply border-l-8 border-yellow-500 shadow-md opacity-70;
+}
+
+</style>
