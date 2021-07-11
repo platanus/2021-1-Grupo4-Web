@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
 /* eslint-disable consistent-return */
@@ -158,7 +159,9 @@
               v-for="(message, msg_idx) in messages"
               :key="msg_idx"
             >
-              <p>{{ message }}</p>
+              <p>
+                {{ message }}
+              </p>
             </div>
           </div>
           <br>
@@ -173,7 +176,9 @@
               v-for="(message, msg_idx) in messages"
               :key="`toReduce${msg_idx}`"
             >
-              <p>{{ message }}</p>
+              <p>
+                {{ message }}
+              </p>
             </div>
           </div>
         </div>
@@ -199,7 +204,9 @@
             v-for="(message, msg_idx) in messages"
             :key="msg_idx"
           >
-            <p>{{ message }}</p>
+            <p v-html="message">
+              {{ message }}
+            </p>
           </div>
         </div>
       </base-modal>
@@ -226,6 +233,7 @@ export default {
       showingReduceMsg: false,
       showReductionOfInventory: false,
       loading: true,
+      numberToGetDecimals: 100,
     };
   },
   props: {
@@ -250,8 +258,10 @@ export default {
     getMessageofReduction(menuIngredients) {
       const listOfMessages = menuIngredients.map((obj) =>
         obj.ingredients.map((element) =>
-          `Has reducido ${element.quantity} ${element.measure} de ${element.name} y quedaste en ${element.inventory}
-           ${element.measure}`,
+          `Has reducido ${Math.round(element.quantity * this.numberToGetDecimals) / this.numberToGetDecimals}
+          ${element.measure} de <strong>${element.name} </strong> y quedaste en <strong> 
+          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals} </strong>
+          ${element.measure}`,
         ));
 
       return listOfMessages;
@@ -260,9 +270,12 @@ export default {
     getMessageConfirmationElementsWithInventory(menuIngredients) {
       const listOfMessagesWithInventory = menuIngredients.map((obj) =>
         obj.ingredients.map((element) => {
-          const nuevoInventario = element.inventory - element.quantity;
+          // eslint-disable-next-line no-magic-numbers
+          let nuevoInventario = (element.inventory - element.quantity).toFixed(this.numberDecimals);
+          nuevoInventario = Math.round(nuevoInventario * this.numberToGetDecimals) / this.numberToGetDecimals;
           if (nuevoInventario >= 0) {
-            return ` ${element.name}: de ${element.inventory} a ${nuevoInventario}  ${element.measure}`;
+            return ` ${element.name}: de ${Math.round(element.inventory * this.numberToGetDecimals) /
+            this.numberToGetDecimals} a ${nuevoInventario} ${element.measure}`;
           }
 
           return '';
@@ -276,8 +289,9 @@ export default {
         obj.ingredients.map((element) => {
           const nuevoInventario = element.inventory - element.quantity;
           if (nuevoInventario < 0) {
-            return ` ${element.name}: ${element.quantity} ${element.measure} (Tienes ${element.inventory}
-            ${element.measure})`;
+            return `${element.name}: ${Math.round(element.quantity * this.numberToGetDecimals) /
+            this.numberToGetDecimals} ${element.measure} (Tienes ${Math.round(element.inventory *
+            this.numberToGetDecimals) / this.numberToGetDecimals} ${element.measure})`;
           }
 
           return '';
@@ -291,14 +305,14 @@ export default {
     },
 
     async toggleReduce(menuId) {
-      this.showingReduceMsg = !this.showingReduceMsg;
       this.idMenuToReduce = menuId;
       const menuIngredientsResponse = await getShoppingList(menuId);
-      this.menuIngredients = menuIngredientsResponse.data;
+      const menuIngredients = menuIngredientsResponse.data;
       this.listOfMessagesToConfirmWithInventory =
-      this.getMessageConfirmationElementsWithInventory(this.menuIngredients);
+      this.getMessageConfirmationElementsWithInventory(menuIngredients);
       this.listOfMessagesToConfirmWithoutInventory =
-      this.getMessageConfirmationElementsWithoutInventory(this.menuIngredients);
+      this.getMessageConfirmationElementsWithoutInventory(menuIngredients);
+      this.showingReduceMsg = !this.showingReduceMsg;
 
       this.loading = false;
     },

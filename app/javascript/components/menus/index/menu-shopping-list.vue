@@ -101,7 +101,9 @@ export default {
       this.loading = false;
     },
     formatIngredientInfo(ingredient) {
-      return `${ingredient.name}, ${ingredient.quantity} ${ingredient.measure}, $ ${ingredient.totalPrice}`;
+      // eslint-disable-next-line no-magic-numbers
+      return `${ingredient.name}, ${Math.round(ingredient.quantity * 100) / 100}
+      ${ingredient.measure}, $ ${Math.round(ingredient.totalPrice)}`;
     },
     async downloadShoppingList() {
       downloadShoppingList(this.menuId);
