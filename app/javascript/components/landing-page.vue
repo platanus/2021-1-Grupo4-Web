@@ -55,8 +55,8 @@
         <p class="text-2xl text-gray-700 font-normal text-center p-2 mb-8">
           {{ $t('msg.start') }}
         </p>
-        <div class="flex flex-col md:flex-row">
-          <div class="w-48 p-1 mx-auto">
+        <div class="flex flex-col justify-center md:flex-row">
+          <div class="w-48 p-1 mx-auto md:mx-2">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.login'),
@@ -65,7 +65,7 @@
               @click="signIn"
             />
           </div>
-          <div class="w-48 p-1 mx-auto">
+          <div class="w-48 p-1 mx-auto md:mx-2">
             <base-button
               :elements="{
                 placeholder: $t('msg.users.register'),
