@@ -137,12 +137,12 @@ export default {
     addMarketIngredient(productIdx) {
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
-        provider_name: this.productsByMarket[this.market].provider.name, /* eslint-disable-line camelcase */
+        providerName: this.productsByMarket[this.market].provider.name,
         name: productInfo.name,
         sku: null,
         price: productInfo.price,
         currency: 'CLP',
-        ingredientMeasuresAttributes: [ /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [
           { name: productInfo.measure, quantity: productInfo.quantity }],
       };
       this.$emit('submit', productForm);
