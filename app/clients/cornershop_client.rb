@@ -35,7 +35,7 @@ class CornershopClient
 
       {
         price: get_price(product),
-        quantity: 1,
+        quantity: get_quantity(product),
         measure: get_measure(product),
         package: get_package(product),
         name: get_name(product),
@@ -51,7 +51,20 @@ class CornershopClient
   end
 
   def get_measure(product)
-    product['buy_unit']
+    MeasuresService.map_measure(package(product).split(' ').second)
+  end
+
+  def get_quantity(product)
+    quantity = package(product).split(' ').first.to_i
+
+    quantity.zero? ? 1 : quantity
+  end
+
+  def package(product)
+    elements = product['package']&.split(' ')
+    return '1 Unidad' unless elements&.count&.between?(2, 3)
+
+    elements.last(2).join(' ')
   end
 
   def get_package(product)
