@@ -1,6 +1,6 @@
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
-  acts_as_token_authentication_handler_for User, fallback: :exception, only: [:change_password]
   protect_from_forgery with: :null_session
+  acts_as_token_authentication_handler_for User, fallback: :exception, only: [:change_password]
 
   self.responder = ApiResponder
   respond_to :json
