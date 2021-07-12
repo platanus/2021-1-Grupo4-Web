@@ -8,61 +8,29 @@
     </div>
 
     <!-- Alert data copied -->
-    <div
-      v-if="dataCopied"
-      class="mt-4 w-max bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.providers.dataCopied') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert('dataCopied')"
-      >
-        <img
-          svg-inline
-          src="../../../../assets/images/cancel-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <base-alert
+      :variable="dataCopied"
+      :alert-name="'providers.dataCopied'"
+      :success="true"
+      @closeAlert="closeAlert"
+    />
 
     <!-- Alert unexpected error -->
-    <div
-      v-if="unexpectedError"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert('unexpectedError')"
-      >
-        <img
-          svg-inline
-          src="../../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
 
     <!-- Alert provider name error -->
-    <div
-      v-if="providerNameError"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.providers.providerNameError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert('providerNameError')"
-      >
-        <img
-          svg-inline
-          src="../../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <base-alert
+      :variable="providerNameError"
+      :alert-name="'providers.providerNameError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
+
     <!-- info -->
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <!-- searchBar y button -->
@@ -174,10 +142,10 @@ export default {
       if (alert === 'unexpectedError') {
         this.unexpectedError = false;
       }
-      if (alert === 'dataCopied') {
+      if (alert === 'providers.dataCopied') {
         this.dataCopied = false;
       }
-      if (alert === 'providerNameError') {
+      if (alert === 'providers.providerNameError') {
         this.providerNameError = false;
       }
     },
