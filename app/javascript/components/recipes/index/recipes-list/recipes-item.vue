@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-row justify-between items-center p-6 static h-24 bg-white border-2 border-solid border-gray-400 box-border my-2 flex-none flex-grow-0 self-stretch">
+  <div
+    class="flex flex-row justify-between items-center p-6 static h-24 bg-white border-2 border-solid border-gray-400 box-border my-2 flex-none flex-grow-0 self-stretch"
+    @click="goToRecipe"
+  >
     <recipes-item-info
       :recipe-name="recipe.name"
       :recipe-portions="recipe.portions"
@@ -30,6 +33,9 @@ export default {
   methods: {
     ingredientFinalPrice(quantity, price) {
       return (quantity * price);
+    },
+    goToRecipe() {
+      window.location = `/recipes/${this.recipe.id}`;
     },
   },
   computed: {
