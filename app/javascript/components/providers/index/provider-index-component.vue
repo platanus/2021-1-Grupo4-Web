@@ -147,7 +147,7 @@ export default {
       searchQuery: '',
       dataCopied: false,
       unexpectedError: false,
-      providerNameError: true,
+      providerNameError: false,
     };
   },
   components: {
