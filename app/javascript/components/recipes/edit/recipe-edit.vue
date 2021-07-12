@@ -191,15 +191,12 @@ export default {
     },
     async editRecipe() {
       if (this.validations()) {
-        this.loading = true;
         try {
           const updatedRecipe = this.getUpdatedRecipe();
           await updateRecipe(this.recipe.id, updatedRecipe);
           window.location = `/recipes/${this.recipeId}`;
         } catch (error) {
           this.error = true;
-        } finally {
-          this.loading = false;
         }
       }
     },

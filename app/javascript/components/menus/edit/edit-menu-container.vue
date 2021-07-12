@@ -257,15 +257,12 @@ export default {
 
     async editMenu() {
       if (this.validations()) {
-        this.loading = true;
         try {
           const updatedMenu = this.getUpdatedMenu();
           await updateMenu(this.menuId, updatedMenu);
           window.location = '/menus';
         } catch (error) {
           this.error = true;
-        } finally {
-          this.loading = false;
         }
       }
     },
