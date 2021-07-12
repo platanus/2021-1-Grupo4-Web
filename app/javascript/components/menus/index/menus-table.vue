@@ -321,7 +321,6 @@ export default {
       this.getMessageConfirmationElementsWithInventory(menuIngredients);
       this.listOfMessagesToConfirmWithoutInventory =
       this.getMessageConfirmationElementsWithoutInventory(menuIngredients);
-      console.log(this.listOfMessagesToConfirmWithoutInventory);
 
       this.showingReduceMsg = !this.showingReduceMsg;
 
