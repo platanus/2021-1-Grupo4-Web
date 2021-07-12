@@ -101,7 +101,7 @@ export default {
       this.loading = false;
     },
     formatIngredientInfo(ingredient) {
-      return `${ingredient.name}, ${ingredient.quantity} ${ingredient.measure}, $ ${ingredient.totalPrice}`;
+      return `${ingredient.name}, ${ingredient.quantity} ${ingredient.measure}, $ ${this.price(ingredient.totalPrice)}`;
     },
     async downloadShoppingList() {
       downloadShoppingList(this.menuId);
@@ -109,6 +109,9 @@ export default {
     reduceInventory() {
       this.toggleList();
       this.$emit('reduceInventory', this.menuId);
+    },
+    price(price) {
+      return Math.round(price);
     },
   },
 };
