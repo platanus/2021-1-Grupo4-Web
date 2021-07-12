@@ -276,7 +276,6 @@ export default {
     getMessageConfirmationElementsWithInventory(menuIngredients) {
       const listOfMessagesWithInventory = menuIngredients.map((obj) =>
         obj.ingredients.map((element) => {
-          // eslint-disable-next-line no-magic-numbers
           let nuevoInventario = (element.inventory - element.quantity).toFixed(this.numberDecimals);
           nuevoInventario = Math.round(nuevoInventario * this.numberToGetDecimals) / this.numberToGetDecimals;
           if (nuevoInventario >= 0) {
