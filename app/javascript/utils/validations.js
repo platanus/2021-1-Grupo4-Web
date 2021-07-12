@@ -7,7 +7,7 @@ function geqZero(field, initialError) {
 
 function floatNonZero(field, initialError) {
   let error = initialError;
-  if (field && ((typeof (field - 0) === 'number') || !(field > 0))) error = 'floatNonZero';
+  if (field && (!(typeof (field - 0) === 'number') || !(field > 0))) error = 'floatNonZero';
 
   return error;
 }
