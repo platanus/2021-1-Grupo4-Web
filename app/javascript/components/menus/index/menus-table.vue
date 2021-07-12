@@ -165,9 +165,14 @@
             </div>
           </div>
           <br>
-          <p class="text-md font-bold">
-            Ingredientes con falta de inventario
-          </p>
+          <div class="flex">
+            <p class="text-md font-bold">
+              Ingredientes con falta de inventario
+            </p>
+            <p class="px-1">
+              (Si reduces, quedaran en 0)
+            </p>
+          </div>
           <div
             v-for="(messages, index) in listOfMessagesToConfirmWithoutInventory"
             :key="`toReduce${index}`"
@@ -260,8 +265,8 @@ export default {
         obj.ingredients.map((element) =>
           `Has reducido ${Math.round(element.quantity * this.numberToGetDecimals) / this.numberToGetDecimals}
           ${element.measure} de <strong>${element.name} </strong> y quedaste en <strong> 
-          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals} </strong>
-          ${element.measure}`,
+          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals} 
+          ${element.measure} </strong>`,
         ));
 
       return listOfMessages;
