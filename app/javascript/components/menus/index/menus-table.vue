@@ -1,8 +1,3 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable consistent-return */
-/* eslint-disable consistent-return */
 <template>
   <div class="w-full">
     <table class="w-full divide-y divide-gray-200">
@@ -169,9 +164,15 @@
             <p class="text-md font-bold">
               Ingredientes con falta de inventario
             </p>
-            <p class="px-1">
-              (Si reduces, quedaran en 0)
-            </p>
+            <div
+              v-if="anyElementWithoutInventory"
+            >
+              <p
+                class="px-1"
+              >
+                (Si reduces, quedaran en 0)
+              </p>
+            </div>
           </div>
           <div
             v-for="(messages, index) in listOfMessagesToConfirmWithoutInventory"
@@ -253,7 +254,7 @@ export default {
         this.error = error;
       }
       const menuIngredientsResponse = await getShoppingList(this.idMenuToReduce);
-      this.menuIngredients = menuIngredientsResponse.data; // Quizas estas lineas sobran. REV
+      this.menuIngredients = menuIngredientsResponse.data;
       this.toggleMessageReduction();
     },
     toggleMessageReduction() {
@@ -290,10 +291,13 @@ export default {
       return listOfMessagesWithInventory;
     },
     getMessageConfirmationElementsWithoutInventory(menuIngredients) {
+      this.anyElementWithoutInventory = false;
       const listOfMessagesWithoutInventory = menuIngredients.map((obj) =>
         obj.ingredients.map((element) => {
           const nuevoInventario = element.inventory - element.quantity;
           if (nuevoInventario < 0) {
+            this.anyElementWithoutInventory = true;
+
             return `${element.name}: ${Math.round(element.quantity * this.numberToGetDecimals) /
             this.numberToGetDecimals} ${element.measure} (Tienes ${Math.round(element.inventory *
             this.numberToGetDecimals) / this.numberToGetDecimals} ${element.measure})`;
@@ -317,6 +321,8 @@ export default {
       this.getMessageConfirmationElementsWithInventory(menuIngredients);
       this.listOfMessagesToConfirmWithoutInventory =
       this.getMessageConfirmationElementsWithoutInventory(menuIngredients);
+      console.log(this.listOfMessagesToConfirmWithoutInventory);
+
       this.showingReduceMsg = !this.showingReduceMsg;
 
       this.loading = false;
