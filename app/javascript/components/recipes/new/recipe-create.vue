@@ -20,24 +20,13 @@
       </span>
     </div>
 
-    <!-- Alert -->
-    <div
-      v-if="error"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert"
-      >
-        <img
-          svg-inline
-          src="../../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <!-- Alert unexpected error -->
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
 
     <div
       v-if="!loading"
@@ -59,12 +48,9 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.name"
             >
-            <p
-              v-if="errors.name"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.name}`) }}
-            </p>
+            <base-error-paragraph
+              :msg-error="errors.name"
+            />
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -74,12 +60,9 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.portions"
             >
-            <p
-              v-if="errors.portions"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.portions}`) }}
-            </p>
+            <base-error-paragraph
+              :msg-error="errors.portions"
+            />
           </div>
           <div class="relative w-1/4">
             <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
@@ -89,12 +72,9 @@
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.cookMinutes"
             >
-            <p
-              v-if="errors.cookMinutes"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.cookMinutes}`) }}
-            </p>
+            <base-error-paragraph
+              :msg-error="errors.cookMinutes"
+            />
           </div>
         </div>
       </div>
@@ -146,7 +126,7 @@
 
 <script>
 import { postRecipe } from '../../../api/recipes.js';
-import { geqZero, intGeqZero, requiredField } from '../../../utils/validations.js';
+import { geqZero, intNonZero, requiredField } from '../../../utils/validations.js';
 import recipeIngredients from '../base/recipe-ingredients.vue';
 import recipeSteps from '../base/recipe-steps.vue';
 
@@ -158,8 +138,7 @@ export default {
   data() {
     return {
       loading: false,
-      status: '',
-      error: false,
+      unexpectedError: false,
       recipe: {
         id: null,
         name: '',
@@ -175,7 +154,7 @@ export default {
   },
   methods: {
     closeAlert() {
-      this.error = false;
+      this.unexpectedError = false;
     },
     cancelCreate() {
       window.location = '/recipes';
@@ -189,7 +168,7 @@ export default {
           await postRecipe(recipeToCreate);
           window.location = '/recipes';
         } catch (error) {
-          this.error = true;
+          this.unexpectedError = true;
         } finally {
           this.loading = false;
         }
@@ -307,7 +286,7 @@ export default {
     validations() {
       this.errors = { name: '', portions: '', cookMinutes: '' };
 
-      this.errors.portions = intGeqZero(this.recipe.portions, this.errors.portions);
+      this.errors.portions = intNonZero(this.recipe.portions, this.errors.portions);
       this.errors.cookMinutes = geqZero(this.recipe.cookMinutes, this.errors.cookMinutes);
       this.errors.name = requiredField(this.recipe.name, this.errors.name);
       this.errors.portions = requiredField(this.recipe.portions, this.errors.portions);
