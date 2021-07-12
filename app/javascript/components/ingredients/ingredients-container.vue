@@ -173,6 +173,7 @@
 import Vue from 'vue';
 import { getIngredients, postIngredient, deleteIngredient,
   editIngredient, getCriticalAssociations } from './../../api/ingredients.js';
+import { floatNonZero, intGeqZero, geqZero, requiredField } from '../../utils/validations.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
@@ -396,39 +397,19 @@ export default {
       };
     },
 
-    // eslint-disable-next-line max-statements,complexity
+    // eslint-disable-next-line max-statements
     validations(form) {
       this.cleanErrors();
 
       const quantity = form.ingredientMeasuresAttributes[0].quantity;
 
-      if (!(typeof (quantity - 0) === 'number') || !(quantity > 0)) {
-        this.errors.quantity = 'floatNonZero';
-      }
-
-      if (!(Number.isInteger(form.price - 0)) || !(form.price >= 0)) {
-        this.errors.price = 'intGeqZero';
-      }
-
-      if (form.minimumQuantity && !(form.minimumQuantity >= 0)) {
-        this.errors.minimumQuantity = 'geqZero';
-      }
-
-      if (!form.name) {
-        this.errors.name = 'requiredField';
-      }
-
-      if (!form.ingredientMeasuresAttributes[0].quantity) {
-        this.errors.quantity = 'requiredField';
-      }
-
-      if (!form.ingredientMeasuresAttributes[0].name) {
-        this.errors.measure = 'requiredField';
-      }
-
-      if (!form.price) {
-        this.errors.price = 'requiredField';
-      }
+      this.errors.quantity = floatNonZero(quantity, this.errors.quantity);
+      this.errors.price = intGeqZero(form.price, this.errors.price);
+      this.errors.minimumQuantity = geqZero(form.minimumQuantity, this.errors.minimumQuantity);
+      this.errors.name = requiredField(form.name, this.errors.name);
+      this.errors.quantity = requiredField(quantity, this.errors.quantity);
+      this.errors.measure = requiredField(form.ingredientMeasuresAttributes[0].name, this.errors.measure);
+      this.errors.price = requiredField(form.price, this.errors.price);
 
       const validForm = !(Object.values(this.errors).some(value => !!value));
 
