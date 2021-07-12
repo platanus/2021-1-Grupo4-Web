@@ -4,6 +4,14 @@ function geqZero(field, initialError) {
 
   return error;
 }
+
+function floatNonZero(field, initialError) {
+  let error = initialError;
+  if (field && ((typeof (field - 0) === 'number') || !(field > 0))) error = 'floatNonZero';
+
+  return error;
+}
+
 function intGeqZero(field, initialError) {
   let error = initialError;
   if (field && (!(Number.isInteger(field - 0)) || !(field >= 0))) error = 'intGeqZero';
@@ -37,4 +45,4 @@ function validEmail(field, initialError) {
   return error;
 }
 
-export { geqZero, intGeqZero, intNonZero, requiredField, validEmail };
+export { geqZero, floatNonZero, intGeqZero, intNonZero, requiredField, validEmail };

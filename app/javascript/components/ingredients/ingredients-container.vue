@@ -13,24 +13,13 @@
       </span>
     </div>
 
-    <!-- Alert -->
-    <div
-      v-if="unexpectedError"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert"
-      >
-        <img
-          svg-inline
-          src="../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <!-- Alert unexpected error -->
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 my-10">
       <!--SearchBar y Button-->
@@ -340,9 +329,6 @@ export default {
     // eslint-disable-next-line max-statements
     async editIngredient() {
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
-      if (this.checkErrorsEditIngredient(ingredientsInfo)) {
-        return;
-      }
       if (this.validations(this.$refs.editIngredientInfo.form)) {
         try {
           this.showingEdit = !this.showingEdit;
@@ -360,27 +346,7 @@ export default {
         }
       }
     },
-    checkErrorsEditIngredient(info) {
-      if (!info.name || !info.ingredientMeasuresAttributes[0].quantity ||
-      !info.ingredientMeasuresAttributes[0].name) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjAlert'));
 
-        return true;
-      } else if (info.ingredientMeasuresAttributes[0].quantity < 1) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjMinQuantity'));
-
-        return true;
-      } else if (info.minimumQuantity < 0) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjNegativeQuantity'));
-
-        return true;
-      }
-
-      return false;
-    },
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
         .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
