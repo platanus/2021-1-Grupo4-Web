@@ -134,13 +134,66 @@
       </tbody>
       <base-modal
         @ok="reduceInventory"
-        @cancel="toggleReduce"
+        @cancel="toggleCloseReduceModal"
         v-if="showingReduceMsg"
         :title="$t('msg.menus.reduceInventory')"
         :ok-button-label="$t('msg.menus.yesReduce')"
         :cancel-button-label="$t('msg.cancel')"
       >
-        <p>{{ $t('msg.menus.reduceMsg') }}</p>
+        <div
+          v-if="!loading"
+        >
+          <p class="text-md font-bold">
+            Ingredientes a reducir inventario
+          </p>
+          <div
+            v-for="(messages, idx) in listOfMessagesToConfirmWithInventory"
+            :key="idx"
+          >
+            <div
+              v-for="(message, msg_idx) in messages"
+              :key="msg_idx"
+            >
+              <p>
+                {{ message }}
+              </p>
+            </div>
+          </div>
+          <br>
+          <div class="flex">
+            <p class="text-md font-bold">
+              Ingredientes con falta de inventario
+            </p>
+            <div
+              v-if="anyElementWithoutInventory"
+            >
+              <p
+                class="px-1"
+              >
+                (Si reduces, quedaran en 0)
+              </p>
+            </div>
+          </div>
+          <div
+            v-for="(messages, index) in listOfMessagesToConfirmWithoutInventory"
+            :key="`toReduce${index}`"
+          >
+            <div
+              v-for="(message, msg_idx) in messages"
+              :key="`toReduce${msg_idx}`"
+            >
+              <p>
+                {{ message }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <span
+          v-else
+          class="flex justify-center m-auto w-8 h-8"
+        >
+          <base-spinner />
+        </span>
       </base-modal>
       <base-modal
         @cancel="toggleMessageReduction"
@@ -157,7 +210,9 @@
             v-for="(message, msg_idx) in messages"
             :key="msg_idx"
           >
-            <p>{{ message }}</p>
+            <p v-html="message">
+              {{ message }}
+            </p>
           </div>
         </div>
       </base-modal>
@@ -183,6 +238,8 @@ export default {
       error: '',
       showingReduceMsg: false,
       showReductionOfInventory: false,
+      loading: true,
+      numberToGetDecimals: 100,
     };
   },
   props: {
@@ -207,15 +264,66 @@ export default {
     getMessageofReduction(menuIngredients) {
       const listOfMessages = menuIngredients.map((obj) =>
         obj.ingredients.map((element) =>
-          `Has reducido ${element.quantity} ${element.measure} de ${element.name} y quedaste en ${element.inventory}
-           ${element.measure}`,
+          `Has reducido ${Math.round(element.quantity * this.numberToGetDecimals) / this.numberToGetDecimals}
+          ${element.measure} de <strong>${element.name} </strong> y quedaste en <strong> 
+          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals} 
+          ${element.measure} </strong>`,
         ));
 
       return listOfMessages;
     },
-    toggleReduce(menuId) {
+
+    getMessageConfirmationElementsWithInventory(menuIngredients) {
+      const listOfMessagesWithInventory = menuIngredients.map((obj) =>
+        obj.ingredients.map((element) => {
+          let nuevoInventario = (element.inventory - element.quantity).toFixed(this.numberDecimals);
+          nuevoInventario = Math.round(nuevoInventario * this.numberToGetDecimals) / this.numberToGetDecimals;
+          if (nuevoInventario >= 0) {
+            return ` ${element.name}: de ${Math.round(element.inventory * this.numberToGetDecimals) /
+            this.numberToGetDecimals} a ${nuevoInventario} ${element.measure}`;
+          }
+
+          return '';
+        },
+        ));
+
+      return listOfMessagesWithInventory;
+    },
+    getMessageConfirmationElementsWithoutInventory(menuIngredients) {
+      this.anyElementWithoutInventory = false;
+      const listOfMessagesWithoutInventory = menuIngredients.map((obj) =>
+        obj.ingredients.map((element) => {
+          const nuevoInventario = element.inventory - element.quantity;
+          if (nuevoInventario < 0) {
+            this.anyElementWithoutInventory = true;
+
+            return `${element.name}: ${Math.round(element.quantity * this.numberToGetDecimals) /
+            this.numberToGetDecimals} ${element.measure} (Tienes ${Math.round(element.inventory *
+            this.numberToGetDecimals) / this.numberToGetDecimals} ${element.measure})`;
+          }
+
+          return '';
+        },
+        ));
+
+      return listOfMessagesWithoutInventory;
+    },
+    toggleCloseReduceModal() {
       this.showingReduceMsg = !this.showingReduceMsg;
+    },
+
+    async toggleReduce(menuId) {
       this.idMenuToReduce = menuId;
+      const menuIngredientsResponse = await getShoppingList(menuId);
+      const menuIngredients = menuIngredientsResponse.data;
+      this.listOfMessagesToConfirmWithInventory =
+      this.getMessageConfirmationElementsWithInventory(menuIngredients);
+      this.listOfMessagesToConfirmWithoutInventory =
+      this.getMessageConfirmationElementsWithoutInventory(menuIngredients);
+
+      this.showingReduceMsg = !this.showingReduceMsg;
+
+      this.loading = false;
     },
     editMenu(element) {
       window.location = `/menus/${element.id}/edit`;

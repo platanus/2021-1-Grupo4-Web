@@ -62,29 +62,29 @@
         <base-spinner />
       </div>
       <div
-        class="flex justify-between my-1 p-2 px-4 w-96 text-lg font-medium"
+        class="flex justify-between my-1 p-2 px-4 w-auto text-lg font-medium"
         v-if="!this.alertLoading"
       >
         {{ $t('msg.ingredients.alertIngredients') }}:
       </div>
       <div
-        class="flex justify-between my-1 p-2 px-4 bg-gray-100 w-96"
+        class="flex justify-between my-1 p-2 px-4 bg-gray-100 w-auto"
         v-if="alertIngredients.length == 0 && !this.alertLoading"
       >
         {{ $t('msg.ingredients.noAlert') }}
       </div>
       <div
-        class="flex justify-between my-1 p-2 px-4 bg-red-100 w-96"
+        class="flex justify-between my-1 p-2 px-4 bg-red-100 w-auto"
         v-for="ingredient in alertIngredients"
         :key="ingredient.id"
       >
         <div>
           {{ ingredient.name }}
         </div>
-        <div class="flex">
-          <div class="text-red-600">
-            {{ ingredient.inventory }}
-          </div>/{{ ingredient.minimumQuantity }} {{ ingredient.measure }}
+        <div class="flex px-3">
+          <div class="text-red-600 px-1">
+            {{ ingredient.inventory }} {{ ingredient.measure }}
+          </div>(Mínimo {{ ingredient.minimumQuantity }} {{ ingredient.measure }})
         </div>
       </div>
     </base-modal>

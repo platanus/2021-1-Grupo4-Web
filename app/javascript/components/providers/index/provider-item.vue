@@ -48,11 +48,24 @@
         class="flex items-center w-6 h-6 self-stretch justify-self-end"
         @click="toggleOpenModal"
       >
-        <img
-          svg-inline
-          src="../../../../assets/images/chevron-down-svg.svg"
-          class="w-6 h-6"
+        <div
+          v-if="showingDetails"
         >
+          <img
+            svg-inline
+            src="../../../../assets/images/chevron-up-svg.svg"
+            class="w-6 h-6 cursor-pointer"
+          >
+        </div>
+        <div
+          v-else
+        >
+          <img
+            svg-inline
+            src="../../../../assets/images/chevron-down-svg.svg"
+            class="w-6 h-6 cursor-pointer"
+          >
+        </div>
       </div>
     </div>
     <div
@@ -154,7 +167,7 @@
       <div class="flex flex-row items-start order-2 self-stretch w-80 justify-between mx-2">
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center border-2 border-red-600 hover:bg-gray-300 text-red-600 rounded order-1 flex-grow-1 px-2"
             @click="toggleDelModal"
           >
             {{ $t('msg.providers.delete') }}
@@ -162,7 +175,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-white hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-white border-2 border-black hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             {{ $t('msg.providers.edit') }}

@@ -44,7 +44,7 @@
       </div>
       <!-- proovedores -->
       <div
-        class="flex w-full flex-wrap justify-between bg-gray-50"
+        class="flex w-full flex-wrap justify-between bg-gray-50 px-20"
       >
         <p
           v-if="this.providers.length===0 && !loading"

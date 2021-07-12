@@ -251,7 +251,7 @@ export default {
         Litro: { Mililitro: 0.001 },
         Mililitro: { Litro: 1000 },
         Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
-        Cucharada: { Cucharadita: 0.333, Taza: 16 },
+        Cucharada: { Cucharadita: 0.333333333, Taza: 16 },
         Cucharadita: { Taza: 48, Cucharada: 3 },
       },
       showingMeasureModal: false,
