@@ -154,7 +154,6 @@ export default {
     try {
       const response = await getRecipe(this.recipeId);
       this.recipe = { id: response.data.data.id, ...response.data.data.attributes };
-      this.status = status;
     } catch (error) {
       this.unexpectedError = true;
     } finally {
@@ -290,7 +289,6 @@ export default {
       }
     },
 
-    // eslint-disable-next-line max-statements,complexity
     validations() {
       this.errors = { name: '', portions: '', cookMinutes: '' };
 
@@ -299,9 +297,8 @@ export default {
       this.errors.name = requiredField(this.recipe.name, this.errors.name);
       this.errors.portions = requiredField(this.recipe.portions, this.errors.portions);
       this.errors.cookMinutes = requiredField(this.recipe.cookMinutes, this.errors.cookMinutes);
-      const validForm = !(Object.values(this.errors).some(value => !!value));
 
-      return validForm;
+      return !(Object.values(this.errors).some(value => !!value));
     },
 
   },

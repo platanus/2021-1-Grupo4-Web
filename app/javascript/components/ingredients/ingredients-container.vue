@@ -397,7 +397,6 @@ export default {
       };
     },
 
-    // eslint-disable-next-line max-statements
     validations(form) {
       this.cleanErrors();
 
@@ -411,9 +410,7 @@ export default {
       this.errors.measure = requiredField(form.ingredientMeasuresAttributes[0].name, this.errors.measure);
       this.errors.price = requiredField(form.price, this.errors.price);
 
-      const validForm = !(Object.values(this.errors).some(value => !!value));
-
-      return validForm;
+      return !(Object.values(this.errors).some(value => !!value));
     },
   },
 };

@@ -82,6 +82,7 @@
       <filter-popup-content
         ref="filtersInfo"
         :actualfilters="filters"
+        :errors="filterErrors"
       />
     </base-modal>
   </div>
@@ -90,6 +91,7 @@
 <script>
 
 import { getRecipes } from '../../../api/recipes.js';
+import { intGeqZero } from '../../../utils/validations.js';
 import Filters from './filters';
 import FilterPopupContent from './filter-popup-content';
 import RecipesPagination from './pagination/recipes-pagination';
@@ -114,6 +116,7 @@ export default {
       filterOptions: ['price', 'portions'],
       error: '',
       showingFiltersModal: false,
+      filterErrors: { priceMin: '', priceMax: '', portionsMin: '', portionsMax: '' },
     };
   },
   async created() {
@@ -209,8 +212,20 @@ export default {
       this.filters.portions.max = '';
     },
     updateFilters() {
-      this.showingFiltersModal = !this.showingFiltersModal;
-      this.filters = this.$refs.filtersInfo.filters;
+      if (this.filterValidations()) {
+        this.showingFiltersModal = !this.showingFiltersModal;
+        this.filters = this.$refs.filtersInfo.filters;
+      }
+    },
+    filterValidations() {
+      this.filterErrors = { priceMin: '', priceMax: '', portionsMin: '', portionsMax: '' };
+      const form = this.$refs.filtersInfo.filters;
+      this.filterErrors.priceMin = intGeqZero(form.price.min, this.filterErrors.priceMin);
+      this.filterErrors.priceMax = intGeqZero(form.price.max, this.filterErrors.priceMax);
+      this.filterErrors.portionsMin = intGeqZero(form.portions.min, this.filterErrors.portionsMin);
+      this.filterErrors.portionsMax = intGeqZero(form.portions.max, this.filterErrors.portionsMax);
+
+      return !(Object.values(this.filterErrors).some(value => !!value));
     },
   },
 };

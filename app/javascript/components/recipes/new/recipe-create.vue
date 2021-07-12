@@ -282,7 +282,6 @@ export default {
       }
     },
 
-    // eslint-disable-next-line max-statements,complexity
     validations() {
       this.errors = { name: '', portions: '', cookMinutes: '' };
 
@@ -292,9 +291,7 @@ export default {
       this.errors.portions = requiredField(this.recipe.portions, this.errors.portions);
       this.errors.cookMinutes = requiredField(this.recipe.cookMinutes, this.errors.cookMinutes);
 
-      const validForm = !(Object.values(this.errors).some(value => !!value));
-
-      return validForm;
+      return !(Object.values(this.errors).some(value => !!value));
     },
   },
 };

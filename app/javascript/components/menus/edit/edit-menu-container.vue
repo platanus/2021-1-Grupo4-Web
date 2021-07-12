@@ -342,16 +342,14 @@ export default {
       });
     },
 
-    // eslint-disable-next-line max-statements,complexity
     validations() {
       this.errors = { name: '', portions: '' };
 
       this.errors.portions = intNonZero(this.menuPortions, this.errors.portions);
       this.errors.name = requiredField(this.menuName, this.errors.name);
       this.errors.portions = requiredField(this.menuPortions, this.errors.portions);
-      const validForm = !(Object.values(this.errors).some(value => !!value));
 
-      return validForm;
+      return !(Object.values(this.errors).some(value => !!value));
     },
   },
 };
