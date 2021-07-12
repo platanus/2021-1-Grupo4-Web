@@ -108,7 +108,7 @@
                   >
                 </div>
                 <div class="flex">
-                  Restar Inventario
+                  {{ $t('msg.menus.reduceInventory') }}
                 </div>
               </div>
             </div>

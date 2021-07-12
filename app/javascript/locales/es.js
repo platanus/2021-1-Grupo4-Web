@@ -166,7 +166,7 @@ export default {
       shoppingList: 'Lista de compras',
       closeShoppingList: 'Cerrar',
       actions: 'Acciones',
-      reduceInventory: 'Reducir Inventario',
+      reduceInventory: 'Reducir inventario',
       reduceMsg: '¿Estás seguro que quieres reducir el inventario?',
       yesReduce: 'Reducir',
       menuRecipes: 'Este menú tiene la(s) siguiente(s) receta(s):',

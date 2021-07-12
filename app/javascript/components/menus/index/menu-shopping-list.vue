@@ -12,7 +12,7 @@
         >
       </div>
       <div class="flex">
-        Lista de Compras
+        {{ $t('msg.menus.shoppingList') }}
       </div>
     </div>
     <base-modal
