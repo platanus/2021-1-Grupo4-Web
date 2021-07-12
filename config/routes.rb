@@ -55,7 +55,9 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount Sidekiq::Web => '/queue'
 
-  resources :ingredients, only: [:index, :show]
+  resources :ingredients, only: [:index] do
+    collection { get '/update-inventories', to: 'ingredients#update_inventories' }
+  end
   resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :show, :new, :edit]
   resources :providers, only: [:index, :new]
