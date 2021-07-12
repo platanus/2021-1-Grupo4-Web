@@ -1,7 +1,7 @@
 <template>
   <p
-    v-if="errors.name"
-    class="mt-2 ml-1 text-xs text-red-400"
+    v-if="msgError"
+    class="my-2 ml-1 text-xs text-red-400"
   >
     {{ $t(`msg.${msgError}`) }}
   </p>
@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    msgError: { type: String, required: true },
+    msgError: { type: String, default: '' },
   },
 };
 </script>

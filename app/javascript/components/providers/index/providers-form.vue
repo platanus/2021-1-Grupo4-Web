@@ -26,12 +26,9 @@
                 :placeholder="$t('msg.providers.name')"
                 v-model="form.name"
               >
-              <p
-                v-if="errors.name"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.name}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.name"
+              />
             </div>
           </div>
           <div class="flex flex-wrap -mx-3 mb-3">
@@ -50,12 +47,9 @@
                 :placeholder="$t('msg.providers.email')"
                 v-model="form.email"
               >
-              <p
-                v-if="errors.email"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.email}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.email"
+              />
               <!--Phone -->
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -72,12 +66,9 @@
                 :placeholder="'+569'"
                 v-model="form.phone"
               >
-              <p
-                v-if="errors.phone"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.phone}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.phone"
+              />
             </div>
           </div>
 
@@ -97,15 +88,12 @@
                 :placeholder="$t('msg.providers.webpageUrl')"
                 v-model="form.webpageUrl"
               >
-              <p
-                v-if="errors.webpageUrl"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.webpageUrl}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.webpageUrl"
+              />
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <!--DeliberyDays -->
+              <!--DeliveryDays -->
               <label
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="provider-deliveryDays"
@@ -119,12 +107,9 @@
                 :placeholder="$t('msg.providers.deliveryDays')"
                 v-model="form.deliveryDays"
               >
-              <p
-                v-if="errors.deliveryDays"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.deliveryDays}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.deliveryDays"
+              />
             </div>
           </div>
           <div class="flex flex-wrap -mx-3 mb-6">
@@ -143,12 +128,9 @@
                 :placeholder="$t('msg.providers.minimumPurchase')"
                 v-model="form.minimumPurchase"
               >
-              <p
-                v-if="errors.minimumPurchase"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.minimumPurchase}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.minimumPurchase"
+              />
             </div>
           </div>
           <!-- Datos bancarios -->
@@ -168,12 +150,9 @@
                 :placeholder="$t('msg.providers.bankAccount.name')"
                 v-model="form.contactName"
               >
-              <p
-                v-if="errors.contactName"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.contactName}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.contactName"
+              />
               <!-- account rut -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -182,12 +161,9 @@
                 :placeholder="$t('msg.providers.bankAccount.rut')"
                 v-model="form.contactRut"
               >
-              <p
-                v-if="errors.contactRut"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.contactRut}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.contactRut"
+              />
               <!-- bank name -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -196,12 +172,9 @@
                 :placeholder="$t('msg.providers.bankAccount.bank')"
                 v-model="form.bankName"
               >
-              <p
-                v-if="errors.bankName"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.bankName}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.bankName"
+              />
               <!-- account type -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -210,12 +183,9 @@
                 :placeholder="$t('msg.providers.bankAccount.type')"
                 v-model="form.accountType"
               >
-              <p
-                v-if="errors.accountType"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.accountType}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.accountType"
+              />
               <!-- account number -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -224,12 +194,9 @@
                 :placeholder="$t('msg.providers.bankAccount.number')"
                 v-model="form.accountNumber"
               >
-              <p
-                v-if="errors.accountNumber"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.accountNumber}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.accountNumber"
+              />
             </div>
           </div>
         </form>
@@ -261,12 +228,9 @@
                 :placeholder="$t('msg.providers.name')"
                 v-model="form.name"
               >
-              <p
-                v-if="errors.name"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.name}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.name"
+              />
             </div>
           </div>
 
@@ -286,12 +250,9 @@
                 :placeholder="$t('msg.providers.email')"
                 v-model="form.email"
               >
-              <p
-                v-if="errors.email"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.email}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.email"
+              />
               <!--Phone -->
             </div>
             <div class="relative">
@@ -308,12 +269,9 @@
                 :placeholder="'+569'"
                 v-model="form.phone"
               >
-              <p
-                v-if="errors.phone"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.phone}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.phone"
+              />
             </div>
           </div>
           <div class="flex flex-wrap -mx-3 mb-6">
@@ -332,12 +290,9 @@
                 :placeholder="$t('msg.providers.webpageUrl')"
                 v-model="form.webpageUrl"
               >
-              <p
-                v-if="errors.webpageUrl"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.webpageUrl}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.webpageUrl"
+              />
             </div>
             <div class="relative">
               <!--DeliveryDays -->
@@ -354,12 +309,9 @@
                 :placeholder="$t('msg.providers.deliveryDays')"
                 v-model="form.deliveryDays"
               >
-              <p
-                v-if="errors.deliveryDays"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.deliveryDays}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.deliveryDays"
+              />
             </div>
           </div>
           <div class="flex flex-wrap -mx-3 mb-6">
@@ -378,12 +330,9 @@
                 :placeholder="$t('msg.providers.minimumPurchase')"
                 v-model="form.minimumPurchase"
               >
-              <p
-                v-if="errors.minimumPurchase"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.minimumPurchase}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.minimumPurchase"
+              />
             </div>
           </div>
           <!-- Datos bancarios -->
@@ -403,12 +352,9 @@
                 :placeholder="$t('msg.providers.bankAccount.name')"
                 v-model="form.contactName"
               >
-              <p
-                v-if="errors.contactName"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.contactName}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.contactName"
+              />
               <!-- account rut -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -417,12 +363,9 @@
                 :placeholder="$t('msg.providers.bankAccount.rut')"
                 v-model="form.contactRut"
               >
-              <p
-                v-if="errors.contactRut"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.contactRut}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.contactRut"
+              />
               <!-- bank name -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -431,12 +374,9 @@
                 :placeholder="$t('msg.providers.bankAccount.bank')"
                 v-model="form.bankName"
               >
-              <p
-                v-if="errors.bankName"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.bankName}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.bankName"
+              />
               <!-- account type -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -445,12 +385,9 @@
                 :placeholder="$t('msg.providers.bankAccount.type')"
                 v-model="form.accountType"
               >
-              <p
-                v-if="errors.accountType"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.accountType}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.accountType"
+              />
               <!-- account number -->
               <input
                 class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
@@ -459,12 +396,9 @@
                 :placeholder="$t('msg.providers.bankAccount.number')"
                 v-model="form.accountNumber"
               >
-              <p
-                v-if="errors.accountNumber"
-                class="mt-2 ml-1 text-xs text-red-400"
-              >
-                {{ $t(`msg.${errors.accountNumber}`) }}
-              </p>
+              <base-error-paragraph
+                :msg-error="errors.accountNumber"
+              />
             </div>
           </div>
         </form>
@@ -474,8 +408,10 @@
 </template>
 
 <script>
+import { geqZero, intGeqZero, requiredField, validEmail } from '../../../utils/validations.js';
 
 export default {
+
   props: {
     provider: { type: Object, default() {
       return {};
@@ -558,7 +494,7 @@ export default {
       }
     },
 
-    // eslint-disable-next-line max-statements,complexity
+    // eslint-disable-next-line max-statements
     validations() {
       this.errors = {
         name: '',
@@ -574,27 +510,10 @@ export default {
         accountNumber: '',
       };
 
-      const minPurchaseCond = !(Number.isInteger(this.form.minimumPurchase - 0)) || !(this.form.minimumPurchase >= 0);
-      if (this.form.minimumPurchase && minPurchaseCond) {
-        this.errors.minimumPurchase = 'intGeqZero';
-      }
-
-      if (this.form.deliveryDays && !(this.form.deliveryDays >= 0)) {
-        this.errors.deliveryDays = 'geqZero';
-      }
-
-      const regexEmail = new RegExp(`${
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+/.source
-      }${/(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@/.source
-      }${/(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+/.source
-      }${/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.source}`);
-      if (this.form.email && !regexEmail.test(this.form.email)) {
-        this.errors.email = 'invalidEmail';
-      }
-
-      if (!this.form.name) {
-        this.errors.name = 'requiredField';
-      }
+      this.errors.minimumPurchase = intGeqZero(this.form.minimumPurchase, this.errors.minimumPurchase);
+      this.errors.deliveryDays = geqZero(this.form.deliveryDays, this.errors.deliveryDays);
+      this.errors.email = validEmail(this.form.email, this.errors.email);
+      this.errors.name = requiredField(this.form.name, this.errors.name);
 
       const bankData = [
         this.form.contactName,
@@ -604,24 +523,12 @@ export default {
         this.form.accountNumber,
       ];
       if (bankData.some(data => !!data)) {
-        if (!this.form.contactName) {
-          this.errors.contactName = 'requiredField';
-        }
-        if (!this.form.contactRut) {
-          this.errors.contactRut = 'requiredField';
-        }
-        if (!this.form.bankName) {
-          this.errors.bankName = 'requiredField';
-        }
-        if (!this.form.accountType) {
-          this.errors.accountType = 'requiredField';
-        }
-        if (!this.form.accountNumber) {
-          this.errors.accountNumber = 'requiredField';
-        }
-        if (!this.form.email) {
-          this.errors.email = 'requiredField';
-        }
+        this.errors.contactName = requiredField(this.form.contactName, this.errors.contactName);
+        this.errors.contactRut = requiredField(this.form.contactRut, this.errors.contactRut);
+        this.errors.bankName = requiredField(this.form.bankName, this.errors.bankName);
+        this.errors.accountType = requiredField(this.form.accountType, this.errors.accountType);
+        this.errors.accountNumber = requiredField(this.form.accountNumber, this.errors.accountNumber);
+        this.errors.email = requiredField(this.form.email, this.errors.email);
       }
 
       const validForm = !(Object.values(this.errors).some(value => !!value));
