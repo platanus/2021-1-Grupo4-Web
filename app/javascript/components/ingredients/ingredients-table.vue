@@ -34,7 +34,7 @@
       </thead>
       <tbody class="bg-gray-200">
         <tr
-          v-for="(ingredient, idx) in ingredients"
+          v-for="(ingredient, idx) in pageIngredients"
           :key="ingredient.id"
           class="bg-white border-2 border-gray-200 text-left font-normal"
         >
@@ -131,6 +131,13 @@
         </tr>
       </tbody>
     </table>
+    <base-pagination
+      :current-page="currentPage"
+      :final-page="finalPage"
+      @next="nextPage"
+      @prev="prevPage"
+      @change-page="changePage"
+    />
   </div>
 </template>
 
@@ -143,14 +150,26 @@ export default {
   },
   props: {
     ingredients: { type: Array, required: true },
+    pageSize: { type: Number, required: true },
+    filter: { type: String, required: true },
   },
 
   data() {
     return {
       originalIngredients: [...this.ingredients].map(element => JSON.parse(JSON.stringify(element))),
+      currentPage: 1,
     };
   },
-
+  computed: {
+    pageIngredients() {
+      return this.ingredients.slice(
+        (this.currentPage - 1) * this.pageSize, Math.min(
+          this.ingredients.length, this.currentPage * this.pageSize));
+    },
+    finalPage() {
+      return Math.ceil(this.ingredients.length / this.pageSize);
+    },
+  },
   methods: {
     editIngredient(element) {
       this.$emit('edit', element);
@@ -176,6 +195,26 @@ export default {
       const finalRowsCount = 2;
 
       return idx >= this.ingredients.length - finalRowsCount;
+    },
+    nextPage() {
+      this.currentPage += 1;
+    },
+    prevPage() {
+      this.currentPage -= 1;
+    },
+    changePage(index) {
+      this.currentPage = index;
+    },
+  },
+  watch: {
+    ingredients() {
+      this.finalPage();
+      if (this.currentPage > this.finalPage) {
+        this.currentPage = this.finalPage;
+      }
+    },
+    filter() {
+      this.currentPage = 1;
     },
   },
 };

@@ -89,7 +89,9 @@
           class="flex 2xl:justify-center items-center"
         >
           <ingredients-table
-            :ingredients="filteredIngredients"
+            :ingredients="filterIngredients"
+            :page-size="2"
+            :filter="searchQuery"
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
