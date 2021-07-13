@@ -14,7 +14,7 @@
     <div class="flex w-full">
       <div class="flex flex-col justify-center items-center w-full">
         <a
-          class=" flex justify-center items-center cursor-pointer h-12 underline text-xl focus:outline-none"
+          class=" flex justify-center items-center cursor-pointer h-12 text-xl focus:outline-none mt-1"
           :href="`/recipes/${recipe.id}/edit`"
         >
           <span>
@@ -27,7 +27,7 @@
           {{ $t('msg.recipes.edit') }}
         </a>
         <button
-          class="flex justify-center cursor-pointer h-12 underline text-xl text-red-600 focus:outline-none"
+          class="flex justify-center items-center cursor-pointer h-12 text-xl text-red-600 focus:outline-none mb-1"
           @click="toggleDelModal"
         >
           <span>
