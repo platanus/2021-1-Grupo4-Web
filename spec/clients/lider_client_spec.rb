@@ -52,7 +52,7 @@ RSpec.describe LiderClient do
           products: [
             {
               price: 1990,
-              measure: 'g',
+              measure: 'Gramo',
               quantity: 500,
               package: '500 g',
               name: 'Carne Molida 4%',

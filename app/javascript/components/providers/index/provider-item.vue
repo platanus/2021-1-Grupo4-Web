@@ -48,11 +48,24 @@
         class="flex items-center w-6 h-6 self-stretch justify-self-end"
         @click="toggleOpenModal"
       >
-        <img
-          svg-inline
-          src="../../../../assets/images/chevron-down-svg.svg"
-          class="w-6 h-6"
+        <div
+          v-if="showingDetails"
         >
+          <img
+            svg-inline
+            src="../../../../assets/images/chevron-up-svg.svg"
+            class="w-6 h-6 cursor-pointer"
+          >
+        </div>
+        <div
+          v-else
+        >
+          <img
+            svg-inline
+            src="../../../../assets/images/chevron-down-svg.svg"
+            class="w-6 h-6 cursor-pointer"
+          >
+        </div>
       </div>
     </div>
     <div
@@ -154,7 +167,7 @@
       <div class="flex flex-row items-start order-2 self-stretch w-80 justify-between mx-2">
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center border-2 border-red-600 hover:bg-gray-300 text-red-600 rounded order-1 flex-grow-1 px-2"
             @click="toggleDelModal"
           >
             {{ $t('msg.providers.delete') }}
@@ -162,7 +175,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-white hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-white border-2 border-black hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             {{ $t('msg.providers.edit') }}
@@ -197,6 +210,7 @@
       :title="$t('msg.providers.bank')"
       :ok-button-label="$t('msg.providers.copy')"
       :cancel-button-label="$t('msg.close')"
+      :ok-button-present="copyButtonAvailable"
     >
       <div
         v-if="provider.contactName && provider.contactRut && provider.bankName &&
@@ -222,7 +236,10 @@
         </p>
       </div>
       <div v-else>
-        <p> {{ $t('msg.providers.dataMissing') }} </p>
+        <p class="font-bold">
+          {{ $t('msg.providers.dataMissing') }}
+        </p>
+        <br>
         <ul>
           <li v-if="!provider.contactName">
             {{ $t('msg.providers.bankAccount.name') }}
@@ -269,6 +286,17 @@ export default {
       providerToEdit: {},
     };
   },
+  computed: {
+    // eslint-disable-next-line complexity
+    copyButtonAvailable() {
+      if (this.provider.contactName && this.provider.contactRut && this.provider.bankName &&
+          this.provider.accountType && this.provider.accountNumber && this.provider.email) {
+        return true;
+      }
+
+      return false;
+    },
+  },
   methods: {
     toggleOpenModal(provider) {
       this.showingDetails = !this.showingDetails;
@@ -289,6 +317,8 @@ export default {
       const textToCopy = `${this.provider.contactName}\n${this.provider.contactRut}\n${this.provider.bankName
       }\n${this.provider.accountType}\n${this.provider.accountNumber}\n${this.provider.email}`;
       navigator.clipboard.writeText(textToCopy);
+      this.toggleBankAccount();
+      this.$emit('copied');
     },
     async editProvider(provider) {
       this.toggleEditModal();
@@ -296,25 +326,19 @@ export default {
         const res = await editProvider(this.providerToEdit.id, provider);
         this.$emit('update', res, this.providerToEdit.id);
       } catch (error) {
-        this.errorResponse(error);
+        this.$emit('error');
       }
     },
     async deleteProvider() {
+      this.toggleDelModal();
       try {
         const response = await deleteProvider(this.providerToDelete.id);
         this.$emit('del', this.provider.id, response);
       } catch (error) {
-        this.errorResponse(error);
+        this.$emit('error');
       }
     },
-    async successResponse(status) {
-      this.status = status;
-      this.error = '';
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
-    },
+
     openWindow() {
       // eslint-disable-next-line no-magic-numbers
       // eslint-disable-next-line no-negated-condition

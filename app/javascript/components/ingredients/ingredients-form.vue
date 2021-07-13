@@ -41,6 +41,7 @@
             class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.providerName"
             id="ingredient-provider"
+            :disabled="!editMode && marketIngredient !== undefined"
           >
             <!--Add Mode unit from market -->
             <option
@@ -92,7 +93,7 @@
               v-model="unit.quantity"
               min="1"
               type="number"
-              :placeholder="$t('msg.ingredients.quantity')"
+              :placeholder="unit.name"
               @change="autoAddUnit(unit)"
             >
             <p
@@ -251,7 +252,7 @@ export default {
         Litro: { Mililitro: 0.001 },
         Mililitro: { Litro: 1000 },
         Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
-        Cucharada: { Cucharadita: 0.333, Taza: 16 },
+        Cucharada: { Cucharadita: 0.333333333, Taza: 16 },
         Cucharadita: { Taza: 48, Cucharada: 3 },
       },
       showingMeasureModal: false,

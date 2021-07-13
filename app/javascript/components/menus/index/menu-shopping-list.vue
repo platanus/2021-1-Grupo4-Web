@@ -101,7 +101,10 @@ export default {
       this.loading = false;
     },
     formatIngredientInfo(ingredient) {
-      return `${ingredient.name}, ${ingredient.quantity} ${ingredient.measure}, $ ${ingredient.totalPrice}`;
+      const number = 100;
+
+      return `${ingredient.name}, ${Math.round(ingredient.quantity * number) / number}
+      ${ingredient.measure}, $ ${Math.round(ingredient.totalPrice)}`;
     },
     async downloadShoppingList() {
       downloadShoppingList(this.menuId);

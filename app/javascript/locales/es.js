@@ -27,6 +27,7 @@ export default {
     floatNonZero: 'Debe ser mayor a cero',
     geqZero: 'Debe ser mayor o igual a cero',
     intGeqZero: 'Debe ser un entero mayor o igual a cero',
+    invalidEmail: 'El correo no es válido',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -38,6 +39,7 @@ export default {
       register: 'Registrarse',
       login: 'Iniciar Sesión',
       logout: 'Cerrar Sesión',
+      enter: 'Ingresar',
       successRegister: 'Usuario creado exitosamente',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',
@@ -109,6 +111,7 @@ export default {
       portions: 'Porcion(es)',
       steps: 'Pasos',
       noIngredients: 'Esta receta aún no tiene ingredientes',
+      noIngredientsAvailable: 'Aún no tienes ingredientes para seleccionar',
       noSteps: 'Esta receta aún no tiene pasos',
       create: 'Crear receta',
       basic: 'Datos básicos',
@@ -158,6 +161,8 @@ export default {
       recipesQuantity: 'Cantidad de recetas',
       recipes: 'Recetas',
       noRecipes: 'Este menú aún no tiene recetas',
+      noRecipesAvailable: 'Aún no tienes recetas para seleccionar',
+      noNameAlert: 'Debes ingresar el nombre del menú',
       saveChanges: 'Guardar cambios',
       shoppingList: 'Lista de compras',
       closeShoppingList: 'Cerrar',
@@ -196,6 +201,8 @@ export default {
       },
       noTransferData: 'Aún no se tiene esta información',
       dataMissing: 'Faltan los siguientes datos:',
+      dataCopied: 'Datos copiados correctamente!',
+      providerNameError: 'Ya tienes agregado a este proveedor',
     },
   },
 };

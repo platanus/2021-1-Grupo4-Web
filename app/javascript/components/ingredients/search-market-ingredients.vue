@@ -29,7 +29,7 @@
                 <img
                   svg-inline
                   src="../../../assets/images/magnifyng-glass-svg.svg"
-                  class="w-8 h-8 text-yellow-700"
+                  class="stroke-current w-8 h-8 text-yellow-700"
                 >
               </button>
             </span>
@@ -135,14 +135,15 @@ export default {
       }
     },
     addMarketIngredient(productIdx) {
+      this.$emit('make-invisible');
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
-        provider_name: this.productsByMarket[this.market].provider.name, /* eslint-disable-line camelcase */
+        providerName: this.productsByMarket[this.market].provider.name,
         name: productInfo.name,
         sku: null,
         price: productInfo.price,
         currency: 'CLP',
-        ingredientMeasuresAttributes: [ /* eslint-disable-line camelcase */
+        ingredientMeasuresAttributes: [
           { name: productInfo.measure, quantity: productInfo.quantity }],
       };
       this.$emit('submit', productForm);

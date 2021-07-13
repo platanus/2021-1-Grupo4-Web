@@ -12,7 +12,7 @@
         >
         <!-- ingredientes disponibles -->
         <div
-          v-if="!loading"
+          v-if="!loading && filteredIngredients.length > 0"
           class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
         >
           <add-ingredient-card
@@ -28,6 +28,12 @@
           >
             {{ ingredient.name }}
           </add-ingredient-card>
+        </div>
+        <div
+          class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
+          v-else
+        >
+          {{ $t('msg.recipes.noIngredientsAvailable') }}
         </div>
         <span
           v-if="loading"

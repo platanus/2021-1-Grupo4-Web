@@ -43,7 +43,7 @@ class LiderClient
   end
 
   def get_measure(product)
-    product.css('/div[2]/div[1]/div/span[1]').text.split(' ').second
+    MeasuresService.map_measure(product.css('/div[2]/div[1]/div/span[1]').text.split(' ').second)
   end
 
   def get_package(product)
