@@ -27,6 +27,7 @@ export default {
     floatNonZero: 'Debe ser mayor a cero',
     geqZero: 'Debe ser mayor o igual a cero',
     intGeqZero: 'Debe ser un entero mayor o igual a cero',
+    invalidEmail: 'El correo no es válido',
 
     users: {
       registerTitle: 'Crear Cuenta',
@@ -200,6 +201,8 @@ export default {
       },
       noTransferData: 'Aún no se tiene esta información',
       dataMissing: 'Faltan los siguientes datos:',
+      dataCopied: 'Datos copiados correctamente!',
+      providerNameError: 'Ya tienes agregado a este proveedor',
     },
   },
 };
