@@ -119,7 +119,7 @@ export default {
     return {
       scraperProblems: null,
       loading: false,
-      unexpectedError: true,
+      unexpectedError: false,
       errors: { query: '' },
       query: '',
       productsByMarket: [],
