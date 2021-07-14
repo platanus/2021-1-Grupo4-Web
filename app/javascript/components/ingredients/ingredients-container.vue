@@ -47,7 +47,6 @@
             <input
               class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.ingredients.search')"
-              @keyup="filterIngredients"
               v-model="searchQuery"
             >
           </div>
@@ -90,7 +89,7 @@
           class="flex 2xl:justify-center items-center overflow-x-auto"
         >
           <ingredients-table
-            :ingredients="filterIngredients"
+            :ingredients="filteredIngredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
@@ -243,7 +242,7 @@ export default {
   },
 
   computed: {
-    filterIngredients() {
+    filteredIngredients() {
       if (this.searchQuery) {
         return this.ingredients.filter(item => this.searchQuery
           .toLowerCase()

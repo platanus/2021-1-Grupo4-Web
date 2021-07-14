@@ -28,7 +28,6 @@
             <input
               class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.recipes.search')"
-              @keyup="filterRecipes"
               v-model="searchQuery"
             >
           </div>
@@ -62,7 +61,7 @@
         </p>
         <div v-else>
           <recipes-list
-            :allrecipes="filterRecipes"
+            :allrecipes="filteredRecipes"
           />
         </div>
       </div>
@@ -158,7 +157,7 @@ export default {
 
       return filtersToCompare;
     },
-    filterRecipes() {
+    filteredRecipes() {
       if (this.searchQuery) {
         // Los 4 filtros con busqueda
         return this.recipes.filter(recipe => this.searchQuery
