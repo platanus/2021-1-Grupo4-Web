@@ -38,7 +38,7 @@
             {{ $t('msg.ingredients.providerName') }}
           </label>
           <select
-            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none disabled:opacity-30"
             v-model="form.providerName"
             id="ingredient-provider"
             :disabled="!editMode && marketIngredient !== undefined"
@@ -305,17 +305,17 @@ export default {
         this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
       }
     },
+    async getProviderNames() {
+      const providers = await getProviders();
+
+      return providers.data.data.map((provider) => provider.attributes.name);
+    },
   },
   async created() {
     if (this.marketIngredient === undefined) {
       const {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        otherMeasures,
+        providerName, name, sku, price,
+        currency, minimumQuantity, otherMeasures,
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
@@ -328,20 +328,15 @@ export default {
         }];
       }
       this.form = {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        ingredientMeasuresAttributes,
+        providerName, name, sku, price,
+        currency, minimumQuantity, ingredientMeasuresAttributes,
       };
     } else {
       this.form = this.marketIngredient;
+      this.autoAddUnit(this.form.ingredientMeasuresAttributes[0]);
     }
 
-    const providers = await getProviders();
-    this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
+    this.providersNames = await this.getProviderNames();
   },
 };
 
