@@ -63,7 +63,7 @@
       </div>
       <!-- proovedores -->
       <div
-        class="flex w-full flex-wrap justify-between bg-gray-50 px-20"
+        class="flex flex-col justify-center bg-gray-50 m-auto md:flex-row md:flex-wrap md:px-8"
       >
         <p
           v-if="this.providers.length===0 && !loading"
@@ -73,7 +73,7 @@
         </p>
         <div
           v-else
-          class="flex bg-gray-50"
+          class="flex bg-gray-50 px-16"
           v-for="element in filterProviders"
           :key="element.id"
         >
