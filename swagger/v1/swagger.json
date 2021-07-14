@@ -333,9 +333,6 @@
     "change_password": {
       "type": "object",
       "properties": {
-        "old_password": {
-          "type": "string"
-        },
         "password": {
           "type": "string"
         },
@@ -2792,9 +2789,6 @@
         "responses": {
           "201": {
             "description": "password correctly updated"
-          },
-          "401": {
-            "description": "old password is not correct"
           },
           "400": {
             "description": "new password and confirmation are not the same"

@@ -64,7 +64,6 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
         let(:user) do
           {
             user: {
-              old_password: '12345678',
               password: 'some_password',
               password_confirmation: 'some_password'
             }
@@ -74,32 +73,19 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
         run_test!
       end
 
-      response '401', 'old password is not correct' do
+      response '201', 'new password and confirmation are not the same' do
         let(:user) do
           {
             user: {
-              old_password: 'incorrect_password',
-              password: 'some_password',
-              password_confirmation: 'some_password'
-            }
-          }
-        end
-
-        run_test!
-      end
-
-      response '400', 'new password and confirmation are not the same' do
-        let(:user) do
-          {
-            user: {
-              old_password: '12345678',
               password: 'some_password',
               password_confirmation: 'some_password2'
             }
           }
         end
 
-        run_test!
+        run_test! do |response|
+          expect(JSON.parse(response.body)).to eq(false)
+        end
       end
     end
   end

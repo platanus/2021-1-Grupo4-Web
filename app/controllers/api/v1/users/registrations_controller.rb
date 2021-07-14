@@ -15,10 +15,13 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def change_password
-    if current_user.valid_password?(change_password_params[:old_password])
-      respond_with current_user.update!(change_password_params.except(:old_password))
+    if current_user.present?
+      respond_with current_user.reset_password(
+        change_password_params[:password],
+        change_password_params[:password_confirmation]
+      )
     else
-      respond_api_error(:unauthorized, { message: 'Invalid old password' })
+      respond_api_error(:unauthorized, { message: 'User not logged in' })
     end
   end
 
@@ -29,6 +32,6 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def change_password_params
-    params.require(:user).permit(:old_password, :password, :password_confirmation)
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end
