@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <button
-      class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
+      class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 lg:mt-0 focus:outline-none"
       @click="toggleDropdown"
     >
       {{ email }}

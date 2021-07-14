@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center justify-between bg-black h-16">
+  <nav class="flex flex-col pt-2 sm:flex-row sm:pt-0 items-center justify-between bg-black sm:h-16">
     <!--Left Buttons -->
     <div class="flex items-center text-white ml-4">
       <a
@@ -10,7 +10,7 @@
       </a>
     </div>
     <!--Right buttons -->
-    <div class="w-full flex-grow flex items-center w-auto justify-end pr-5">
+    <div class="flex w-full items-center justify-center sm:justify-end sm:pr-5">
       <!--Logged -->
       <template v-if="isCurrentUser">
         <div class="flex items-center relative">
