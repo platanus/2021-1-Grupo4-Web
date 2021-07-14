@@ -1,7 +1,7 @@
 <template>
   <nav class="flex items-center justify-between bg-black h-16">
     <!--Left Buttons -->
-    <div class="flex items-center flex-shrink-0 text-white ml-4">
+    <div class="flex items-center text-white ml-4">
       <a
         href="/"
         class="font-bold text-2xl tracking-wider"
@@ -10,7 +10,7 @@
       </a>
     </div>
     <!--Right buttons -->
-    <div class="w-full flex-grow lg:flex items-center lg:w-auto justify-end pr-5">
+    <div class="w-full flex-grow flex items-center w-auto justify-end pr-5">
       <!--Logged -->
       <template v-if="isCurrentUser">
         <div class="flex items-center relative">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <button
-          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 mt-4 lg:mt-0 focus:outline-none"
+          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 mt-0 focus:outline-none"
           @click="logout"
         >
           {{ $t('msg.users.logout') }}
