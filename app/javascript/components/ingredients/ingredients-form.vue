@@ -171,13 +171,12 @@
           >
             {{ $t('msg.ingredients.price') }}
           </label>
-          <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+          <base-money
             id="ingredient-price"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.price"
-            type="number"
             :placeholder="$t('msg.ingredients.price')"
-          >
+          />
           <p
             v-if="ingredientErrors.price"
             class="mt-2 ml-1 text-xs text-red-400"
@@ -220,7 +219,6 @@
 </template>
 
 <script>
-
 import { getProviders } from './../../api/providers.js';
 import MeasureSearch from './measure_search';
 
@@ -242,7 +240,7 @@ export default {
         providerName: null,
         name: '',
         sku: null,
-        price: '',
+        price: 0,
         currency: 'CLP',
         ingredientMeasuresAttributes: [],
       },
