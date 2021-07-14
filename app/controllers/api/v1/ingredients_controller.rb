@@ -30,7 +30,7 @@ class Api::V1::IngredientsController < Api::V1::BaseController
   end
 
   def index
-    respond_with ingredients
+    respond_with ingredients.order(:name)
   end
 
   def show
