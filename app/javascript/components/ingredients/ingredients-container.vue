@@ -305,7 +305,7 @@ export default {
       }
     },
     goToEditInventories() {
-      window.location = '/ingredients/show';
+      window.location = '/ingredients/update-inventories';
     },
 
     async getIngredientAssociations(ingredientId) {

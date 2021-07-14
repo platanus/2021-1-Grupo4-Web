@@ -47,7 +47,7 @@
                 :min="0"
                 oninput="validity.valid||(value='0');"
                 ref="increase-inventory"
-                class="w-10 border-2 border-solid border-gray-400 box-border"
+                class="w-10 border-2 border-solid rounded-sm border-gray-300 box-border text-center"
                 v-model="increaseInventoryIn[idx]"
                 @change="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
@@ -62,7 +62,7 @@
                 oninput="validity.valid||(value='0');"
                 :max="maxDecrease(idx)"
                 ref="decrease-inventory"
-                class="w-10 border-2 border-solid border-gray-400 box-border"
+                class="w-10 border-2 border-solid rounded-sm border-gray-300 box-border text-center"
                 v-model="decreaseInventoryIn[idx]"
                 @change="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}

@@ -15,7 +15,7 @@
       <template v-if="isCurrentUser">
         <div class="flex items-center relative">
           <button
-            class="mr-4"
+            class="mr-4 focus:outline-none"
             @click="toggleAlerts(true)"
           >
             <img
@@ -49,10 +49,10 @@
     </div>
     <base-modal
       v-if="showAlerts"
-      @ok="toggleAlerts(false)"
+      @ok="goToEditInventories"
       @cancel="toggleAlerts(false)"
       :title="$t('msg.ingredients.alerts')"
-      :ok-button-present="false"
+      :ok-button-label="$t('msg.ingredients.inventory.editInventories')"
       :cancel-button-label="$t('msg.close')"
     >
       <div
@@ -140,6 +140,9 @@ export default {
           this.alertLoading = false;
         }
       }
+    },
+    goToEditInventories() {
+      window.location = '/ingredients/update-inventories';
     },
   },
   async created() {
