@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         devise_scope :user do
           resources :registrations, only: [:create]
           post '/change-password', to: 'registrations#change_password'
+          post '/forgot-password', to: 'registrations#forgot_password'
           resources :sessions, only: [:create]
         end
       end

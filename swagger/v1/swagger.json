@@ -341,6 +341,14 @@
         }
       }
     },
+    "forgot_password": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
     "provider_ingredient": {
       "type": "object",
       "properties": {
@@ -2792,6 +2800,39 @@
           },
           "400": {
             "description": "new password and confirmation are not the same"
+          }
+        }
+      }
+    },
+    "/users/forgot-password": {
+      "post": {
+        "summary": "Send email for recover password tro user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/forgot_password"
+                }
+              },
+              "required": [
+                "user"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "recover password email correctly sent"
           }
         }
       }

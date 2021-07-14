@@ -1,0 +1,30 @@
+
+
+<div class="pt-8 px-4 m-auto max-w-xs">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" }) do |f| %>
+    <h2 class="pb-5 text-4xl text-center">
+      <%= I18n.t('devise.recover-password') %>
+    </h2>
+
+    <div class="pb-2">
+      <% resource.errors.full_messages.each do |msg| %>
+        <p class="mt-2 ml-1 text-xs text-red-400"><%= msg %></p>
+      <% end %>
+    </div>
+    <%= f.hidden_field :reset_password_token %>
+
+    <div class="flex flex-col pb-2">
+      <%= f.label :password, I18n.t('devise.new-password'), class: "text-gray-700 text-sm font-bold mb-2" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="flex flex-col pb-2">
+      <%= f.label :password_confirmation, I18n.t('devise.confirm-password'), class: "text-gray-700 text-sm font-bold mb-2" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="flex justify-center pt-4">
+      <%= f.submit I18n.t('devise.confirm'), class: 'cursor-pointer font-bold py-2 text-center rounded shadow-md w-full h-auto focus:outline-none bg-green-500 hover:bg-green-700 text-white' %>
+    </div>
+  <% end %>
+</div>
