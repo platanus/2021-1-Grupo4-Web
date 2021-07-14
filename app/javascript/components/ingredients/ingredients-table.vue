@@ -174,11 +174,8 @@ export default {
     },
     lastIngredient(idx) {
       const finalRowsCount = 2;
-      if (idx >= this.ingredients.length - finalRowsCount) {
-        return true;
-      }
 
-      return false;
+      return idx >= this.ingredients.length - finalRowsCount;
     },
   },
 };

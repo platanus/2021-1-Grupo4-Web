@@ -179,11 +179,8 @@ export default {
     },
     lastStep(idx) {
       const finalRowsCount = 2;
-      if (idx >= this.recipeSteps.length - finalRowsCount) {
-        return true;
-      }
 
-      return false;
+      return idx >= this.recipeSteps.length - finalRowsCount;
     },
   },
 };

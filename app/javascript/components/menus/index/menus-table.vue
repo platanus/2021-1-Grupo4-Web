@@ -247,11 +247,8 @@ export default {
     },
     lastMenu(idx) {
       const finalRowsCount = 2;
-      if (idx >= this.menus.length - finalRowsCount) {
-        return true;
-      }
 
-      return false;
+      return idx >= this.menus.length - finalRowsCount;
     },
   },
 };
