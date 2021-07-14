@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  get '/profile', to: 'home#profile'
+
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :ingredients do
@@ -33,7 +35,6 @@ Rails.application.routes.draw do
           post '/change-password', to: 'registrations#change_password'
           post '/forgot-password', to: 'registrations#forgot_password'
           resources :sessions, only: [:create]
-          resources :passwords, only: [:create]
         end
       end
 

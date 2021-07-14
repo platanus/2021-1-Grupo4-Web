@@ -3,7 +3,7 @@
     <!-- Titulo -->
     <div class="flex flex-col items-center flex-none flex-grow-0 mb-4">
       <img
-        class="h-16 w-16 pt-4 m-auto"
+        class="h-16 w-16 pt-4 m-auto text-gray-700"
         svg-inline
         src="../../../assets/images/user-svg.svg"
       >
@@ -14,17 +14,23 @@
     <!-- form -->
     <div class="flex flex-col justify-center items-center p-8 bg-white rounded flex-none flex-grow-0 w-4/5 lg:w-1/2">
       <form
-        @submit.prevent="changePasword"
+        @submit.prevent="changePassword"
         method="post"
         class="w-full"
       >
         <h2 class="text-base text-black font-normal flex-none self-stretch flex-grow-0 mb-8">
           {{ $t('msg.users.modify') }}
         </h2>
-        <!-- new password -->
+        <!-- New password -->
         <div class="mb-6 w-full">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="email"
+          >
+            {{ $t('msg.users.labelPassword') }}
+          </label>
           <input
-            v-model="form.userPassword"
+            v-model="form.password"
             class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-200 rounded-md flex-none flex-grow-0"
             id="password"
             type="password"
@@ -39,6 +45,12 @@
         </div>
         <!-- Password Confirmation -->
         <div class="mb-6 w-full">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="email"
+          >
+            {{ $t('msg.users.labelPasswordConfirmation') }}
+          </label>
           <input
             v-model="form.passwordConfirmation"
             class="flex items-start w-full py-5 px-4 bg-white border border-solid border-gray-200 rounded-md flex-none flex-grow-0"
@@ -74,7 +86,7 @@ export default {
   data() {
     return {
       form: {
-        userPassword: '',
+        password: '',
         passwordConfirmation: '',
       },
       userEmail: '',
@@ -84,15 +96,18 @@ export default {
 
   methods: {
 
-    async changePasword() {
-      //   if (this.validations()) {
-      //     try {
-      //       await changeUserPassword(this.userEmail, this.form.userPassword, this.form.passwordConfirmation);
-      //       window.location.href = '/';
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   }
+    async changePassword() {
+      if (this.validations()) {
+        try {
+          const response = await changeUserPassword(
+            this.form.password, this.form.passwordConfirmation);
+
+          localStorage.setItem('token', response.data.data.attributes.authenticationToken);
+          window.location.href = '/';
+        } catch (error) {
+          this.errors.password = 'unhandledChangePassword';
+        }
+      }
     },
 
     // eslint-disable-next-line max-statements
@@ -101,20 +116,21 @@ export default {
       let validForm = true;
 
       const minPasswordLen = 6;
-      if (!(this.form.userPassword.length >= minPasswordLen)) {
+      if (!(this.form.password.length >= minPasswordLen)) {
         this.errors.password = 'passwordTooShort';
         validForm = false;
       }
 
-      if (this.form.userPassword !== this.form.passwordConfirmation) {
+      if (this.form.password !== this.form.passwordConfirmation) {
         this.errors.passwordConfirmation = 'passwordConfirmationIncorrect';
         validForm = false;
       }
 
-      if (!this.form.userPassword) {
+      if (!this.form.password) {
         this.errors.password = 'requiredPassword';
         validForm = false;
       }
+
       if (!this.form.passwordConfirmation) {
         this.errors.passwordConfirmation = 'requiredPasswordConfirmation';
         validForm = false;

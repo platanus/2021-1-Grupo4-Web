@@ -1,4 +1,5 @@
 import axios from 'axios';
+import client from '../auth/authClient.js';
 
 const tokenEl = document && document.querySelector('meta[name="csrf-token"]');
 const CSRFToken = tokenEl && tokenEl.getAttribute('content');
@@ -48,14 +49,19 @@ async function logoutUser() {
   );
 }
 
-async function changeUserPassword() {
-  return (axios
-    .patch('/users/sign_out',
-      {
-        headers: {
-          'X-CSRF-Token': CSRFToken,
-        },
+async function changeUserPassword(newPassword, passwordConfirmation) {
+  return (client
+    .post('/users/change-password', {
+      user: {
+        password: newPassword,
+        passwordConfirmation,
       },
+    },
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
+    },
     )
   );
 }

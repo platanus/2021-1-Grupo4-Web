@@ -16,10 +16,17 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   def change_password
     if current_user.present?
-      respond_with current_user.reset_password(
+      resetted = current_user.reset_password(
         change_password_params[:password],
         change_password_params[:password_confirmation]
       )
+
+      return respond_api_error(:bad_request, message: 'reset password error') unless resetted
+
+      bypass_sign_in(current_user)
+      sign_in current_user
+
+      render json: current_user, serializer: Api::V1::UserSerializer, status: :ok
     else
       respond_api_error(:unauthorized, { message: 'User not logged in' })
     end

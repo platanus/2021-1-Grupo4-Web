@@ -60,7 +60,7 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
       let(:user_email) { current_user.email }
       let(:user_token) { current_user.authentication_token }
 
-      response '201', 'password correctly updated' do
+      response '200', 'password correctly updated' do
         let(:user) do
           {
             user: {
@@ -73,7 +73,7 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
         run_test!
       end
 
-      response '201', 'new password and confirmation are not the same' do
+      response '400', 'new password and confirmation are not the same' do
         let(:user) do
           {
             user: {
@@ -83,9 +83,7 @@ describe 'API::V1::Registrations', swagger_doc: 'v1/swagger.json' do
           }
         end
 
-        run_test! do |response|
-          expect(JSON.parse(response.body)).to eq(false)
-        end
+        run_test!
       end
     end
   end

@@ -121,7 +121,7 @@ export default {
       window.location.href = '/';
     },
     goToProfile() {
-      window.location.href = '/users/password/edit';
+      window.location.href = '/profile';
     },
     async toggleAlerts(reload) {
       this.showAlerts = !this.showAlerts;
