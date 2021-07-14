@@ -147,6 +147,8 @@ export default {
   },
   async created() {
     try {
+      if (!this.isCurrentUser) return;
+
       const response = await getAlertedIngredients();
       this.alertIngredients = response.data.data.map((element) => ({
         id: element.id,
