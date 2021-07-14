@@ -120,6 +120,11 @@
               "example": 3,
               "x-nullable": true
             },
+            "ingredient_measure": {
+              "type": "string",
+              "example": "Kilo",
+              "x-nullable": true
+            },
             "created_at": {
               "type": "string",
               "example": "1984-06-04 09:00",
@@ -151,6 +156,11 @@
         "ingredient_quantity": {
           "type": "integer",
           "example": 3,
+          "x-nullable": true
+        },
+        "ingredient_measure": {
+          "type": "string",
+          "example": "Kilo",
           "x-nullable": true
         }
       }
@@ -320,6 +330,17 @@
         }
       }
     },
+    "change_password": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "password_confirmation": {
+          "type": "string"
+        }
+      }
+    },
     "provider_ingredient": {
       "type": "object",
       "properties": {
@@ -443,8 +464,8 @@
                 "x-nullable": false
               },
               "quantity": {
-                "type": "integer",
-                "example": 1,
+                "type": "float",
+                "example": 1.2,
                 "x-nullable": true
               }
             }
@@ -504,8 +525,8 @@
               "x-nullable": true
             },
             "quantity": {
-              "type": "integer",
-              "example": 2,
+              "type": "float",
+              "example": 2.4,
               "x-nullable": true
             },
             "measure": {
@@ -2723,6 +2744,54 @@
         "responses": {
           "201": {
             "description": "user created"
+          }
+        }
+      }
+    },
+    "/users/change-password": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "user_token",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Changes password of user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/change_password"
+                }
+              },
+              "required": [
+                "user"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "password correctly updated"
+          },
+          "400": {
+            "description": "new password and confirmation are not the same"
           }
         }
       }

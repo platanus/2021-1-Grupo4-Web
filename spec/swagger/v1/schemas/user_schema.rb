@@ -7,3 +7,11 @@ USER_SCHEMA = {
     password: { type: :string }
   }
 }
+
+CHANGE_PASSWORD_SCHEMA = {
+  type: :object,
+  properties: {
+    password: { type: :string },
+    password_confirmation: { type: :string }
+  }
+}
