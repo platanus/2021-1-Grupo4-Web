@@ -178,7 +178,9 @@ export default {
       this.modifiedRecipeSteps[idx].isEditing = !this.modifiedRecipeSteps[idx].isEditing;
     },
     lastStep(idx) {
-      return (idx === this.recipeSteps.length - 1);
+      const finalRowsCount = 2;
+
+      return idx >= this.recipeSteps.length - finalRowsCount;
     },
   },
 };

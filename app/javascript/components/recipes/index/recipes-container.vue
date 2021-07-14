@@ -6,7 +6,7 @@
         {{ $t('msg.recipes.title') }}
       </div>
       <span
-        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        class="flex m-auto w-8 h-8 ml-2"
         v-if="loading"
       >
         <base-spinner />

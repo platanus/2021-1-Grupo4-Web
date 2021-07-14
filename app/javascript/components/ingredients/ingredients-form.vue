@@ -129,8 +129,8 @@
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <button
-                type="button text-black"
-                class="px-3"
+                type="button"
+                class="px-3 text-black focus:outline-none"
                 v-if="index > 0"
                 @click="deleteUnit(unit)"
               >

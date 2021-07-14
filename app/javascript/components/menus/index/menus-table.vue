@@ -354,7 +354,9 @@ export default {
       return returnArray;
     },
     lastMenu(idx) {
-      return (idx === this.menus.length - 1);
+      const finalRowsCount = 2;
+
+      return idx >= this.menus.length - finalRowsCount;
     },
   },
 };
