@@ -208,7 +208,6 @@ export default {
   },
   watch: {
     ingredients() {
-      this.finalPage();
       if (this.currentPage > this.finalPage) {
         this.currentPage = this.finalPage;
       }

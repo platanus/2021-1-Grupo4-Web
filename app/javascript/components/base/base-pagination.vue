@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex w-90 justify-end m-2"
+    class="flex w-90 justify-center m-2"
     v-if="finalPage != 1"
   >
     <button
-      class="focus:outline-none"
+      class="focus:outline-none m-2"
       v-if="currentPage != 1"
       @click="prev"
     >
@@ -15,7 +15,7 @@
       >
     </button>
     <button
-      class="focus:outline-none disabled:opacity-50 ..."
+      class="focus:outline-none m-2 disabled:opacity-50 ..."
       disabled
       v-else
     >
@@ -26,26 +26,48 @@
       >
     </button>
     <div
-      v-for="index in getShownPages()"
+      v-if="1 < shownPages[0]"
+    >
+      <button
+        class="focus:outline-none w-5 m-2"
+        @click="changePage(1)"
+      >
+        {{ 1 }}
+      </button>
+      ...
+    </div>
+    <div
+      v-for="index in shownPages"
       :key="index"
     >
       <button
-        class="bg-yellow-500 focus:outline-none w-5"
+        class="text-yellow-500 focus:outline-none w-5 m-2"
         v-if="index === currentPage"
         @click="changePage(index)"
       >
         {{ index }}
       </button>
       <button
-        class="focus:outline-none w-5"
+        class="focus:outline-none w-5 m-2"
         v-else
         @click="changePage(index)"
       >
         {{ index }}
       </button>
     </div>
+    <div
+      v-if="finalPage > shownPages[shownPages.length - 1]"
+    >
+      ...
+      <button
+        class="focus:outline-none w-5 m-2"
+        @click="changePage(finalPage)"
+      >
+        {{ finalPage }}
+      </button>
+    </div>
     <button
-      class="focus:outline-none"
+      class="focus:outline-none m-2"
       v-if="currentPage != finalPage"
       @click="next"
     >
@@ -56,7 +78,7 @@
       >
     </button>
     <button
-      class="focus:outline-none disabled:opacity-50 ..."
+      class="focus:outline-none disabled:opacity-50 m-2"
       disabled
       v-else
     >
@@ -86,7 +108,9 @@ export default {
     changePage(index) {
       this.$emit('change-page', index);
     },
-    getShownPages() {
+  },
+  computed: {
+    shownPages() {
       const split = 2;
       let startAt;
       if (Math.floor(this.currentPage + this.pageSlots / split) > this.finalPage) {
