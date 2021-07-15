@@ -43,59 +43,51 @@
       >
         1. {{ $t('msg.recipes.basic') }}
       </div>
-      <div class="flex flex-col">
-        <div class="flex items-start justify-between h-16 flex-none self-stretch flex-grow-0 mb-8">
-          <div class="relative w-2/5">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.name') }}
-            </div>
-            <input
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.name"
-            >
-            <p
-              v-if="errors.name"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.name}`) }}
-            </p>
+      <div class="flex flex-col xl:flex-row items-start justify-between mb-8 px-4">
+        <div class="relative w-3/5 xl:w-2/5 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.name') }}
           </div>
-          <div class="relative w-1/4">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.portions') }}
-            </div>
-            <input
-              type="number"
-              :min="0"
-              oninput="validity.valid||(value='0');"
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.portions"
-            >
-            <p
-              v-if="errors.portions"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.portions}`) }}
-            </p>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="recipe.name"
+          >
+          <p
+            v-if="errors.name"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.name}`) }}
+          </p>
+        </div>
+        <div class="relative w-2/5 xl:w-1/4 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.portions') }}
           </div>
-          <div class="relative w-1/4">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.preparation') }}
-            </div>
-            <input
-              type="number"
-              :min="0"
-              oninput="validity.valid||(value='0');"
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.cookMinutes"
-            >
-            <p
-              v-if="errors.cookMinutes"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${errors.cookMinutes}`) }}
-            </p>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="recipe.portions"
+          >
+          <p
+            v-if="errors.portions"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.portions}`) }}
+          </p>
+        </div>
+        <div class="relative w-2/5 xl:w-1/4 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.preparation') }}
           </div>
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="recipe.cookMinutes"
+          >
+          <p
+            v-if="errors.cookMinutes"
+            class="mt-2 ml-1 text-xs text-red-400"
+          >
+            {{ $t(`msg.${errors.cookMinutes}`) }}
+          </p>
         </div>
       </div>
       <!-- Ingredients -->
