@@ -142,7 +142,7 @@
               v-if="selectedRecipes.length > 0 && !loading"
             >
               <div
-                class="min-w-full"
+                class="min-w-max"
               >
                 <selected-recipes-card
                   v-for="recipeSelected in selectedRecipes"
