@@ -22,11 +22,11 @@
     <% end %>
 
     <div id="vue-app">
-      <%= yield %>
       <top-navbar
         :is-current-user=<%= current_user.present? %>
-        class="fixed w-full mb-16"
+        class="fixed w-full -mt-16"
       ></top-navbar>
+      <%= yield %>
     </div>
   </body>
 </html>
