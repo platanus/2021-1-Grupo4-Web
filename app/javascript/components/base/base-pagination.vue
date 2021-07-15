@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex w-90 justify-center m-2"
-    v-if="finalPage != 1"
+    v-if="finalPage > 1"
   >
     <button
       class="focus:outline-none m-2"
