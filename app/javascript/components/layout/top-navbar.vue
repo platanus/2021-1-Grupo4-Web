@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-col pt-2 sm:flex-row sm:pt-0 items-center justify-between bg-black sm:h-16">
+  <nav class="flex flex-col h-20 sm:flex-row items-center justify-between bg-black sm:h-16">
     <!--Left Buttons -->
     <div class="flex items-center text-white ml-4">
       <a

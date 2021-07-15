@@ -86,7 +86,7 @@
         </p>
         <div
           v-else
-          class="flex 2xl:justify-center items-center overflow-x-auto"
+          class="flex 2xl:justify-center items-center"
         >
           <ingredients-table
             :ingredients="filteredIngredients"

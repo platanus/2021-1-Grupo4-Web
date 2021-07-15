@@ -17,13 +17,16 @@
     <%= stylesheet_pack_tag 'application' %>
   </head>
 
-  <body>  <%if Rails.env.production? %>
+  <body class="bg-gray-200">  <%if Rails.env.production? %>
       <%= render "shared/gtm_body" %>
     <% end %>
 
     <div id="vue-app">
-      <top-navbar :is-current-user=<%= current_user.present? %>></top-navbar>
-        <%= yield %>
+      <top-navbar
+        :is-current-user=<%= current_user.present? %>
+        class="fixed w-full -mt-16"
+      ></top-navbar>
+      <%= yield %>
     </div>
   </body>
 </html>
