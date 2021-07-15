@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center justify-between bg-black h-16">
+  <nav class="flex flex-col pt-2 sm:flex-row sm:pt-0 items-center justify-between bg-black sm:h-16">
     <!--Left Buttons -->
     <div class="flex items-center text-white ml-4">
       <a
@@ -10,7 +10,7 @@
       </a>
     </div>
     <!--Right buttons -->
-    <div class="w-full flex-grow flex items-center w-auto justify-end pr-5">
+    <div class="flex w-full items-center justify-center sm:justify-end sm:pr-5">
       <!--Logged -->
       <template v-if="isCurrentUser">
         <div class="flex items-center relative">
@@ -30,21 +30,11 @@
             <span class="absolute top-0 right-0 inline-block w-2 h-2 mr-4 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full" />
           </div>
         </div>
-        <button
-          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900 mt-0 focus:outline-none"
-          @click="logout"
-        >
-          {{ $t('msg.users.logout') }}
-        </button>
-      </template>
-      <!--Not Logged -->
-      <template v-else>
-        <a
-          href="/users/sign_in"
-          class="text-lg px-4 py-2 text-white rounded-md hover:bg-gray-900"
-        >
-          {{ $t('msg.users.login') }}
-        </a>
+        <dropdown
+          :email="userEmail"
+          @logout="logout"
+          @profile="goToProfile"
+        />
       </template>
     </div>
     <base-modal
@@ -95,11 +85,15 @@
 
 import { logoutUser } from './../../api/users.js';
 import { getAlertedIngredients } from './../../api/ingredients.js';
+import Dropdown from './dropdown-user.vue';
 
 export default {
 
   props: {
     isCurrentUser: { type: Boolean, required: true },
+  },
+  components: {
+    Dropdown,
   },
 
   data() {
@@ -115,6 +109,9 @@ export default {
     logged() {
       return localStorage.getItem('token');
     },
+    userEmail() {
+      return localStorage.getItem('email');
+    },
   },
 
   methods: {
@@ -123,7 +120,9 @@ export default {
       await logoutUser();
       window.location.href = '/';
     },
-
+    goToProfile() {
+      window.location.href = '/profile';
+    },
     async toggleAlerts(reload) {
       this.showAlerts = !this.showAlerts;
       if (reload) {

@@ -33,7 +33,7 @@ export default {
       registerTitle: 'Crear cuenta',
       loginTitle: 'Iniciar sesión',
       labelEmail: 'Correo',
-      labelPassword: 'Contraseña',
+      labelPassword: 'Nueva contraseña',
       labelPasswordConfirmation: 'Confirmar contraseña',
       placeholderEmail: 'Ingresa tu correo',
       register: 'Registrarse',
@@ -51,8 +51,12 @@ export default {
       passwordConfirmationIncorrect: 'La contraseña no coincide',
       emailNotFound: 'Este correo no está registrado',
       incorrectPassword: 'La contraseña es incorrecta',
+      unhandledChangePassword: 'Ocurrió un error cambiando la contraseña',
       enterEmail: 'Ingresa tu correo',
       enterPassword: 'Ingresa tu contraseña',
+      profile: 'Perfil de usuario',
+      myProfile: 'Mi perfil',
+      modify: 'Modifica tus datos',
     },
 
     ingredients: {
