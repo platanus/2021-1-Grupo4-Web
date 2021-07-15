@@ -89,7 +89,7 @@
           class="flex 2xl:justify-center items-center"
         >
           <ingredients-table
-            :ingredients="filterIngredients"
+            :ingredients="filteredIngredients"
             :page-size="8"
             :filter="searchQuery"
             @edit="toggleEditModal"
