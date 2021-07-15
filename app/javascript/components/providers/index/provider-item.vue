@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col m-auto p-4 border-2 border-solid border-gray-400 box-border mb-6 w-96 order-none">
-    <div class="flex flex-row items-center w-auto h-auto self-stretch my-4 px-3">
+    <div class="flex flex-row items-center w-auto h-auto self-stretch mb-4 px-1">
       <!-- Info -->
-      <div class="flex flex-col w-auto h-auto self-stretch flex-grow mx-2">
+      <div class="flex flex-col w-auto h-auto self-stretch flex-grow">
         <!-- nombre Proveedor -->
         <div
           class="flex items-center w-auto h-5 text-xl font-bold"
@@ -49,8 +49,15 @@
         @click="toggleOpenModal"
       >
         <img
+          v-if="!showingDetails"
           svg-inline
           src="../../../../assets/images/chevron-down-svg.svg"
+          class="w-6 h-6"
+        >
+        <img
+          v-else
+          svg-inline
+          src="../../../../assets/images/chevron-up-svg.svg"
           class="w-6 h-6"
         >
       </div>
@@ -151,10 +158,10 @@
         </div>
       </div>
       <!-- botones -->
-      <div class="flex flex-row items-start order-2 self-stretch w-80 justify-between mx-2">
+      <div class="flex flex-row items-start order-2 self-stretch w-full justify-between">
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-red-500 hover:bg-red-700 text-white rounded order-1 flex-grow-1 px-2"
             @click="toggleDelModal"
           >
             {{ $t('msg.providers.delete') }}
@@ -162,7 +169,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-white hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             {{ $t('msg.providers.edit') }}
