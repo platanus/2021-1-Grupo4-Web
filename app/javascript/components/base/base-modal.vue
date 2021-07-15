@@ -23,6 +23,21 @@
       >
         <!--Title-->
         <div class="bg-gray-900 px-6 py-6 sm:px-6 sm:flex sm:flex-row">
+          <button
+            v-if="back"
+            @click="goBack"
+            class="cursor-pointer text-white"
+          >
+            <span
+              class="text-white"
+            >
+              <img
+                svg-inline
+                class="h-6 w-6 mr-2 text-white"
+                src="../../../assets/images/arrow-left-white-svg.svg"
+              >
+            </span>
+          </button>
           <h3
             class="text-lg leading-6 font-medium text-white"
             id="modal-title"
@@ -77,6 +92,7 @@ export default {
     okButtonPresent: { type: Boolean, required: false, default: true },
     okButtonLabel: { type: String, required: false, default: 'Ok' },
     cancelButtonLabel: { type: String, required: true },
+    back: { type: Boolean, default: false },
   },
   methods: {
     ok() {
@@ -84,6 +100,9 @@ export default {
     },
     cancel() {
       this.$emit('cancel');
+    },
+    goBack() {
+      this.$emit('back');
     },
   },
 };

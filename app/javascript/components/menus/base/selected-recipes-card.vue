@@ -60,6 +60,22 @@
         </div>
       </div>
     </div>
+    <!-- button -->
+    <div class="flex flex-col justify-center items-end h-20 flex-none self-stretch mr-2">
+      <button
+        class="w-4 h-4 bg-white-500 rounded-md mb-1.5 focus:outline-none"
+        @click="deleteRecipe"
+      >
+        <img
+          class="h-4 w-4 text-white m-auto"
+          svg-inline
+          src="../../../../assets/images/cross-svg.svg"
+        >
+      </button>
+      <div class=" h-6 font-sans font-medium text-base text-right text-black flex-none">
+        {{ recipePrice | currency }}
+      </div>
+    </div>
   </div>
 </template>
 

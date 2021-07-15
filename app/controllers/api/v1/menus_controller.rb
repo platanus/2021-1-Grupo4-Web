@@ -3,7 +3,7 @@ class Api::V1::MenusController < Api::V1::BaseController
   before_action :verify_owned_recipes, only: [:create, :update]
 
   def index
-    respond_with menus
+    respond_with menus.order(:name)
   end
 
   def show

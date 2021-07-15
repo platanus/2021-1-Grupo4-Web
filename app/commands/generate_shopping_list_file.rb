@@ -14,7 +14,8 @@ class GenerateShoppingListFile < PowerTypes::Command.new(:shopping_list_json)
         'Nombre',
         'Medida',
         'Cantidad',
-        'Precio total'
+        'Precio total',
+        'Inventario actual'
       ]
     )
   end
@@ -28,7 +29,8 @@ class GenerateShoppingListFile < PowerTypes::Command.new(:shopping_list_json)
             ingredient[:name],
             ingredient[:measure],
             ingredient[:quantity],
-            ingredient[:total_price]
+            ingredient[:total_price],
+            ingredient[:inventory]
           ]
         )
       end

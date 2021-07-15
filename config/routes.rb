@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  get '/profile', to: 'home#profile'
+
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :ingredients do
@@ -30,6 +32,8 @@ Rails.application.routes.draw do
       namespace :users do
         devise_scope :user do
           resources :registrations, only: [:create]
+          post '/change-password', to: 'registrations#change_password'
+          post '/forgot-password', to: 'registrations#forgot_password'
           resources :sessions, only: [:create]
         end
       end
@@ -55,7 +59,9 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount Sidekiq::Web => '/queue'
 
-  resources :ingredients, only: [:index, :show]
+  resources :ingredients, only: [:index] do
+    collection { get '/update-inventories', to: 'ingredients#update_inventories' }
+  end
   resources :recipes, only: [:index, :show, :new, :edit]
   resources :menus, only: [:index, :show, :new, :edit]
   resources :providers, only: [:index, :new]

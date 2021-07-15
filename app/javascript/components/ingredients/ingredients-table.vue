@@ -120,8 +120,8 @@
           <td class="content-center">
             <dots-dropdown
               :elements="{
-                edit:true,
-                del:true,
+                edit: true,
+                del: true,
                 last: lastIngredient(idx)
               }"
               @edit="editIngredient(ingredient)"
@@ -173,11 +173,9 @@ export default {
       }
     },
     lastIngredient(idx) {
-      if (idx === this.ingredients.length - 1) {
-        return true;
-      }
+      const finalRowsCount = 2;
 
-      return false;
+      return idx >= this.ingredients.length - finalRowsCount;
     },
   },
 };

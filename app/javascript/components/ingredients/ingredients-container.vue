@@ -6,7 +6,7 @@
         {{ $t('msg.ingredients.title') }}
       </div>
       <span
-        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        class="flex m-auto w-8 h-8 ml-2"
         v-if="loading"
       >
         <base-spinner />
@@ -47,7 +47,6 @@
             <input
               class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.ingredients.search')"
-              @keyup="filterIngredients"
               v-model="searchQuery"
             >
           </div>
@@ -87,10 +86,10 @@
         </p>
         <div
           v-else
-          class="flex 2xl:justify-center items-center overflow-x-auto"
+          class="flex 2xl:justify-center items-center"
         >
           <ingredients-table
-            :ingredients="filterIngredients"
+            :ingredients="filteredIngredients"
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
@@ -103,10 +102,12 @@
     <base-modal
       @ok="addIngredient"
       @cancel="toggleAddModal"
+      @back="goBackAddModal"
       v-if="showingAdd"
       :title="$t('msg.ingredients.add')"
       :ok-button-label="$t('msg.add')"
       :cancel-button-label="$t('msg.cancel')"
+      :back="true"
     >
       <ingredients-form
         ref="addIngredientInfo"
@@ -123,8 +124,10 @@
       :title="$t('msg.ingredients.searchInMarket')"
       :ok-button-present="false"
       :cancel-button-label="$t('msg.cancel')"
+      :class="invisible ? 'hidden' : ''"
     >
       <search-market-ingredients
+        @make-invisible="makeInvisible"
         @submit="addMarketIngredient"
       />
     </base-modal>
@@ -157,7 +160,7 @@
     >
       <!-- Critical associations -->
       <span
-        class="flex my-auto w-8 h-8 pl-2"
+        class="flex m-auto w-8 h-8"
         v-if="loadingAssociations"
       >
         <base-spinner />
@@ -192,6 +195,7 @@ export default {
 
   data() {
     return {
+      invisible: false,
       loading: false,
       loadingAssociations: false,
       showingAdd: false,
@@ -238,7 +242,7 @@ export default {
   },
 
   computed: {
-    filterIngredients() {
+    filteredIngredients() {
       if (this.searchQuery) {
         return this.ingredients.filter(item => this.searchQuery
           .toLowerCase()
@@ -261,9 +265,25 @@ export default {
       });
     },
     toggleAddModal() {
+      if (this.invisible) {
+        this.toggleSearchIngredientsModal();
+        this.makeInvisible();
+      }
       this.cleanErrors();
       this.showingAdd = !this.showingAdd;
       this.marketIngredient = undefined;
+    },
+
+    goBackAddModal() {
+      if (this.invisible) {
+        this.makeInvisible();
+      }
+      if (this.marketIngredient) {
+        this.showingAdd = !this.showingAdd;
+      } else {
+        // Aqui arreglar si se vuelve a la pagina principal o no
+        this.showingAdd = !this.showingAdd;
+      }
     },
 
     toggleSearchIngredientsModal() {
@@ -284,7 +304,7 @@ export default {
       }
     },
     goToEditInventories() {
-      window.location = '/ingredients/show';
+      window.location = '/ingredients/update-inventories';
     },
 
     async getIngredientAssociations(ingredientId) {
@@ -299,7 +319,7 @@ export default {
       }
     },
 
-    async addIngredient() {
+    async validateAddIngredient() {
       if (this.validations(this.$refs.addIngredientInfo.form)) {
         const ingredientsInfo = this.$refs.addIngredientInfo.form;
         try {
@@ -321,9 +341,20 @@ export default {
       }
     },
 
-    async addMarketIngredient(productForm) {
+    async addIngredient() {
       this.toggleSearchIngredientsModal();
-      this.toggleAddModal();
+      this.makeInvisible();
+      this.validateAddIngredient();
+    },
+
+    makeInvisible() {
+      this.invisible = !this.invisible;
+    },
+
+    async addMarketIngredient(productForm) {
+      this.cleanErrors();
+      this.showingAdd = !this.showingAdd;
+      this.marketIngredient = undefined;
       this.marketIngredient = productForm;
     },
 

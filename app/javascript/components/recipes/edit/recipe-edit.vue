@@ -65,6 +65,9 @@
               {{ $t('msg.recipes.portions') }}
             </div>
             <input
+              type="number"
+              :min="0"
+              oninput="validity.valid||(value='0');"
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.portions"
               type="number"
@@ -81,6 +84,9 @@
               {{ $t('msg.recipes.preparation') }}
             </div>
             <input
+              type="number"
+              :min="0"
+              oninput="validity.valid||(value='0');"
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.cookMinutes"
               type="number"
@@ -193,15 +199,12 @@ export default {
     },
     async editRecipe() {
       if (this.validations()) {
-        this.loading = true;
         try {
           const updatedRecipe = this.getUpdatedRecipe();
           await updateRecipe(this.recipe.id, updatedRecipe);
           window.location = `/recipes/${this.recipeId}`;
         } catch (error) {
           this.error = true;
-        } finally {
-          this.loading = false;
         }
       }
     },

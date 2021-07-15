@@ -38,9 +38,10 @@
             {{ $t('msg.ingredients.providerName') }}
           </label>
           <select
-            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none disabled:opacity-30"
             v-model="form.providerName"
             id="ingredient-provider"
+            :disabled="!editMode && marketIngredient !== undefined"
           >
             <!--Add Mode unit from market -->
             <option
@@ -127,6 +128,18 @@
                 :selected-measure="unit.name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
+              <button
+                type="button"
+                class="px-3 text-black focus:outline-none"
+                v-if="index > 0"
+                @click="deleteUnit(unit)"
+              >
+                <img
+                  class="h-5 w-5 m-auto"
+                  svg-inline
+                  src="../../../assets/images/cross-svg.svg"
+                >
+              </button>
             </div>
             <p
               v-if="ingredientErrors.measure"
@@ -173,13 +186,12 @@
           >
             {{ $t('msg.ingredients.price') }}
           </label>
-          <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+          <base-money
             id="ingredient-price"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.price"
-            type="number"
             :placeholder="$t('msg.ingredients.price')"
-          >
+          />
           <p
             v-if="ingredientErrors.price"
             class="mt-2 ml-1 text-xs text-red-400"
@@ -222,7 +234,6 @@
 </template>
 
 <script>
-
 import { getProviders } from './../../api/providers.js';
 import MeasureSearch from './measure_search';
 
@@ -244,17 +255,18 @@ export default {
         providerName: null,
         name: '',
         sku: null,
-        price: '',
+        price: 0,
         currency: 'CLP',
         ingredientMeasuresAttributes: [],
       },
       directConvertions: {
-        Gramo: { Kilo: 1000 },
-        Kilo: { Gramo: 0.001 },
+        Gramo: { Kilo: 1000, Oz: 28.35 },
+        Kilo: { Gramo: 0.001, Oz: 0.02835 },
+        Oz: { Kilo: 35.27, Gramo: 0.03527 },
         Litro: { Mililitro: 0.001 },
         Mililitro: { Litro: 1000 },
         Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
-        Cucharada: { Cucharadita: 0.333, Taza: 16 },
+        Cucharada: { Cucharadita: 0.333333333, Taza: 16 },
         Cucharadita: { Taza: 48, Cucharada: 3 },
       },
       showingMeasureModal: false,
@@ -309,17 +321,17 @@ export default {
         this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
       }
     },
+    async getProviderNames() {
+      const providers = await getProviders();
+
+      return providers.data.data.map((provider) => provider.attributes.name);
+    },
   },
   async created() {
     if (this.marketIngredient === undefined) {
       const {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        otherMeasures,
+        providerName, name, sku, price,
+        currency, minimumQuantity, otherMeasures,
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
@@ -332,20 +344,15 @@ export default {
         }];
       }
       this.form = {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        ingredientMeasuresAttributes,
+        providerName, name, sku, price,
+        currency, minimumQuantity, ingredientMeasuresAttributes,
       };
     } else {
       this.form = this.marketIngredient;
+      this.autoAddUnit(this.form.ingredientMeasuresAttributes[0]);
     }
 
-    const providers = await getProviders();
-    this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
+    this.providersNames = await this.getProviderNames();
   },
 };
 

@@ -11,6 +11,9 @@ import BaseDropdown from '../components/base/base-dropdown.vue';
 import BaseSpinner from '../components/base/base-spinner.vue';
 import TextBox from '../components/base/base-text-box.vue';
 import BaseOneColumnTable from '../components/base/base-one-column-table';
+import BaseErrorParagraph from '../components/base/base-error-paragraph';
+import BaseAlert from '../components/base/base-alert';
+import BaseMoney from '../components/base/base-money';
 
 import TopNavbar from '../components/layout/top-navbar.vue';
 import SideNavbar from '../components/layout/side-navbar.vue';
@@ -18,6 +21,7 @@ import SideNavbar from '../components/layout/side-navbar.vue';
 import Register from '../components/users/register.vue';
 import Login from '../components/users/login.vue';
 import LandingPage from '../components/landing-page.vue';
+import Profile from '../components/users/profile.vue';
 
 import IngredientsContainer from '../components/ingredients/ingredients-container.vue';
 import IngredientsEditInventory from '../components/ingredients/ingredients-edit-inventory.vue';
@@ -42,6 +46,9 @@ Vue.component('BaseDropdown', BaseDropdown);
 Vue.component('BaseSpinner', BaseSpinner);
 Vue.component('TextBox', TextBox);
 Vue.component('BaseOneColumnTable', BaseOneColumnTable);
+Vue.component('BaseErrorParagraph', BaseErrorParagraph);
+Vue.component('BaseAlert', BaseAlert);
+Vue.component('BaseMoney', BaseMoney);
 
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
@@ -49,6 +56,7 @@ Vue.component('SideNavbar', SideNavbar);
 Vue.component('Register', Register);
 Vue.component('Login', Login);
 Vue.component('LandingPage', LandingPage);
+Vue.component('Profile', Profile);
 
 Vue.component('IngredientsContainer', IngredientsContainer);
 Vue.component('IngredientsEditInventory', IngredientsEditInventory);

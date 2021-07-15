@@ -3,5 +3,5 @@ class IngredientsController < ApplicationController
 
   def index; end
 
-  def show; end
+  def update_inventories; end
 end

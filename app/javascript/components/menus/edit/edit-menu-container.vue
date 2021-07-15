@@ -119,7 +119,7 @@
             </div>
             <span
               v-if="loading"
-              class="flex my-auto w-8 h-8 pl-2 ml-2"
+              class="flex m-auto w-8 h-8 ml-2"
             >
               <base-spinner />
             </span>
@@ -132,7 +132,7 @@
               {{ $t('msg.menus.selectedRecipes') }} ({{ selectedRecipes.length }})
               <span
                 v-if="loading"
-                class="flex my-auto w-8 h-8 pl-2 ml-2"
+                class="flex m-auto w-8 h-8 ml-2"
               >
                 <base-spinner />
               </span>
@@ -258,15 +258,12 @@ export default {
 
     async editMenu() {
       if (this.validations()) {
-        this.loading = true;
         try {
           const updatedMenu = this.getUpdatedMenu();
           await updateMenu(this.menuId, updatedMenu);
           window.location = '/menus';
         } catch (error) {
           this.error = true;
-        } finally {
-          this.loading = false;
         }
       }
     },
@@ -313,12 +310,15 @@ export default {
       this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
     },
     decreaseQuantity(recipe) {
-      if (recipe.quantity <= 1) return;
-      const newValue = recipe.quantity -= 1;
+      if (recipe.quantity <= 1) {
+        this.deleteRecipe(recipe);
+      } else {
+        const newValue = recipe.quantity -= 1;
 
-      const indexToUpdate = this.selectedRecipes.findIndex((element) =>
-        parseInt(element.id, 10) === parseInt(recipe.id, 10));
-      this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
+        const indexToUpdate = this.selectedRecipes.findIndex((element) =>
+          parseInt(element.id, 10) === parseInt(recipe.id, 10));
+        this.selectedRecipes.splice(indexToUpdate, 1, { ...recipe, quantity: newValue });
+      }
     },
     getUpdatedMenu() {
       const updatedMenu = { name: this.menuName,

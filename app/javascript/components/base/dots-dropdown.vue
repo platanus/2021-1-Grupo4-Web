@@ -71,8 +71,8 @@ export default {
   computed: {
     dropdownStyle() {
       const baseStyle = 'mt-0.5 w-32 bg-white border overflow-hidden rounded-lg shadow-md cursor-pointer z-10 ';
-      const notLastStyle = '-left-20 absolute';
-      const lastStyle = '-left-20 bottom-10 absolute';
+      const notLastStyle = '-left-24 absolute';
+      const lastStyle = '-left-24 bottom-10 absolute';
       if (!this.elements.last) {
         return baseStyle + notLastStyle;
       }

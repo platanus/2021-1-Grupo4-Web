@@ -29,7 +29,7 @@
                 <img
                   svg-inline
                   src="../../../assets/images/magnifyng-glass-svg.svg"
-                  class="w-8 h-8 text-yellow-700"
+                  class="stroke-current w-8 h-8 text-yellow-700"
                 >
               </button>
             </span>
@@ -38,7 +38,7 @@
               v-else
             >
               <span
-                class="flex my-auto w-8 h-8 pl-2"
+                class="flex m-auto w-8 h-8"
               >
                 <base-spinner />
               </span>
@@ -135,6 +135,7 @@ export default {
       }
     },
     addMarketIngredient(productIdx) {
+      this.$emit('make-invisible');
       const productInfo = this.productsByMarket[this.market].products[productIdx];
       const productForm = {
         providerName: this.productsByMarket[this.market].provider.name,

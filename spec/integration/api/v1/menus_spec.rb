@@ -231,7 +231,7 @@ describe 'Api::V1::Menus', swagger_doc: 'v1/swagger.json' do
     def ingredient_hash(name, quantity, measure)
       hash_including(
         measure: measure, name: name,
-        quantity: quantity, total_price: kind_of(Float)
+        quantity: quantity, total_price: kind_of(Float), inventory: kind_of(Float)
       )
     end
 
