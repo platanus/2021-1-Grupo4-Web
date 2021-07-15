@@ -73,6 +73,7 @@
             <input
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.portions"
+              type="number"
             >
             <p
               v-if="errors.portions"
@@ -88,6 +89,7 @@
             <input
               class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
               v-model="recipe.cookMinutes"
+              type="number"
             >
             <p
               v-if="errors.cookMinutes"
