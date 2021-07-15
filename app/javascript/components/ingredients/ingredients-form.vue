@@ -245,8 +245,9 @@ export default {
         ingredientMeasuresAttributes: [],
       },
       directConvertions: {
-        Gramo: { Kilo: 1000 },
-        Kilo: { Gramo: 0.001 },
+        Gramo: { Kilo: 1000, Oz: 28.35 },
+        Kilo: { Gramo: 0.001, Oz: 0.02835 },
+        Oz: { Kilo: 35.27, Gramo: 0.03527 },
         Litro: { Mililitro: 0.001 },
         Mililitro: { Litro: 1000 },
         Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
