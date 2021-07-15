@@ -106,6 +106,7 @@ export default {
     },
     goToRecipe() {
       window.location = `/recipes/${this.recipe.id}`;
+    },
     toggleDelModal() {
       this.showingDel = !this.showingDel;
       if (this.showingDel) {
