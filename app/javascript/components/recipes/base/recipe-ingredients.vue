@@ -1,8 +1,8 @@
 /* eslint-disable vue/max-len */
 <template>
-  <div class="flex justify-between mb-8">
+  <div class="flex flex-col lg:flex-row justify-between mb-8">
     <!-- igredientes para agregar -->
-    <div class="w-1/2 p-4">
+    <div class="w-full lg:w-1/2 p-4">
       <div class="flex flex-col">
         <!-- buscador -->
         <input
@@ -44,7 +44,7 @@
       </div>
     </div>
     <!-- ingredientes seleccionados -->
-    <div class="w-1/2 p-4">
+    <div class="w-full lg:w-1/2 p-4">
       <div class="flex flex-col self-stretch flex-grow bg-gray-50">
         <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
           {{ $t('msg.recipes.selectedIngredients') }} ({{ recipeIngredients.length }})
