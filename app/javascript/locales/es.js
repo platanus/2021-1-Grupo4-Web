@@ -43,6 +43,8 @@ export default {
       successRegister: 'Usuario creado exitosamente',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
       notHaveAccount: '¿No tienes cuenta? Registrate',
+      forgotPassword: '¿Olvidaste tu contraseña?',
+      recoverPassword: 'Enviar instrucciones',
       requiredEmail: 'El correo es obligatorio',
       invalidEmail: 'El correo no es válido',
       requiredPassword: 'La contraseña es obligatoria',

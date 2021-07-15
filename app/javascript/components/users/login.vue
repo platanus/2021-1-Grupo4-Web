@@ -66,7 +66,12 @@
           </p>
         </div>
         <div class="w-full flex flex-col lg:flex-row justify-between items-center flex-none self-stretch flex-grow-0 mb-8">
-          <div class="font-normal text-base underline text-yellow-500 flex-none flex-grow-0 mb-1 mx-auto lg:mr-8">
+          <div class="font-normal text-base underline text-gray-400 mx-auto lg:mr-8 pb-2">
+            <a href="/forgot-password">
+              {{ $t('msg.users.forgotPassword') }}
+            </a>
+          </div>
+          <div class="font-normal text-base underline text-yellow-500 mx-auto lg:mr-8 pb-2">
             <a href="/users/sign_up">
               {{ $t('msg.users.notHaveAccount') }}
             </a>

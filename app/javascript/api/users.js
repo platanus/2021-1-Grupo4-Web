@@ -37,6 +37,22 @@ function loginUser(userEmail, userPassword) {
   );
 }
 
+function forgotPassword(userEmail) {
+  return (axios
+    .post('/api/v1/users/forgot-password', {
+      user: {
+        email: userEmail,
+      },
+    },
+    {
+      headers: {
+        'X-CSRF-Token': CSRFToken,
+      },
+    },
+    )
+  );
+}
+
 async function logoutUser() {
   return (axios
     .delete('/users/sign_out',
@@ -66,4 +82,4 @@ async function changeUserPassword(newPassword, passwordConfirmation) {
   );
 }
 
-export { registerUser, loginUser, logoutUser, changeUserPassword };
+export { registerUser, loginUser, logoutUser, forgotPassword, changeUserPassword };
