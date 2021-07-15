@@ -1,5 +1,8 @@
 <template>
-  <div class="flex w-90 justify-end m-2">
+  <div
+    class="flex w-90 justify-end m-2"
+    v-if="finalPage != 1"
+  >
     <button
       class="focus:outline-none"
       v-if="currentPage != 1"

@@ -90,7 +90,7 @@
         >
           <ingredients-table
             :ingredients="filterIngredients"
-            :page-size="2"
+            :page-size="8"
             :filter="searchQuery"
             @edit="toggleEditModal"
             @del="toggleDelModal"
