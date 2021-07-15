@@ -38,7 +38,7 @@
             {{ $t('msg.ingredients.providerName') }}
           </label>
           <select
-            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none disabled:opacity-30"
             v-model="form.providerName"
             id="ingredient-provider"
             :disabled="!editMode && marketIngredient !== undefined"
@@ -171,13 +171,12 @@
           >
             {{ $t('msg.ingredients.price') }}
           </label>
-          <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+          <base-money
             id="ingredient-price"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.price"
-            type="number"
             :placeholder="$t('msg.ingredients.price')"
-          >
+          />
           <p
             v-if="ingredientErrors.price"
             class="mt-2 ml-1 text-xs text-red-400"
@@ -220,7 +219,6 @@
 </template>
 
 <script>
-
 import { getProviders } from './../../api/providers.js';
 import MeasureSearch from './measure_search';
 
@@ -242,7 +240,7 @@ export default {
         providerName: null,
         name: '',
         sku: null,
-        price: '',
+        price: 0,
         currency: 'CLP',
         ingredientMeasuresAttributes: [],
       },
@@ -307,17 +305,17 @@ export default {
         this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
       }
     },
+    async getProviderNames() {
+      const providers = await getProviders();
+
+      return providers.data.data.map((provider) => provider.attributes.name);
+    },
   },
   async created() {
     if (this.marketIngredient === undefined) {
       const {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        otherMeasures,
+        providerName, name, sku, price,
+        currency, minimumQuantity, otherMeasures,
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
@@ -330,20 +328,15 @@ export default {
         }];
       }
       this.form = {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        ingredientMeasuresAttributes,
+        providerName, name, sku, price,
+        currency, minimumQuantity, ingredientMeasuresAttributes,
       };
     } else {
       this.form = this.marketIngredient;
+      this.autoAddUnit(this.form.ingredientMeasuresAttributes[0]);
     }
 
-    const providers = await getProviders();
-    this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
+    this.providersNames = await this.getProviderNames();
   },
 };
 

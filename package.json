@@ -13,6 +13,7 @@
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.0",
     "turbolinks": "^5.2.0",
+    "v-money": "^0.8.1",
     "vue": "^2.6.12",
     "vue-i18n": "^8.24.4",
     "vue-loader": "^15.9.6",

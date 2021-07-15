@@ -13,6 +13,7 @@ import TextBox from '../components/base/base-text-box.vue';
 import BaseOneColumnTable from '../components/base/base-one-column-table';
 import BaseErrorParagraph from '../components/base/base-error-paragraph';
 import BaseAlert from '../components/base/base-alert';
+import BaseMoney from '../components/base/base-money';
 
 import TopNavbar from '../components/layout/top-navbar.vue';
 import SideNavbar from '../components/layout/side-navbar.vue';
@@ -47,6 +48,7 @@ Vue.component('TextBox', TextBox);
 Vue.component('BaseOneColumnTable', BaseOneColumnTable);
 Vue.component('BaseErrorParagraph', BaseErrorParagraph);
 Vue.component('BaseAlert', BaseAlert);
+Vue.component('BaseMoney', BaseMoney);
 
 Vue.component('TopNavbar', TopNavbar);
 Vue.component('SideNavbar', SideNavbar);
