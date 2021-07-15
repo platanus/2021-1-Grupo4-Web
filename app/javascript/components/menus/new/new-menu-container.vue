@@ -95,19 +95,21 @@
               v-if="!loading && filterRecipes.length > 0"
               class="flex flex-col h-96 bg-gray-200 overflow-scroll"
             >
-              <add-recipe-card
-                v-for="recipe in filterRecipes"
-                :key="recipe.id"
-                :selected-recipes="selectedRecipes"
-                :id="recipe.id"
-                :name="recipe.name"
-                :portions="recipe.portions"
-                :minutes="recipe.cookMinutes"
-                :recipe-ingredients="recipe.recipeIngredients.data"
-                @add="addRecipe(recipe)"
-              >
-                {{ recipe.name }}
-              </add-recipe-card>
+              <div class="min-w-max">
+                <add-recipe-card
+                  v-for="recipe in filterRecipes"
+                  :key="recipe.id"
+                  :selected-recipes="selectedRecipes"
+                  :id="recipe.id"
+                  :name="recipe.name"
+                  :portions="recipe.portions"
+                  :minutes="recipe.cookMinutes"
+                  :recipe-ingredients="recipe.recipeIngredients.data"
+                  @add="addRecipe(recipe)"
+                >
+                  {{ recipe.name }}
+                </add-recipe-card>
+              </div>
             </div>
             <div
               class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
@@ -140,10 +142,11 @@
               v-if="selectedRecipes.length > 0 && !loading"
             >
               <div
-                v-for="recipeSelected in selectedRecipes"
-                :key="recipeSelected.id"
+                class="min-w-full"
               >
                 <selected-recipes-card
+                  v-for="recipeSelected in selectedRecipes"
+                  :key="recipeSelected.id"
                   :recipe-selected="recipeSelected"
                   @delete-recipe="deleteRecipe"
                   @increase-quantity="increaseQuantity"
