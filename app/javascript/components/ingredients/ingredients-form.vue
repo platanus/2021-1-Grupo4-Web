@@ -78,7 +78,7 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex -mx-3">
+        <div class="flex -mx-3 w-96 items-center">
           <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
@@ -103,7 +103,7 @@
               {{ $t(`msg.${ingredientErrors.quantity}`) }}
             </p>
           </div>
-          <div class="w-full px-3 mb-6 md:mb-0">
+          <div class="w-full px-3 mb-6">
             <!--Measure -->
             <label
               v-if="index == 0 || index == 1"

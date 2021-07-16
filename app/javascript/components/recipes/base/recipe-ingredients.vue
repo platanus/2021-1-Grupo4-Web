@@ -15,19 +15,21 @@
           v-if="!loading && filteredIngredients.length > 0"
           class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
         >
-          <add-ingredient-card
-            v-for="ingredient in filteredIngredients"
-            :key="ingredient.id"
-            :recipe-ingredients="recipeIngredients"
-            :id="ingredient.id"
-            :name="ingredient.name"
-            :price="ingredient.price / ingredient.quantity"
-            :quantity="ingredient.quantity"
-            :measure="ingredient.measure"
-            @add="addIngredient(ingredient)"
-          >
-            {{ ingredient.name }}
-          </add-ingredient-card>
+          <div class="min-w-full">
+            <add-ingredient-card
+              v-for="ingredient in filteredIngredients"
+              :key="ingredient.id"
+              :recipe-ingredients="recipeIngredients"
+              :id="ingredient.id"
+              :name="ingredient.name"
+              :price="ingredient.price / ingredient.quantity"
+              :quantity="ingredient.quantity"
+              :measure="ingredient.measure"
+              @add="addIngredient(ingredient)"
+            >
+              {{ ingredient.name }}
+            </add-ingredient-card>
+          </div>
         </div>
         <div
           class="flex h-6 bg-gray-50 font-sans font-light text-base text-black self-stretch mb-3"
@@ -56,14 +58,15 @@
           </span>
         </div>
         <div
-          class="flex flex-col h-96 bg-gray-200 overflow-auto"
+          class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
           v-if="recipeIngredients.length > 0 && !loading"
         >
           <div
-            v-for="(recipeIngredient, idx) in recipeIngredients"
-            :key="recipeIngredient.id"
+            class="min-w-full"
           >
             <selected-ingredient-card
+              v-for="(recipeIngredient, idx) in recipeIngredients"
+              :key="recipeIngredient.id"
               :recipe-ingredient-idx="idx"
               :recipe-ingredient-attrs="recipeIngredient.attributes"
               @delete-ingredient="deleteIngredient"

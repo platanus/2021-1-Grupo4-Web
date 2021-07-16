@@ -3,8 +3,7 @@
     <div class="static font-sans not-italic font-normal text-2xl flex-none order-0 flex-grow-0 mx-2.5 text-yellow-500">
       {{ recipePrice | currency }}
     </div>
-    <a
-      :href="`/recipes/${this.idRecipe}`"
+    <div
       class="static w-5 h-5 flex-none order-1 flex-grow-0 mx-2.5"
     >
       <img
@@ -12,7 +11,7 @@
         svg-inline
         src="../../../../../assets/images/keyboard-arrow-right-svg.svg"
       >
-    </a>
+    </div>
   </div>
 </template>
 
