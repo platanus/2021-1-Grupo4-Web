@@ -103,7 +103,7 @@
               {{ $t(`msg.${ingredientErrors.quantity}`) }}
             </p>
           </div>
-          <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
+          <div class="w-full px-3 mb-6">
             <!--Measure -->
             <label
               v-if="index == 0 || index == 1"
@@ -147,21 +147,6 @@
             >
               {{ $t(`msg.${ingredientErrors.measure}`) }}
             </p>
-          </div>
-          <div class="w-full md:w-1/5 px-3 mb-0 md:mb-6">
-            <br>
-            <button
-              type="button text-black"
-              class="px-3"
-              v-if="index > 0"
-              @click="deleteUnit(unit)"
-            >
-              <img
-                class="h-5 w-5 m-auto"
-                svg-inline
-                src="../../../assets/images/cross-svg.svg"
-              >
-            </button>
           </div>
         </div>
         <div

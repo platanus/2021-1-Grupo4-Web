@@ -5,8 +5,8 @@
       <div class="flex flex-col w-auto h-auto self-stretch flex-grow">
         <!-- nombre Proveedor -->
         <div
-          class="flex items-center w-auto h-5 text-xl font-bold"
-          @click="openWindow"
+          class="flex items-center cursor-pointer w-auto h-5 text-xl font-bold"
+          @click="toggleOpenModal"
         >
           {{ provider.name }}
         </div>
@@ -90,7 +90,7 @@
           </div>
           <!-- Link -->
           <div
-            class="flex items-center underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
+            class="flex items-center cursor-pointer underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
             {{ provider.webpageUrl }}
@@ -175,7 +175,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-green-500 hover:bg-green-700 text-white rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center border-2 border-green-500 bg-green-500 hover:bg-green-700 hover:border-green-700 text-white rounded order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             {{ $t('msg.providers.edit') }}
