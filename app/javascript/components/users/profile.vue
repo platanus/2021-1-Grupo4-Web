@@ -18,7 +18,7 @@
         method="post"
         class="w-full"
       >
-        <h2 class="text-base text-black font-normal flex-none self-stretch flex-grow-0 mb-8">
+        <h2 class="font-bold text-2xl text-black flex-none self-stretch flex-grow-0 mb-8">
           {{ $t('msg.users.modify') }}
         </h2>
         <!-- New password -->
@@ -65,7 +65,7 @@
             {{ $t(`msg.users.${errors.passwordConfirmation}`) }}
           </p>
         </div>
-        <div class="w-full flex flex-none self-stretch flex-grow-0">
+        <div class="w-full flex justify-end flex-grow-0">
           <div class="mx-auto lg:m-0">
             <base-button
               :elements="{ placeholder: $t('msg.save'),
