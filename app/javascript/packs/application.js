@@ -21,6 +21,7 @@ import SideNavbar from '../components/layout/side-navbar.vue';
 
 import Register from '../components/users/register.vue';
 import Login from '../components/users/login.vue';
+import ForgotPassword from '../components/users/forgot-password.vue';
 import LandingPage from '../components/landing-page.vue';
 import Profile from '../components/users/profile.vue';
 
@@ -57,6 +58,7 @@ Vue.component('SideNavbar', SideNavbar);
 
 Vue.component('Register', Register);
 Vue.component('Login', Login);
+Vue.component('ForgotPassword', ForgotPassword);
 Vue.component('LandingPage', LandingPage);
 Vue.component('Profile', Profile);
 

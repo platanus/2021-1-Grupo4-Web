@@ -7,4 +7,6 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path, flash: { error: 'no estas loggeado' }
     end
   end
+
+  def forgot_password; end
 end
