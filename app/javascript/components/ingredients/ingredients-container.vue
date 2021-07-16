@@ -95,6 +95,7 @@
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
+            @updateMinimumQuantity="updateMinimumQuantity"
           />
         </div>
       </div>
@@ -434,6 +435,13 @@ export default {
     async UpdateInventory(ingredient) {
       try {
         await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
+      } catch (error) {
+        this.unexpectedError = true;
+      }
+    },
+    async updateMinimumQuantity(ingredient) {
+      try {
+        await editIngredient(ingredient.id, { 'minimumQuantity': ingredient.minimumQuantity });
       } catch (error) {
         this.unexpectedError = true;
       }
