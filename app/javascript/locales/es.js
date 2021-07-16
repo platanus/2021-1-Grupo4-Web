@@ -42,7 +42,7 @@ export default {
       enter: 'Ingresar',
       successRegister: 'Usuario creado exitosamente',
       alreadyHaveAccount: '¿Ya tienes cuenta? Inicia sesión',
-      notHaveAccount: '¿No tienes cuenta? Registrate',
+      notHaveAccount: '¿No tienes cuenta? Regístrate',
       forgotPassword: '¿Olvidaste tu contraseña?',
       recoverPassword: 'Enviar instrucciones',
       requiredEmail: 'El correo es obligatorio',
