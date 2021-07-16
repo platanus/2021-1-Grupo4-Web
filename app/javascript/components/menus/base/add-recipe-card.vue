@@ -1,72 +1,74 @@
 <template>
-  <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50 flex-none">
+  <div class="flex items-center min-w-max h-20 border border-gray-500 bg-gray-50 flex-none">
     <!-- Image -->
     <img
       svg-inline
       src="../../../../assets/images/recipe.jpg"
       class="w-20 h-20 text-yellow-700"
     >
-    <!-- Name and info -->
-    <div class="flex flex-col items-start w-full h-16 mx-3 my-auto">
-      <p class="py-2 pr-3 font-medium">
-        {{ name }}
-      </p>
-      <div class="flex flex-row">
-        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
-          <div class="mr-2">
-            <img
-              class="h-5 w-5 text-white"
-              svg-inline
-              src="../../../../assets/images/chart-pie-svg.svg"
-            >
+    <div class="flex w-full justify-between">
+      <!-- Name and info -->
+      <div class="flex flex-col items-start w-auto h-16 mx-3 my-auto">
+        <p class="py-2 pr-3 font-medium">
+          {{ name }}
+        </p>
+        <div class="flex flex-row">
+          <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+            <div class="mr-2">
+              <img
+                class="h-5 w-5 text-white"
+                svg-inline
+                src="../../../../assets/images/chart-pie-svg.svg"
+              >
+            </div>
+            <div>
+              <p class="py-2 pr-3 text-xs inline-block">
+                {{ portions }} {{ $t('msg.recipes.portions') }}
+              </p>
+            </div>
           </div>
-          <div>
-            <p class="py-2 pr-3 text-xs inline-block">
-              {{ portions }} {{ $t('msg.recipes.portions') }}
-            </p>
+          <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+            <div class="mr-2">
+              <img
+                class="h-5 w-5 text-white"
+                svg-inline
+                src="../../../../assets/images/dollar-svg.svg"
+              >
+            </div>
+            <div>
+              <p class="py-2 pr-3 text-xs inline-block">
+                {{ recipePrice | currency }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
-          <div class="mr-2">
-            <img
-              class="h-5 w-5 text-white"
-              svg-inline
-              src="../../../../assets/images/dollar-svg.svg"
-            >
-          </div>
-          <div>
-            <p class="py-2 pr-3 text-xs inline-block">
-              {{ recipePrice | currency }}
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
-          <div class="mr-2">
-            <img
-              class="h-5 w-5 text-white"
-              svg-inline
-              src="../../../../assets/images/chart-pie-svg.svg"
-            >
-          </div>
-          <div>
-            <p class="py-2 pr-3 text-xs inline-block">
-              {{ minutes }} {{ $t('msg.recipes.minutes') }}
-            </p>
+          <div class="flex items-center w-auto h-6 flex-grow-0 mr-2">
+            <div class="mr-2">
+              <img
+                class="h-5 w-5 text-white"
+                svg-inline
+                src="../../../../assets/images/chart-pie-svg.svg"
+              >
+            </div>
+            <div>
+              <p class="py-2 pr-3 text-xs inline-block">
+                {{ minutes }} {{ $t('msg.recipes.minutes') }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
+      <!-- button -->
+      <button
+        class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none my-auto mx-3"
+        :disabled="selected"
+        :class="selected ? 'opacity-25' : 'opacity-100'"
+        @click="addRecipe()"
+      >
+        <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none">
+          {{ $t('msg.add') }}
+        </div>
+      </button>
     </div>
-    <!-- button -->
-    <button
-      class="flex items-center py-1.5 px-4 w-auto h-9 bg-yellow-500 shadow-sm rounded-md flex-none my-auto mx-3"
-      :disabled="selected"
-      :class="selected ? 'opacity-25' : 'opacity-100'"
-      @click="addRecipe()"
-    >
-      <div class="w-auto h-6 font-hind font-normal text-base text-white flex-none">
-        {{ $t('msg.add') }}
-      </div>
-    </button>
   </div>
 </template>
 

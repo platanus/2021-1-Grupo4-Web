@@ -89,30 +89,26 @@
             />
           </td>
           <td
-            class="content-center py-2 px-6 items-center"
+            class="content-center py-4 px-6 items-center"
           >
             <div class="flex flex-col">
-              <div class="flex w-full justify-between">
-                <menu-shopping-list
-                  class="flex w-5/12 m-auto"
-                  :menu-id="menu.id"
-                  @reduceInventory="toggleReduce"
-                />
-                <div class="flex w-7/12">
-                  Lista de Compras
-                </div>
-              </div>
-              <div class="flex w-full justify-between">
-                <div class="flex w-5/12 m-auto">
+              <menu-shopping-list
+                :menu-id="menu.id"
+                @reduceInventory="toggleReduce"
+              />
+              <div
+                class="flex w-full cursor-pointer"
+                @click="toggleReduce(menu.id)"
+              >
+                <div class="flex mr-2">
                   <img
                     svg-inline
                     src="../../../../assets/images/reduce-inventory-svg.svg"
-                    class="w-6 h-6 cursor-pointer"
-                    @click="toggleReduce(menu.id)"
+                    class="w-6 h-6"
                   >
                 </div>
-                <div class="flex w-7/12">
-                  Restar Inventario
+                <div class="flex">
+                  {{ $t('msg.menus.reduceInventory') }}
                 </div>
               </div>
             </div>
@@ -354,7 +350,9 @@ export default {
       return returnArray;
     },
     lastMenu(idx) {
-      return (idx === this.menus.length - 1);
+      const finalRowsCount = 2;
+
+      return idx >= this.menus.length - finalRowsCount;
     },
   },
 };

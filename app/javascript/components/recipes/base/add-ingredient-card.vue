@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50 flex-none flex-grow-0">
+  <div class="flex items-start justify-between min-w-max h-20 border border-gray-500 bg-gray-50 flex-none flex-grow-0">
     <!-- data -->
     <div class="flex flex-col items-start w-auto h-14 flex-none flex-grow-0 mx-3 my-auto">
       <div class="w-auto h-7 font-hind font-bold text-lg text-black flex-none flex-grow-0">

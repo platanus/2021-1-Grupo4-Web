@@ -1,7 +1,7 @@
 <template>
-  <div class="flex items-start justify-between w-full h-20 border border-gray-500 bg-gray-50">
+  <div class="flex items-start justify-between min-w-max h-20 border border-gray-500 bg-gray-50">
     <!-- data -->
-    <div class="flex flex-col items-start w-full h-16 mx-3 my-auto">
+    <div class="flex flex-col items-start w-auto h-16 mx-3 my-auto">
       <div class="h-6 font-hind font-bold text-lg text-black mb-0.5">
         {{ recipeIngredientAttrs.ingredient.name }}
       </div>
@@ -50,13 +50,13 @@
       </div>
     </div>
     <!-- button -->
-    <div class="flex flex-col justify-center items-end h-20 flex-none self-stretch mr-2">
+    <div class="w-auto flex flex-col justify-center items-end h-20 flex-none self-stretch mr-2">
       <button
-        class="w-3 h-3 bg-red-500 shadow-sm rounded-md flex-none flex-grow-0 mb-1.5 focus:outline-none"
+        class="w-4 h-4 bg-white-500 rounded-md mb-1.5 focus:outline-none"
         @click="deleteIngredient"
       >
         <img
-          class="h-3 w-3 text-white m-auto"
+          class="h-4 w-4 text-white m-auto"
           svg-inline
           src="../../../../assets/images/cross-svg.svg"
         >

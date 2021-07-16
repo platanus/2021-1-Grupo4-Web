@@ -38,7 +38,7 @@
             {{ $t('msg.ingredients.providerName') }}
           </label>
           <select
-            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+            class="block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none disabled:opacity-30"
             v-model="form.providerName"
             id="ingredient-provider"
             :disabled="!editMode && marketIngredient !== undefined"
@@ -78,7 +78,7 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex -mx-3">
+        <div class="flex -mx-3 w-96 items-center">
           <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
@@ -103,7 +103,7 @@
               {{ $t(`msg.${ingredientErrors.quantity}`) }}
             </p>
           </div>
-          <div class="w-full px-3 mb-6 md:mb-0">
+          <div class="w-full px-3 mb-6">
             <!--Measure -->
             <label
               v-if="index == 0 || index == 1"
@@ -129,8 +129,8 @@
                 @selectMeasure="changeUnitName(unit, ...arguments)"
               />
               <button
-                type="button text-black"
-                class="px-3"
+                type="button"
+                class="px-3 text-black focus:outline-none"
                 v-if="index > 0"
                 @click="deleteUnit(unit)"
               >
@@ -171,13 +171,12 @@
           >
             {{ $t('msg.ingredients.price') }}
           </label>
-          <input
-            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+          <base-money
             id="ingredient-price"
+            class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.price"
-            type="number"
             :placeholder="$t('msg.ingredients.price')"
-          >
+          />
           <p
             v-if="ingredientErrors.price"
             class="mt-2 ml-1 text-xs text-red-400"
@@ -220,7 +219,6 @@
 </template>
 
 <script>
-
 import { getProviders } from './../../api/providers.js';
 import MeasureSearch from './measure_search';
 
@@ -242,13 +240,14 @@ export default {
         providerName: null,
         name: '',
         sku: null,
-        price: '',
+        price: 0,
         currency: 'CLP',
         ingredientMeasuresAttributes: [],
       },
       directConvertions: {
-        Gramo: { Kilo: 1000 },
-        Kilo: { Gramo: 0.001 },
+        Gramo: { Kilo: 1000, Oz: 28.35 },
+        Kilo: { Gramo: 0.001, Oz: 0.02835 },
+        Oz: { Kilo: 35.27, Gramo: 0.03527 },
         Litro: { Mililitro: 0.001 },
         Mililitro: { Litro: 1000 },
         Taza: { Cucharada: 0.0625, Cucharadita: 0.020833 },
@@ -307,17 +306,17 @@ export default {
         this.form.ingredientMeasuresAttributes.push({ name, quantity, id: undefined });
       }
     },
+    async getProviderNames() {
+      const providers = await getProviders();
+
+      return providers.data.data.map((provider) => provider.attributes.name);
+    },
   },
   async created() {
     if (this.marketIngredient === undefined) {
       const {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        otherMeasures,
+        providerName, name, sku, price,
+        currency, minimumQuantity, otherMeasures,
       } = this.ingredient;
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
@@ -330,20 +329,15 @@ export default {
         }];
       }
       this.form = {
-        providerName,
-        name,
-        sku,
-        price,
-        currency,
-        minimumQuantity,
-        ingredientMeasuresAttributes,
+        providerName, name, sku, price,
+        currency, minimumQuantity, ingredientMeasuresAttributes,
       };
     } else {
       this.form = this.marketIngredient;
+      this.autoAddUnit(this.form.ingredientMeasuresAttributes[0]);
     }
 
-    const providers = await getProviders();
-    this.providersNames = providers.data.data.map((provider) => provider.attributes.name);
+    this.providersNames = await this.getProviderNames();
   },
 };
 

@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SuperKitchen</title>
+    <title>Kitchengram</title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="shortcut icon" href=<%= asset_path('chef-svg.svg')%> sizes="any" type="image/svg+xml" />
+
     <%if Rails.env.production? %>
       <%= render "shared/gtm_head" %>
     <% end %>
     <%= stylesheet_pack_tag 'application' %>
   </head>
 
-  <body>  <%if Rails.env.production? %>
+  <body class="bg-gray-200">  <%if Rails.env.production? %>
       <%= render "shared/gtm_body" %>
     <% end %>
 
     <div id="vue-app">
-      <top-navbar :is-current-user=<%= current_user.present? %>></top-navbar>
-        <%= yield %>
+      <top-navbar
+        :is-current-user=<%= current_user.present? %>
+        class="fixed w-full -mt-16"
+      ></top-navbar>
+      <%= yield %>
     </div>
   </body>
 </html>

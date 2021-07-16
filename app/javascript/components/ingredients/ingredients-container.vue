@@ -6,7 +6,7 @@
         {{ $t('msg.ingredients.title') }}
       </div>
       <span
-        class="flex my-auto w-8 h-8 pl-2 ml-2"
+        class="flex m-auto w-8 h-8 ml-2"
         v-if="loading"
       >
         <base-spinner />
@@ -47,7 +47,6 @@
             <input
               class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.ingredients.search')"
-              @keyup="filterIngredients"
               v-model="searchQuery"
             >
           </div>
@@ -87,10 +86,12 @@
         </p>
         <div
           v-else
-          class="flex 2xl:justify-center items-center overflow-x-auto"
+          class="flex 2xl:justify-center items-center"
         >
           <ingredients-table
-            :ingredients="filterIngredients"
+            :ingredients="filteredIngredients"
+            :page-size="8"
+            :filter="searchQuery"
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
@@ -161,7 +162,7 @@
     >
       <!-- Critical associations -->
       <span
-        class="flex my-auto w-8 h-8 pl-2"
+        class="flex m-auto w-8 h-8"
         v-if="loadingAssociations"
       >
         <base-spinner />
@@ -243,7 +244,7 @@ export default {
   },
 
   computed: {
-    filterIngredients() {
+    filteredIngredients() {
       if (this.searchQuery) {
         return this.ingredients.filter(item => this.searchQuery
           .toLowerCase()
@@ -305,7 +306,7 @@ export default {
       }
     },
     goToEditInventories() {
-      window.location = '/ingredients/show';
+      window.location = '/ingredients/update-inventories';
     },
 
     async getIngredientAssociations(ingredientId) {

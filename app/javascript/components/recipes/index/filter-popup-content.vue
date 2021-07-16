@@ -11,6 +11,7 @@
         </p>
         <input
           class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          type="number"
           :placeholder="$t('msg.min')"
           v-model="filters.price.min"
         >
@@ -21,6 +22,7 @@
         </p>
         <input
           class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          type="number"
           :placeholder="$t('msg.max')"
           v-model="filters.price.max"
         >
@@ -38,6 +40,7 @@
         </p>
         <input
           class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          type="number"
           :placeholder="$t('msg.min')"
           v-model="filters.portions.min"
         >
@@ -48,6 +51,7 @@
         </p>
         <input
           class="px-4 w-50 h-12 bg-white border-2 border-solid border-gray-200 box-border rounded flex-grow-0 my-1"
+          type="number"
           :placeholder="$t('msg.max')"
           v-model="filters.portions.max"
         >

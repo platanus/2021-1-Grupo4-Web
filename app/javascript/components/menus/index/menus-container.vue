@@ -29,7 +29,6 @@
               class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.menus.search')"
               autocomplete="off"
-              @keyup="filterMenus"
               v-model="searchQuery"
             >
           </div>
@@ -56,7 +55,7 @@
           class="flex w-full 2xl:justify-center items-center overflow-auto"
         >
           <menus-table
-            :menus="filterMenus"
+            :menus="filteredMenus"
             @del="toggleDelModal"
           />
         </div>
@@ -111,7 +110,7 @@ export default {
     }
   },
   computed: {
-    filterMenus() {
+    filteredMenus() {
       if (this.searchQuery) {
         return this.menus.filter(item => this.searchQuery
           .toLowerCase()

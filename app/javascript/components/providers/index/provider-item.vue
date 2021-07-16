@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col m-auto p-4 border-2 border-solid border-gray-400 box-border mb-6 w-96 order-none">
-    <div class="flex flex-row items-center w-auto h-auto self-stretch my-4 px-3">
+    <div class="flex flex-row items-center w-auto h-auto self-stretch mb-4 px-1">
       <!-- Info -->
-      <div class="flex flex-col w-auto h-auto self-stretch flex-grow mx-2">
+      <div class="flex flex-col w-auto h-auto self-stretch flex-grow">
         <!-- nombre Proveedor -->
         <div
-          class="flex items-center w-auto h-5 text-xl font-bold"
-          @click="openWindow"
+          class="flex items-center cursor-pointer w-auto h-5 text-xl font-bold"
+          @click="toggleOpenModal"
         >
           {{ provider.name }}
         </div>
@@ -90,7 +90,7 @@
           </div>
           <!-- Link -->
           <div
-            class="flex items-center underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
+            class="flex items-center cursor-pointer underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
             {{ provider.webpageUrl }}
@@ -164,7 +164,7 @@
         </div>
       </div>
       <!-- botones -->
-      <div class="flex flex-row items-start order-2 self-stretch w-80 justify-between mx-2">
+      <div class="flex flex-row items-start order-2 self-stretch w-full justify-between">
         <div>
           <button
             class="flex flex-row items-center justify-center border-2 border-red-600 hover:bg-gray-300 text-red-600 rounded order-1 flex-grow-1 px-2"
@@ -175,7 +175,7 @@
         </div>
         <div>
           <button
-            class="flex flex-row items-center justify-center bg-white border-2 border-black hover:bg-gray-300 text-black rounded order-1 flex-grow-1 px-2"
+            class="flex flex-row items-center justify-center border-2 border-green-500 bg-green-500 hover:bg-green-700 hover:border-green-700 text-white rounded order-1 flex-grow-1 px-2"
             @click="toggleEditModal"
           >
             {{ $t('msg.providers.edit') }}

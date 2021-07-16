@@ -1,15 +1,20 @@
 <template>
   <div>
-    <button
-      class="focus:outline-none"
+    <div
+      class="flex w-full cursor-pointer mb-2"
       @click="toggleList"
     >
-      <img
-        svg-inline
-        src="../../../../assets/images/shopping-cart-svg.svg"
-        class="w-6 h-6 text-yellow-700"
-      >
-    </button>
+      <div class="flex mr-2">
+        <img
+          svg-inline
+          src="../../../../assets/images/shopping-cart-svg.svg"
+          class="w-6 h-6 text-yellow-700"
+        >
+      </div>
+      <div class="flex">
+        {{ $t('msg.menus.shoppingList') }}
+      </div>
+    </div>
     <base-modal
       @cancel="toggleList"
       v-if="showingList"
@@ -112,6 +117,9 @@ export default {
     reduceInventory() {
       this.toggleList();
       this.$emit('reduceInventory', this.menuId);
+    },
+    price(price) {
+      return Math.round(price);
     },
   },
 };
