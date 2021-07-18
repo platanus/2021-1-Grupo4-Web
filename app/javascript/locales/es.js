@@ -209,6 +209,7 @@ export default {
       dataMissing: 'Faltan los siguientes datos:',
       dataCopied: 'Datos copiados correctamente!',
       providerNameError: 'Ya tienes agregado a este proveedor',
+      noInformation: 'Sin información',
     },
   },
 };
