@@ -6,6 +6,7 @@
       v-model="query"
       @focus="toggleFocusInput"
       @blur="toggleFocusInput"
+      @change="emitSelectedMeasure(query)"
     >
     <div
       v-if="focusedInput"
@@ -16,7 +17,6 @@
         <div
           v-if="!sameQueryInOptions && query.length > 0"
           class="px-1 py-2 hover:underline cursor-pointer w-full text-yellow-600 font-light"
-          @mousedown="emitSelectedMeasure(query)"
         >
           {{ `${$t('msg.ingredients.newMeasure')} '${query}'` }}
         </div>
