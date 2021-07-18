@@ -17,7 +17,7 @@
         >
           <div class="min-w-full">
             <add-ingredient-card
-              v-for="ingredient in filteredIngredients"
+              v-for="ingredient in pageIngredients"
               :key="ingredient.id"
               :recipe-ingredients="recipeIngredients"
               :id="ingredient.id"
@@ -43,6 +43,14 @@
         >
           <base-spinner />
         </span>
+        <base-pagination
+          v-else
+          :current-page="currentPage"
+          :final-page="finalPage"
+          @next="nextPage"
+          @prev="prevPage"
+          @change-page="changePage"
+        />
       </div>
     </div>
     <!-- ingredientes seleccionados -->
@@ -106,6 +114,8 @@ export default {
       ingredients: [],
       error: '',
       query: '',
+      currentPage: 1,
+      pageSize: 10,
     };
   },
   components: {
@@ -147,6 +157,14 @@ export default {
 
       return this.ingredients;
     },
+    finalPage() {
+      return Math.ceil(this.filteredIngredients.length / this.pageSize);
+    },
+    pageIngredients() {
+      return this.filteredIngredients.slice(
+        (this.currentPage - 1) * this.pageSize, Math.min(
+          this.filteredIngredients.length, this.currentPage * this.pageSize));
+    },
   },
   methods: {
     addIngredient(ingredient) {
@@ -161,6 +179,20 @@ export default {
 
     changeMeasure(measure, recipeIngredientIdx) {
       this.$emit('change-measure', measure, recipeIngredientIdx);
+    },
+    nextPage() {
+      this.currentPage += 1;
+    },
+    prevPage() {
+      this.currentPage -= 1;
+    },
+    changePage(index) {
+      this.currentPage = index;
+    },
+  },
+  watch: {
+    query() {
+      this.currentPage = 1;
     },
   },
 };
