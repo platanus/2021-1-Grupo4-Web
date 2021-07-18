@@ -75,7 +75,7 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex -mx-3 w-96 items-center">
+        <div class="flex -mx-3 w-96 items-start">
           <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
@@ -91,10 +91,11 @@
               min="1"
               type="number"
               :placeholder="unit.name"
+              ref="quantityInput"
               @change="autoAddUnit(unit)"
             >
             <base-error-paragraph
-              :msg-error="ingredientErrors.quantity"
+              :msg-error="ingredientErrors.quantity[index]"
             />
           </div>
           <div class="w-full px-3 mb-6">
@@ -136,7 +137,7 @@
               </button>
             </div>
             <base-error-paragraph
-              :msg-error="ingredientErrors.measure"
+              :msg-error="ingredientErrors.measure[index]"
             />
           </div>
         </div>

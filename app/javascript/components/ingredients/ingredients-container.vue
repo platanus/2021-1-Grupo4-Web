@@ -441,8 +441,8 @@ export default {
     cleanErrors() {
       this.errors = {
         name: '',
-        quantity: '',
-        measure: '',
+        quantity: [],
+        measure: [],
         price: '',
         minimumQuantity: '',
       };
@@ -450,18 +450,45 @@ export default {
 
     validations(form) {
       this.cleanErrors();
+      const correctMeasures = this.measuresValidations(form);
 
-      const quantity = form.ingredientMeasuresAttributes[0].quantity;
-
-      this.errors.quantity = floatNonZero(quantity, this.errors.quantity);
       this.errors.price = intGeqZero(form.price, this.errors.price);
       this.errors.minimumQuantity = geqZero(form.minimumQuantity, this.errors.minimumQuantity);
       this.errors.name = requiredField(form.name, this.errors.name);
-      this.errors.quantity = requiredField(quantity, this.errors.quantity);
-      this.errors.measure = requiredField(form.ingredientMeasuresAttributes[0].name, this.errors.measure);
       this.errors.price = requiredField(form.price, this.errors.price);
 
-      return !(Object.values(this.errors).some(value => !!value));
+      return correctMeasures && !(Object.values(this.errors).some(value => !!value));
+    },
+
+    measuresValidations(form) {
+      let correct = this.duplicatedMeasuresValidations(form);
+
+      form.ingredientMeasuresAttributes.forEach((pair, idx) => {
+        this.errors.quantity[idx] = requiredField(pair.quantity, this.errors.quantity[idx]);
+        this.errors.quantity[idx] = floatNonZero(pair.quantity, this.errors.quantity[idx]);
+        this.errors.measure[idx] = requiredField(pair.name, this.errors.measure[idx]);
+
+        if (!!this.errors.measure[idx] || !!this.errors.quantity[idx]) {
+          correct = false;
+        }
+      });
+
+      return correct;
+    },
+
+    duplicatedMeasuresValidations(form) {
+      let correct = true;
+      const auxiliaryMeasureAttributes = JSON.parse(JSON.stringify(form.ingredientMeasuresAttributes));
+      const names = auxiliaryMeasureAttributes.map((unit) => unit.name.toLowerCase());
+
+      auxiliaryMeasureAttributes.forEach((pair, idx) => {
+        if (names.filter((value) => value === pair.name.toLowerCase()).length > 1) {
+          this.errors.measure[idx] = 'duplicatedMeasure';
+          correct = false;
+        }
+      });
+
+      return correct;
     },
   },
 };
