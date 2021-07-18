@@ -1,5 +1,12 @@
 <template>
-  <div class="pt-3 h-full w-96">
+  <div class="h-full w-96">
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+      class="mb-5"
+    />
     <div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
@@ -108,8 +115,7 @@ export default {
     return {
       scraperProblems: null,
       loading: false,
-      status: null,
-      error: '',
+      unexpectedError: false,
       query: '',
       productsByMarket: [],
       market: null,
@@ -119,6 +125,9 @@ export default {
     MarketIngredient,
   },
   methods: {
+    closeAlert() {
+      this.unexpectedError = false;
+    },
     async searchIngredients() {
       this.loading = true;
       try {
@@ -129,7 +138,7 @@ export default {
         this.market = 0;
         this.scraperProblems = data.message;
       } catch (error) {
-        this.errorResponse(error);
+        this.unexpectedError = true;
       } finally {
         this.loading = false;
       }
@@ -147,10 +156,6 @@ export default {
           { name: productInfo.measure, quantity: productInfo.quantity }],
       };
       this.$emit('submit', productForm);
-    },
-    async errorResponse(error) {
-      this.status = error.response.status;
-      this.error = error;
     },
   },
   computed: {
