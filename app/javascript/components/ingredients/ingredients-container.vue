@@ -5,12 +5,6 @@
       <div class="text-4xl font-bold">
         {{ $t('msg.ingredients.title') }}
       </div>
-      <span
-        class="flex m-auto w-8 h-8 ml-2"
-        v-if="loading"
-      >
-        <base-spinner />
-      </span>
     </div>
 
     <!-- Alert -->
@@ -34,7 +28,9 @@
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 my-10">
       <!--SearchBar y Button-->
-      <div class="flex flex-col lg:flex-row pb-4">
+      <div
+        class="flex flex-col lg:flex-row pb-4"
+      >
         <div class="flex items-center py-2 pr-2 lg:w-1/2">
           <div class="relative text-yellow-700 w-full">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -77,6 +73,12 @@
       </div>
 
       <!--Table-->
+      <span
+        class="flex m-auto w-8 h-8 ml-2"
+        v-if="loading"
+      >
+        <base-spinner />
+      </span>
       <div v-if="!loading">
         <p
           v-if="this.ingredients.length===0"
