@@ -22,7 +22,7 @@
         class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
         role="alert"
       >
-        <span class="block sm:inline">{{ takenEmailAlert[0] }}</span>
+        <span class="block sm:inline mr-6">{{ takenEmailAlert[0] }}</span>
         <span
           class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
           @click="closeAlert"

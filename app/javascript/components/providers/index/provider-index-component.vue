@@ -82,6 +82,7 @@
               :provider="element"
               @update="updateProvider"
               @del="deleteProvider"
+              @copied="dataCopied = true"
             />
           </div>
         </div>
