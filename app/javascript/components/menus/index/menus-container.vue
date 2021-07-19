@@ -52,7 +52,7 @@
         </p>
         <div
           v-else
-          class="flex w-full 2xl:justify-center items-center overflow-auto"
+          class="flex w-full 2xl:justify-center items-center"
         >
           <menus-table
             :menus="filteredMenus"
