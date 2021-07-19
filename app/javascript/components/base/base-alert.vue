@@ -1,13 +1,15 @@
 <template>
   <div
     v-if="variable"
-    class="mt-4 w-max px-4 py-3 rounded relative"
+    class="flex mt-4 w-max px-4 py-3 rounded relative"
     :class="success ? successClass : errorClass"
     role="alert"
   >
-    <span class="mr-7 block sm:inline">{{ $t(`msg.${alertName}`) }}</span>
-    <span
-      class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+    <div>
+      <span class="mr-2 block sm:inline">{{ $t(`msg.${alertName}`) }}</span>
+    </div>
+    <div
+      class="m-auto cursor-pointer"
       @click="closeAlert"
     >
       <img
@@ -15,7 +17,7 @@
         src="../../../assets/images/cancel-svg.svg"
         class="h-5 w-5 text-red-700"
       >
-    </span>
+    </div>
   </div>
 </template>
 
