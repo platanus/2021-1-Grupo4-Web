@@ -95,6 +95,7 @@
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
+            @updateMinimumQuantity="updateMinimumQuantity"
           />
         </div>
       </div>
@@ -321,9 +322,13 @@ export default {
       }
     },
 
+    // eslint-disable-next-line max-statements
     async validateAddIngredient() {
       if (this.validations(this.$refs.addIngredientInfo.form)) {
         const ingredientsInfo = this.$refs.addIngredientInfo.form;
+        if (ingredientsInfo.minimumQuantity === undefined) {
+          ingredientsInfo.minimumQuantity = 0;
+        }
         try {
           this.showingAdd = !this.showingAdd;
           this.loading = true;
@@ -434,6 +439,13 @@ export default {
     async UpdateInventory(ingredient) {
       try {
         await editIngredient(ingredient.id, { 'inventory': ingredient.inventory });
+      } catch (error) {
+        this.unexpectedError = true;
+      }
+    },
+    async updateMinimumQuantity(ingredient) {
+      try {
+        await editIngredient(ingredient.id, { 'minimumQuantity': ingredient.minimumQuantity });
       } catch (error) {
         this.unexpectedError = true;
       }
