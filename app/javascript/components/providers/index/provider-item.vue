@@ -23,7 +23,15 @@
             </div>
             <!-- Texto -->
             <div class="flex w-auto h-5 text-base items-center text-gray-400">
-              {{ provider.email }}
+              <div
+                v-if="!provider.email"
+                class="text-base text-gray-300"
+              >
+                {{ $t('msg.providers.noInformation') }}
+              </div>
+              <div v-else>
+                {{ provider.email }}
+              </div>
             </div>
           </div>
           <!-- Telefono -->
@@ -38,7 +46,15 @@
             </div>
             <!-- Texto -->
             <div class="flex w-auto h-5 text-base items-center text-gray-400">
-              {{ provider.phone }}
+              <div
+                v-if="!provider.phone"
+                class="text-base text-gray-300"
+              >
+                {{ $t('msg.providers.noInformation') }}
+              </div>
+              <div v-else>
+                {{ provider.phone }}
+              </div>
             </div>
           </div>
         </div>
@@ -71,7 +87,7 @@
     <div
       v-if="showingDetails"
     >
-      <div class="flex flex-col items-start order-1 w-full">
+      <div class="flex flex-col items-start w-full">
         <!-- Pagina Web -->
         <div class="flex flex-row items-start order-none w-full justify-between">
           <div class="flex flex-row items-center order-none w-48">
@@ -90,6 +106,13 @@
           </div>
           <!-- Link -->
           <div
+            v-if="!provider.webpageUrl"
+            class="flex text-base text-gray-300"
+          >
+            {{ $t('msg.providers.noInformation') }}
+          </div>
+          <div
+            v-else
             class="flex items-center cursor-pointer underline text-gray-600 overflow-auto order-1 text-right justify-items-end max-w-full"
             @click="openWindow"
           >
@@ -137,7 +160,16 @@
             </p>
           </div>
           <!-- Minimo -->
-          <p class="flex items-center text-black order-1 flex-grow-0 text-right justify-items-end">
+          <div
+            v-if="!provider.minimumPurchase"
+            class="flex text-base text-gray-300"
+          >
+            {{ $t('msg.providers.noInformation') }}
+          </div>
+          <p
+            v-else
+            class="flex items-center text-black order-1 flex-grow-0 text-right justify-items-end"
+          >
             $ {{ provider.minimumPurchase }}
           </p>
         </div>
@@ -158,7 +190,16 @@
             </p>
           </div>
           <!-- Tiempo -->
-          <p class="flex items-center text-black order-1 text-right justify-items-end">
+          <div
+            v-if="!provider.deliveryDays"
+            class="flex text-base text-gray-300"
+          >
+            {{ $t('msg.providers.noInformation') }}
+          </div>
+          <p
+            v-else
+            class="flex items-center text-black order-1 text-right justify-items-end"
+          >
             {{ provider.deliveryDays }} {{ $t('msg.providers.days') }}
           </p>
         </div>

@@ -5,12 +5,6 @@
       <div class="text-4xl font-bold">
         {{ $t('msg.recipes.title') }}
       </div>
-      <span
-        class="flex m-auto w-8 h-8 ml-2"
-        v-if="loading"
-      >
-        <base-spinner />
-      </span>
     </div>
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
@@ -50,6 +44,16 @@
         @deletePortions="toggleDeletePortionsByCross"
       />
       <!-- Content -->
+      <div
+        class="w-auto m-auto"
+        v-if="loading"
+      >
+        <span
+          class="flex w-12 h-12 ml-2 my-4"
+        >
+          <base-spinner />
+        </span>
+      </div>
       <div
         class="mt-4"
         v-if="!loading"
