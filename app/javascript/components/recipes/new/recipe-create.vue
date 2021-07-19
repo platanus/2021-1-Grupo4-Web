@@ -38,100 +38,88 @@
       >
         1. {{ $t('msg.recipes.basic') }}
       </div>
-      <div class="flex flex-col">
-        <div class="flex items-start justify-between h-16 flex-none self-stretch flex-grow-0 mb-8">
-          <div class="relative w-2/5">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.name') }}
-            </div>
-            <input
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.name"
-            >
-            <base-error-paragraph
-              :msg-error="errors.name"
-            />
+      <div class="flex flex-col xl:flex-row items-start justify-between mb-8 px-4">
+        <div class="relative w-3/5 xl:w-2/5 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.name') }}
           </div>
-          <div class="relative w-1/4">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.portions') }}
-            </div>
-            <input
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.portions"
-            >
-            <base-error-paragraph
-              :msg-error="errors.portions"
-            />
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="recipe.name"
+          >
+          <base-error-paragraph
+            :msg-error="errors.name"
+          />
+        </div>
+        <div class="relative w-2/5 xl:w-1/4 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.portions') }}
           </div>
-          <div class="relative w-1/4">
-            <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
-              {{ $t('msg.recipes.preparation') }}
-            </div>
-            <input
-              class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
-              v-model="recipe.cookMinutes"
-            >
-            <base-error-paragraph
-              :msg-error="errors.cookMinutes"
-            />
+          <input
+            class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
+            v-model="recipe.portions"
+          >
+          <base-error-paragraph
+            :msg-error="errors.portions"
+          />
+        </div>
+        <div class="relative w-2/5 xl:w-1/4 py-2">
+          <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
+            {{ $t('msg.recipes.preparation') }}
           </div>
           <input
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="recipe.cookMinutes"
-            type="number"
           >
-          <p
-            v-if="errors.cookMinutes"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${errors.cookMinutes}`) }}
-          </p>
-        </div>
-      </div>
-      <!-- Ingredients -->
-      <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
-        2. {{ $t('msg.recipes.ingredients') }}
-      </div>
-      <recipe-ingredients
-        :recipe-ingredients="recipe.recipeIngredients.data"
-        @add-ingredient="addIngredient"
-        @delete-ingredient="deleteIngredient"
-        @change-quantity="changeQuantity"
-        @change-measure="changeMeasure"
-      />
-      <!-- pasos -->
-      <div
-        class="grid grid-cols-1 divide-y divide-gray-400"
-      >
-        <div class="mb-4">
-          <recipe-steps
-            :recipe-steps="recipe.steps.data"
-            @new-step="addStep"
-            @delete-step="deleteStep"
-            @switch-steps="switchSteps"
+          <base-error-paragraph
+            :msg-error="errors.cookMinutes"
           />
         </div>
-        <div>
-          <!--  botones -->
-          <div class="flex items-start items-center mt-4">
-            <button
-              class="py-2 px-6 rounded shadow-md w-48 h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
-              @click="cancelCreate"
-            >
-              {{ $t('msg.recipes.cancel') }}
-            </button>
-            <div>
-              <base-button
-                :elements="{ placeholder: $t('msg.recipes.add'),
-                             color: 'bg-green-500 hover:bg-green-700 text-white' }"
-                @click="createRecipe"
-              />
-            </div>
+      </div>
+    </div>
+    <!-- Ingredients -->
+    <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
+      2. {{ $t('msg.recipes.ingredients') }}
+    </div>
+    <recipe-ingredients
+      :recipe-ingredients="recipe.recipeIngredients.data"
+      @add-ingredient="addIngredient"
+      @delete-ingredient="deleteIngredient"
+      @change-quantity="changeQuantity"
+      @change-measure="changeMeasure"
+    />
+    <!-- pasos -->
+    <div
+      class="grid grid-cols-1 divide-y divide-gray-400"
+    >
+      <div class="mb-4">
+        <recipe-steps
+          :recipe-steps="recipe.steps.data"
+          @new-step="addStep"
+          @delete-step="deleteStep"
+          @switch-steps="switchSteps"
+        />
+      </div>
+      <div>
+        <!--  botones -->
+        <div class="flex items-start items-center mt-4">
+          <button
+            class="py-2 px-6 rounded shadow-md w-48 h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
+            @click="cancelCreate"
+          >
+            {{ $t('msg.recipes.cancel') }}
+          </button>
+          <div>
+            <base-button
+              :elements="{ placeholder: $t('msg.recipes.add'),
+                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
+              @click="createRecipe"
+            />
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
