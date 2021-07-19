@@ -17,12 +17,9 @@
             :placeholder="$t('msg.ingredients.name')"
             v-model="form.name"
           >
-          <p
-            v-if="ingredientErrors.name"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${ingredientErrors.name}`) }}
-          </p>
+          <base-error-paragraph
+            :msg-error="ingredientErrors.name"
+          />
         </div>
       </div>
 
@@ -96,12 +93,9 @@
               :placeholder="unit.name"
               @change="autoAddUnit(unit)"
             >
-            <p
-              v-if="ingredientErrors.quantity"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${ingredientErrors.quantity}`) }}
-            </p>
+            <base-error-paragraph
+              :msg-error="ingredientErrors.quantity"
+            />
           </div>
           <div class="w-full px-3 mb-6">
             <!--Measure -->
@@ -141,12 +135,9 @@
                 >
               </button>
             </div>
-            <p
-              v-if="ingredientErrors.measure"
-              class="mt-2 ml-1 text-xs text-red-400"
-            >
-              {{ $t(`msg.${ingredientErrors.measure}`) }}
-            </p>
+            <base-error-paragraph
+              :msg-error="ingredientErrors.measure"
+            />
           </div>
         </div>
         <div
@@ -177,12 +168,9 @@
             v-model="form.price"
             :placeholder="$t('msg.ingredients.price')"
           />
-          <p
-            v-if="ingredientErrors.price"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${ingredientErrors.price}`) }}
-          </p>
+          <base-error-paragraph
+            :msg-error="ingredientErrors.price"
+          />
           <!--Minimum Quantity -->
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-4"
@@ -206,12 +194,9 @@
             type="number"
             :placeholder="$t('msg.ingredients.quantity')"
           >
-          <p
-            v-if="ingredientErrors.minimumQuantity"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${ingredientErrors.minimumQuantity}`) }}
-          </p>
+          <base-error-paragraph
+            :msg-error="ingredientErrors.minimumQuantity"
+          />
         </div>
       </div>
     </form>

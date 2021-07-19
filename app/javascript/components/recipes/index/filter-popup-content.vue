@@ -15,6 +15,9 @@
           :placeholder="$t('msg.min')"
           v-model="filters.price.min"
         >
+        <base-error-paragraph
+          :msg-error="errors.priceMin"
+        />
       </div>
       <div class="ml-2">
         <p>
@@ -26,6 +29,9 @@
           :placeholder="$t('msg.max')"
           v-model="filters.price.max"
         >
+        <base-error-paragraph
+          :msg-error="errors.priceMax"
+        />
       </div>
     </div>
 
@@ -44,6 +50,9 @@
           :placeholder="$t('msg.min')"
           v-model="filters.portions.min"
         >
+        <base-error-paragraph
+          :msg-error="errors.portionsMin"
+        />
       </div>
       <div class="ml-2">
         <p>
@@ -55,6 +64,9 @@
           :placeholder="$t('msg.max')"
           v-model="filters.portions.max"
         >
+        <base-error-paragraph
+          :msg-error="errors.portionsMax"
+        />
       </div>
     </div>
   </div>
@@ -65,6 +77,7 @@
 export default {
   props: {
     actualfilters: { type: Object, required: true },
+    errors: { type: Object, required: true },
   },
   data() {
     return {

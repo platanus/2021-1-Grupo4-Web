@@ -9,7 +9,14 @@
     />
     <div>
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
+        <!-- Alert unexpected error -->
+        <base-alert
+          :variable="unexpectedError"
+          :alert-name="'unexpectedError'"
+          :success="false"
+          @closeAlert="closeAlert"
+        />
+        <div class="w-full px-3 py-3">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="ingredient-name"
@@ -51,6 +58,9 @@
               </span>
             </div>
           </div>
+          <base-error-paragraph
+            :msg-error="errors.query"
+          />
         </div>
       </div>
     </div>
@@ -108,6 +118,7 @@
 
 <script>
 import { searchCornershopIngredients } from '../../api/ingredients';
+import { requiredField } from '../../utils/validations.js';
 import MarketIngredient from './market-ingredient.vue';
 
 export default {
@@ -116,6 +127,7 @@ export default {
       scraperProblems: null,
       loading: false,
       unexpectedError: false,
+      errors: { query: '' },
       query: '',
       productsByMarket: [],
       market: null,
@@ -129,18 +141,20 @@ export default {
       this.unexpectedError = false;
     },
     async searchIngredients() {
-      this.loading = true;
-      try {
-        const {
-          data,
-        } = await searchCornershopIngredients(this.query);
-        this.productsByMarket = data.data;
-        this.market = 0;
-        this.scraperProblems = data.message;
-      } catch (error) {
-        this.unexpectedError = true;
-      } finally {
-        this.loading = false;
+      if (this.validations()) {
+        this.loading = true;
+        try {
+          const {
+            data,
+          } = await searchCornershopIngredients(this.query);
+          this.productsByMarket = data.data;
+          this.market = 0;
+          this.scraperProblems = data.message;
+        } catch (error) {
+          this.unexpectedError = true;
+        } finally {
+          this.loading = false;
+        }
       }
     },
     addMarketIngredient(productIdx) {
@@ -156,6 +170,12 @@ export default {
           { name: productInfo.measure, quantity: productInfo.quantity }],
       };
       this.$emit('submit', productForm);
+    },
+    validations() {
+      this.errors = { query: '' };
+      this.errors.query = requiredField(this.query, this.errors.query);
+
+      return !(Object.values(this.errors).some(value => !!value));
     },
   },
   computed: {
