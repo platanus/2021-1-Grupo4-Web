@@ -1,5 +1,12 @@
 <template>
   <div class="h-full w-96">
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+      class="mb-5"
+    />
     <div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <!-- Alert unexpected error -->
@@ -133,7 +140,6 @@ export default {
     closeAlert() {
       this.unexpectedError = false;
     },
-
     async searchIngredients() {
       if (this.validations()) {
         this.loading = true;
@@ -165,7 +171,6 @@ export default {
       };
       this.$emit('submit', productForm);
     },
-
     validations() {
       this.errors = { query: '' };
       this.errors.query = requiredField(this.query, this.errors.query);

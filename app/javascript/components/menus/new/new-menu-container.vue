@@ -25,8 +25,8 @@
 
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <!-- Menu Name -->
-      <div class="flex flex-row justify-between">
-        <div class="relative w-3/5 ml-4">
+      <div class="flex flex-col xl:flex-row items-start justify-start mb-8 px-4">
+        <div class="mr-5 relative w-3/5 xl:w-2/5 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.name') }}
           </div>
@@ -39,7 +39,7 @@
           />
         </div>
         <!-- Menu Portions -->
-        <div class="relative w-2/5 ml-4">
+        <div class="relative w-2/5 xl:w-1/4 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.portions') }}
           </div>
@@ -53,32 +53,23 @@
         </div>
       </div>
       <!-- Recipes -->
-      <div class="flex justify-between mb-8">
-        <div class="w-1/2 p-4">
-          <div class="flex flex-col w-auto">
+      <div class="flex flex-col lg:flex-row justify-between mb-8">
+        <div class="w-full lg:w-1/2 p-4">
+          <div class="flex flex-col">
             <!-- search bar -->
-            <div class="relative text-yellow-700 my-4">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <img
-                  svg-inline
-                  src="../../../../assets/images/magnifyng-glass-svg.svg"
-                  class="w-6 h-6 text-yellow-700"
-                >
-              </span>
-              <input
-                class="flex py-2 px-12 w-full h-16 bg-gray-50 border-2 border-gray-600 rounded self-stretch flex-grow-0 focus:outline-none"
-                :placeholder="$t('msg.recipes.search')"
-                autocomplete="off"
-                @keyup="filterRecipes"
-                v-model="searchQuery"
-              >
-            </div>
+            <input
+              class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded self-stretch mb-8"
+              :placeholder="$t('msg.recipes.search')"
+              autocomplete="off"
+              @keyup="filterRecipes"
+              v-model="searchQuery"
+            >
             <!-- available recipes -->
             <div
               v-if="!loading && filterRecipes.length > 0"
-              class="flex flex-col h-96 bg-gray-200 overflow-scroll"
+              class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
             >
-              <div class="min-w-max">
+              <div class="min-w-full">
                 <add-recipe-card
                   v-for="recipe in filterRecipes"
                   :key="recipe.id"
@@ -109,7 +100,7 @@
           </div>
         </div>
         <!-- selected recipes -->
-        <div class="w-1/2 p-4">
+        <div class="w-full lg:w-1/2 p-4">
           <div class="flex flex-col self-stretch flex-grow bg-gray-50">
             <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
               {{ $t('msg.menus.selectedRecipes') }} ({{ selectedRecipes.length }})
@@ -121,11 +112,11 @@
               </span>
             </div>
             <div
-              class="flex flex-col h-96 bg-gray-200 overflow-scroll"
+              class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
               v-if="selectedRecipes.length > 0 && !loading"
             >
               <div
-                class="min-w-max"
+                class="min-w-full"
               >
                 <selected-recipes-card
                   v-for="recipeSelected in selectedRecipes"

@@ -1,11 +1,5 @@
 <template>
   <div class="flex items-start min-w-max h-20 border border-gray-500 bg-gray-50">
-    <!-- Image -->
-    <img
-      svg-inline
-      src="../../../../assets/images/recipe.jpg"
-      class="flex w-20 h-20 text-yellow-700"
-    >
     <div class="flex w-full justify-between">
       <!-- data -->
       <div class="flex flex-col items-start w-auto h-16 mx-3 my-auto">
