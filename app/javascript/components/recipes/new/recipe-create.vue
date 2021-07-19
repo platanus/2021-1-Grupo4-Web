@@ -76,50 +76,49 @@
           />
         </div>
       </div>
-    </div>
-    <!-- Ingredients -->
-    <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
-      2. {{ $t('msg.recipes.ingredients') }}
-    </div>
-    <recipe-ingredients
-      :recipe-ingredients="recipe.recipeIngredients.data"
-      @add-ingredient="addIngredient"
-      @delete-ingredient="deleteIngredient"
-      @change-quantity="changeQuantity"
-      @change-measure="changeMeasure"
-    />
-    <!-- pasos -->
-    <div
-      class="grid grid-cols-1 divide-y divide-gray-400"
-    >
-      <div class="mb-4">
-        <recipe-steps
-          :recipe-steps="recipe.steps.data"
-          @new-step="addStep"
-          @delete-step="deleteStep"
-          @switch-steps="switchSteps"
-        />
+      <!-- Ingredients -->
+      <div class="h-7 w-auto font-hind font-bold text-lg text-black flex-none self-stretch flex-grow-0 mb-8">
+        2. {{ $t('msg.recipes.ingredients') }}
       </div>
-      <div>
-        <!--  botones -->
-        <div class="flex items-start items-center mt-4">
-          <button
-            class="py-2 px-6 rounded shadow-md w-48 h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
-            @click="cancelCreate"
-          >
-            {{ $t('msg.recipes.cancel') }}
-          </button>
-          <div>
-            <base-button
-              :elements="{ placeholder: $t('msg.recipes.add'),
-                           color: 'bg-green-500 hover:bg-green-700 text-white' }"
-              @click="createRecipe"
-            />
+      <recipe-ingredients
+        :recipe-ingredients="recipe.recipeIngredients.data"
+        @add-ingredient="addIngredient"
+        @delete-ingredient="deleteIngredient"
+        @change-quantity="changeQuantity"
+        @change-measure="changeMeasure"
+      />
+      <!-- pasos -->
+      <div
+        class="grid grid-cols-1 divide-y divide-gray-400"
+      >
+        <div class="mb-4">
+          <recipe-steps
+            :recipe-steps="recipe.steps.data"
+            @new-step="addStep"
+            @delete-step="deleteStep"
+            @switch-steps="switchSteps"
+          />
+        </div>
+        <div>
+          <!--  botones -->
+          <div class="flex items-start items-center mt-4">
+            <button
+              class="py-2 px-6 rounded shadow-md w-48 h-auto border border-gray-800 box-border drop-shadow rounded-md text-gray-800 mr-8"
+              @click="cancelCreate"
+            >
+              {{ $t('msg.recipes.cancel') }}
+            </button>
+            <div>
+              <base-button
+                :elements="{ placeholder: $t('msg.recipes.add'),
+                             color: 'bg-green-500 hover:bg-green-700 text-white' }"
+                @click="createRecipe"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
