@@ -55,7 +55,7 @@ class CornershopClient
   end
 
   def get_quantity(product)
-    quantity = package(product).split(' ').first.to_i
+    quantity = package(product).split(' ').first.to_f
 
     quantity.zero? ? 1 : quantity
   end
