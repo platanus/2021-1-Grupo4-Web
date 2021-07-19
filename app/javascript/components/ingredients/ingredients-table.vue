@@ -183,13 +183,11 @@ export default {
       this.$emit('del', element);
     },
     openEditInventory(idx) {
-      console.log("inventory", idx)
       this.$nextTick(() => {
         this.$refs.inventory[idx].focus();
       });
     },
     openEditMinimumQuantity(idx) {
-      console.log("minimum", idx)
       this.$nextTick(() => {
         this.$refs.minimumQuantity[idx].focus();
       });
