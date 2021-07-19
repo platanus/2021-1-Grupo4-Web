@@ -54,12 +54,6 @@
           <base-spinner />
         </span>
       </div>
-      <!-- <span
-        class="flex m-auto w-8 h-8 ml-2 mt-4"
-        v-if="loading"
-      >
-        <base-spinner />
-      </span> -->
       <div
         class="mt-4"
         v-if="!loading"
