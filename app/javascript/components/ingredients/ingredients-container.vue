@@ -210,8 +210,8 @@ export default {
       unexpectedError: false,
       errors: {
         name: '',
-        quantity: '',
-        measure: '',
+        quantity: [],
+        measure: [],
         price: '',
         minimumQuantity: '',
       },
@@ -450,14 +450,16 @@ export default {
 
     validations(form) {
       this.cleanErrors();
-      const correctMeasures = this.measuresValidations(form);
-
       this.errors.price = intGeqZero(form.price, this.errors.price);
       this.errors.minimumQuantity = geqZero(form.minimumQuantity, this.errors.minimumQuantity);
       this.errors.name = requiredField(form.name, this.errors.name);
       this.errors.price = requiredField(form.price, this.errors.price);
 
-      return correctMeasures && !(Object.values(this.errors).some(value => !!value));
+      const errorsCopy = JSON.parse(JSON.stringify(this.errors));
+      const correctAttributes = !(Object.values(errorsCopy).some(value => value.length > 0));
+      const correctMeasures = this.measuresValidations(form);
+
+      return correctAttributes && correctMeasures;
     },
 
     measuresValidations(form) {
@@ -479,10 +481,10 @@ export default {
     duplicatedMeasuresValidations(form) {
       let correct = true;
       const auxiliaryMeasureAttributes = JSON.parse(JSON.stringify(form.ingredientMeasuresAttributes));
-      const names = auxiliaryMeasureAttributes.map((unit) => unit.name.toLowerCase());
+      const names = auxiliaryMeasureAttributes.map((unit) => unit.name && unit.name.toLowerCase());
 
       auxiliaryMeasureAttributes.forEach((pair, idx) => {
-        if (names.filter((value) => value === pair.name.toLowerCase()).length > 1) {
+        if (names.filter((value) => pair.name && value === pair.name.toLowerCase()).length > 1) {
           this.errors.measure[idx] = 'duplicatedMeasure';
           correct = false;
         }
