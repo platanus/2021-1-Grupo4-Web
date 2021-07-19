@@ -73,12 +73,16 @@
       </div>
 
       <!--Table-->
-      <span
-        class="flex m-auto w-8 h-8 ml-2"
+      <div
+        class="w-auto m-auto"
         v-if="loading"
       >
-        <base-spinner />
-      </span>
+        <span
+          class="flex w-12 h-12 ml-2"
+        >
+          <base-spinner />
+        </span>
+      </div>
       <div v-if="!loading">
         <p
           v-if="this.ingredients.length===0"

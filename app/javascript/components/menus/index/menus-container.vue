@@ -37,12 +37,16 @@
         </div>
       </div>
       <!-- Content -->
-      <span
+      <div
+        class="w-auto m-auto"
         v-if="loading"
-        class="flex my-auto w-8 h-8 ml-2 pl-2"
       >
-        <base-spinner />
-      </span>
+        <span
+          class="flex w-12 h-12 ml-2"
+        >
+          <base-spinner />
+        </span>
+      </div>
       <div v-if="!loading">
         <p
           class="my-4"

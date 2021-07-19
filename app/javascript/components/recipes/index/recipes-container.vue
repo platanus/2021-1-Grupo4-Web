@@ -44,12 +44,22 @@
         @deletePortions="toggleDeletePortionsByCross"
       />
       <!-- Content -->
-      <span
+      <div
+        class="w-auto m-auto"
+        v-if="loading"
+      >
+        <span
+          class="flex w-12 h-12 ml-2 my-4"
+        >
+          <base-spinner />
+        </span>
+      </div>
+      <!-- <span
         class="flex m-auto w-8 h-8 ml-2 mt-4"
         v-if="loading"
       >
         <base-spinner />
-      </span>
+      </span> -->
       <div
         class="mt-4"
         v-if="!loading"

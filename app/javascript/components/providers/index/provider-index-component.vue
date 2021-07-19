@@ -62,12 +62,22 @@
         </div>
       </div>
       <!-- proovedores -->
-      <span
+      <div
+        class="w-auto m-auto"
+        v-if="loading"
+      >
+        <span
+          class="flex w-12 h-12 ml-2"
+        >
+          <base-spinner />
+        </span>
+      </div>
+      <!-- <span
         class="flex m-auto w-8 h-8 ml-2"
         v-if="loading"
       >
         <base-spinner />
-      </span>
+      </span> -->
       <div
         class="flex flex-col justify-center bg-gray-50 m-auto md:flex-row md:flex-wrap md:px-8"
       >
