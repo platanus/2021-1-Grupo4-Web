@@ -111,7 +111,7 @@
                 <input
                   type="number"
                   min="0"
-                  ref="mininventory"
+                  ref="minimumQuantity"
                   class="w-12 m-auto border-none outline-none text-center"
                   v-model="ingredient.minimumQuantity"
                   @blur.prevent="changeMinimumQuantity(ingredient, ingredient.minimumQuantity)"
@@ -183,11 +183,13 @@ export default {
       this.$emit('del', element);
     },
     openEditInventory(idx) {
+      console.log("inventory", idx)
       this.$nextTick(() => {
         this.$refs.inventory[idx].focus();
       });
     },
     openEditMinimumQuantity(idx) {
+      console.log("minimum", idx)
       this.$nextTick(() => {
         this.$refs.minimumQuantity[idx].focus();
       });
