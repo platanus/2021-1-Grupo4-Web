@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col m-auto p-4 border-2 border-solid border-gray-400 box-border mb-6 w-96 order-none">
-    <div class="flex flex-row items-center w-auto h-auto self-stretch mb-4 px-1">
+  <div class="flex flex-col m-auto p-2 sm:p-4 border-2 border-solid border-gray-400 box-border mb-6 w-full order-none">
+    <div class="flex flex-row items-center self-stretch mb-4 px-1">
       <!-- Info -->
-      <div class="flex flex-col w-auto h-auto self-stretch flex-grow">
+      <div class="flex flex-col">
         <!-- nombre Proveedor -->
         <div
           class="flex items-center cursor-pointer w-auto h-5 text-xl font-bold"
@@ -61,7 +61,7 @@
       </div>
       <!-- flecha -->
       <div
-        class="flex items-center w-6 h-6 self-stretch justify-self-end"
+        class="flex items-center w-6 h-6 justify-self-end"
         @click="toggleOpenModal"
       >
         <div
@@ -87,9 +87,9 @@
     <div
       v-if="showingDetails"
     >
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col items-center sm:items-start w-full">
         <!-- Pagina Web -->
-        <div class="flex flex-row items-start order-none w-full justify-between">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start order-none w-full justify-between">
           <div class="flex flex-row items-center order-none w-48">
             <!-- Icono -->
             <div class="w-4 h-4 m-1.5">
@@ -120,7 +120,7 @@
           </div>
         </div>
         <!-- Datos bancarios -->
-        <div class="flex flex-row items-start order-none w-full justify-between">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start order-none w-full justify-between">
           <div class="flex flex-row items-center order-none w-48">
             <!-- Icono -->
             <div class="w-4 h-4 m-1.5">
@@ -144,7 +144,7 @@
           </button>
         </div>
         <!-- Minimo Compra -->
-        <div class="flex flex-row items-start order-none w-full justify-between">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start order-none w-full justify-between">
           <div class="flex flex-row items-center order-none w-48">
             <!-- Icono -->
             <div class="w-4 h-4 m-1.5">
@@ -174,7 +174,7 @@
           </p>
         </div>
         <!-- Tiempo de Despacho -->
-        <div class="flex flex-row items-start order-none w-full justify-between mb-2">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start order-none w-full justify-between mb-2">
           <div class="flex flex-row items-center order-none w-48">
             <!-- Icono -->
             <div class="w-4 h-4 m-1.5">
@@ -205,8 +205,8 @@
         </div>
       </div>
       <!-- botones -->
-      <div class="flex flex-row items-start order-2 self-stretch w-full justify-between">
-        <div>
+      <div class="flex flex-col sm:flex-row items-center sm:items-start order-2 self-stretch w-full justify-between">
+        <div class="pb-2 sm:pb-0">
           <button
             class="flex flex-row items-center justify-center border-2 border-red-600 hover:bg-gray-300 text-red-600 rounded order-1 flex-grow-1 px-2"
             @click="toggleDelModal"

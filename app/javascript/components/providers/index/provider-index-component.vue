@@ -32,7 +32,7 @@
     />
 
     <!-- info -->
-    <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+    <div class="flex flex-col pt-6 px-1 sm:pb-10 sm:px-10 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
       <!-- searchBar y button -->
       <div class="flex flex-col lg:flex-row pb-6">
         <div class="flex items-center py-2 pr-2 lg:w-1/2">
@@ -45,14 +45,14 @@
               >
             </span>
             <input
-              class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
+              class="w-full py-2 pl-10 sm:pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
               :placeholder="$t('msg.providers.search')"
               @keyup="filterProviders"
               v-model="searchQuery"
             >
           </div>
         </div>
-        <div class="flex justify-end w-full">
+        <div class="flex justify-center sm:justify-end w-full">
           <a
             class="my-2 h-10 font-bold py-2 px-6 rounded shadow-md flex-shrink-0 bg-green-500 hover:bg-green-700 text-white cursor-pointer"
             @click="toggleAddModal"
@@ -73,7 +73,7 @@
         </span>
       </div>
       <div
-        class="flex flex-col justify-center bg-gray-50 m-auto md:flex-row md:flex-wrap md:px-8"
+        class="flex flex-col w-full justify-center bg-gray-50 m-auto sm:flex-row sm:flex-wrap sm:px-8"
       >
         <p
           v-if="this.providers.length===0 && !loading"
@@ -83,11 +83,11 @@
         </p>
         <div
           v-else
-          class="flex bg-gray-50 px-16"
+          class="flex bg-gray-50 w-full sm:px-16"
           v-for="element in filterProviders"
           :key="element.id"
         >
-          <div>
+          <div class="w-full px-1">
             <provider-item
               :provider="element"
               @update="updateProvider"

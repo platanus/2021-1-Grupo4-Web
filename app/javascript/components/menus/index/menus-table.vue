@@ -1,40 +1,40 @@
 <template>
-  <div class="w-full">
+  <div class="w-full md:overflow-visible overflow-auto">
     <table class="w-full divide-y divide-gray-200">
       <thead class="justify-between bg-gray-600 border-2 border-gray-600">
         <tr class="text-left">
           <th
-            class="px-6 py-3 w-60"
+            class="w-6 pl-2 py-3 w-60"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.name') }}</span>
           </th>
           <th
-            class="px-6 py-3"
+            class="w-6 pl-2 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.totalCost') }}</span>
           </th>
           <th
-            class="px-6 py-3"
+            class="w-6 pl-2 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.portions') }}</span>
           </th>
           <th
-            class="px-6 py-3"
+            class="w-6 pl-2 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.recipesQuantity') }}</span>
           </th>
           <th
-            class="px-6 py-3"
+            class="w-6 pl-2 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.recipes') }}</span>
           </th>
           <th
-            class="px-6 py-3"
+            class="w-6 pl-2 py-3"
           >
             <span class="text-white font-bold">{{ $t('msg.menus.actions') }}</span>
           </th>
           <th
-            class="px-4 py-3"
+            class="w-6 py-3"
           />
         </tr>
       </thead>
@@ -47,7 +47,7 @@
           <!-- name -->
           <td
             key="name"
-            class="py-2 px-6"
+            class="py-2 w-6 pl-2"
           >
             <p>
               {{ menu.name }}
@@ -56,7 +56,7 @@
           <!-- totalPrice -->
           <td
             key="totalPrice"
-            class="py-2 px-6"
+            class="py-2 w-6 pl-2"
           >
             <p>
               {{ totalMenuPrice(menu.menuRecipes.data) | currency }}
@@ -64,7 +64,7 @@
           </td>
           <td
             key="portions"
-            class="py-2 px-6"
+            class="py-2 w-6 pl-2"
           >
             <p>
               {{ menu.portions }}
@@ -73,7 +73,7 @@
           <!-- recipesQuantity -->
           <td
             key="recipesQuantity"
-            class="py-2 px-6"
+            class="py-2 w-6 pl-2"
           >
             <menus-table-recipes-quantity
               :menu="menu"
@@ -82,14 +82,14 @@
           <!-- recipes -->
           <td
             key="recipes"
-            class="py-2 px-6"
+            class="py-2 w-6 pl-2"
           >
             <menus-table-recipes
               :menu="menu"
             />
           </td>
           <td
-            class="content-center py-4 px-6 items-center"
+            class="content-center py-4 w-6 pl-2 items-center"
           >
             <div class="flex flex-col">
               <menu-shopping-list
@@ -114,9 +114,10 @@
             </div>
           </td>
           <td
-            class="content-center"
+            class="content-center w-6 pl-1"
           >
             <dots-dropdown
+              class="w-6"
               :elements="{
                 edit:true,
                 del:true,
@@ -261,8 +262,8 @@ export default {
       const listOfMessages = menuIngredients.map((obj) =>
         obj.ingredients.map((element) =>
           `Has reducido ${Math.round(element.quantity * this.numberToGetDecimals) / this.numberToGetDecimals}
-          ${element.measure} de <strong>${element.name} </strong> y quedaste en <strong> 
-          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals} 
+          ${element.measure} de <strong>${element.name} </strong> y quedaste en <strong>
+          ${Math.round(element.inventory * this.numberToGetDecimals) / this.numberToGetDecimals}
           ${element.measure} </strong>`,
         ));
 

@@ -45,7 +45,7 @@
             :msg-error="errors.name"
           />
         </div>
-        <div class="relative w-2/5 xl:w-1/4 py-2">
+        <div class="relative w-3/5 xl:w-1/4 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
             {{ $t('msg.recipes.portions') }}
           </div>
@@ -57,7 +57,7 @@
             :msg-error="errors.portions"
           />
         </div>
-        <div class="elative w-2/5 xl:w-1/4 py-2">
+        <div class="relative w-3/5 xl:w-1/4 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-1">
             {{ $t('msg.recipes.preparation') }}
           </div>

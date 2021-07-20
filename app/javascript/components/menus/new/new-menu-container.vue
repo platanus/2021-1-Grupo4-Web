@@ -23,10 +23,10 @@
       @closeAlert="closeAlert"
     />
 
-    <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
+    <div class="flex flex-col py-6 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-8">
       <!-- Menu Name -->
-      <div class="flex flex-col xl:flex-row items-start justify-start mb-8 px-4">
-        <div class="mr-5 relative w-3/5 xl:w-2/5 py-2">
+      <div class="flex flex-col xl:flex-row items-start justify-start 4 px-4">
+        <div class="mr-5 relative w-3/5 xl:w-2/5 pt-2 pb-4">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.name') }}
           </div>

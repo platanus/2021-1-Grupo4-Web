@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-row divide-x-2 divide-gray-400 border-2 border-solid border-gray-400 box-border my-2">
+  <div class="flex flex-col md:flex-row md:divide-x-2 divide-gray-400 border-2 border-solid border-gray-400 box-border my-2">
     <div
-      class="flex flex-row cursor-pointer w-10/12 justify-between items-center p-6 static h-24 bg-white flex-none flex-grow-0 self-stretch"
+      class="flex flex-row cursor-pointer w-full md:w-10/12 justify-between items-center p-6 h-24 bg-white flex-none flex-grow-0 self-stretch"
       @click="goToRecipe"
     >
       <recipes-item-info
