@@ -65,12 +65,12 @@
         </p>
         <div v-else>
           <recipes-list
+            :page-size="5"
+            :filter="searchQuery"
             :allrecipes="filteredRecipes"
           />
         </div>
       </div>
-      <!--Pagination-->
-      <recipes-pagination />
     </div>
 
     <!-- Filters Modal-->
@@ -97,7 +97,6 @@ import { getRecipes } from '../../../api/recipes.js';
 import { intGeqZero } from '../../../utils/validations.js';
 import Filters from './filters';
 import FilterPopupContent from './filter-popup-content';
-import RecipesPagination from './pagination/recipes-pagination';
 import RecipesList from './recipes-list/recipes-list';
 import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
 
@@ -105,7 +104,6 @@ export default {
   components: {
     Filters,
     FilterPopupContent,
-    RecipesPagination,
     RecipesList,
   },
 
