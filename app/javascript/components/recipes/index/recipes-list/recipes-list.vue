@@ -59,6 +59,8 @@ export default {
     allrecipes() {
       if (this.currentPage > this.finalPage) {
         this.currentPage = this.finalPage;
+      } else if (this.currentPage <= 0) {
+        this.currentPage = 1;
       }
     },
     filter() {
