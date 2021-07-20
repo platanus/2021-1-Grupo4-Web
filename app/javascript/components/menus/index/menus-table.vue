@@ -272,7 +272,8 @@ export default {
     getMessageConfirmationElementsWithInventory(menuIngredients) {
       const listOfMessagesWithInventory = menuIngredients.map((obj) =>
         obj.ingredients.map((element) => {
-          let nuevoInventario = (element.inventory - element.quantity).toFixed(this.numberDecimals);
+          let nuevoInventario = Math.round((element.inventory - element.quantity) * this.numberToGetDecimals) /
+          this.numberToGetDecimals;
           nuevoInventario = Math.round(nuevoInventario * this.numberToGetDecimals) / this.numberToGetDecimals;
           if (nuevoInventario >= 0) {
             return ` ${element.name}: de ${Math.round(element.inventory * this.numberToGetDecimals) /

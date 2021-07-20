@@ -11,6 +11,14 @@
         {{ $t(`msg.users.profile`) }}
       </h1>
     </div>
+    <div class="pb-4">
+      <base-alert
+        :variable="passwordChanged"
+        :alert-name="'passwordChanged'"
+        :success="true"
+        @closeAlert="closeAlert"
+      />
+    </div>
     <!-- form -->
     <div class="flex flex-col justify-center items-center p-8 bg-white rounded flex-none flex-grow-0 w-4/5 lg:w-1/2">
       <form
@@ -91,19 +99,26 @@ export default {
       },
       userEmail: '',
       errors: { password: '', passwordConfirmation: '' },
+      passwordChanged: false,
     };
   },
 
   methods: {
-
+    closeAlert(alert) {
+      if (alert === 'passwordChanged') {
+        this.passwordChanged = false;
+      }
+    },
     async changePassword() {
       if (this.validations()) {
+        this.passwordChanged = true;
         try {
           const response = await changeUserPassword(
             this.form.password, this.form.passwordConfirmation);
 
           localStorage.setItem('token', response.data.data.attributes.authenticationToken);
-          window.location.href = '/';
+          this.form.password = '';
+          this.form.passwordConfirmation = '';
         } catch (error) {
           this.errors.password = 'unhandledChangePassword';
         }
