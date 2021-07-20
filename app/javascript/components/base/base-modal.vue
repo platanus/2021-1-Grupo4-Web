@@ -26,7 +26,7 @@
           <button
             v-if="back"
             @click="goBack"
-            class="cursor-pointer text-white"
+            class="cursor-pointer text-white focus:outline-none"
           >
             <span
               class="text-white"

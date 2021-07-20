@@ -28,6 +28,7 @@ export default {
     geqZero: 'Debe ser mayor o igual a cero',
     intGeqZero: 'Debe ser un entero mayor o igual a cero',
     invalidEmail: 'El correo no es válido',
+    duplicatedMeasure: 'Esta medida está duplicada',
 
     users: {
       registerTitle: 'Crear cuenta',

@@ -16,6 +16,7 @@
             type="text"
             :placeholder="$t('msg.ingredients.name')"
             v-model="form.name"
+            @change="resetErrors"
           >
           <base-error-paragraph
             :msg-error="ingredientErrors.name"
@@ -75,7 +76,7 @@
         >
           {{ $t('msg.ingredients.alternativeUnit') }}
         </div>
-        <div class="flex -mx-3 w-96 items-center">
+        <div class="flex -mx-3 w-96 items-start">
           <div class="w-full md:w-2/5 px-3 mb-0 md:mb-6">
             <!--Quantity -->
             <label
@@ -91,10 +92,11 @@
               min="1"
               type="number"
               :placeholder="unit.name"
+              ref="quantityInput"
               @change="autoAddUnit(unit)"
             >
             <base-error-paragraph
-              :msg-error="ingredientErrors.quantity"
+              :msg-error="ingredientErrors.quantity[index]"
             />
           </div>
           <div class="w-full px-3 mb-6">
@@ -121,6 +123,7 @@
                 v-if="editMode"
                 :selected-measure="unit.name"
                 @selectMeasure="changeUnitName(unit, ...arguments)"
+                @change="resetErrors"
               />
               <button
                 type="button"
@@ -136,7 +139,7 @@
               </button>
             </div>
             <base-error-paragraph
-              :msg-error="ingredientErrors.measure"
+              :msg-error="ingredientErrors.measure[index]"
             />
           </div>
         </div>
@@ -167,6 +170,7 @@
             class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
             v-model="form.price"
             :placeholder="$t('msg.ingredients.price')"
+            @change="resetErrors"
           />
           <base-error-paragraph
             :msg-error="ingredientErrors.price"
@@ -248,14 +252,16 @@ export default {
     addMeasure() {
       const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
       if (lastItem.name && lastItem.quantity) {
-        this.form.ingredientMeasuresAttributes.push({ name: undefined, quantity: undefined, id: undefined });
+        this.form.ingredientMeasuresAttributes.push({
+          name: undefined, quantity: undefined, id: undefined,
+        });
       }
     },
     deleteUnit(unit) {
       this.form.ingredientMeasuresAttributes = this.form
         .ingredientMeasuresAttributes.filter((originalUnit) => originalUnit !== unit);
       if (unit.id !== undefined) {
-        this.measuresToDelete.push(unit.id);
+        this.measuresToDelete.push({ id: unit.id, name: unit.name });
       }
     },
     changeUnitName(unit, measure) {
@@ -263,7 +269,7 @@ export default {
       this.autoAddUnit(unit);
     },
     autoAddUnit(currentUnit) {
-      const decimals = 100; // la cantidad de 0s es la cantidad de decimales que tendrá la conversion.
+      const decimals = 1000; // la cantidad de 0s es la cantidad de decimales que tendrá la conversion.
       const presentUnits = this.form.ingredientMeasuresAttributes.map((unit) => unit.name);
       if (this.directConvertions[currentUnit.name] && currentUnit.quantity !== undefined) {
         Object.keys(this.directConvertions[currentUnit.name]).forEach((unit) => {
@@ -280,6 +286,8 @@ export default {
           }
         });
       }
+
+      this.resetErrors();
     },
     pushAutoUnit(name, quantity) {
       const lastItem = this.form.ingredientMeasuresAttributes[this.form.ingredientMeasuresAttributes.length - 1];
@@ -296,6 +304,10 @@ export default {
 
       return providers.data.data.map((provider) => provider.attributes.name);
     },
+
+    resetErrors() {
+      this.$emit('resetErrors');
+    },
   },
   async created() {
     if (this.marketIngredient === undefined) {
@@ -303,6 +315,7 @@ export default {
         providerName, name, sku, price,
         currency, minimumQuantity, otherMeasures,
       } = this.ingredient;
+
       let ingredientMeasuresAttributes;
       if (otherMeasures) {
         ingredientMeasuresAttributes = otherMeasures.data.map(unit =>

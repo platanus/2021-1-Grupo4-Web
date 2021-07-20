@@ -20,7 +20,8 @@ class Api::V1::IngredientSerializer < ActiveModel::Serializer
 
   def other_measures
     ActiveModelSerializers::SerializableResource.new(
-      object.ingredient_measures, each_serializer: Api::V1::IngredientMeasureSerializer
+      object.ingredient_measures.order(primary: :desc),
+      each_serializer: Api::V1::IngredientMeasureSerializer
     )
   end
 
