@@ -5,36 +5,21 @@
       <div class="text-4xl font-bold">
         {{ $t('msg.ingredients.title') }}
       </div>
-      <span
-        class="flex m-auto w-8 h-8 ml-2"
-        v-if="loading"
-      >
-        <base-spinner />
-      </span>
     </div>
 
-    <!-- Alert -->
-    <div
-      v-if="unexpectedError"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert"
-      >
-        <img
-          svg-inline
-          src="../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <!-- Alert unexpected error -->
+    <base-alert
+      :variable="unexpectedError"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
 
     <div class="flex flex-col pt-6 pb-10 px-10 w-auto h-auto bg-gray-50 my-10">
       <!--SearchBar y Button-->
-      <div class="flex flex-col lg:flex-row pb-4">
+      <div
+        class="flex flex-col lg:flex-row pb-4"
+      >
         <div class="flex items-center py-2 pr-2 lg:w-1/2">
           <div class="relative text-yellow-700 w-full">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -77,6 +62,16 @@
       </div>
 
       <!--Table-->
+      <div
+        class="w-auto m-auto"
+        v-if="loading"
+      >
+        <span
+          class="flex w-12 h-12 ml-2"
+        >
+          <base-spinner />
+        </span>
+      </div>
       <div v-if="!loading">
         <p
           v-if="this.ingredients.length===0"
@@ -95,6 +90,7 @@
             @edit="toggleEditModal"
             @del="toggleDelModal"
             @updateInventory="UpdateInventory"
+            @updateMinimumQuantity="updateMinimumQuantity"
           />
         </div>
       </div>
@@ -116,6 +112,7 @@
         :edit-mode="false"
         :market-ingredient="marketIngredient"
         :ingredient-errors="errors"
+        @resetErrors="cleanErrors"
       />
     </base-modal>
 
@@ -148,6 +145,7 @@
         :edit-mode="true"
         :ingredient="this.ingredientToEdit"
         :ingredient-errors="errors"
+        @resetErrors="cleanErrors"
       />
     </base-modal>
 
@@ -186,9 +184,9 @@
 
 <script>
 
-import Vue from 'vue';
-import { getIngredients, postIngredient, deleteIngredient,
+import { getIngredient, getIngredients, postIngredient, deleteIngredient,
   editIngredient, getCriticalAssociations } from './../../api/ingredients.js';
+import { floatNonZero, intGeqZero, geqZero, requiredField } from '../../utils/validations.js';
 import IngredientsForm from './ingredients-form';
 import IngredientsTable from './ingredients-table';
 import SearchMarketIngredients from './search-market-ingredients';
@@ -213,8 +211,8 @@ export default {
       unexpectedError: false,
       errors: {
         name: '',
-        quantity: '',
-        measure: '',
+        quantity: [],
+        measure: [],
         price: '',
         minimumQuantity: '',
       },
@@ -228,19 +226,7 @@ export default {
   },
 
   async created() {
-    this.loading = true;
-    try {
-      const response = await getIngredients();
-      this.ingredients = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-    } catch (error) {
-      this.unexpectedError = true;
-    } finally {
-      this.loading = false;
-    }
-    this.roundInventory();
+    await this.fetchIngredients();
   },
 
   computed: {
@@ -257,6 +243,43 @@ export default {
   },
 
   methods: {
+    async fetchIngredients() {
+      this.loading = true;
+      try {
+        const response = await getIngredients();
+        this.ingredients = response.data.data.map((element) => ({
+          id: element.id,
+          ...element.attributes,
+        }));
+      } catch (error) {
+        this.unexpectedError = true;
+      } finally {
+        this.loading = false;
+      }
+      this.roundInventory();
+    },
+
+    async fetchIngredient(ingredientId) {
+      try {
+        const response = await getIngredient(ingredientId);
+        const element = response.data.data;
+        this.ingredients.forEach((elem, idx) => {
+          if (elem.id === element.id) {
+            this.ingredients[idx] = {
+              id: element.id,
+              ...element.attributes,
+            };
+          }
+
+          const inventory = this.ingredients[idx].inventory;
+          // eslint-disable-next-line no-magic-numbers
+          this.ingredients[idx].inventory = Math.round(inventory * 100) / 100;
+        });
+      } catch (error) {
+        this.unexpectedError = true;
+      }
+    },
+
     closeAlert() {
       this.unexpectedError = false;
     },
@@ -283,7 +306,6 @@ export default {
       if (this.marketIngredient) {
         this.showingAdd = !this.showingAdd;
       } else {
-        // Aqui arreglar si se vuelve a la pagina principal o no
         this.showingAdd = !this.showingAdd;
       }
     },
@@ -321,26 +343,31 @@ export default {
       }
     },
 
+    // eslint-disable-next-line max-statements
     async validateAddIngredient() {
       if (this.validations(this.$refs.addIngredientInfo.form)) {
         const ingredientsInfo = this.$refs.addIngredientInfo.form;
+        if (ingredientsInfo.minimumQuantity === undefined) {
+          ingredientsInfo.minimumQuantity = 0;
+        }
         try {
           this.showingAdd = !this.showingAdd;
           this.loading = true;
-          ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
-            .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
-          const {
-            data:
-            { data: { id, attributes },
-            },
-          } = await postIngredient(ingredientsInfo);
-          this.ingredients.push({ id, ...attributes });
+
+          this.filterMeasures(ingredientsInfo);
+          const { data: { data: { id, attributes } } } = await postIngredient(ingredientsInfo);
+          this.ingredients.unshift({ id, ...attributes });
         } catch (error) {
           this.unexpectedError = true;
         } finally {
           this.loading = false;
         }
       }
+    },
+
+    filterMeasures(ingredientsInfo) {
+      ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+        .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
     },
 
     async addIngredient() {
@@ -360,32 +387,16 @@ export default {
       this.marketIngredient = productForm;
     },
 
-    addInventoryToIngredient(ingredientsInfo, id) {
-      this.ingredients.forEach(elem => {
-        if (elem.id === id) {
-          ingredientsInfo.inventory = elem.inventory;
-        }
-      });
-
-      return ingredientsInfo;
-    },
-
-    // eslint-disable-next-line max-statements
     async editIngredient() {
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
-      if (this.checkErrorsEditIngredient(ingredientsInfo)) {
-        return;
-      }
       if (this.validations(this.$refs.editIngredientInfo.form)) {
         try {
           this.showingEdit = !this.showingEdit;
           this.loading = true;
-          ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
-            .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
           this.addMeasuresToDelete(ingredientsInfo);
-          const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
-          await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
-          this.updateIngredient(ingredientsInfoFinal);
+
+          await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
+          await this.fetchIngredient(this.ingredientToEdit.id);
         } catch (error) {
           this.unexpectedError = true;
         } finally {
@@ -393,30 +404,12 @@ export default {
         }
       }
     },
-    checkErrorsEditIngredient(info) {
-      if (!info.name || !info.ingredientMeasuresAttributes[0].quantity ||
-      !info.ingredientMeasuresAttributes[0].name) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjAlert'));
 
-        return true;
-      } else if (info.ingredientMeasuresAttributes[0].quantity < 1) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjMinQuantity'));
-
-        return true;
-      } else if (info.minimumQuantity < 0) {
-        // eslint-disable-next-line no-alert
-        alert(this.$t('msg.ingredients.msjNegativeQuantity'));
-
-        return true;
-      }
-
-      return false;
-    },
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
-        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
+        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push(
+          { id: elem.id, _destroy: true },
+        ));
     },
 
     async deleteIngredient() {
@@ -438,68 +431,67 @@ export default {
         this.unexpectedError = true;
       }
     },
-
-    async updateIngredient(ingredientEdited) {
-      ingredientEdited.quantity = ingredientEdited.ingredientMeasuresAttributes[0].quantity;
-      ingredientEdited.measure = ingredientEdited.ingredientMeasuresAttributes[0].name;
-      ingredientEdited.id = this.ingredientToEdit.id;
-      ingredientEdited.otherMeasures = { data: [] };
-      ingredientEdited.providerName = ingredientEdited.provider_name;
-      ingredientEdited.ingredientMeasuresAttributes.forEach(element => {
-        ingredientEdited.otherMeasures.data
-          .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
-      });
-      const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
-      Vue.set(this.ingredients, objectIndex, ingredientEdited);
+    async updateMinimumQuantity(ingredient) {
+      try {
+        await editIngredient(ingredient.id, { 'minimumQuantity': ingredient.minimumQuantity });
+      } catch (error) {
+        this.unexpectedError = true;
+      }
     },
 
     cleanErrors() {
       this.errors = {
         name: '',
-        quantity: '',
-        measure: '',
+        quantity: [],
+        measure: [],
         price: '',
         minimumQuantity: '',
       };
     },
 
-    // eslint-disable-next-line max-statements,complexity
     validations(form) {
       this.cleanErrors();
+      this.errors.price = intGeqZero(form.price, this.errors.price);
+      this.errors.minimumQuantity = geqZero(form.minimumQuantity, this.errors.minimumQuantity);
+      this.errors.name = requiredField(form.name, this.errors.name);
+      this.errors.price = requiredField(form.price, this.errors.price);
 
-      const quantity = form.ingredientMeasuresAttributes[0].quantity;
+      const errorsCopy = JSON.parse(JSON.stringify(this.errors));
+      const correctAttributes = !(Object.values(errorsCopy).some(value => value.length > 0));
+      const correctMeasures = this.measuresValidations(form);
 
-      if (!(typeof (quantity - 0) === 'number') || !(quantity > 0)) {
-        this.errors.quantity = 'floatNonZero';
-      }
+      return correctAttributes && correctMeasures;
+    },
 
-      if (!(Number.isInteger(form.price - 0)) || !(form.price >= 0)) {
-        this.errors.price = 'intGeqZero';
-      }
+    measuresValidations(form) {
+      let correct = this.duplicatedMeasuresValidations(form);
 
-      if (form.minimumQuantity && !(form.minimumQuantity >= 0)) {
-        this.errors.minimumQuantity = 'geqZero';
-      }
+      form.ingredientMeasuresAttributes.forEach((pair, idx) => {
+        this.errors.quantity[idx] = requiredField(pair.quantity, this.errors.quantity[idx]);
+        this.errors.quantity[idx] = floatNonZero(pair.quantity, this.errors.quantity[idx]);
+        this.errors.measure[idx] = requiredField(pair.name, this.errors.measure[idx]);
 
-      if (!form.name) {
-        this.errors.name = 'requiredField';
-      }
+        if (!!this.errors.measure[idx] || !!this.errors.quantity[idx]) {
+          correct = false;
+        }
+      });
 
-      if (!form.ingredientMeasuresAttributes[0].quantity) {
-        this.errors.quantity = 'requiredField';
-      }
+      return correct;
+    },
 
-      if (!form.ingredientMeasuresAttributes[0].name) {
-        this.errors.measure = 'requiredField';
-      }
+    duplicatedMeasuresValidations(form) {
+      let correct = true;
+      const auxiliaryMeasureAttributes = JSON.parse(JSON.stringify(form.ingredientMeasuresAttributes));
+      const names = auxiliaryMeasureAttributes.map((unit) => unit.name && unit.name.toLowerCase());
 
-      if (!form.price) {
-        this.errors.price = 'requiredField';
-      }
+      auxiliaryMeasureAttributes.forEach((pair, idx) => {
+        if (names.filter((value) => pair.name && value === pair.name.toLowerCase()).length > 1) {
+          this.errors.measure[idx] = 'duplicatedMeasure';
+          correct = false;
+        }
+      });
 
-      const validForm = !(Object.values(this.errors).some(value => !!value));
-
-      return validForm;
+      return correct;
     },
   },
 };

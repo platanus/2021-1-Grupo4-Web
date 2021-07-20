@@ -1,5 +1,11 @@
 import client from '../auth/authClient.js';
 
+function getIngredient(ingredientId) {
+  return (client
+    .get(`/ingredients/${ingredientId}`, {
+    }));
+}
+
 function getIngredients() {
   return (client
     .get('/ingredients', {
@@ -49,6 +55,7 @@ function getCriticalAssociations(ingredientId) {
 }
 
 export {
+  getIngredient,
   getIngredients,
   postIngredient,
   deleteIngredient,

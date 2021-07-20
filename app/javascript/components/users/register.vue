@@ -19,12 +19,14 @@
       <!-- Alert -->
       <div
         v-if="takenEmailAlert"
-        class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+        class="flex mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
         role="alert"
       >
-        <span class="block sm:inline">{{ takenEmailAlert[0] }}</span>
-        <span
-          class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
+        <div>
+          <span class="block sm:inline mr-2">{{ takenEmailAlert[0] }}</span>
+        </div>
+        <div
+          class="m-auto cursor-pointer"
           @click="closeAlert"
         >
           <img
@@ -32,7 +34,7 @@
             src="../../../assets/images/cancel-red-svg.svg"
             class="h-5 w-5 text-red-700"
           >
-        </span>
+        </div>
       </div>
       <form
         @submit.prevent="register"

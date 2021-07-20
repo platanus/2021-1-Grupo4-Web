@@ -28,12 +28,14 @@ export default {
     geqZero: 'Debe ser mayor o igual a cero',
     intGeqZero: 'Debe ser un entero mayor o igual a cero',
     invalidEmail: 'El correo no es válido',
+    duplicatedMeasure: 'Esta medida está duplicada',
 
     users: {
       registerTitle: 'Crear cuenta',
       loginTitle: 'Iniciar sesión',
       labelEmail: 'Correo',
-      labelPassword: 'Nueva contraseña',
+      labelPassword: 'Contraseña',
+      labelNewPassword: 'Nueva contraseña',
       labelPasswordConfirmation: 'Confirmar contraseña',
       placeholderEmail: 'Ingresa tu correo',
       register: 'Registrarse',
@@ -83,9 +85,6 @@ export default {
       defaultUnit: 'Unidad por defecto',
       alternativeUnit: 'Unidades alternativas',
       addUnit: 'Agregar Unidad',
-      msjAlert: 'Debes ingresar el nombre, la cantidad y la unidad',
-      msjMinQuantity: 'El inventario debe ser mayor o igual a 1',
-      msjNegativeQuantity: 'La cantidad mínima debe ser mayor o igual a 0',
       associationWarning: 'Este ingrediente se encuentra en la(s) siguiente(s) receta(s):',
       newMeasure: 'Crear la medida',
       inventory: {
@@ -209,6 +208,7 @@ export default {
       dataMissing: 'Faltan los siguientes datos:',
       dataCopied: 'Datos copiados correctamente!',
       providerNameError: 'Ya tienes agregado a este proveedor',
+      noInformation: 'Sin información',
     },
   },
 };

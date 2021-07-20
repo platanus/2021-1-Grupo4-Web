@@ -27,7 +27,7 @@
             class="block text-gray-700 text-sm font-bold mb-2"
             for="email"
           >
-            {{ $t('msg.users.labelPassword') }}
+            {{ $t('msg.users.labelNewPassword') }}
           </label>
           <input
             v-model="form.password"

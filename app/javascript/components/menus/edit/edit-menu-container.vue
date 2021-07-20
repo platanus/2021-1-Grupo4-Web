@@ -15,29 +15,18 @@
       </div>
     </div>
 
-    <!-- Alert -->
-    <div
-      v-if="error"
-      class="mt-4 w-max bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-      role="alert"
-    >
-      <span class="mr-7 block sm:inline">{{ $t('msg.unexpectedError') }}</span>
-      <span
-        class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-        @click="closeAlert"
-      >
-        <img
-          svg-inline
-          src="../../../../assets/images/cancel-red-svg.svg"
-          class="h-5 w-5 text-red-700"
-        >
-      </span>
-    </div>
+    <!-- Alert unexpected error -->
+    <base-alert
+      :variable="error"
+      :alert-name="'unexpectedError'"
+      :success="false"
+      @closeAlert="closeAlert"
+    />
 
     <div class="flex flex-col py-8 px-6 w-auto h-auto bg-gray-50 flex-grow-0 my-10">
-      <div class="flex flex-row">
+      <div class="flex flex-col xl:flex-row items-start justify-start mb-8 px-4">
         <!-- Menu Name -->
-        <div class="relative w-3/5 ml-4">
+        <div class="mr-5 relative w-3/5 xl:w-2/5 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.name') }}
           </div>
@@ -45,57 +34,44 @@
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuName"
           >
-          <p
-            v-if="errors.name"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${errors.name}`) }}
-          </p>
+          <base-error-paragraph
+            :msg-error="errors.name"
+          />
         </div>
         <!-- Menu Portions -->
-        <div class="relative w-2/5 ml-4">
+        <div class="relative w-2/5 xl:w-1/4 py-2">
           <div class="text-gray-600 text-sm absolute bg-gray-50 px-1 left-2 -top-2">
             {{ $t('msg.recipes.portions') }}
           </div>
           <input
             class="w-full h-16 bg-gray-50 border border-gray-600 box-border rounded-md flex-none flex-grow-0 px-5"
             v-model="menuPortions"
+            type="number"
+            min="0"
           >
-          <p
-            v-if="errors.portions"
-            class="mt-2 ml-1 text-xs text-red-400"
-          >
-            {{ $t(`msg.${errors.portions}`) }}
-          </p>
+          <base-error-paragraph
+            :msg-error="errors.portions"
+          />
         </div>
       </div>
       <!-- Recipes -->
-      <div class="flex justify-between mb-8">
-        <div class="w-1/2 p-4">
-          <div class="flex flex-col w-full">
+      <div class="flex flex-col lg:flex-row justify-between mb-8">
+        <div class="w-full lg:w-1/2 p-4">
+          <div class="flex flex-col">
             <!-- search bar -->
-            <div class="flex w-full relative text-yellow-700 my-4">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <img
-                  svg-inline
-                  src="../../../../assets/images/magnifyng-glass-svg.svg"
-                  class="w-6 h-6 text-yellow-700"
-                >
-              </span>
-              <input
-                class="flex py-2 px-12 w-96 h-16 bg-gray-50 border-2 border-gray-600 rounded focus:outline-none"
-                :placeholder="$t('msg.recipes.search')"
-                autocomplete="off"
-                @keyup="filterRecipes"
-                v-model="searchQuery"
-              >
-            </div>
+            <input
+              class="flex items-center py-2 px-5 w-auto h-16 bg-gray-50 border-2 border-gray-600 box-border rounded self-stretch mb-8"
+              :placeholder="$t('msg.recipes.search')"
+              autocomplete="off"
+              @keyup="filterRecipes"
+              v-model="searchQuery"
+            >
             <!-- available recipes -->
             <div
               v-if="!loading && filterRecipes.length > 0"
-              class="flex flex-col bg-gray-200 overflow-auto"
+              class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
             >
-              <div class="min-w-max">
+              <div class="min-w-full">
                 <add-recipe-card
                   v-for="recipe in filterRecipes"
                   :key="recipe.id"
@@ -126,7 +102,7 @@
           </div>
         </div>
         <!-- selected recipes -->
-        <div class="w-1/2 p-4">
+        <div class="w-full lg:w-1/2 p-4">
           <div class="flex flex-col self-stretch flex-grow bg-gray-50">
             <div class="flex h-6 bg-gray-50 font-sans font-medium text-base text-black self-stretch mb-3">
               {{ $t('msg.menus.selectedRecipes') }} ({{ selectedRecipes.length }})
@@ -138,10 +114,10 @@
               </span>
             </div>
             <div
-              class="flex flex-col bg-gray-200 overflow-auto"
+              class="flex flex-col items-start w-auto h-96 flex-none flex-grow-0 bg-gray-200 overflow-auto"
               v-if="selectedRecipes.length > 0 && !loading"
             >
-              <div class="min-w-max">
+              <div class="min-w-full">
                 <selected-recipes-card
                   v-for="recipeSelected in selectedRecipes"
                   :key="recipeSelected.id"
@@ -183,7 +159,7 @@
 <script>
 import { getRecipes } from '../../../api/recipes.js';
 import { getMenu, updateMenu } from '../../../api/menus.js';
-import { intGeqZero, requiredField } from '../../../utils/validations.js';
+import { intNonZero, requiredField } from '../../../utils/validations.js';
 import SelectedRecipesCard from '../base/selected-recipes-card.vue';
 import AddRecipeCard from '../base/add-recipe-card';
 import { getPriceOfSelectedIngredient } from '../../../utils/recipeUtils';
@@ -360,16 +336,14 @@ export default {
       });
     },
 
-    // eslint-disable-next-line max-statements,complexity
     validations() {
       this.errors = { name: '', portions: '' };
 
-      this.errors.portions = intGeqZero(this.menuPortions, this.errors.portions);
+      this.errors.portions = intNonZero(this.menuPortions, this.errors.portions);
       this.errors.name = requiredField(this.menuName, this.errors.name);
       this.errors.portions = requiredField(this.menuPortions, this.errors.portions);
-      const validForm = !(Object.values(this.errors).some(value => !!value));
 
-      return validForm;
+      return !(Object.values(this.errors).some(value => !!value));
     },
   },
 };

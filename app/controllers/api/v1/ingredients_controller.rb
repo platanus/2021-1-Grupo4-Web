@@ -46,6 +46,8 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       name: ingredient_params[:provider_name], user: current_user
     )
 
+    ingredient_params[:ingredient_measures_attributes].first[:primary] = true
+
     respond_with ingredients.create!(
       ingredient_params.except(:provider_name).merge(provider_id: provider.id)
     )
@@ -67,8 +69,19 @@ class Api::V1::IngredientsController < Api::V1::BaseController
         name: ingredient_params[:provider_name], user: current_user
       )
 
-      respond_with ingredient.update!(
-        ingredient_params.except(:provider_name).merge(provider_id: provider.id)
+      respond_with update_starting_with_delete_of_measures(provider)
+    end
+  end
+
+  def update_starting_with_delete_of_measures(provider)
+    ActiveRecord::Base.transaction do
+      ingredient.update!(ingredient_measures_attributes: ingredient_measures_to_delete)
+
+      ingredient.update!(
+        ingredient_params.except(:provider_name, :ingredient_measures_attributes).merge(
+          provider_id: provider.id,
+          ingredient_measures_attributes: ingredient_measures_to_add
+        )
       )
     end
   end
@@ -97,6 +110,18 @@ class Api::V1::IngredientsController < Api::V1::BaseController
     }
   end
 
+  def ingredient_measures_to_add
+    ingredient_measures_params.to_h[:ingredient_measures_attributes].filter do |hash|
+      !hash[:_destroy]
+    end
+  end
+
+  def ingredient_measures_to_delete
+    ingredient_measures_params.to_h[:ingredient_measures_attributes].filter do |hash|
+      hash[:_destroy]
+    end
+  end
+
   def ingredient_params
     params.require(:ingredient).permit(
       :name,
@@ -108,6 +133,12 @@ class Api::V1::IngredientsController < Api::V1::BaseController
       :minimum_quantity,
       ingredient_measures_attributes: [:id, :name, :quantity, :primary, :_destroy]
     )
+  end
+
+  def ingredient_measures_params
+    params.require(:ingredient).permit(ingredient_measures_attributes: [
+                                         :id, :name, :quantity, :primary, :_destroy
+                                       ])
   end
 
   def update_inventories_params

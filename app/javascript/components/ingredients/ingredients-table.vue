@@ -98,24 +98,29 @@
           </td>
           <!-- minimum quantity -->
           <td class="py-2">
-            <p
-              class="ml-2 font-medium"
-              v-if="ingredient.minimumQuantity == ''"
+            <div
+              class="flex justify-start"
             >
-              0
-            </p>
-            <p
-              class="ml-2 font-medium"
-              v-if="ingredient.minimumQuantity != undefined"
-            >
-              {{ ingredient.minimumQuantity }}
-            </p>
-            <p
-              class="ml-2 font-medium"
-              v-if="ingredient.minimumQuantity == undefined"
-            >
-              0
-            </p>
+              <img
+                svg-inline
+                src="../../../assets/images/pencil-svg.svg"
+                class="w-4 h-4 cursor-pointer"
+                @click="openEditMinimumQuantity(idx)"
+              >
+              <div class="flex">
+                <input
+                  type="number"
+                  min="0"
+                  ref="minimumQuantity"
+                  class="w-12 m-auto border-none outline-none text-center"
+                  v-model="ingredient.minimumQuantity"
+                  @blur.prevent="changeMinimumQuantity(ingredient, ingredient.minimumQuantity)"
+                >
+                <div class="flex m-auto">
+                  {{ ingredient.measure }}
+                </div>
+              </div>
+            </div>
           </td>
           <td class="content-center">
             <dots-dropdown
@@ -182,6 +187,11 @@ export default {
         this.$refs.inventory[idx].focus();
       });
     },
+    openEditMinimumQuantity(idx) {
+      this.$nextTick(() => {
+        this.$refs.minimumQuantity[idx].focus();
+      });
+    },
     changeInventory(ingredient, inventory) {
       if (inventory && parseFloat(inventory) >= 0) {
         ingredient.inventory = inventory;
@@ -189,6 +199,15 @@ export default {
       } else {
         const originalIngredient = this.originalIngredients.filter(original => original.id === ingredient.id)[0];
         ingredient.inventory = originalIngredient.inventory;
+      }
+    },
+    changeMinimumQuantity(ingredient, minimumQuantity) {
+      if (minimumQuantity && parseFloat(minimumQuantity) >= 0) {
+        ingredient.minimumQuantity = minimumQuantity;
+        this.$emit('updateMinimumQuantity', ingredient);
+      } else {
+        const originalIngredient = this.originalIngredients.filter(original => original.id === ingredient.id)[0];
+        ingredient.minimumQuantity = originalIngredient.minimumQuantity;
       }
     },
     lastIngredient(idx) {
