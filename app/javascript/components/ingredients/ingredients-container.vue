@@ -112,6 +112,7 @@
         :edit-mode="false"
         :market-ingredient="marketIngredient"
         :ingredient-errors="errors"
+        @resetErrors="cleanErrors"
       />
     </base-modal>
 
@@ -144,6 +145,7 @@
         :edit-mode="true"
         :ingredient="this.ingredientToEdit"
         :ingredient-errors="errors"
+        @resetErrors="cleanErrors"
       />
     </base-modal>
 
@@ -182,8 +184,7 @@
 
 <script>
 
-import Vue from 'vue';
-import { getIngredients, postIngredient, deleteIngredient,
+import { getIngredient, getIngredients, postIngredient, deleteIngredient,
   editIngredient, getCriticalAssociations } from './../../api/ingredients.js';
 import { floatNonZero, intGeqZero, geqZero, requiredField } from '../../utils/validations.js';
 import IngredientsForm from './ingredients-form';
@@ -225,19 +226,7 @@ export default {
   },
 
   async created() {
-    this.loading = true;
-    try {
-      const response = await getIngredients();
-      this.ingredients = response.data.data.map((element) => ({
-        id: element.id,
-        ...element.attributes,
-      }));
-    } catch (error) {
-      this.unexpectedError = true;
-    } finally {
-      this.loading = false;
-    }
-    this.roundInventory();
+    await this.fetchIngredients();
   },
 
   computed: {
@@ -254,6 +243,43 @@ export default {
   },
 
   methods: {
+    async fetchIngredients() {
+      this.loading = true;
+      try {
+        const response = await getIngredients();
+        this.ingredients = response.data.data.map((element) => ({
+          id: element.id,
+          ...element.attributes,
+        }));
+      } catch (error) {
+        this.unexpectedError = true;
+      } finally {
+        this.loading = false;
+      }
+      this.roundInventory();
+    },
+
+    async fetchIngredient(ingredientId) {
+      try {
+        const response = await getIngredient(ingredientId);
+        const element = response.data.data;
+        this.ingredients.forEach((elem, idx) => {
+          if (elem.id === element.id) {
+            this.ingredients[idx] = {
+              id: element.id,
+              ...element.attributes,
+            };
+          }
+
+          const inventory = this.ingredients[idx].inventory;
+          // eslint-disable-next-line no-magic-numbers
+          this.ingredients[idx].inventory = Math.round(inventory * 100) / 100;
+        });
+      } catch (error) {
+        this.unexpectedError = true;
+      }
+    },
+
     closeAlert() {
       this.unexpectedError = false;
     },
@@ -280,7 +306,6 @@ export default {
       if (this.marketIngredient) {
         this.showingAdd = !this.showingAdd;
       } else {
-        // Aqui arreglar si se vuelve a la pagina principal o no
         this.showingAdd = !this.showingAdd;
       }
     },
@@ -328,20 +353,21 @@ export default {
         try {
           this.showingAdd = !this.showingAdd;
           this.loading = true;
-          ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
-            .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
-          const {
-            data:
-            { data: { id, attributes },
-            },
-          } = await postIngredient(ingredientsInfo);
-          this.ingredients.push({ id, ...attributes });
+
+          this.filterMeasures(ingredientsInfo);
+          const { data: { data: { id, attributes } } } = await postIngredient(ingredientsInfo);
+          this.ingredients.unshift({ id, ...attributes });
         } catch (error) {
           this.unexpectedError = true;
         } finally {
           this.loading = false;
         }
       }
+    },
+
+    filterMeasures(ingredientsInfo) {
+      ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
+        .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
     },
 
     async addIngredient() {
@@ -361,29 +387,16 @@ export default {
       this.marketIngredient = productForm;
     },
 
-    addInventoryToIngredient(ingredientsInfo, id) {
-      this.ingredients.forEach(elem => {
-        if (elem.id === id) {
-          ingredientsInfo.inventory = elem.inventory;
-        }
-      });
-
-      return ingredientsInfo;
-    },
-
-    // eslint-disable-next-line max-statements
     async editIngredient() {
       const ingredientsInfo = this.$refs.editIngredientInfo.form;
       if (this.validations(this.$refs.editIngredientInfo.form)) {
         try {
           this.showingEdit = !this.showingEdit;
           this.loading = true;
-          ingredientsInfo.ingredientMeasuresAttributes = ingredientsInfo
-            .ingredientMeasuresAttributes.filter(unit => unit.name && unit.quantity);
           this.addMeasuresToDelete(ingredientsInfo);
-          const ingredientsInfoFinal = this.addInventoryToIngredient(ingredientsInfo, this.ingredientToEdit.id);
-          await editIngredient(this.ingredientToEdit.id, ingredientsInfoFinal);
-          this.updateIngredient(ingredientsInfoFinal);
+
+          await editIngredient(this.ingredientToEdit.id, ingredientsInfo);
+          await this.fetchIngredient(this.ingredientToEdit.id);
         } catch (error) {
           this.unexpectedError = true;
         } finally {
@@ -394,7 +407,9 @@ export default {
 
     addMeasuresToDelete(ingredientsInfo) {
       this.$refs.editIngredientInfo.measuresToDelete
-        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push({ id: elem, _destroy: true }));
+        .forEach(elem => ingredientsInfo.ingredientMeasuresAttributes.push(
+          { id: elem.id, _destroy: true },
+        ));
     },
 
     async deleteIngredient() {
@@ -422,20 +437,6 @@ export default {
       } catch (error) {
         this.unexpectedError = true;
       }
-    },
-
-    async updateIngredient(ingredientEdited) {
-      ingredientEdited.quantity = ingredientEdited.ingredientMeasuresAttributes[0].quantity;
-      ingredientEdited.measure = ingredientEdited.ingredientMeasuresAttributes[0].name;
-      ingredientEdited.id = this.ingredientToEdit.id;
-      ingredientEdited.otherMeasures = { data: [] };
-      ingredientEdited.providerName = ingredientEdited.provider_name;
-      ingredientEdited.ingredientMeasuresAttributes.forEach(element => {
-        ingredientEdited.otherMeasures.data
-          .push({ id: element.id, attributes: { name: element.name, quantity: element.quantity } });
-      });
-      const objectIndex = this.ingredients.findIndex((obj => obj.id === this.ingredientToEdit.id));
-      Vue.set(this.ingredients, objectIndex, ingredientEdited);
     },
 
     cleanErrors() {
