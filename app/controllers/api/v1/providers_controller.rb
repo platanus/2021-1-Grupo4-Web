@@ -2,7 +2,7 @@ class Api::V1::ProvidersController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   def index
-    respond_with providers
+    respond_with providers.order(:name)
   end
 
   def show
