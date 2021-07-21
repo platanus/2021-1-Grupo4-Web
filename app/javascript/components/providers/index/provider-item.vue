@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col m-auto p-2 sm:p-4 border-2 border-solid border-gray-400 box-border mb-6 w-full md:w-96 order-none">
-    <div class="flex flex-row items-center self-stretch mb-4 px-1">
+    <div class="flex flex-row justify-between items-center self-stretch mb-4 px-1">
       <!-- Info -->
       <div class="flex flex-col">
         <!-- nombre Proveedor -->
