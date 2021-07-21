@@ -38,6 +38,13 @@ function editIngredient(ingredientId, ingredient) {
     ));
 }
 
+function editInventories(ingredients) {
+  return (client
+    .post('/ingredients/update-inventories',
+      { ingredients },
+    ));
+}
+
 async function searchCornershopIngredients(query) {
   return (client
     .get('/search-cornershop-products', {
@@ -60,6 +67,7 @@ export {
   postIngredient,
   deleteIngredient,
   editIngredient,
+  editInventories,
   searchCornershopIngredients,
   getCriticalAssociations,
   getAlertedIngredients,

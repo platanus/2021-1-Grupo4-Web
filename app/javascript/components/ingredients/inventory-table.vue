@@ -5,19 +5,19 @@
     >
       <thead class="justify-between bg-gray-600 border-2 border-gray-600">
         <tr class="text-left items-center w-full">
-          <th class="px-8 py-3">
+          <th class="pl-2 w-8 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
           </th>
-          <th class="px-8 py-3">
+          <th class="w-8 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.actualQuantity') }}</span>
           </th>
-          <th class="px-8 py-3">
+          <th class="w-12 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.increaseIn') }}</span>
           </th>
-          <th class="px-8 py-3">
+          <th class="w-12 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.decreaseIn') }}</span>
           </th>
-          <th class="px-8 py-3">
+          <th class="w-8 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.resulting') }}</span>
           </th>
         </tr>
@@ -29,47 +29,44 @@
           class="bg-white border-2 border-gray-200 text-left"
         >
           <!-- ingredient name -->
-          <td class="py-2 px-8">
+          <td class="py-2 w-8">
             <p class="ml-2">
               {{ ingredient.name }}
             </p>
           </td>
-          <td class="py-2 px-8">
+          <td class="py-2 w-8">
             <p class="ml-2">
               {{ actualInventories[idx] === null ? "-" : actualInventories[idx] }}
             </p>
           </td>
           <!-- increase in -->
-          <td class="py-2 px-8">
-            <p class="ml-2">
+          <td class="py-2 w-10">
+            <p>
               <input
                 type="number"
                 :min="0"
-                oninput="validity.valid||(value='0');"
                 ref="increase-inventory"
-                class="w-10 border-2 border-solid rounded-sm border-gray-300 box-border text-center"
+                class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
                 v-model="increaseInventoryIn[idx]"
-                @change="changeInventory(ingredient, idx)"
+                @input="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
           </td>
           <!-- deacrease in -->
-          <td class="py-2 px-8">
-            <p class="ml-2">
+          <td class="py-2 w-10">
+            <p>
               <input
                 type="number"
-                min="0"
-                oninput="validity.valid||(value='0');"
-                :max="maxDecrease(idx)"
+                :min="0"
                 ref="decrease-inventory"
-                class="w-10 border-2 border-solid rounded-sm border-gray-300 box-border text-center"
+                class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
                 v-model="decreaseInventoryIn[idx]"
-                @change="changeInventory(ingredient, idx)"
+                @input="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
           </td>
           <!-- resulting -->
-          <td class="py-2 px-8">
+          <td class="py-2 w-8">
             <div
               class="flex justify-between"
             >
@@ -99,14 +96,33 @@ export default {
   },
   methods: {
     changeInventory(ingredient, idx) {
-      this.increaseInventoryIn[idx] = (this.increaseInventoryIn[idx] === '' ? '0' : this.increaseInventoryIn[idx]);
-      this.decreaseInventoryIn[idx] = (this.decreaseInventoryIn[idx] === '' ? '0' : this.decreaseInventoryIn[idx]);
-      ingredient.inventory = this.actualInventories[idx] + parseFloat(this.increaseInventoryIn[idx]) -
-      parseFloat(this.decreaseInventoryIn[idx]);
+      this.increaseInventoryIn[idx] = this.newIncrease(idx);
+      this.decreaseInventoryIn[idx] = this.newDecrease(idx);
+      ingredient.inventory = Math.round(
+        (this.actualInventories[idx] +
+        parseFloat(this.increaseInventoryIn[idx]) -
+        // eslint-disable-next-line no-magic-numbers
+        parseFloat(this.decreaseInventoryIn[idx])) * 100) / 100;
       this.$emit('updateIngredientInventory', ingredient);
     },
     maxDecrease(idx) {
       return this.actualInventories[idx] + this.increaseInventoryIn[idx];
+    },
+    newIncrease(idx) {
+      const increase = this.increaseInventoryIn[idx];
+      if (increase === '') {
+        return 0;
+      }
+
+      return Math.max(0, increase);
+    },
+    newDecrease(idx) {
+      const decrease = this.decreaseInventoryIn[idx];
+      if (decrease === '') {
+        return 0;
+      }
+
+      return Math.min(Math.max(0, decrease), this.maxDecrease(idx));
     },
   },
   created() {

@@ -75,7 +75,7 @@
 
 <script>
 
-import { getIngredients, editIngredient } from './../../api/ingredients.js';
+import { getIngredients, editInventories } from './../../api/ingredients.js';
 import InventoryTable from './inventory-table';
 
 export default {
@@ -130,8 +130,14 @@ export default {
     },
     async updateInventory() {
       try {
-        await this.ingredientsToEdit.forEach(
-          ing => { editIngredient(ing.id, { 'inventory': ing.inventory, 'providerName': ing.providerName }); });
+        const formattedIngredients = this.ingredientsToEdit.map((ingredient) => ({
+          ingredientId: ingredient.id, inventory: ingredient.inventory,
+        }));
+
+        if (formattedIngredients.length) {
+          await editInventories(formattedIngredients);
+        }
+
         window.location = '/ingredients';
       } catch (error) {
         this.error = error;
