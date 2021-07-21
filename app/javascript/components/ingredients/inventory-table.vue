@@ -48,7 +48,7 @@
                 ref="increase-inventory"
                 class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
                 v-model="increaseInventoryIn[idx]"
-                @change="changeInventory(ingredient, idx)"
+                @input="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
           </td>
@@ -57,12 +57,11 @@
             <p>
               <input
                 type="number"
-                min="0"
-                :max="maxDecrease(idx)"
+                :min="0"
                 ref="decrease-inventory"
                 class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
                 v-model="decreaseInventoryIn[idx]"
-                @change="changeInventory(ingredient, idx)"
+                @input="changeInventory(ingredient, idx)"
               > {{ ingredient.measure }}
             </p>
           </td>
@@ -97,8 +96,8 @@ export default {
   },
   methods: {
     changeInventory(ingredient, idx) {
-      this.increaseInventoryIn[idx] = (this.increaseInventoryIn[idx] === '' ? '0' : this.increaseInventoryIn[idx]);
-      this.decreaseInventoryIn[idx] = (this.decreaseInventoryIn[idx] === '' ? '0' : this.decreaseInventoryIn[idx]);
+      this.increaseInventoryIn[idx] = this.newIncrease(idx);
+      this.decreaseInventoryIn[idx] = this.newDecrease(idx);
       ingredient.inventory = Math.round(
         (this.actualInventories[idx] +
         parseFloat(this.increaseInventoryIn[idx]) -
@@ -108,6 +107,22 @@ export default {
     },
     maxDecrease(idx) {
       return this.actualInventories[idx] + this.increaseInventoryIn[idx];
+    },
+    newIncrease(idx) {
+      const increase = this.increaseInventoryIn[idx];
+      if (increase === '') {
+        return 0;
+      }
+
+      return Math.max(0, increase);
+    },
+    newDecrease(idx) {
+      const decrease = this.decreaseInventoryIn[idx];
+      if (decrease === '') {
+        return 0;
+      }
+
+      return Math.min(Math.max(0, decrease), this.maxDecrease(idx));
     },
   },
   created() {
