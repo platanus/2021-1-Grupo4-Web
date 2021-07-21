@@ -174,7 +174,7 @@ export default {
             },
         } = await postProvider(provider);
         const providerToAdd = { id, ...attributes };
-        this.providers.push(providerToAdd);
+        this.providers.unshift(providerToAdd);
       } catch (error) {
         if (error.response.data.errors.name[0] === 'Name ya tiene cuenta') {
           this.providerNameError = true;
