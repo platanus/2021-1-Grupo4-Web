@@ -90,7 +90,7 @@ export default {
       newMeasure: 'Crear la medida',
       inventory: {
         title: 'Inventario',
-        editingInventories: 'Editando varios inventarios',
+        editingInventories: 'Editar varios inventarios',
         editInventories: 'Editar varios inventarios',
         actualQuantity: 'Inventario actual',
         increaseIn: 'Aumentar en',

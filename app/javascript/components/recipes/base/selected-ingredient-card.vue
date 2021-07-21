@@ -5,8 +5,8 @@
       <div class="h-6 font-hind font-bold text-lg text-black mb-0.5">
         {{ recipeIngredientAttrs.ingredient.name }}
       </div>
-      <div class="flex items-center  h-5 mb-0.5">
-        <div class="h-5 font-hind font-light text-sm text-gray-600 mr-0.5">
+      <div class="flex items-center h-5 mb-0.5">
+        <div class="h-5 font-hind font-light text-sm text-gray-600 mr-2">
           {{ $t('msg.recipes.price') }} {{ $t('msg.recipes.unitary') }}
         </div>
         <div class="h-5 font-hind font-normal text-sm text-black">

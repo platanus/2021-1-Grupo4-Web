@@ -84,9 +84,8 @@
               <div class="flex">
                 <input
                   type="number"
-                  min="0"
                   ref="inventory"
-                  class="w-10 m-auto border-none outline-none text-center"
+                  class="w-14 m-auto border-none outline-none appearence-none text-center"
                   v-model="ingredient.inventory"
                   @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
                 >
@@ -112,7 +111,7 @@
                   type="number"
                   min="0"
                   ref="minimumQuantity"
-                  class="w-10 m-auto border-none outline-none text-center"
+                  class="w-14 m-auto border-none outline-none text-center"
                   v-model="ingredient.minimumQuantity"
                   @blur.prevent="changeMinimumQuantity(ingredient, ingredient.minimumQuantity)"
                 >
