@@ -83,11 +83,11 @@
         </p>
         <div
           v-else
-          class="flex bg-gray-50 w-full sm:px-16"
+          class="flex bg-gray-50 w-full md:w-auto sm:px-16"
           v-for="element in filterProviders"
           :key="element.id"
         >
-          <div class="w-full px-1">
+          <div class="w-full md:w-auto px-1">
             <provider-item
               :provider="element"
               @update="updateProvider"
