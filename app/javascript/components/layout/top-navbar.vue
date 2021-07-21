@@ -73,7 +73,7 @@
         </div>
         <div class="flex px-3">
           <div class="text-red-600 px-1">
-            {{ ingredient.inventory }} {{ ingredient.measure }}
+            {{ Math.round(ingredient.inventory * 100) / 100 }} {{ ingredient.measure }}
           </div>(Mínimo {{ ingredient.minimumQuantity }} {{ ingredient.measure }})
         </div>
       </div>

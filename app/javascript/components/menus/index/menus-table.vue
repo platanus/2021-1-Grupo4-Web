@@ -272,11 +272,12 @@ export default {
     getMessageConfirmationElementsWithInventory(menuIngredients) {
       const listOfMessagesWithInventory = menuIngredients.map((obj) =>
         obj.ingredients.map((element) => {
-          let nuevoInventario = (element.inventory - element.quantity).toFixed(this.numberDecimals);
-          nuevoInventario = Math.round(nuevoInventario * this.numberToGetDecimals) / this.numberToGetDecimals;
-          if (nuevoInventario >= 0) {
+          let newInventory = Math.round((element.inventory - element.quantity) * this.numberToGetDecimals) /
+          this.numberToGetDecimals;
+          newInventory = Math.round(newInventory * this.numberToGetDecimals) / this.numberToGetDecimals;
+          if (newInventory >= 0) {
             return ` ${element.name}: de ${Math.round(element.inventory * this.numberToGetDecimals) /
-            this.numberToGetDecimals} a ${nuevoInventario} ${element.measure}`;
+            this.numberToGetDecimals} a ${newInventory} ${element.measure}`;
           }
 
           return '';

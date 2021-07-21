@@ -1,5 +1,6 @@
 export default {
   msg: {
+    passwordChanged: 'Has cambiado exitosamente tu contraseña',
     welcomeTitle: '¡Bienvenido/a a KitchenGram!',
     welcomeSubtitle: 'La nueva forma de gestionar tu cocina y negocio',
     start: '¡Comienza ya!',
