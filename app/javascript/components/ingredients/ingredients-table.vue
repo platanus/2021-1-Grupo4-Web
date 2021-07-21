@@ -1,35 +1,35 @@
 <template>
-  <div class="w-full">
+  <div class="w-full flex flex-col overflow-auto lg:overflow-visible">
     <table
       class="w-full divide-y divide-gray-200"
     >
       <thead class="justify-between bg-gray-600 border-2 border-gray-600">
         <tr class="text-left items-center">
-          <th class="pl-6 py-3 w-72">
+          <th class="pl-2 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.name') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.provider') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.price') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.quantity') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.measure') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 pr-4 w-4 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.unitPrice') }}</span>
           </th>
-          <th class="px-4 py-3">
+          <th class="pl-1 w-14 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.inventory.title') }}</span>
           </th>
-          <th class="py-3">
+          <th class="pl-1 w-14 py-3">
             <span class="text-white font-bold">{{ $t('msg.ingredients.minimumQuantityShort') }}</span>
           </th>
-          <th class="px-4 py-3" />
+          <th class="pl-1 w-6 py-3" />
         </tr>
       </thead>
       <tbody class="bg-gray-200">
@@ -39,46 +39,46 @@
           class="bg-white border-2 border-gray-200 text-left font-normal"
         >
           <!-- ingredient name -->
-          <td class="pl-6 py-3">
+          <td class="pl-2 w-6 py-3">
             <p>
               {{ ingredient.name }}
             </p>
           </td>
-          <td class="px-4 py-3">
+          <td class="pl-1 w-4 py-3">
             <p>
               {{ ingredient.providerName === null ? "-" : ingredient.providerName }}
             </p>
           </td>
           <!-- price -->
-          <td class="py-2 px-4">
+          <td class="pl-1 w-4 py-3">
             <p>
               {{ ingredient.price | currency }}
             </p>
           </td>
           <!-- quantity -->
-          <td class="py-2 px-4">
+          <td class="pl-1 w-4 py-3">
             <p>
               {{ ingredient.quantity }}
             </p>
           </td>
-          <td class="py-2 px-4">
+          <td class="pl-1 w-4 py-3">
             <p>
               {{ ingredient.measure }}
             </p>
           </td>
-          <td class="py-2 px-4">
+          <td class="pl-1 w-4 py-3">
             <ingredients-table-unit-price
               :ingredient="ingredient"
             />
           </td>
-          <td class="py-2 px-4">
+          <td class="pl-1 w-14 py-3">
             <div
               class="flex justify-start"
             >
               <img
                 svg-inline
                 src="../../../assets/images/pencil-svg.svg"
-                class="w-4 h-4 cursor-pointer"
+                class="w-3 h-3 my-auto cursor-pointer"
                 @click="openEditInventory(idx)"
               >
               <div class="flex">
@@ -86,25 +86,25 @@
                   type="number"
                   min="0"
                   ref="inventory"
-                  class="w-12 m-auto border-none outline-none text-center"
+                  class="w-10 m-auto border-none outline-none text-center"
                   v-model="ingredient.inventory"
                   @blur.prevent="changeInventory(ingredient, ingredient.inventory)"
                 >
-                <div class="flex m-auto">
+                <div class="m-auto hidden lg:flex">
                   {{ ingredient.measure }}
                 </div>
               </div>
             </div>
           </td>
           <!-- minimum quantity -->
-          <td class="py-2">
+          <td class="pl-1 w-14 py-3">
             <div
               class="flex justify-start"
             >
               <img
                 svg-inline
                 src="../../../assets/images/pencil-svg.svg"
-                class="w-4 h-4 cursor-pointer"
+                class="w-3 h-3 my-auto cursor-pointer"
                 @click="openEditMinimumQuantity(idx)"
               >
               <div class="flex">
@@ -112,18 +112,19 @@
                   type="number"
                   min="0"
                   ref="minimumQuantity"
-                  class="w-12 m-auto border-none outline-none text-center"
+                  class="w-10 m-auto border-none outline-none text-center"
                   v-model="ingredient.minimumQuantity"
                   @blur.prevent="changeMinimumQuantity(ingredient, ingredient.minimumQuantity)"
                 >
-                <div class="flex m-auto">
+                <div class="m-auto hidden lg:flex">
                   {{ ingredient.measure }}
                 </div>
               </div>
             </div>
           </td>
-          <td class="content-center">
+          <td class="pl-1 w-6 py-3">
             <dots-dropdown
+              class="w-6"
               :elements="{
                 edit: true,
                 del: true,

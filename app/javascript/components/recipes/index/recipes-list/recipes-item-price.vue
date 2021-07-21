@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row p-0 static w-auto h-auto flex-none order-1 flex-grow-0 mx-2.5 items-center">
-    <div class="static font-sans not-italic font-normal text-2xl flex-none order-0 flex-grow-0 mx-2.5 text-yellow-500">
+  <div class="flex flex-row items-center">
+    <div class="font-sans not-italic font-normal text-2xl text-yellow-500">
       {{ recipePrice | currency }}
     </div>
     <div
