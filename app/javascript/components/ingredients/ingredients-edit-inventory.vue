@@ -13,12 +13,6 @@
         <div class="text-4xl font-bold">
           {{ $t('msg.ingredients.inventory.editingInventories') }}
         </div>
-        <span
-          class="flex m-auto w-8 h-8 ml-2"
-          v-if="loading"
-        >
-          <base-spinner />
-        </span>
       </div>
       <div class="flex flex-col p-10 w-auto bg-gray-50 my-10">
         <!--SearchBar-->
@@ -40,6 +34,16 @@
               >
             </div>
           </div>
+        </div>
+        <div
+          class="w-auto m-auto"
+          v-if="loading"
+        >
+          <span
+            class="flex w-12 h-12 ml-2"
+          >
+            <base-spinner />
+          </span>
         </div>
         <!--Table-->
         <div v-if="!loading">
