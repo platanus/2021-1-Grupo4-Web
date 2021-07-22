@@ -58,7 +58,7 @@
           >
             <inventory-table
               :ingredients="ingredients"
-              :searchQuery="searchQuery"
+              :search-query="searchQuery"
               @updateIngredientInventory="updateIngredientInventory"
             />
           </div>
