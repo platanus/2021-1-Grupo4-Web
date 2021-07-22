@@ -29,7 +29,6 @@
               <input
                 class="w-full py-2 pl-12 bg-gray-50 border-2 border-gray-600 rounded self-stretch focus:outline-none z-200"
                 :placeholder="$t('msg.ingredients.search')"
-                @keyup="filterIngredients"
                 v-model="searchQuery"
               >
             </div>
@@ -58,7 +57,8 @@
             class="flex flex-col w-full 2xl:justify-center items-center overflow-auto"
           >
             <inventory-table
-              :ingredients="filterIngredients"
+              :ingredients="ingredients"
+              :search-query="searchQuery"
               @updateIngredientInventory="updateIngredientInventory"
             />
           </div>
@@ -115,19 +115,6 @@ export default {
     this.roundInventory();
   },
 
-  computed: {
-    filterIngredients() {
-      if (this.searchQuery) {
-        return this.ingredients.filter(item => this.searchQuery
-          .toLowerCase()
-          .split(' ')
-          .every(text => item.name.toLowerCase().includes(text)));
-      }
-
-      return this.ingredients;
-    },
-  },
-
   methods: {
     updateIngredientInventory(ingredient) {
       this.ingredientsToEdit.push(ingredient);
@@ -135,7 +122,7 @@ export default {
     async updateInventory() {
       try {
         const formattedIngredients = this.ingredientsToEdit.map((ingredient) => ({
-          ingredientId: ingredient.id, inventory: ingredient.inventory,
+          ingredientId: ingredient.id, inventory: ingredient.finalInventory,
         }));
 
         if (formattedIngredients.length) {
