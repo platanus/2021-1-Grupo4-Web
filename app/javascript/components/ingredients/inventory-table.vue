@@ -24,7 +24,7 @@
       </thead>
       <tbody class="bg-gray-200">
         <tr
-          v-for="(ingredient, idx) in ingredients"
+          v-for="ingredient in filteredIngredients"
           :key="ingredient.id"
           class="bg-white border-2 border-gray-200 text-left"
         >
@@ -36,7 +36,7 @@
           </td>
           <td class="py-2 w-8">
             <p class="ml-2">
-              {{ actualInventories[idx] === null ? "-" : actualInventories[idx] }}
+              {{ ingredient.inventory === null ? "-" : ingredient.inventory }}
             </p>
           </td>
           <!-- increase in -->
@@ -47,8 +47,8 @@
                 :min="0"
                 ref="increase-inventory"
                 class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
-                v-model="increaseInventoryIn[idx]"
-                @input="changeInventory(ingredient, idx)"
+                v-model="ingredient.increaseInventoryIn"
+                @input="changeInventory(ingredient)"
               > {{ ingredient.measure }}
             </p>
           </td>
@@ -60,8 +60,8 @@
                 :min="0"
                 ref="decrease-inventory"
                 class="w-14 border-2 border-solid rounded-sm border-gray-200 box-border text-center"
-                v-model="decreaseInventoryIn[idx]"
-                @input="changeInventory(ingredient, idx)"
+                v-model="ingredient.decreaseInventoryIn"
+                @input="changeInventory(ingredient)"
               > {{ ingredient.measure }}
             </p>
           </td>
@@ -71,7 +71,7 @@
               class="flex justify-between"
             >
               <p class="ml-2">
-                {{ ingredient.inventory }}
+                {{ ingredient.finalInventory }}
               </p>
             </div>
           </td>
@@ -86,49 +86,64 @@
 export default {
   data() {
     return {
-      increaseInventoryIn: [],
-      decreaseInventoryIn: [],
-      actualInventories: [],
+      ingredientsWithInventories: [],
     };
   },
   props: {
     ingredients: { type: Array, required: true },
+    searchQuery: { type: String, required: true },
   },
   methods: {
-    changeInventory(ingredient, idx) {
-      this.increaseInventoryIn[idx] = this.newIncrease(idx);
-      this.decreaseInventoryIn[idx] = this.newDecrease(idx);
-      ingredient.inventory = Math.round(
-        (this.actualInventories[idx] +
-        parseFloat(this.increaseInventoryIn[idx]) -
+    changeInventory(ingredient) {
+      ingredient.increaseInventoryIn = this.newIncrease(ingredient);
+      ingredient.decreaseInventoryIn = this.newDecrease(ingredient);
+      ingredient.finalInventory = Math.round(
+        (ingredient.inventory +
+        parseFloat(ingredient.increaseInventoryIn) -
         // eslint-disable-next-line no-magic-numbers
-        parseFloat(this.decreaseInventoryIn[idx])) * 100) / 100;
+        parseFloat(ingredient.decreaseInventoryIn)) * 100) / 100;
       this.$emit('updateIngredientInventory', ingredient);
     },
-    maxDecrease(idx) {
-      return this.actualInventories[idx] + this.increaseInventoryIn[idx];
+    maxDecrease(ingredient) {
+      return ingredient.inventory + ingredient.increaseInventoryIn;
     },
-    newIncrease(idx) {
-      const increase = this.increaseInventoryIn[idx];
-      if (increase === '') {
-        return 0;
+    newIncrease(ingredient) {
+      return Math.max(0, ingredient.increaseInventoryIn);
+    },
+    newDecrease(ingredient) {
+      return Math.min(
+        Math.max(
+          0,
+          ingredient.decreaseInventoryIn,
+        ),
+        this.maxDecrease(ingredient),
+      );
+    },
+  },
+
+  computed: {
+    filteredIngredients() {
+      if (this.searchQuery) {
+        return this.ingredientsWithInventories.filter(item => this.searchQuery
+          .toLowerCase()
+          .split(' ')
+          .every(text => item.name.toLowerCase().includes(text)));
       }
 
-      return Math.max(0, increase);
-    },
-    newDecrease(idx) {
-      const decrease = this.decreaseInventoryIn[idx];
-      if (decrease === '') {
-        return 0;
-      }
-
-      return Math.min(Math.max(0, decrease), this.maxDecrease(idx));
+      return this.ingredientsWithInventories;
     },
   },
   created() {
-    this.actualInventories = this.ingredients.map(element => element.inventory);
-    this.increaseInventoryIn = new Array(this.ingredients.length).fill(0);
-    this.decreaseInventoryIn = new Array(this.ingredients.length).fill(0);
+    this.ingredients.forEach((ingredient) => {
+      this.ingredientsWithInventories.push({
+        name: ingredient.name,
+        id: ingredient.id,
+        inventory: ingredient.inventory,
+        increaseInventoryIn: 0,
+        decreaseInventoryIn: 0,
+        finalInventory: ingredient.inventory,
+      });
+    });
   },
 };
 </script>
